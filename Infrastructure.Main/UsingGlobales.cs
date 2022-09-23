@@ -1,0 +1,20 @@
+﻿global using Domain.Main.Auditoria;
+global using Domain.Main.Administrador;
+global using Domain.Main.Autenticacion;
+global using Domain.Main.Entidades;
+global using Domain.Main.Seguridad;
+global using EFCore.BulkExtensions;
+global using FluentValidation;
+global using FluentValidation.Results;
+global using Infrastructure.Main.Contexto;
+global using Infrastructure.Main.Extensiones;
+global using Infraestructure.Data.Core.EntityConfig;
+global using Infrastructure.Data.MainModule.Repository;
+global using SharedKernell.Enum;
+global using SharedKernell.Helpers;
+global using SharedKernell.Nucleo;
+global using SharedKernell.Paginacion;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;
+global using System.Linq.Expressions;
+

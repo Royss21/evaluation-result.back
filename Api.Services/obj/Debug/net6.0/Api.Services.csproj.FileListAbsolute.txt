@@ -1,0 +1,479 @@
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.AssemblyReference.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfoInputs.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CoreCompileInputs.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.Development.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.exe
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.deps.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.runtimeconfig.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.ExpressionMapping.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dapper.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.SqlServer.Types.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\EFCore.BulkExtensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\FluentValidation.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Humanizer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\IFilterTextReader.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\itextsharp.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\MimeTypes.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.Sqlite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Sqlite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\MySqlConnector.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetCore.AutoRegisterDi.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.IO.SqlServerBytes.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Serilog.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\SQLitePCLRaw.core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.CodeDom.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Hashing.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Packaging.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Memory.Data.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.build.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.development.json
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\scopedcss\bundle\Api.Services.styles.css
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CopyComplete
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\refint\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.genruntimeconfig.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\ref\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.AspNetCore.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.MemoryStorage.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\ca\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\de\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\es\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\fa\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\fr\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\nb\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\nl\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-BR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-PT\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\tr-TR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh-TW\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cache
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+D:\Royss\Proyectos\01. ChloeAtelier\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.Development.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.exe
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.deps.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.runtimeconfig.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.ExpressionMapping.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dapper.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.SqlServer.Types.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\EFCore.BulkExtensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\FluentValidation.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.AspNetCore.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.MemoryStorage.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Humanizer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\IFilterTextReader.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\itextsharp.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.Core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\MimeTypes.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.Sqlite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Sqlite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\MySqlConnector.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetCore.AutoRegisterDi.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.IO.SqlServerBytes.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Serilog.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\SQLitePCLRaw.core.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.CodeDom.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Hashing.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Packaging.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Memory.Data.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\ca\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\de\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\es\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\fa\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\fr\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\nb\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\nl\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-BR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-PT\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\tr-TR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh-TW\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.AssemblyReference.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfoInputs.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CoreCompileInputs.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cs
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.build.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.development.json
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\scopedcss\bundle\Api.Services.styles.css
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CopyComplete
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\refint\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.genruntimeconfig.cache
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\obj\Debug\net6.0\ref\Api.Services.dll
+D:\Royss\Proyectos\01. ChloeAtelier\Backend\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.WindowsAzure.Storage.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.Development.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\appsettings.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.exe
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.deps.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.runtimeconfig.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.ExpressionMapping.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Core.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Blobs.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Azure.Storage.Common.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\BouncyCastle.Crypto.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dapper.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.SqlServer.Types.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\EFCore.BulkExtensions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.SqlServer.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFramework.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\EntityFrameworkCore.SqlServer.HierarchyId.Abstractions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\FluentValidation.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.AspNetCore.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.Core.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Hangfire.MemoryStorage.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Humanizer.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\IFilterTextReader.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\itextsharp.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\LinqKit.Core.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\MimeTypes.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Mvc.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Razor.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.Helpers.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Deployment.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.Razor.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Web.WebPages.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.Razor.Extensions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.AspNetCore.Razor.Language.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.CSharp.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.CodeAnalysis.Razor.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Data.Sqlite.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.Sqlite.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Identity.Client.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.OpenApi.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Web.Infrastructure.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\MySqlConnector.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetCore.AutoRegisterDi.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\NetTopologySuite.IO.SqlServerBytes.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Serilog.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\SQLitePCLRaw.core.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Annotations.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.CodeDom.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Hashing.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.IO.Packaging.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Memory.Data.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Security.Permissions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Microsoft.WindowsAzure.Storage.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\ca\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\de\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\es\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\fa\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\fr\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\nb\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\nl\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-BR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt-PT\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\pt\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\tr-TR\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh-TW\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\zh\Hangfire.Core.resources.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-arm64\native\sni.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x64\native\sni.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win-x86\native\sni.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.ModuloPrincipal.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.IoC.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Dto.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Aplicacion.Seguridad.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.Comun.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Dominio.ModuloPrincipal.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.ModuloPrincipal.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\Infraestructura.UnitOfWork.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\bin\Debug\net6.0\KernellCompartido.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.AssemblyReference.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfoInputs.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.AssemblyInfo.cs
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CoreCompileInputs.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cs
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.MvcApplicationPartsAssemblyInfo.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.RazorAssemblyInfo.cs
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.build.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\staticwebassets.development.json
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\scopedcss\bundle\Api.Services.styles.css
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.csproj.CopyComplete
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\refint\Api.Services.dll
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.pdb
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\Api.Services.genruntimeconfig.cache
+D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\obj\Debug\net6.0\ref\Api.Services.dll

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Contrasenia\2z30ryu0.klz~" />
+    <None Remove="JWT\JwtFabrica.cs~RF39ae8946.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KernellCompartido\KernellCompartido\SharedKernell.csproj" />
+    <ProjectReference Include="..\Dominio.Comun\Domain.Common.csproj" />
+  </ItemGroup>
+
+</Project>

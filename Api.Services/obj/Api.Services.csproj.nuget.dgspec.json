@@ -1,0 +1,1086 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Api.Services\\Api.Services.csproj": {}
+  },
+  "projects": {
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Api.Services\\Api.Services.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Api.Services\\Api.Services.csproj",
+        "projectName": "Api.Services",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Api.Services\\Api.Services.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Api.Services\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\Application.IoC.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\Application.IoC.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\Application.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\Application.Main.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[2.11.0, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.22.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj",
+        "projectName": "Application.Dto",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\Application.Main.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\Application.Main.csproj",
+        "projectName": "Application.Main",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\Application.Main.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "AutoMapper.Extensions.ExpressionMapping": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.7.30, )"
+            },
+            "LinqKit": {
+              "target": "Package",
+              "version": "[1.2.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj",
+        "projectName": "Application.Security",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\KernellCompartido.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\KernellCompartido.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[6.8.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\Application.IoC.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\Application.IoC.csproj",
+        "projectName": "Application.IoC",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\Application.IoC.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\AplicacionIoC\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\Application.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.ModuloPrincipal\\Application.Main.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Hangfire.MemoryStorage": {
+              "target": "Package",
+              "version": "[1.7.0, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "NetCore.AutoRegisterDi": {
+              "target": "Package",
+              "version": "[2.1.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            },
+            "Swashbuckle.AspNetCore.Annotations": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\Application.Main.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\Application.Main.csproj",
+        "projectName": "Application.Main",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\Application.Main.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Main\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Dto\\Application.Dto.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Aplicacion.Seguridad\\Application.Security.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[11.0.1, )"
+            },
+            "AutoMapper.Extensions.ExpressionMapping": {
+              "target": "Package",
+              "version": "[5.1.0, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[11.0.0, )"
+            },
+            "Hangfire.AspNetCore": {
+              "target": "Package",
+              "version": "[1.7.30, )"
+            },
+            "LinqKit": {
+              "target": "Package",
+              "version": "[1.2.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+        "projectName": "Domain.Common",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj",
+        "projectName": "Domain.Main",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj"
+              },
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj",
+        "projectName": "Domain.Common",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj",
+        "projectName": "Infrastructure.Main",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.0.123, )"
+            },
+            "EFCore.BulkExtensions": {
+              "target": "Package",
+              "version": "[6.5.5, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj",
+        "projectName": "Infrastructure.UnitOfWork",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\Infrastructure.UnitOfWork.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.UnitOfWork\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infraestructura.MainModule\\Infrastructure.Main.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\KernellCompartido.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\KernellCompartido.csproj",
+        "projectName": "KernellCompartido",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\KernellCompartido.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.13.0, )"
+            },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[2.17.1, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "IFilterTextReader": {
+              "target": "Package",
+              "version": "[1.7.7, )"
+            },
+            "MediaTypeMap.Core": {
+              "target": "Package",
+              "version": "[2.3.3, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.9, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.21.0, )"
+            },
+            "WindowsAzure.Storage": {
+              "target": "Package",
+              "version": "[9.3.3, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj",
+        "projectName": "SharedKernell",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj",
+        "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Royss Martel\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.13.0, )"
+            },
+            "DocumentFormat.OpenXml": {
+              "target": "Package",
+              "version": "[2.17.1, )"
+            },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.1.0, )"
+            },
+            "IFilterTextReader": {
+              "target": "Package",
+              "version": "[1.7.7, )"
+            },
+            "MediaTypeMap.Core": {
+              "target": "Package",
+              "version": "[2.3.3, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.9, )"
+            },
+            "Microsoft.AspNetCore.Mvc": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[6.0.7, )"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[6.21.0, )"
+            },
+            "WindowsAzure.Storage": {
+              "target": "Package",
+              "version": "[9.3.3, )"
+            },
+            "iTextSharp": {
+              "target": "Package",
+              "version": "[5.5.13.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

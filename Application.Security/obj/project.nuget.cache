@@ -1,0 +1,25 @@
+{
+  "version": 2,
+  "dgSpecHash": "IdTvWxiaR7oLceW6nch0STPz7OkSVeiS2oM0oOKGmTNhTZw9FbZBhZvHhss8esm+YADQviNcUwMMNNq8OGijRQ==",
+  "success": false,
+  "projectFilePath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Security\\Application.Security.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.8.0\\microsoft.identitymodel.jsonwebtokens.6.8.0.nupkg.sha512",
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.identitymodel.logging\\6.8.0\\microsoft.identitymodel.logging.6.8.0.nupkg.sha512",
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.8.0\\microsoft.identitymodel.tokens.6.8.0.nupkg.sha512",
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.8.0\\system.identitymodel.tokens.jwt.6.8.0.nupkg.sha512",
+    "C:\\Users\\Royss Martel\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "No se encuentra el proyecto \"D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\SharedKernell.csproj\". Compruebe que la referencia al proyecto sea válida y que exista el archivo de proyecto.",
+      "libraryId": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\SharedKernell.csproj",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
+}
