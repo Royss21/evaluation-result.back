@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Main.Administrador
 {
-    public class Menu: BaseModeloActivo<Guid>
+    public class Menu: BaseModelActivo<Guid>
     {
 
         public Guid? MenuPadreId { get; set; }

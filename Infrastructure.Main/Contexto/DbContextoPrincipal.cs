@@ -234,7 +234,7 @@ namespace Infrastructure.Main.Contexto
         }
         private void ConfigurarEntidades(ModelBuilder builder)
         {
-            builder.AddQueryFilter<IBaseModelo>(e => !e.EsEliminado);
+            builder.AddQueryFilter<IBaseModel>(e => !e.EsEliminado);
             builder.AddQueryFilter<IBaseCompania>(e => ObtenerCompaniaId() != null 
                                                         ? e.CompaniaId.Equals(ObtenerCompaniaId()) 
                                                         : !e.CompaniaId.Equals(Guid.Empty));
@@ -267,11 +267,11 @@ namespace Infrastructure.Main.Contexto
         private void ActualizarEntidades()
         {
             var fechaActual = DateTime.Now.ObtenerFechaPeru();
-            var entidadaEntradas = ChangeTracker.Entries().Where(e => e.Entity is IBaseModelo);
+            var entidadaEntradas = ChangeTracker.Entries().Where(e => e.Entity is IBaseModel);
             
             foreach (var entidadEntrada in entidadaEntradas)
             {
-                if (!(entidadEntrada.Entity is IBaseModelo entidad)) continue;
+                if (!(entidadEntrada.Entity is IBaseModel entidad)) continue;
                 switch (entidadEntrada.State)
                 {
                     case EntityState.Added:
@@ -284,7 +284,7 @@ namespace Infrastructure.Main.Contexto
                                                             ? (Guid)ObtenerCompaniaId()
                                                             : entidadCompania.CompaniaId;
 
-                        if (entidad is BaseModelo<Guid> entidadIdGuid)
+                        if (entidad is BaseModel<Guid> entidadIdGuid)
                             entidadIdGuid.Id = Guid.NewGuid();
 
                         break;

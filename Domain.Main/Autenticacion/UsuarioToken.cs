@@ -1,6 +1,6 @@
 ﻿namespace Domain.Main.Autenticacion
 {
-    public  class UsuarioToken : BaseModeloActivo<Guid>
+    public  class UsuarioToken : BaseModelActivo<Guid>
     {
         public Guid UsuarioId { get; set; }
         public string Token { get; set; } = string.Empty;

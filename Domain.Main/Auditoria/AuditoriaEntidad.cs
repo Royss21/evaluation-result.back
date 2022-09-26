@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Main.Auditoria
 {
-    public class AuditoriaEntidad : BaseModelo<int>
+    public class AuditoriaEntidad : BaseModel<int>
     {
         public string NombreTabla { get; set; } = string.Empty;
         public string LlaveValores { get; set; } = string.Empty;

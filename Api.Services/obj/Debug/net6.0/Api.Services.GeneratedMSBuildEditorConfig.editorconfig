@@ -8,13 +8,13 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Api.Services
 build_property.RootNamespace = Api.Services
-build_property.ProjectDir = D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services\
+build_property.ProjectDir = D:\Royss\Proyectos\05.EvaluacionResultado\evaluation-result.back\Api.Services\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = D:\Royss\Proyectos\05.EvaluacionResultado\ChloeAtelier\Api.Services
+build_property.MSBuildProjectDirectory = D:\Royss\Proyectos\05.EvaluacionResultado\evaluation-result.back\Api.Services
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/Royss/Proyectos/05.EvaluacionResultado/ChloeAtelier/Api.Services/Vistas/CorreoPrueba.cshtml]
+[D:/Royss/Proyectos/05.EvaluacionResultado/evaluation-result.back/Api.Services/Vistas/CorreoPrueba.cshtml]
 build_metadata.AdditionalFiles.TargetPath = VmlzdGFzXENvcnJlb1BydWViYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

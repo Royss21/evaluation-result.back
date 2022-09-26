@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XI85ImgyBuNfZhPSUXcrJQnwMFqhtBfu/cARI3Ezx3PYHuoCtVekIWADI3NsuJqxGfeBE6BeI8pDg4kC/IcsoQ==",
+  "dgSpecHash": "awx9t5VYbPcmAV93+XQXlBQA9kvUs90KW7wpDt65UUB7OaP1wyAmozKLux11g5tmQjKJmdXzqIBH6jESQ2Aq3w==",
   "success": true,
-  "projectFilePath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\Infrastructure.Main.csproj",
+  "projectFilePath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\Infrastructure.Main.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Royss Martel\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Royss Martel\\.nuget\\packages\\azure.storage.blobs\\12.13.0\\azure.storage.blobs.12.13.0.nupkg.sha512",

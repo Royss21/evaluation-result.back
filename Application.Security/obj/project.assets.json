@@ -73,16 +73,6 @@
             "rid": "win"
           }
         }
-      },
-      "Domain.Common/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v6.0",
-        "compile": {
-          "bin/placeholder/Domain.Common.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Domain.Common.dll": {}
-        }
       }
     }
   },
@@ -285,17 +275,12 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
-    },
-    "Domain.Common/1.0.0": {
-      "type": "project",
-      "path": "../Dominio.Comun/Domain.Common.csproj",
-      "msbuildProject": "../Dominio.Comun/Domain.Common.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\SharedKernell.csproj",
-      "Domain.Common >= 1.0.0",
+      "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Dominio.Comun\\Domain.Common.csproj",
       "System.IdentityModel.Tokens.Jwt >= 6.8.0"
     ]
   },
@@ -307,11 +292,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Security\\Application.Security.csproj",
+      "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Application.Security\\Application.Security.csproj",
       "projectName": "Application.Security",
-      "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Security\\Application.Security.csproj",
+      "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Application.Security\\Application.Security.csproj",
       "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
-      "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Security\\obj\\",
+      "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Application.Security\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -333,8 +318,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj": {
-              "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Dominio.Comun\\Domain.Common.csproj"
+            "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Dominio.Comun\\Domain.Common.csproj": {
+              "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Dominio.Comun\\Domain.Common.csproj"
             },
             "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\SharedKernell.csproj": {
               "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\KernellCompartido\\KernellCompartido\\SharedKernell.csproj"
@@ -377,6 +362,15 @@
     }
   },
   "logs": [
+    {
+      "code": "NU1104",
+      "level": "Error",
+      "message": "No se encuentra el proyecto \"D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Dominio.Comun\\Domain.Common.csproj\". Compruebe que la referencia al proyecto sea válida y que exista el archivo de proyecto.",
+      "libraryId": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Dominio.Comun\\Domain.Common.csproj",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
     {
       "code": "NU1104",
       "level": "Error",

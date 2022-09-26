@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\Infrastructure.Main.csproj": {}
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\Infrastructure.Main.csproj": {}
   },
   "projects": {
-    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj": {
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj",
         "projectName": "Domain.Common",
-        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj",
         "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
-        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\obj\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -63,14 +63,14 @@
         }
       }
     },
-    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj": {
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\Domain.Main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj",
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\Domain.Main.csproj",
         "projectName": "Domain.Main",
-        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\Domain.Main.csproj",
         "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
-        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\obj\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -92,8 +92,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj": {
-                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj"
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj"
               },
               "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj": {
                 "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\SharedKernell\\SharedKernell\\SharedKernell.csproj"
@@ -139,14 +139,14 @@
         }
       }
     },
-    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\Infrastructure.Main.csproj": {
+    "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\Infrastructure.Main.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\Infrastructure.Main.csproj",
+        "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\Infrastructure.Main.csproj",
         "projectName": "Infrastructure.Main",
-        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\Infrastructure.Main.csproj",
+        "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\Infrastructure.Main.csproj",
         "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
-        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Infrastructure.Main\\obj\\",
+        "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Infrastructure.Main\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -168,8 +168,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj": {
-                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Main\\Domain.Main.csproj"
+              "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\Domain.Main.csproj": {
+                "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Main\\Domain.Main.csproj"
               }
             }
           }

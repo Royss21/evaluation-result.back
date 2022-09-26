@@ -15,11 +15,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+      "projectUniqueName": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj",
       "projectName": "Domain.Common",
-      "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\Domain.Common.csproj",
+      "projectPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\Domain.Common.csproj",
       "packagesPath": "C:\\Users\\Royss Martel\\.nuget\\packages\\",
-      "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Domain.Common\\obj\\",
+      "outputPath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Domain.Common\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

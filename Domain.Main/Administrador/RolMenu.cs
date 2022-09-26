@@ -3,7 +3,7 @@
 namespace Domain.Main.Administrador
 {
     using Domain.Main.Autenticacion;
-    public class RolMenu : BaseModelo<int>
+    public class RolMenu : BaseModel<int>
     {
         public Guid RolId { get; set; }
         public Guid MenuId { get; set; }

@@ -2,7 +2,7 @@
 namespace Domain.Main.Autenticacion
 {
 
-    public  class UsuarioRol : BaseModelo<int>
+    public  class UsuarioRol : BaseModel<int>
     {
         public Guid UsuarioId { get; set; }
         public Guid RolId { get; set; }

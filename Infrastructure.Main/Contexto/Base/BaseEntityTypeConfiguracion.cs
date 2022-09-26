@@ -4,7 +4,7 @@ namespace Infraestructure.Data.Core.EntityConfig
     using Domain.Main.Base;
     public abstract class BaseEntityTypeConfiguracion<TEntity, TId> : 
         IEntityTypeConfiguration<TEntity>
-        where TEntity : BaseModelo<TId>
+        where TEntity : BaseModel<TId>
     {
         public abstract void ConfigureEntity(EntityTypeBuilder<TEntity> builder);
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)

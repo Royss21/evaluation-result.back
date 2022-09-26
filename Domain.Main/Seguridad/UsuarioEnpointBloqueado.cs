@@ -2,7 +2,7 @@
 
 namespace Domain.Main.Seguridad
 {
-    public class UsuarioEnpointBloqueado : BaseModelo<int>
+    public class UsuarioEnpointBloqueado : BaseModel<int>
     {
         public Guid UsuarioId { get; set; }
         public Guid EndpointId { get; set; }

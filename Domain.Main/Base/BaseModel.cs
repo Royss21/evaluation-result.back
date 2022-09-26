@@ -2,9 +2,9 @@
 namespace Domain.Main.Base
 {
     using SharedKernell.EntidadBase;
-    public abstract class BaseModelo<TId> :
-        EntidadBase<TId>,
-        IBaseModelo
+    public abstract class BaseModel<TId> :
+        BaseEntity<TId>,
+        IBaseModel
     {
         public virtual string UsuarioCrea { get; set; } = string.Empty;
         public virtual DateTimeOffset FechaCrea { get; set; }
@@ -13,12 +13,12 @@ namespace Domain.Main.Base
         public virtual bool EsEliminado { get; set; }
     }
 
-    public abstract class BaseModeloActivo<TId> : BaseModelo<TId>
+    public abstract class BaseModelActivo<TId> : BaseModel<TId>
     {
         public virtual bool EsActivo { get; set; }
     }
 
-    public interface IBaseModelo
+    public interface IBaseModel
     {
         string UsuarioCrea { get; set; }
         DateTimeOffset FechaCrea { get; set; }

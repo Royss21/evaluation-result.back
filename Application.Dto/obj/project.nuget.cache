@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TTm/L1xqlLzYQLsetfxJgdXPZs4MEe761Fr179KwJfh8l7TQdKRG9+11vbHjlV8iTlMzngVeMYSKMwGTM80feA==",
+  "dgSpecHash": "5mFYKrMMSbWRYdd9CLz5BcioPFg7DLUwoynKjjpGtDO6VRf5FCp/GVQzJqWjKXkHK+rp4lBuT2f2AZon9gPvDA==",
   "success": true,
-  "projectFilePath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\ChloeAtelier\\Application.Dto\\Application.Dto.csproj",
+  "projectFilePath": "D:\\Royss\\Proyectos\\05.EvaluacionResultado\\evaluation-result.back\\Application.Dto\\Application.Dto.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\Royss Martel\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",

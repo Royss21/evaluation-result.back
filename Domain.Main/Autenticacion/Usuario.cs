@@ -1,6 +1,6 @@
 ﻿namespace Domain.Main.Autenticacion
 {
-    public  class Usuario : BaseModeloActivo<Guid>, IBaseCompania
+    public  class Usuario : BaseModelActivo<Guid>, IBaseCompania
     {
         public Guid PersonaId { get; set; }
         public Guid CompaniaId { get ; set ; }
