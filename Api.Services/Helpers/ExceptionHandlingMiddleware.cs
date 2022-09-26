@@ -1,5 +1,5 @@
 ﻿
-namespace Api.Services.Ayudantes
+namespace Api.Services.Helpers
 {
     using Application.Main.Excepciones;
     using SharedKernell.Helpers;

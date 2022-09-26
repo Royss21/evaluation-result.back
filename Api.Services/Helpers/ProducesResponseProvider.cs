@@ -1,4 +1,4 @@
-﻿namespace Api.Services.Ayudantes
+﻿namespace Api.Services.Helpers
 {
     using Microsoft.AspNetCore.Mvc.ApplicationModels;
     public class ProducesResponseProvider : IApplicationModelProvider

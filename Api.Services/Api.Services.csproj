@@ -17,8 +17,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
     <ProjectReference Include="..\Application.Main\Application.Main.csproj" />
     <ProjectReference Include="..\AplicacionIoC\Application.IoC.csproj" />
+    <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>
