@@ -1,8 +1,8 @@
 ﻿
-namespace Infraestructure.Data.Core.EntityConfig
+namespace Infrastructure.Main.Context.Base
 {
     using Domain.Main.Base;
-    public abstract class BaseEntityTypeConfiguracion<TEntity, TId> : 
+    public abstract class BaseEntityTypeConfig<TEntity, TId> : 
         IEntityTypeConfiguration<TEntity>
         where TEntity : BaseModel<TId>
     {

@@ -12,51 +12,11 @@ namespace Infrastructure.UnitOfWork
     using Infrastructure.Main.Repositorios.Administrador;
     using Infrastructure.UnitOfWork.Interfaces;
 
-    public class UnitOfWorkRepositorio : IUnitOfWorkRepositorio
+    public class UnitOfWorkRepository : IUnitOfWorkRepositorio
     {
-        public ICategoriaRepositorio CategoriaRepositorio { get; }
-        public IClienteDireccionEnvioRepositorio ClienteDireccionEnvioRepositorio { get; }
-        public IClienteRepositorio ClienteRepositorio { get; }
-        public IColorRepositorio ColorRepositorio { get; }
-        public ICompaniaRepositorio CompaniaRepositorio { get; }
-        public ICotizacionDetalleRepositorio CotizacionDetalleRepositorio { get; }
-        public ICotizacionRepositorio CotizacionRepositorio { get; }
-        public IDocumentoIdentidadRepositorio DocumentoIdentidadRepositorio { get; }
-        public IEstadoRepositorio EstadoRepositorio { get; }
-        public IFormaPagoRepositorio FormaPagoRepositorio { get; }
-        public IImagenRepositorio ImagenRepositorio { get; }
-        public IMarcaVehiculoRepositorio MarcaVehiculoRepositorio { get; }
-        public IMenuRepositorio MenuRepositorio { get; }
-        public IOperadoraTelefonoRepositorio OperadoraTelefonoRepositorio { get; }
-        public IPedidoCuotaRepositorio PedidoCuotaRepositorio { get; }
-        public IPedidoDetalleRepositorio PedidoDetalleRepositorio { get; }
-        public IPedidoRepositorio PedidoRepositorio { get; }
-        public IPedidoHistorialRepositorio PedidoHistorialRepositorio { get; }
-        public IPersonaRepositorio PersonaRepositorio { get; }
-        public IPersonaTelefonoRepositorio PersonaTelefonoRepositorio { get; }
-        public IProductoCategoriaRepositorio ProductoCategoriaRepositorio { get; }
-        public IProductoFotoRepositorio ProductoFotoRepositorio { get; }
-        public IProductoPrecioRepositorio ProductoPrecioRepositorio { get; }
-        public IProductoRepositorio ProductoRepositorio { get; }
-        public IProductoSetRepositorio ProductoSetRepositorio { get; }
-        public IRepartidorPrecioRepositorio RepartidorPrecioRepositorio { get; }
-        public IRepartidorRepositorio RepartidorRepositorio { get; }
-        public IRepartidorVehiculoRepositorio RepartidorVehiculoRepositorio { get; }
-        public IRolMenuRepositorio RolMenuRepositorio { get; }
-        public IRolRepositorio RolRepositorio { get; }
-        public ITamanioRepositorio TamanioRepositorio { get; }
-        public ITelaRepositorio TelaRepositorio { get; }
-        public ITelaColorRepositorio TelaColorRepositorio { get; }
-        public ITipoEntidadEstadoRepositorio TipoEntidadEstadoRepositorio { get; }
-        public ITipoVehiculoRepositorio TipoVehiculoRepositorio { get; }
-        public IUbigeoRepositorio UbigeoRepositorio { get; }
-        public IUsuarioEndpointBloqueadoRepositorio UsuarioEndpointBloqueadoRepositorio { get; }
-        public IEndpointRepositorio EndpointRepositorio { get; }
-        public IUsuarioRepositorio UsuarioRepositorio { get; }
-        public IUsuarioRolRepositorio UsuarioRolRepositorio { get; }
-        public IUsuarioTokenRepositorio UsuarioTokenRepositorio { get; }
+        //public ICategoriaRepositorio CategoriaRepositorio { get; }
 
-        public UnitOfWorkRepositorio(DbContextoPrincipal contextPrincipal)
+        public UnitOfWorkRepository(DbContextoPrincipal contextPrincipal)
         {
             CategoriaRepositorio = new CategoriaRepositorio(contextPrincipal);
             ClienteDireccionEnvioRepositorio = new ClienteDireccionEnvioRepositorio(contextPrincipal);

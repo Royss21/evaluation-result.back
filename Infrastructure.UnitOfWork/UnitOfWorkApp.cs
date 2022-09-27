@@ -13,7 +13,7 @@ namespace Infrastructure.UnitOfWork
         public UnitOfWorkApp(DbContextoPrincipal contextoPrincipal)
         {
             _contextoPrincipal = contextoPrincipal;
-            Repositorio = new UnitOfWorkRepositorio(contextoPrincipal);
+            Repositorio = new UnitOfWorkRepository(contextoPrincipal);
         }
 
         public void Dispose()
