@@ -41,7 +41,7 @@ namespace Api.Services.Helpers
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
                     var memoryCacheService = _serviceProvider.GetService<IMemoriaCacheServicio>();
-                    var endpointLocked = memoryCacheService.ObtenerDatoCache($"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{userId}") as List<string>;
+                    var endpointLocked = memoryCacheService.ObtenerDatoCache($"{Messages.MemoriaCache.UsuarioEndpointsBloqueados}{userId}") as List<string>;
 
                     if (endpointLocked is null)
                         await next();
@@ -50,11 +50,11 @@ namespace Api.Services.Helpers
                         if (!endpointLocked.Contains(endpoint))
                             await next();
                         else
-                            throw new ProhibidoExcepcion(Mensajes.Autenticacion.EndpointProhibido);
+                            throw new ProhibidoExcepcion(Messages.Autenticacion.EndpointProhibido);
                     }
                 }
                 else
-                    throw new NoAutorizadoExcepcion(Mensajes.Autenticacion.NoAutorizado);
+                    throw new NoAutorizadoExcepcion(Messages.Autenticacion.NoAutorizado);
             }
             else
                 await next();

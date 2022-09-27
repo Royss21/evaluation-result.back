@@ -1,23 +1,22 @@
 ﻿
-using SharedKernell.BaseEntity;
 
 namespace Domain.Main.Base
 {
 
-    public abstract class BaseModel<TId> :
-        BaseEntity<TId>,
-        IBaseModel
+    using SharedKernell.BaseEntity;
+
+    public abstract class BaseModel<TId> :BaseEntity<TId>, IBaseModel
     {
         public virtual string CreateUser { get; set; } = string.Empty;
-        public virtual DateTimeOffset FechaCrea { get; set; }
-        public virtual string? UsuarioEdita { get; set; }
-        public virtual DateTimeOffset? FechaEdita { get; set; }
-        public virtual bool EsEliminado { get; set; }
+        public virtual DateTimeOffset CreateDate { get; set; }
+        public virtual string? EditUser { get; set; }
+        public virtual DateTimeOffset? EditDate { get; set; }
+        public virtual bool IsDeleted { get; set; }
     }
 
-    public abstract class BaseModelActivo<TId> : BaseModel<TId>
+    public abstract class BaseModelActive<TId> : BaseModel<TId>
     {
-        public virtual bool EsActivo { get; set; }
+        public virtual bool IsActive { get; set; }
     }
 
     public interface IBaseModel
@@ -26,12 +25,6 @@ namespace Domain.Main.Base
         DateTimeOffset CreateDate { get; set; }
         string? EditUser { get; set; }
         DateTimeOffset? EditDate { get; set; }
-        bool IsDelete { get; set; }
+        bool IsDeleted { get; set; }
     }
-
-    public interface IBaseCompania
-    {
-        Guid CompaniaId { get; set; }
-    }
-
 }

@@ -2,6 +2,7 @@
 namespace Infrastructure.Main.Context.Base
 {
     using Domain.Main.Base;
+
     public abstract class BaseEntityTypeConfig<TEntity, TId> : 
         IEntityTypeConfiguration<TEntity>
         where TEntity : BaseModel<TId>
@@ -11,11 +12,11 @@ namespace Infrastructure.Main.Context.Base
         {
             ConfigureEntity(builder);
 
-            builder.Property(p => p.FechaCrea).IsRequired();
-            builder.Property(p => p.UsuarioCrea).IsRequired().HasMaxLength(50);
-            builder.Property(p => p.FechaEdita);
-            builder.Property(p => p.UsuarioEdita).HasMaxLength(50);
-            builder.Property(p => p.EsEliminado).HasDefaultValue(false);
+            builder.Property(p => p.CreateDate).IsRequired();
+            builder.Property(p => p.CreateUser).IsRequired().HasMaxLength(50);
+            builder.Property(p => p.EditDate);
+            builder.Property(p => p.EditUser).HasMaxLength(50);
+            builder.Property(p => p.IsDeleted).HasDefaultValue(false);
         }
     }
 }
