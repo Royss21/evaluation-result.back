@@ -1,6 +1,4 @@
-﻿
-
-namespace Domain.Main.Security
+﻿namespace Domain.Main.Security
 {
     
     using Domain.Main.Authentication;
