@@ -65,10 +65,14 @@
                 .ApplyConfiguration(new UserTokenConfig())
                 .ApplyConfiguration(new UserRoleConfig())
 
+            #region Collaborator
                 .ApplyConfiguration(new AreaConfig())
                 .ApplyConfiguration(new ChargeConfig())
                 .ApplyConfiguration(new GerencyConfig())
                 .ApplyConfiguration(new HierarchyConfig())
+            #endregion
+
+            #region Config
                 .ApplyConfiguration(new ComponentConfig())
                 .ApplyConfiguration(new ConductConfig())
                 .ApplyConfiguration(new HierarchyComponentConfig())
@@ -78,6 +82,7 @@
                 .ApplyConfiguration(new StageConfig())
                 .ApplyConfiguration(new SubcomponentConfig())
                 .ApplyConfiguration(new SubcomponentValueConfig())
+            #endregion
 
                 .ApplyConfiguration(new ComponentCollaboratorConfig())
                 .ApplyConfiguration(new ComponentCollaboratorDetailsConfig())

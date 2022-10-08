@@ -40,7 +40,7 @@ namespace Api.Services.Helpers
 
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
-                    var memoryCacheService = _serviceProvider.GetService<IMemoriaCacheServicio>();
+                    var memoryCacheService = _serviceProvider.GetService<IMemoryCacheService>();
                     var endpointLocked = memoryCacheService.ObtenerDatoCache($"{Messages.MemoriaCache.UsuarioEndpointsBloqueados}{userId}") as List<string>;
 
                     if (endpointLocked is null)

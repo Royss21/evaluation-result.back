@@ -1,7 +1,7 @@
 ﻿namespace Api.Services.Controllers.Autenticacion
 {
     using Application.Dto.Autenticacion.InicioSesion;
-    using Application.Main.Servicios.Autenticacion.Interfaces;
+    using Application.Main.Services.Seguridad.Interfaces;
     using Microsoft.AspNetCore.Authorization;
 
     [Route("api/[controller]")]

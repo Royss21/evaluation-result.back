@@ -2,7 +2,7 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.Autenticacion.Usuario;
-    using Application.Main.Servicios.Autenticacion.Interfaces;
+    using Application.Main.Services.Seguridad.Interfaces;
 
     [Route("api/[controller]")]
     [ApiController]

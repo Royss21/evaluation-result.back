@@ -17,7 +17,7 @@ builder.Services.AddDbContext<DbContextoPrincipal>(opts => opts.UseSqlServer(bui
 builder.Services.Configure<ContraseniaOpciones>(builder.Configuration.GetSection("ContraseniaOpciones"));
 builder.Services.Configure<JwtEmisorOpciones>(builder.Configuration.GetSection("JwtEmisorOpciones"));
 builder.Services.Configure<EmailConfiguracion>(builder.Configuration.GetSection("EmailSettings"));
-builder.Services.AddAutoMapper(typeof(AutoMapperConfiguracion).GetTypeInfo().Assembly);
+builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).GetTypeInfo().Assembly);
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDependencyInjectionInterfacesApp();

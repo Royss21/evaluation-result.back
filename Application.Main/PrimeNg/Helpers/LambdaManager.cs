@@ -1,6 +1,8 @@
 ﻿
+
 namespace Application.Main.PrimeNg.Helpers
 {
+    using SharedKernell.Constants;
     public static class LambdaManager
     {
         public static Expression<Func<T, bool>> ConvertToLambda<T>(List<ColumnsFilter> filters) where T : class
@@ -13,21 +15,21 @@ namespace Application.Main.PrimeNg.Helpers
 
         private static readonly Dictionary<string, IOperator> Operators = new()
         {
-            {FiltroModoCoincidenciaConst.Contains, new ContainsOperator()},
-            {FiltroModoCoincidenciaConst.In, new ContainsOperator()},
-            {FiltroModoCoincidenciaConst.Equals, new EqualOperator()},
-            {FiltroModoCoincidenciaConst.NotEquals, new NotEqualOperator()},
-            {FiltroModoCoincidenciaConst.GreaterThanOrEqualTo, new GreaterThanOrEqualOperator()},
-            {FiltroModoCoincidenciaConst.LessThanOrEqualTo, new LessThanOrEqualOperator()},
-            {FiltroModoCoincidenciaConst.GreaterThan, new GreaterThanOperator()},
-            {FiltroModoCoincidenciaConst.LessThan, new LessThanOperator()},
-            {FiltroModoCoincidenciaConst.EndsWith, new EndsWithOperator()},
-            {FiltroModoCoincidenciaConst.StartsWith, new StartsWithOperator()},
-            {FiltroModoCoincidenciaConst.DateIs, new EqualDateOperator()},
-            {FiltroModoCoincidenciaConst.DateIsNot, new NotEqualDateOperator()},
-            {FiltroModoCoincidenciaConst.DateBefore, new LessThanDateOperator()},
-            {FiltroModoCoincidenciaConst.DateAfter, new GreaterThanDateOperator()},
-            {FiltroModoCoincidenciaConst.NotContains, new NotContainsOperator()}
+            {FilterModMatchConst.Contains, new ContainsOperator()},
+            {FilterModMatchConst.In, new ContainsOperator()},
+            {FilterModMatchConst.Equals, new EqualOperator()},
+            {FilterModMatchConst.NotEquals, new NotEqualOperator()},
+            {FilterModMatchConst.GreaterThanOrEqualTo, new GreaterThanOrEqualOperator()},
+            {FilterModMatchConst.LessThanOrEqualTo, new LessThanOrEqualOperator()},
+            {FilterModMatchConst.GreaterThan, new GreaterThanOperator()},
+            {FilterModMatchConst.LessThan, new LessThanOperator()},
+            {FilterModMatchConst.EndsWith, new EndsWithOperator()},
+            {FilterModMatchConst.StartsWith, new StartsWithOperator()},
+            {FilterModMatchConst.DateIs, new EqualDateOperator()},
+            {FilterModMatchConst.DateIsNot, new NotEqualDateOperator()},
+            {FilterModMatchConst.DateBefore, new LessThanDateOperator()},
+            {FilterModMatchConst.DateAfter, new GreaterThanDateOperator()},
+            {FilterModMatchConst.NotContains, new NotContainsOperator()}
         };
 
         private static Expression<Func<T, bool>> ReadFilterColumns<T>(List<ColumnsFilter> filters,
@@ -37,7 +39,7 @@ namespace Application.Main.PrimeNg.Helpers
 
             foreach (var filter in filters)
             {
-                var pascalCaseField = StringHelper.APascalCase(filter.Field);
+                var pascalCaseField = StringHelper.ToPascalCase(filter.Field);
                 var fieldType = TreeExpressionHelper.ObtenerTipoPropiedad<T>(pascalCaseField);
                 var constantExpression = GetConstantExpression(filter.Value, fieldType);
 

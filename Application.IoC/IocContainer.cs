@@ -1,14 +1,8 @@
 
 namespace Application.IoC
 {
-    using Application.Main;
-    using Application.Security.Contrasenia;
-    using Application.Security.JWT;
     using Hangfire;
     using Hangfire.MemoryStorage;
-    using Infrastructure.UnitOfWork;
-    using Infrastructure.UnitOfWork.Interfaces;
-    using SharedKernell.Email;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;

@@ -35,15 +35,15 @@ namespace Api.Services.Helpers
                         resultado.CodigoEstado = (int)HttpStatusCode.InternalServerError;
                         resultado.Mensaje = ex.Message;
                         break;
-                    case NoAutorizadoExcepcion noAutorizadoExcepcion:
+                    case UnauthorizedException noAutorizadoExcepcion:
                         resultado.CodigoEstado = (int)HttpStatusCode.Unauthorized;
                         resultado.Mensaje = ex.Message;
                         break;
-                    case ProhibidoExcepcion prohibidoExcepcion:
+                    case ForbiddenException prohibidoExcepcion:
                         resultado.CodigoEstado = (int)HttpStatusCode.Forbidden;
                         resultado.Mensaje = ex.Message;
                         break;
-                    case ValidadorExcepcion validadorExcepcion:
+                    case ValidatorException validadorExcepcion:
                         resultado.CodigoEstado = (int)HttpStatusCode.BadRequest;
                         resultado.Mensaje = ex.Message;
                         break;

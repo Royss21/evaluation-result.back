@@ -7,17 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Contrasenia\2z30ryu0.klz~" />
-    <None Remove="JWT\JwtFabrica.cs~RF39ae8946.TMP" />
+    <None Remove="Password\2z30ryu0.klz~" />
+    <None Remove="Jwt\JwtFabrica.cs~RF39ae8946.TMP" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\KernellCompartido\KernellCompartido\SharedKernell.csproj" />
-    <ProjectReference Include="..\Dominio.Comun\Domain.Common.csproj" />
+    <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
+    <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
   </ItemGroup>
 
 </Project>
