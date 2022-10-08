@@ -5,7 +5,7 @@
         public Guid RolId { get; set; }
         public Guid MenuId { get; set; }
 
-        public Role Role { get; set; }
-        public Menu Menu { get; set; }
+        public Role? Role { get; set; }
+        public Menu? Menu { get; set; }
     }
 }

@@ -11,7 +11,7 @@ namespace Domain.Main.Config
         public decimal MaximunPercentage { get; set; }
 
 
-        public Subcomponent Subcomponent { get; set; }
-        public Charge Charge { get; set; }
+        public Subcomponent? Subcomponent { get; set; }
+        public Charge? Charge { get; set; }
     }
 }

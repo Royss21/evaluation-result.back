@@ -9,7 +9,7 @@ namespace Domain.Main.Config
         public decimal Weight { get; set; }
 
 
-        public Hierarchy Hierarchy { get; set; }
-        public Component Component { get; set; }
+        public Hierarchy? Hierarchy { get; set; }
+        public Component? Component { get; set; }
     }
 }

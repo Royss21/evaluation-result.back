@@ -11,7 +11,7 @@ namespace Domain.Main.Config
         public string Description { get; set; } = string.Empty;
 
 
-        public Component Component { get; set; }
-        public Area Area { get; set; }
+        public Component? Component { get; set; }
+        public Area? Area { get; set; }
     }
 }

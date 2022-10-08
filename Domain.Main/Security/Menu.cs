@@ -9,6 +9,6 @@
         public string Icon { get; set; } = string.Empty;
         public int Sort { get; set; }
 
-        public Menu MenuDad { get; set; }
+        public Menu? MenuDad { get; set; }
     }
 }
