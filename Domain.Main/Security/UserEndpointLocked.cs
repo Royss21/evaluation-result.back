@@ -1,7 +1,5 @@
 ﻿namespace Domain.Main.Security
 {
-    
-    using Domain.Main.Authentication;
     public class UserEndpointLocked : BaseModel<int>
     {
         public Guid UserId { get; set; }

@@ -1,9 +1,9 @@
-﻿using SharedKernell.Nucleo;
-
+﻿
 namespace Infrastructure.UnitOfWork.Interfaces
 {
+    using SharedKernell.Core;
     public interface IUnitOfWorkApp : IUnitOfWork
     {
-         IUnitOfWorkRepositorio Repositorio { get; }
+         IUnitOfWorkRepository Repository { get; }
     }
 }

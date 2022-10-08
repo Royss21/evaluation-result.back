@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infraestructura.MainModule\Infrastructure.Main.csproj" />
+    <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
+    <ProjectReference Include="..\Infrastructure.Main\Infrastructure.Main.csproj" />
   </ItemGroup>
 
 </Project>

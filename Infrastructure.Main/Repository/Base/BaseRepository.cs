@@ -8,13 +8,13 @@ namespace Infrastructure.Data.MainModule.Repository
         protected DbContextMain DbContextMain { get; }
         protected DbSet<TEntity> DbSet { get; set; }
 
-        public BaseRepositorio(DbContextMain DbContextMain)
+        public BaseRepository(DbContextMain DbContextMain)
         {
             DbContextMain = DbContextMain;
             DbSet = DbContextMain.Set<TEntity>();
         }
 
-        public BaseRepositorio(DbContextMain DbContextMain, DbSet<TEntity> dbSet)
+        public BaseRepository(DbContextMain DbContextMain, DbSet<TEntity> dbSet)
         {
             DbContextMain = DbContextMain;
             DbSet = dbSet;
