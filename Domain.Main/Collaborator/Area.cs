@@ -6,6 +6,6 @@
         public string Name { get; set; } = string.Empty;
 
 
-        public Gerency Gerency { get; set; }
+        public Gerency? Gerency { get; set; }
     }
 }

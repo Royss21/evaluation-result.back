@@ -1,13 +1,12 @@
-﻿
-
-namespace Infrastructure.Main.Context
+﻿namespace Infrastructure.Main.Context
 {
-    using Domain.Common.Constants;
     using Domain.Main.Base;
-    using Infrastructure.Main.Context.Configuration.Collaborator;
+    using Domain.Common.Constants;
+    using Microsoft.AspNetCore.Http;
     using Infrastructure.Main.Context.Configuration.Config;
     using Infrastructure.Main.Context.Configuration.Security;
-    using Microsoft.AspNetCore.Http;
+    using Infrastructure.Main.Context.Configuration.EvaResult;
+    using Infrastructure.Main.Context.Configuration.Collaborator;
 
     public class DbContextMain : DbContext
     {
@@ -78,7 +77,20 @@ namespace Infrastructure.Main.Context
                 .ApplyConfiguration(new LevelConfig())
                 .ApplyConfiguration(new StageConfig())
                 .ApplyConfiguration(new SubcomponentConfig())
-                .ApplyConfiguration(new SubcomponentValueConfig());
+                .ApplyConfiguration(new SubcomponentValueConfig())
+
+                .ApplyConfiguration(new ComponentCollaboratorConfig())
+                .ApplyConfiguration(new ComponentCollaboratorDetailsConfig())
+                .ApplyConfiguration(new ComponentCollaboratorStagesConfig())
+                .ApplyConfiguration(new ComponentStagesConfig())
+                .ApplyConfiguration(new EvaluationCollaboratorConfig())
+                .ApplyConfiguration(new EvaluationComponentConfig())
+                .ApplyConfiguration(new EvaluationConfig())
+                .ApplyConfiguration(new EvaluationLeaderConfig())
+                .ApplyConfiguration(new EvaluationStagesConfig())
+                .ApplyConfiguration(new LeaderCollaboratorConfig())
+                .ApplyConfiguration(new LeaderStageConfig())
+                .ApplyConfiguration(new PeriodConfig());
 
             ConfigEntities(builder);
         }

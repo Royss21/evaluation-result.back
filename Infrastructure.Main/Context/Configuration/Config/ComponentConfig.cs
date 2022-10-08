@@ -1,8 +1,5 @@
-﻿
-
-namespace Infrastructure.Main.Context.Configuration.Config
+﻿namespace Infrastructure.Main.Context.Configuration.Config
 {
-
     public class ComponentConfig : BaseEntityTypeConfig<Component, int>
     {
         public override void ConfigureEntity(EntityTypeBuilder<Component> builder)

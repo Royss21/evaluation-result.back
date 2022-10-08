@@ -1,6 +1,4 @@
-﻿
-
-namespace Infrastructure.Main.Context.Configuration.Collaborator
+﻿namespace Infrastructure.Main.Context.Configuration.Collaborator
 {
 
     public class AreaConfig : BaseEntityTypeConfig<Area, int>

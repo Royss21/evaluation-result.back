@@ -1,6 +1,4 @@
-﻿
-
-namespace Infrastructure.Main.Context.Configuration.Config
+﻿namespace Infrastructure.Main.Context.Configuration.Config
 {
     public class LabelConfig : BaseEntityTypeConfig<Label, int>
     {

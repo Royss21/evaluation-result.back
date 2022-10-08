@@ -7,7 +7,7 @@
         public string Name { get; set; } = string.Empty;
 
 
-        public Area Area { get; set; }
-        public Hierarchy Hierarchy { get; set; }
+        public Area? Area { get; set; }
+        public Hierarchy? Hierarchy { get; set; }
     }
 }

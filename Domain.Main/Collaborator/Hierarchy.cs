@@ -7,6 +7,6 @@ namespace Domain.Main.Collaborator
         public string Name { get; set; } = string.Empty;
         public int IdLevel { get; set; }
 
-        public Level Level { get; set; }
+        public Level? Level { get; set; }
     }
 }
