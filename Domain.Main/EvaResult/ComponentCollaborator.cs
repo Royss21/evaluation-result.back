@@ -2,24 +2,23 @@
 {
     using Domain.Main.Config;
 
-    public class ComponentCollaborator : BaseModel<int>
+    public class ComponentCollaborator : BaseModel<string>
     {
         public int IdEvaluationComponent { get; set; }
-        public int IdEvaluationCollaborator { get; set; }
-        public int IdComponentHierarchy { get; set; }
-        public int WeightHierarchy { get; set; }
-        public double SubTotal { get; set; }
-        public double SurplusSubtotal { get; set; }
-        public double Total { get; set; }
-        public double TotalCalibrated { get; set; }
-        public double Surplus { get; set; }
+        public string IdEvaluationCollaborator { get; set; } = string.Empty;
+        public string ComponentName { get; set; } = string.Empty;
+        public string HierarchyName { get; set; } = string.Empty;
+        public decimal WeightHierarchy { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal SurplusSubtotal { get; set; }
+        public decimal Total { get; set; }
+        public decimal TotalCalibrated { get; set; }
+        public decimal Surplus { get; set; }
         public string Comment { get; set; } = string.Empty;
         public string CommentCollaborator { get; set; } = string.Empty;
-        public bool IsCompliant { get; set; }
 
 
         public EvaluationComponent? EvaluationComponent { get; set; }
         public EvaluationCollaborator? EvaluationCollaborator { get; set; }
-        public HierarchyComponent? HierarchyComponent { get; set; }
     }
 }

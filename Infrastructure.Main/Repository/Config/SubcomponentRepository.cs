@@ -1,4 +1,4 @@
-﻿namespace Infrastructure.Main.Repository.Collaborator
+﻿namespace Infrastructure.Main.Repository.Config
 {
     using Infrastructure.Main.Repository.Config.Interfaces;
 

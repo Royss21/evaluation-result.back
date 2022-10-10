@@ -6,7 +6,7 @@
         public string IdSubcomponent { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
 
-        public Level? Level { get; set; }
-        public Subcomponent? Subcomponent { get; set; }
+        public Level Level { get; set; }
+        public Subcomponent Subcomponent { get; set; }
     }
 }

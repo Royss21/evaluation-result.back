@@ -7,7 +7,11 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Period> builder)
         {
-    
+            builder.Property(p => p.StartDate)
+                        .IsRequired();
+
+            builder.Property(p => p.EndDate)
+                        .IsRequired();
         }
     }
 }

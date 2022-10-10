@@ -6,7 +6,8 @@
     using Infrastructure.Main.Context.Configuration.Config;
     using Infrastructure.Main.Context.Configuration.Security;
     using Infrastructure.Main.Context.Configuration.EvaResult;
-    using Infrastructure.Main.Context.Configuration.Collaborator;
+    using Infrastructure.Main.Context.Configuration.Employee;
+    using Domain.Main.EvaResult;
 
     public class DbContextMain : DbContext
     {
@@ -31,9 +32,10 @@
         public DbSet<UserToken> UserToken { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
 
-        #region Collaborator
+        #region Employee
         public DbSet<Area> Area { get; set; }
         public DbSet<Charge> Charge { get; set; }
+        public DbSet<Collaborator> Collaborator { get; set; }
         public DbSet<Gerency> Gerency { get; set; }
         public DbSet<Hierarchy> Hierarchy { get; set; }
         #endregion
@@ -50,6 +52,23 @@
         public DbSet<SubcomponentValue> SubcomponentValue { get; set; }
         #endregion
 
+        #region EvaResult
+
+        public DbSet<ComponentCollaborator> ComponentCollaborator { get; set; }
+        public DbSet<ComponentCollaboratorConduct> ComponentCollaboratorConduct { get; set; }
+        public DbSet<ComponentCollaboratorDetail> ComponentCollaboratorDetail { get; set; }
+        public DbSet<ComponentCollaboratorStage> ComponentCollaboratorStage { get; set; }
+        public DbSet<ComponentStage> ComponentStage { get; set; }
+        public DbSet<Evaluation> Evaluation { get; set; }
+        public DbSet<EvaluationCollaborator> EvaluationCollaborator { get; set; }
+        public DbSet<EvaluationComponent> EvaluationComponent { get; set; }
+        public DbSet<EvaluationLeader> EvaluationLeader { get; set; }
+        public DbSet<EvaluationStage> EvaluationStage { get; set; }
+        public DbSet<LeaderCollaborator> LeaderCollaborator { get; set; }
+        public DbSet<LeaderStage> LeaderStage { get; set; }
+        public DbSet<Period> Period { get; set; }
+
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -84,18 +103,22 @@
                 .ApplyConfiguration(new SubcomponentValueConfig())
             #endregion
 
+            #region EvaResult
                 .ApplyConfiguration(new ComponentCollaboratorConfig())
-                .ApplyConfiguration(new ComponentCollaboratorDetailsConfig())
-                .ApplyConfiguration(new ComponentCollaboratorStagesConfig())
-                .ApplyConfiguration(new ComponentStagesConfig())
+                .ApplyConfiguration(new ComponentCollaboratorConductConfig())
+                .ApplyConfiguration(new ComponentCollaboratorDetailConfig())
+                .ApplyConfiguration(new ComponentCollaboratorStageConfig())
+                .ApplyConfiguration(new ComponentStageConfig())
                 .ApplyConfiguration(new EvaluationCollaboratorConfig())
                 .ApplyConfiguration(new EvaluationComponentConfig())
                 .ApplyConfiguration(new EvaluationConfig())
                 .ApplyConfiguration(new EvaluationLeaderConfig())
-                .ApplyConfiguration(new EvaluationStagesConfig())
+                .ApplyConfiguration(new EvaluationStageConfig())
                 .ApplyConfiguration(new LeaderCollaboratorConfig())
                 .ApplyConfiguration(new LeaderStageConfig())
                 .ApplyConfiguration(new PeriodConfig());
+            #endregion
+
 
             ConfigEntities(builder);
         }
@@ -288,7 +311,7 @@
             if (_httpContextAccessor.HttpContext != null)
             {
                 var claimsPrincipal = _httpContextAccessor.HttpContext.User;
-                currentUsername = claimsPrincipal.FindFirst(Claims.userName)?.Value?.Decrypt() ?? "system";
+                currentUsername = claimsPrincipal.FindFirst(Claims.UserName)?.Value?.Decrypt() ?? "system";
             }
 
             return currentUsername;

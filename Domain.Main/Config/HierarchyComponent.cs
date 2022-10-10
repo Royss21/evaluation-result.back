@@ -1,7 +1,7 @@
 ﻿
 namespace Domain.Main.Config
 {
-    using Domain.Main.Collaborator;
+    using Domain.Main.Employee;
     public class HierarchyComponent : BaseModel<int>
     {
         public int IdHierarchy { get; set; }
@@ -9,7 +9,7 @@ namespace Domain.Main.Config
         public decimal Weight { get; set; }
 
 
-        public Hierarchy? Hierarchy { get; set; }
-        public Component? Component { get; set; }
+        public Hierarchy Hierarchy { get; set; }
+        public Component Component { get; set; }
     }
 }

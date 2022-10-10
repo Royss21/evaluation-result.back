@@ -9,7 +9,7 @@
         public int IdStage { get; set; }
 
 
-        public EvaluationLeader? EvaluationLeader { get; set; }
-        public Stage? Stage { get; set; }
+        public EvaluationLeader EvaluationLeader { get; set; }
+        public Stage Stage { get; set; }
     }
 }

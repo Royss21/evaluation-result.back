@@ -1,13 +1,12 @@
 ﻿namespace Domain.Main.EvaResult
 {
-    public class Evaluation : BaseModel<int>
+    public class Evaluation : BaseModel<string>
     {
         public int IdPeriod { get; set; }
-        public string DateStart { get; set; } = string.Empty;
-        public string DateEnd { get; set; } = string.Empty;
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public int Weight { get; set; } 
 
-
-        public Period? Period { get; set; }
+        public Period Period { get; set; }
     }
 }

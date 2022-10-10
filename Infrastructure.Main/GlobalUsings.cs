@@ -1,5 +1,6 @@
-﻿global using Domain.Main.Collaborator;
+﻿global using Domain.Main.Employee;
 global using Domain.Main.Config;
+global using Domain.Main.EvaResult;
 global using Domain.Main.Security;
 global using EFCore.BulkExtensions;
 global using FluentValidation;

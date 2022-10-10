@@ -7,7 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<EvaluationComponent> builder)
         {
-            
+
         }
     }
 }

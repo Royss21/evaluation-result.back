@@ -17,7 +17,7 @@ namespace Application.Main.PrimeNg
         /// <summary>
         /// Nombre de campo para ordenar
         /// </summary>
-        public string? OrderColumn { get; set; }=  "FechaCrea";
+        public string? OrderColumn { get; set; }= "CreateDate";
 
         /// <summary>
         /// Tipo de ordenamiento: 1 => Asc, -1 => Desc
