@@ -16,10 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aplicacion.ModuloPrincipal\Application.Main.csproj" />
-    <ProjectReference Include="..\Aplicacion.Seguridad\Application.Security.csproj" />
-    <ProjectReference Include="..\Infraestructura.MainModule\Infrastructure.Main.csproj" />
-    <ProjectReference Include="..\Infraestructura.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
+    <ProjectReference Include="..\Application.Main\Application.Main.csproj" />
+    <ProjectReference Include="..\Application.Security\Application.Security.csproj" />
   </ItemGroup>
 
 </Project>

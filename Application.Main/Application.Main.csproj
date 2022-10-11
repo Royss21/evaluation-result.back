@@ -28,9 +28,4 @@
     <ProjectReference Include="..\Infrastructure.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AutoMapper\Config\" />
-    <Folder Include="AutoMapper\Collaborator\" />
-  </ItemGroup>
-
 </Project>

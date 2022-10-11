@@ -7,6 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\Administrador\**" />
+    <Compile Remove="Controllers\Seguridad\**" />
+    <Content Remove="Controllers\Administrador\**" />
+    <Content Remove="Controllers\Seguridad\**" />
+    <EmbeddedResource Remove="Controllers\Administrador\**" />
+    <EmbeddedResource Remove="Controllers\Seguridad\**" />
+    <EntityDeploy Remove="Controllers\Administrador\**" />
+    <EntityDeploy Remove="Controllers\Seguridad\**" />
+    <None Remove="Controllers\Administrador\**" />
+    <None Remove="Controllers\Seguridad\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -19,13 +32,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
     <ProjectReference Include="..\Application.Main\Application.Main.csproj" />
-    <ProjectReference Include="..\AplicacionIoC\Application.IoC.csproj" />
     <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\Administrador\" />
-    <Folder Include="Controllers\Seguridad\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

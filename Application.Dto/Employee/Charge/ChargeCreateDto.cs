@@ -1,4 +1,4 @@
-﻿namespace Application.Dto.Employee.Gerency
+﻿namespace Application.Dto.Employee.Charge
 {
     public class ChargeCreateDto : BaseChargeDto
     {
