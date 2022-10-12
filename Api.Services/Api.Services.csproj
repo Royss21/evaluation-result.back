@@ -31,7 +31,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
+    <ProjectReference Include="..\Application.IoC\Application.IoC.csproj" />
     <ProjectReference Include="..\Application.Main\Application.Main.csproj" />
+    <ProjectReference Include="..\Application.Security\Application.Security.csproj" />
     <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
   </ItemGroup>
 

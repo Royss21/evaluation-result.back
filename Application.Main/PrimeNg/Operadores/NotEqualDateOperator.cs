@@ -6,7 +6,7 @@
             Expression expressionValue)
             where T : class
         {
-            var expressionMember = TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField);
+            var expressionMember = TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField);
 
             if (expressionMember.Type == typeof(DateTime?))
             {

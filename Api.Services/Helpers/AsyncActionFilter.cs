@@ -1,9 +1,9 @@
 ﻿
 namespace Api.Services.Helpers
 {
-    using Application.Main.Excepciones;
+    using Application.Main.Exceptions;
     using Application.Main.Servicios.Generico.Interfaces;
-    using Domain.Common.Constantes;
+    using Domain.Common.Constants;
     using Microsoft.AspNetCore.Mvc.Filters;
     using SharedKernell.Helpers;
 
@@ -36,25 +36,25 @@ namespace Api.Services.Helpers
                 _httpContextAccessor?.HttpContext?.User is not null)
             {
                 var claims = _httpContextAccessor.HttpContext.User;
-                var userId = claims.FindFirst(Claims.Identificador)?.Value?.Decrypt();
+                var userId = claims.FindFirst(Claims.Identificate)?.Value?.Decrypt();
 
                 if (!string.IsNullOrWhiteSpace(userId))
                 {
                     var memoryCacheService = _serviceProvider.GetService<IMemoryCacheService>();
-                    var endpointLocked = memoryCacheService.ObtenerDatoCache($"{Messages.MemoriaCache.UsuarioEndpointsBloqueados}{userId}") as List<string>;
+                    var endpointLocked = memoryCacheService.GetDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userId}") as List<string>;
 
                     if (endpointLocked is null)
                         await next();
                     else
                     {
-                        if (!endpointLocked.Contains(endpoint))
-                            await next();
+                        if (endpointLocked.Contains(endpoint))
+                            throw new ForbiddenException(Messages.Authentication.EndpointForbidden);
                         else
-                            throw new ProhibidoExcepcion(Messages.Autenticacion.EndpointProhibido);
+                            await next();
                     }
                 }
                 else
-                    throw new NoAutorizadoExcepcion(Messages.Autenticacion.NoAutorizado);
+                    throw new UnauthorizedException(Messages.Authentication.NoAuthorize);
             }
             else
                 await next();

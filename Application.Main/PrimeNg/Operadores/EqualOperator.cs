@@ -6,7 +6,7 @@
             Expression expressionValue)
             where T : class
         {
-            return Expression.Equal(TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField),
+            return Expression.Equal(TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField),
                 expressionValue);
         }
     }

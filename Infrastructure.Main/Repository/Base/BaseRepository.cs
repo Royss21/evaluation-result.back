@@ -238,17 +238,17 @@ namespace Infrastructure.Data.MainModule.Repository
         protected IQueryable<TEntity> GetDataWithFilter(PaginationParameters<TEntity> parameters, bool @readonly = true)
         {
             var dbSet = parameters.Include != null ? parameters.Include(DbSet) : (IQueryable<TEntity>) DbSet;
-            return (@readonly ? dbSet.AsNoTracking() : dbSet).Where(parameters.WhereFylter ?? (f=> true));
+            return (@readonly ? dbSet.AsNoTracking() : dbSet).Where(parameters.FilterWhere ?? (f=> true));
         }
 
         protected async Task<PaginationResult<TNewEntity>> PagingAsync<TNewEntity>(
             PaginationParameters<TNewEntity> parameters, IQueryable<TNewEntity> pagingQuery) where TNewEntity : class
         {
-            if (parameters.SortColumn != null)
+            if (parameters.OrderColumn != null)
             {
                 pagingQuery = parameters.SortType == SortTypeEnum.Asc
-                    ? Queryable.OrderBy(pagingQuery, (dynamic) parameters.SortColumn)
-                    : Queryable.OrderByDescending(pagingQuery, (dynamic) parameters.SortColumn);
+                    ? Queryable.OrderBy(pagingQuery, (dynamic) parameters.OrderColumn)
+                    : Queryable.OrderByDescending(pagingQuery, (dynamic) parameters.OrderColumn);
             }
 
             return new PaginationResult<TNewEntity>

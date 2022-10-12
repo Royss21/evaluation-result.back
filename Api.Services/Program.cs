@@ -1,22 +1,22 @@
-using Api.Services.Ayudantes;
+using Api.Services.Helpers;
 using Application.IoC;
 using Application.Main.AutoMapper;
-using Application.Security.Contrasenia;
 using Application.Security.JWT;
-using Infrastructure.Main.Contexto;
-using SharedKernell.ConvetidoresJson;
-using SharedKernell.Email;
+using Application.Security.Password;
+using Infrastructure.Main.Context;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using SharedKernell.JsonConvert;
+using SharedKernell.Mail;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DbContextoPrincipal>(opts => opts.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
-builder.Services.Configure<ContraseniaOpciones>(builder.Configuration.GetSection("ContraseniaOpciones"));
-builder.Services.Configure<JwtEmisorOpciones>(builder.Configuration.GetSection("JwtEmisorOpciones"));
-builder.Services.Configure<EmailConfiguracion>(builder.Configuration.GetSection("EmailSettings"));
+builder.Services.AddDbContext<DbContextMain>(opts => opts.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+builder.Services.Configure<PasswordOption>(builder.Configuration.GetSection("PasswordOption"));
+builder.Services.Configure<JwtOption>(builder.Configuration.GetSection("JwtOption"));
+builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection("MailConfiguration"));
 builder.Services.AddAutoMapper(typeof(AutoMapperConfiguration).GetTypeInfo().Assembly);
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();

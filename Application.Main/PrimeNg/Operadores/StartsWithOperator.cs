@@ -8,7 +8,7 @@
         {
             var startsWithMethod = typeof(string).GetMethod("StartsWith", new[] { typeof(string) });
 
-            return Expression.Call(TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField),
+            return Expression.Call(TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField),
                 startsWithMethod, expressionValue);
         }
     }

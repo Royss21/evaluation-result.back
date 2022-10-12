@@ -11,7 +11,7 @@ namespace Application.Main.PrimeNg.Operadores
         {
             MethodCallExpression contains = null;
             MethodInfo stringContainsMethod = typeof(string).GetMethod("Contains", new[] {typeof(string)});
-            var member = TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField);
+            var member = TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField);
 
             if (expressionValue is ConstantExpression {Value: IList} constant && constant.Value.GetType().IsGenericType)
             {

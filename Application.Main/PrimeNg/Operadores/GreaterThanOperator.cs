@@ -7,7 +7,7 @@
             where T : class
         {
             return Expression.GreaterThan(
-                TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField), expressionValue);
+                TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField), expressionValue);
         }
     }
 }
