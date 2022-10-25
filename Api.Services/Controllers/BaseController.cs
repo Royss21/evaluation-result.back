@@ -2,7 +2,7 @@
 namespace Api.Services.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
-    [Authorize]
+    //[Authorize]
     public class BaseController : ControllerBase
     {
     }

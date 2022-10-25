@@ -3,6 +3,6 @@
     public abstract class BaseAreaDto
     {
         public string Name { get; set; } = string.Empty;
-        public int IdGerency { get; set; } 
+        public int GerencyId { get; set; } 
     }
 }

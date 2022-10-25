@@ -25,38 +25,38 @@ namespace Api.Services.Helpers
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var actionDescription = context.ActionDescriptor;
-            var actionName = actionDescription?.RouteValues["action"]?.ToString() ?? "";
-            var controllerName = actionDescription?.RouteValues["controller"]?.ToString() ?? "";
-            var method = _httpContextAccessor?.HttpContext?.Request.Method ?? "";
-            var endpoint = $"{method}.{controllerName}.{actionName}";
+            //var actionDescription = context.ActionDescriptor;
+            //var actionName = actionDescription?.RouteValues["action"]?.ToString() ?? "";
+            //var controllerName = actionDescription?.RouteValues["controller"]?.ToString() ?? "";
+            //var method = _httpContextAccessor?.HttpContext?.Request.Method ?? "";
+            //var endpoint = $"{method}.{controllerName}.{actionName}";
 
-            if (!string.IsNullOrWhiteSpace(endpoint) && 
-                !endpoint.Contains("Authentication") &&
-                _httpContextAccessor?.HttpContext?.User is not null)
-            {
-                var claims = _httpContextAccessor.HttpContext.User;
-                var userId = claims.FindFirst(Claims.Identificate)?.Value?.Decrypt();
+            //if (!string.IsNullOrWhiteSpace(endpoint) && 
+            //    !endpoint.Contains("Authentication") &&
+            //    _httpContextAccessor?.HttpContext?.User is not null)
+            //{
+            //    var claims = _httpContextAccessor.HttpContext.User;
+            //    var userId = claims.FindFirst(Claims.Identificate)?.Value?.Decrypt();
 
-                if (!string.IsNullOrWhiteSpace(userId))
-                {
-                    var memoryCacheService = _serviceProvider.GetService<IMemoryCacheService>();
-                    var endpointLocked = memoryCacheService.GetDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userId}") as List<string>;
+            //    if (!string.IsNullOrWhiteSpace(userId))
+            //    {
+            //        var memoryCacheService = _serviceProvider.GetService<IMemoryCacheService>();
+            //        var endpointLocked = memoryCacheService.GetDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userId}") as List<string>;
 
-                    if (endpointLocked is null)
-                        await next();
-                    else
-                    {
-                        if (endpointLocked.Contains(endpoint))
-                            throw new ForbiddenException(Messages.Authentication.EndpointForbidden);
-                        else
-                            await next();
-                    }
-                }
-                else
-                    throw new UnauthorizedException(Messages.Authentication.NoAuthorize);
-            }
-            else
+            //        if (endpointLocked is null)
+            //            await next();
+            //        else
+            //        {
+            //            if (endpointLocked.Contains(endpoint))
+            //                throw new ForbiddenException(Messages.Authentication.EndpointForbidden);
+            //            else
+            //                await next();
+            //        }
+            //    }
+            //    else
+            //        throw new UnauthorizedException(Messages.Authentication.NoAuthorize);
+            //}
+            //else
                 await next();
         }
     }

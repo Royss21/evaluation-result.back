@@ -52,7 +52,7 @@
         OperationId = "Area.Create",
         Tags = new[] { "AreaService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create([FromForm]AreaCreateDto area)
+        public async Task<IActionResult> Create(AreaCreateDto area)
         {
             var result = await _areaService.CreateAsync(area);
             return new OkObjectResult(new JsonResult<bool>(result));
