@@ -2,7 +2,7 @@
 {
     public class ComponentCollaboratorConduct : BaseModel<int>
     {
-        public string IdComponentCollaboratorDetail { get; set; } = string.Empty;
+        public int ComponentCollaboratorDetailId { get; set; }
         public string LevelName { get; set; } = string.Empty;
         public int Points { get; set; }
 

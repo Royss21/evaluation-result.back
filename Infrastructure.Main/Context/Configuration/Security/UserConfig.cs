@@ -2,7 +2,7 @@
 {
     using Domain.Main.Security;
     using Infrastructure.Main.Context.Base;
-    public class UserConfig : BaseEntityTypeConfig<User, Guid>
+    public class UserConfig : BaseEntityTypeConfig<User, string>
     {
         public override void ConfigureEntity(EntityTypeBuilder<User> builder)
         {

@@ -4,8 +4,8 @@
 
     public class EvaluationComponent : BaseModel<int>
     {
-        public string IdEvaluation { get; set; } = string.Empty;
-        public int IdComponent { get; set; }
+        public string EvaluationId { get; set; } = string.Empty;
+        public int ComponentId { get; set; }
 
 
         public Evaluation Evaluation { get; set; }

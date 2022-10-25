@@ -4,7 +4,7 @@
 
     public class ComponentCollaboratorDetail : BaseModel<int>
     {
-        public string IdComponentCollaborator { get; set; } = string.Empty;
+        public string ComponentCollaboratorId { get; set; } = string.Empty;
         public string SubcomponentName { get; set; }
         public decimal WeightRelative { get; set; }
         public decimal PercentMinimun { get; set; }

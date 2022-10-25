@@ -2,7 +2,7 @@
 {
     public class Collaborator : BaseModel<string>
     {
-        public int IdCharge { get; set; }
+        public int ChargeId { get; set; }
         public string DocumentNumber { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;

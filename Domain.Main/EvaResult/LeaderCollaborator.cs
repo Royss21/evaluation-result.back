@@ -2,8 +2,8 @@
 {
     public class LeaderCollaborator : BaseModel<int>
     {
-        public int IdLeaderStage { get; set; }
-        public int IdEvaluationCollaborator { get; set; }
+        public int LeaderStageId { get; set; }
+        public string EvaluationCollaboratorId { get; set; }
 
 
         public LeaderStage LeaderStage { get; set; }

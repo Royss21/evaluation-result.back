@@ -1,6 +1,6 @@
 ﻿namespace Domain.Main.Security
 {
-    public class Endpoint : BaseModel<Guid>
+    public class EndpointService : BaseModel<string>
     {
         public string Entity { get; set; } = string.Empty;
         public string Method { get; set; } = string.Empty;

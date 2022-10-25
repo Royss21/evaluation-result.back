@@ -4,8 +4,8 @@ namespace Domain.Main.Config
     using Domain.Main.Employee;
     public class SubcomponentValue : BaseModel<string>
     {
-        public string IdSubcomponent { get; set; } = string.Empty;
-        public int? IdCharge { get; set; }
+        public string SubcomponentId { get; set; } = string.Empty;
+        public int? ChargeId { get; set; }
         public decimal RelativeWeight { get; set; }
         public decimal MinimunPercentage { get; set; }
         public decimal MaximunPercentage { get; set; }

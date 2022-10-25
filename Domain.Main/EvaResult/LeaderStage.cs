@@ -5,8 +5,8 @@
 
     public class LeaderStage : BaseModel<int>
     {
-        public int IdEvaluationLeader { get; set; }
-        public int IdStage { get; set; }
+        public int EvaluationLeaderId { get; set; }
+        public int StageId { get; set; }
 
 
         public EvaluationLeader EvaluationLeader { get; set; }

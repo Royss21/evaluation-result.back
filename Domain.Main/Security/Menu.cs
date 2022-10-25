@@ -1,9 +1,9 @@
 ﻿namespace Domain.Main.Security
 {
-    public class Menu : BaseModelActive<Guid>
+    public class Menu : BaseModelActive<int>
     {
 
-        public Guid? MenuId { get; set; }
+        public int? MenuId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Url { get; set; } = string.Empty;
         public string Icon { get; set; } = string.Empty;

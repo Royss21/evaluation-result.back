@@ -4,8 +4,8 @@
 
     public class ComponentCollaborator : BaseModel<string>
     {
-        public int IdEvaluationComponent { get; set; }
-        public string IdEvaluationCollaborator { get; set; } = string.Empty;
+        public int EvaluationComponentId { get; set; }
+        public string EvaluationCollaboratorId { get; set; } = string.Empty;
         public string ComponentName { get; set; } = string.Empty;
         public string HierarchyName { get; set; } = string.Empty;
         public decimal WeightHierarchy { get; set; }

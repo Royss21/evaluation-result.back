@@ -2,7 +2,7 @@
 {
     public class Area : BaseModel<int>
     {
-        public int IdGerency { get; set; }
+        public int GerencyId { get; set; }
         public string Name { get; set; } = string.Empty;
 
 

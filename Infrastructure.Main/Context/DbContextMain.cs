@@ -27,7 +27,7 @@
         public DbSet<Menu> Menu { get; set; } public DbSet<Role> Role { get; set; }
         public DbSet<RoleMenu> RoleMenu { get; set; }
         public DbSet<UserEndpointLocked> UserEndpointLocked { get; set; }
-        public DbSet<Endpoint> Endpoint { get; set; }
+        public DbSet<EndpointService> EndpointService { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<UserToken> UserToken { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
@@ -79,7 +79,7 @@
                 .ApplyConfiguration(new RoleConfig())
                 .ApplyConfiguration(new RoleMenuConfig())
                 .ApplyConfiguration(new UserEnpointLockedConfig())
-                .ApplyConfiguration(new EndpointConfig())
+                .ApplyConfiguration(new EndpointServiceConfig())
                 .ApplyConfiguration(new UserConfig())
                 .ApplyConfiguration(new UserTokenConfig())
                 .ApplyConfiguration(new UserRoleConfig())

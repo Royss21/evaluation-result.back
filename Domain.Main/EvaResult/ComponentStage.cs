@@ -4,8 +4,8 @@
 
     public class ComponentStage : BaseModel<int>
     {
-        public int IdEvaluationComponent { get; set; }
-        public int IdStage { get; set; }
+        public int EvaluationComponentId { get; set; }
+        public int StageId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 

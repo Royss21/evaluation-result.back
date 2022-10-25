@@ -1,6 +1,6 @@
 ﻿namespace Domain.Main.Security
 {
-    public class User : BaseModelActive<Guid>
+    public class User : BaseModelActive<string>
     {
         public Guid PersonId { get; set; }
         public string NameUser { get; set; } = string.Empty;

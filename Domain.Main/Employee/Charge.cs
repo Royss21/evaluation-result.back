@@ -2,8 +2,8 @@
 {
     public class Charge : BaseModel<int>
     {
-        public int IdArea { get; set; }
-        public int IdHierarchy { get; set; }
+        public int AreaId { get; set; }
+        public int HierarchyId { get; set; }
         public string Name { get; set; } = string.Empty;
 
 

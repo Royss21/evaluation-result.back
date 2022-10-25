@@ -5,8 +5,8 @@
 
     public class ComponentCollaboratorStage : BaseModel<string>
     {
-        public int IdComponentCollaborator { get; set; }
-        public int IdStage { get; set; }
+        public string ComponentCollaboratorId { get; set; }
+        public int StageId { get; set; }
         public string Comment { get; set; } = string.Empty;
 
 

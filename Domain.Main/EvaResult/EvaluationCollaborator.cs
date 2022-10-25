@@ -5,13 +5,13 @@
 
     public class EvaluationCollaborator : BaseModel<string>
     {
-        public string IdEvaluation { get; set; } = string.Empty;
-        public string IdCollaborator { get; set; } = string.Empty;
-        public int IdGerency { get; set; }
-        public int IdCharge { get; set; }
-        public int IdArea { get; set; }
-        public int IdHierarchy { get; set; }
-        public int IdLevel { get; set; }
+        public string EvaluationId { get; set; } = string.Empty;
+        public string CollaboratorId { get; set; } = string.Empty;
+        public int GerencyId { get; set; }
+        public int ChargeId { get; set; }
+        public int AreaId { get; set; }
+        public int HierarchyId { get; set; }
+        public int LevelId { get; set; }
 
         public Evaluation Evaluation { get; set; }
         public Collaborator Collaborator { get; set; }

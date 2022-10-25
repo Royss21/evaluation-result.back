@@ -2,7 +2,7 @@
 {
     using Domain.Main.Security;
     using Infrastructure.Main.Context.Base;
-    public class RoleConfig : BaseEntityTypeConfig<Role, Guid>
+    public class RoleConfig : BaseEntityTypeConfig<Role, int>
     {
         public override void ConfigureEntity(EntityTypeBuilder<Role> builder)
         {

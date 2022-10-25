@@ -2,7 +2,7 @@
 {
     using Domain.Main.Security;
     using Infrastructure.Main.Context.Base;
-    public class UserTokenConfig : BaseEntityTypeConfig<UserToken, Guid>
+    public class UserTokenConfig : BaseEntityTypeConfig<UserToken, string>
     {
         public override void ConfigureEntity(EntityTypeBuilder<UserToken> builder)
         {

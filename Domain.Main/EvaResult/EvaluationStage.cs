@@ -4,8 +4,8 @@
 
     public class EvaluationStage : BaseModel<int>
     {
-        public string IdEvaluation { get; set; } = string.Empty;
-        public int IdStage { get; set; }
+        public string EvaluationId { get; set; } = string.Empty;
+        public int StageId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
