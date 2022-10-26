@@ -1,4 +1,4 @@
-﻿namespace Api.Services.Controllers.Area
+﻿namespace Api.Services.Controllers.Config
 {
     using Api.Services.Controllers;
     using Application.Dto.Employee.Area;
@@ -39,7 +39,7 @@
         OperationId = "Area.GetAllPaging",
         Tags = new[] { "AreaService" })]
         [ProducesResponseType(typeof(JsonResult<PaginationResultDto<AreaDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ObtenerTodoPaginado([FromQuery] PrimeTable primeTable)
+        public async Task<IActionResult> GetAllPaging([FromQuery] PrimeTable primeTable)
         {
             var result = await _areaService.GetAllPagingAsync(primeTable);
             return new OkObjectResult(new JsonResult<PaginationResultDto<AreaDto>>(result));
@@ -65,7 +65,7 @@
         OperationId = "Area.Delete",
         Tags = new[] { "AreaService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Eliminar(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             var result = await _areaService.DeleteAsync(id);
             return new OkObjectResult(new JsonResult<bool>(result));

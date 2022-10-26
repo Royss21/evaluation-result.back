@@ -26,6 +26,7 @@
             public const string PhoneAlreadyRegistered = "El Telefono ingresado ya se encuentra registrado";
             public const string MovilAlreadyRegistered = "El Movil ingresado ya se encuentra registrado";
             public const string CodeAlreadyRegistered = "El Código ingresado ya se encuentra registrado";
+            public const string RangeDatesIsNotValid = "El intervalo de fechas ingresadas es incorrecta y/o existe en otros registros.";
         }
     }
 }
