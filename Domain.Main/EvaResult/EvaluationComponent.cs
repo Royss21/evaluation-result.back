@@ -6,7 +6,7 @@
     {
         public string EvaluationId { get; set; } = string.Empty;
         public int ComponentId { get; set; }
-
+        public int StatusId { get; set; }
 
         public Evaluation Evaluation { get; set; }
         public Component Component { get; set; }

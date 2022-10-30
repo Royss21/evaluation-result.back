@@ -5,7 +5,8 @@
         public int PeriodId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int Weight { get; set; } 
+        public int Weight { get; set; }
+        public int StatusId { get; set; }
 
         public Period Period { get; set; }
     }

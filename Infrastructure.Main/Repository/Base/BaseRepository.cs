@@ -70,6 +70,20 @@ namespace Infrastructure.Data.MainModule.Repository
             return await AddEntityAsync(entity, validateEntityResult);
         }
 
+        public async Task<ValidationResult> AddRangeAsync(IEnumerable<TEntity> entities, IValidator<TEntity> validation)
+        {
+            foreach(var entity in entities)
+            {
+                var validateEntityResult = await ValidateEntityAsync(entity, validation);
+                if (!validateEntityResult.IsValid)
+                    return validateEntityResult;
+            }
+
+            await DbSet.AddRangeAsync(entities);
+
+            return new ValidationResult();
+        }
+
         public async Task<ValidationResult> UpdateAsync(TEntity entity, params IValidator<TEntity>[] validaciones)
         {
             var validateEntityResult = await ValidateEntityAsync(entity, validaciones);
