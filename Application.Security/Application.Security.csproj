@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
+    <ProjectReference Include="..\..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
     <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
   </ItemGroup>
 
