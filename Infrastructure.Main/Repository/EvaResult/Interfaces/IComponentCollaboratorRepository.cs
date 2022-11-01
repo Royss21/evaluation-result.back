@@ -1,6 +1,6 @@
 ﻿namespace Infrastructure.Main.Repository.EvaResult.Interfaces
 {
-    public interface IComponentCollaboratorRepository : IBaseRepository<ComponentCollaborator, string>
+    public interface IComponentCollaboratorRepository : IBaseRepository<ComponentCollaborator, Guid>
     {
     }
 }

@@ -11,6 +11,9 @@
         public string Icon { get; set; } = string.Empty;
 
 
-        public Label Label { get; set; }
+
+
+
+        public virtual Label Label { get; set; }
     }
 }

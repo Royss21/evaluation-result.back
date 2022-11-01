@@ -5,11 +5,22 @@
 
     public class EvaluationLeader : BaseModel<int>
     {
-        public string EvaluationCollaboratorId { get; set; } = string.Empty;
-        public int? AreaId { get; set; }
-       
+        public EvaluationLeader()
+        {
+            LeaderStages = new HashSet<LeaderStage>();
+        }
 
-        public EvaluationCollaborator EvaluationCollaborator { get; set; }
-        public Area? Area { get; set; }
+        public Guid EvaluationCollaboratorId { get; set; }
+        public int? AreaId { get; set; }
+        public Guid EvaluationId { get; set; }
+
+
+
+
+
+        public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
+        public virtual Evaluation Evaluation { get; set; }
+        public virtual Area? Area { get; set; }
+        public virtual ICollection<LeaderStage> LeaderStages { get; set; }
     }
 }

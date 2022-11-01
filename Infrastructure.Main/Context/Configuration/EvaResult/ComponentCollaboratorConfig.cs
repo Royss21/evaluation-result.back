@@ -3,10 +3,13 @@
     using Domain.Main.EvaResult;
 
 
-    public class ComponentCollaboratorConfig : BaseEntityTypeConfig<ComponentCollaborator, string>
+    public class ComponentCollaboratorConfig : BaseEntityTypeConfig<ComponentCollaborator, Guid>
     {
         public override void ConfigureEntity(EntityTypeBuilder<ComponentCollaborator> builder)
         {
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
             builder.Property(p => p.HierarchyName)
                .IsRequired()
                .HasMaxLength(100);
@@ -23,6 +26,10 @@
                .IsRequired()
                .HasDefaultValue(0);
 
+            builder.Property(p => p.ExcessSubtotal)
+             .IsRequired()
+             .HasDefaultValue(0);
+
             builder.Property(p => p.Total)
                .IsRequired()
                .HasDefaultValue(0);
@@ -31,7 +38,7 @@
                .IsRequired()
                .HasDefaultValue(0);
 
-            builder.Property(p => p.Surplus)
+            builder.Property(p => p.Excess)
                .IsRequired()
                .HasDefaultValue(0);
 
@@ -42,6 +49,18 @@
             builder.Property(p => p.CommentCollaborator)
                .IsRequired()
                .HasMaxLength(300);
+
+            builder.HasOne(b => b.EvaluationComponent)
+                    .WithMany(b => b.ComponentsCollaborator);
+
+            builder.HasOne(b => b.EvaluationCollaborator)
+                    .WithMany(b => b.ComponentsCollaborator);
+
+            builder.HasMany(b => b.ComponentCollaboratorDetails)
+                    .WithOne(b => b.ComponentCollaborator);
+
+            builder.HasMany(b => b.ComponentCollaboratorStages)
+                    .WithOne(b => b.ComponentCollaborator);
 
         }
     }

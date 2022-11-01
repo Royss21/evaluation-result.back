@@ -4,11 +4,23 @@
 
     public class EvaluationComponent : BaseModel<int>
     {
-        public string EvaluationId { get; set; } = string.Empty;
+        public EvaluationComponent()
+        {
+            ComponentsCollaborator = new HashSet<ComponentCollaborator>();
+            ComponentStages = new HashSet<ComponentStage>();
+        }
+
+        public Guid EvaluationId { get; set; }
         public int ComponentId { get; set; }
         public int StatusId { get; set; }
 
-        public Evaluation Evaluation { get; set; }
-        public Component Component { get; set; }
+
+
+
+
+        public virtual Evaluation Evaluation { get; set; }
+        public virtual Component Component { get; set; }
+        public virtual ICollection<ComponentCollaborator> ComponentsCollaborator { get; set; }
+        public virtual ICollection<ComponentStage> ComponentStages { get; set; }
     }
 }

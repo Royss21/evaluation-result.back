@@ -4,17 +4,26 @@
 
     public class ComponentCollaboratorDetail : BaseModel<int>
     {
-        public string ComponentCollaboratorId { get; set; } = string.Empty;
+        public ComponentCollaboratorDetail()
+        {
+            ComponentCollaboratorConducts = new HashSet<ComponentCollaboratorConduct>();
+        }
+
+        public Guid ComponentCollaboratorId { get; set; }
         public string SubcomponentName { get; set; }
         public decimal WeightRelative { get; set; }
         public decimal PercentMinimun { get; set; }
         public decimal PercentMaximun { get; set; }
         public decimal Result { get; set; } 
-        public decimal ResultCalibrated { get; set; } 
-        public decimal ResultSimil { get; set; } 
-        public int PointsTotalCalibrated { get; set; }
+        public decimal Compliance { get; set; }
+        public decimal Points { get; set; }
+        public decimal PointsCalibrated { get; set; }
 
 
-        public ComponentCollaborator ComponentCollaborator { get; set; }
+
+
+
+        public virtual ComponentCollaborator ComponentCollaborator { get; set; }
+        public virtual ICollection<ComponentCollaboratorConduct> ComponentCollaboratorConducts { get; set; }
     }
 }

@@ -7,11 +7,18 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<EvaluationStage> builder)
         {
+
             builder.Property(p => p.StartDate)
                 .IsRequired();
 
             builder.Property(p => p.EndDate)
                 .IsRequired();
+
+            builder.HasOne(b => b.Evaluation)
+                .WithMany(b => b.EvaluationStages);
+
+            builder.HasOne(b => b.Stage)
+                .WithMany(b => b.EvaluationStages);
         }
     }
 }

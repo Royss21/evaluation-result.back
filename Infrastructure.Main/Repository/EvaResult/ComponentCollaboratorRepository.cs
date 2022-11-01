@@ -2,7 +2,7 @@
 {
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
 
-    public class ComponentCollaboratorRepository : BaseRepository<ComponentCollaborator, string>, IComponentCollaboratorRepository
+    public class ComponentCollaboratorRepository : BaseRepository<ComponentCollaborator, Guid>, IComponentCollaboratorRepository
     {
         public ComponentCollaboratorRepository(DbContextMain dbContextMain) : base(dbContextMain)
         {

@@ -1,10 +1,13 @@
 ﻿namespace Infrastructure.Main.Context.Configuration.Employee
 {
 
-    public class CollaboratorConfig : BaseEntityTypeConfig<Collaborator, string>
+    public class CollaboratorConfig : BaseEntityTypeConfig<Collaborator, Guid>
     {
         public override void ConfigureEntity(EntityTypeBuilder<Collaborator> builder)
         {
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
             builder.Property(p => p.DocumentNumber)
                 .IsRequired()
                 .HasMaxLength(20);
@@ -32,6 +35,9 @@
             builder.Property(p => p.DateBirthday);
             builder.Property(p => p.DateAdmission);
             builder.Property(p => p.DateEgress);
+
+            builder.HasOne(b => b.Charge)
+                .WithMany(b => b.Collaborators);
         }
     }
 }

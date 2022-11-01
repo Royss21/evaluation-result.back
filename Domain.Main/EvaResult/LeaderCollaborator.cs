@@ -3,10 +3,13 @@
     public class LeaderCollaborator : BaseModel<int>
     {
         public int LeaderStageId { get; set; }
-        public string EvaluationCollaboratorId { get; set; }
+        public Guid? EvaluationCollaboratorId { get; set; }
 
 
-        public LeaderStage LeaderStage { get; set; }
-        public EvaluationCollaborator EvaluationCollaborator { get; set; }
+
+
+
+        public virtual LeaderStage LeaderStage { get; set; }
+        public virtual EvaluationCollaborator? EvaluationCollaborator { get; set; }
     }
 }

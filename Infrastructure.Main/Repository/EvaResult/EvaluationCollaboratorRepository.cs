@@ -2,7 +2,7 @@
 {
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
 
-    public class EvaluationCollaboratorRepository : BaseRepository<EvaluationCollaborator, string>, IEvaluationCollaboratorRepository
+    public class EvaluationCollaboratorRepository : BaseRepository<EvaluationCollaborator, Guid>, IEvaluationCollaboratorRepository
     {
         public EvaluationCollaboratorRepository(DbContextMain dbContextMain) : base(dbContextMain)
         {

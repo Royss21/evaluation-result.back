@@ -11,6 +11,9 @@
 
             builder.Property(p => p.Description)
                 .HasMaxLength(200);
+
+            builder.HasMany(b => b.LabelDetails)
+                .WithOne(b => b.Label);
         }
     }
 }

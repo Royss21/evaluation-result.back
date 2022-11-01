@@ -10,9 +10,16 @@
                 .IsRequired()
                 .HasMaxLength(100);
 
-            builder.Property(p => p.Points)
+            builder.Property(p => p.ConductPoints)
                 .IsRequired()
                 .HasDefaultValue(0);
+
+            builder.Property(p => p.ConductPointsCalibrated)
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            builder.HasOne(b => b.ComponentCollaboratorDetail)
+                .WithMany(b => b.ComponentCollaboratorConducts);
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿namespace Application.Dto.Employee.Employee
+﻿namespace Application.Dto.Employee.Collaborator
 {
     public class CollaboratorUpdateDto : BaseCollaboratorDto
     {
-        public string Id { get; set; } = string.Empty;
+        public Guid Id { get; set; }
     }
 }

@@ -25,6 +25,9 @@
             builder.Property(p => p.RealValue)
                .IsRequired()
                .HasDefaultValue(0);
+
+            builder.HasOne(b => b.Label)
+                .WithMany(b => b.LabelDetails);
         }
     }
 }

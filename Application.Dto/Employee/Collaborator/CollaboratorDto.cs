@@ -1,10 +1,10 @@
 ﻿
-namespace Application.Dto.Employee.Employee
+namespace Application.Dto.Employee.Collaborator
 {
     using System.Text.Json.Serialization;
     public class CollaboratorDto : BaseCollaboratorDto
     {
-        public string Id { get; set; } = string.Empty;
+        public Guid Id { get; set; }
 
         [JsonIgnore]
         public DateTimeOffset CreateDate { get; set; }

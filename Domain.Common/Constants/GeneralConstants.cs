@@ -2,13 +2,19 @@
 {
     public static class GeneralConstants
     {
-        public const int CountEvaluationAnnualConfigId = 14;
+        public const int CountEvaluationAnnualConfigId = 1;
 
         public class Component
         {
             public const int CorporateObjectives = 1;
             public const int AreaObjectives = 2;
             public const int Competencies = 3;
+
+            public static Dictionary<int, string> NameComponents = new Dictionary<int, string>{
+                {1 , "Objetivos Corporativos" },
+                {2 , "Objetivos de Area" },
+                {3 , "Competencias" }
+            };
         }
 
         public class StatusGenerals

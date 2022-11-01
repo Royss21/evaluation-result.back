@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20221025015245_migracion uno")]
-    partial class migracionuno
+    [Migration("20221101034200_primero")]
+    partial class primero
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,16 +32,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -64,11 +64,12 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.Config.Conduct", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -80,8 +81,8 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -98,9 +99,8 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("LevelId")
                         .HasColumnType("int");
 
-                    b.Property<string>("SubcomponentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("SubcomponentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -109,6 +109,57 @@ namespace Infrastructure.Main.Migrations
                     b.HasIndex("SubcomponentId");
 
                     b.ToTable("Conduct");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Formula", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FormulaQuery")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("FormulaReal")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Formula");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.HierarchyComponent", b =>
@@ -122,16 +173,16 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -167,8 +218,8 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -180,8 +231,8 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -210,8 +261,8 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -223,8 +274,8 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -278,8 +329,8 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -291,8 +342,8 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -321,16 +372,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -353,8 +404,9 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("AreaId")
                         .HasColumnType("int");
@@ -362,8 +414,8 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -375,12 +427,15 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("FormulaId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -398,27 +453,30 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("ComponentId");
 
+                    b.HasIndex("FormulaId");
+
                     b.ToTable("Subcomponent");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.SubcomponentValue", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int?>("ChargeId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -444,15 +502,15 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
 
-                    b.Property<string>("SubcomponentId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("SubcomponentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChargeId");
 
-                    b.HasIndex("SubcomponentId");
+                    b.HasIndex("SubcomponentId")
+                        .IsUnique();
 
                     b.ToTable("SubcomponentValue");
                 });
@@ -465,16 +523,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -511,16 +569,16 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -550,8 +608,9 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.Employee.Collaborator", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("ChargeId")
                         .HasColumnType("int");
@@ -560,8 +619,8 @@ namespace Infrastructure.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -580,8 +639,8 @@ namespace Infrastructure.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasColumnType("nvarchar(max)");
@@ -620,16 +679,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -658,16 +717,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -695,8 +754,9 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -713,27 +773,36 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EvaluationCollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("EvaluationCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("EvaluationComponentId")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Excess")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("ExcessSubtotal")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
                     b.Property<string>("HierarchyName")
                         .IsRequired()
@@ -749,14 +818,6 @@ namespace Infrastructure.Main.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
-
-                    b.Property<decimal>("Surplus")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("SurplusSubtotal")
-                        .HasColumnType("money");
 
                     b.Property<decimal>("Total")
                         .ValueGeneratedOnAdd()
@@ -793,16 +854,26 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("ComponentCollaboratorDetailId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<decimal>("ConductPoints")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("ConductPointsCalibrated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -817,11 +888,6 @@ namespace Infrastructure.Main.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<int>("Points")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
 
                     b.HasKey("Id");
 
@@ -838,20 +904,24 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ComponentCollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<decimal>("Compliance")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<Guid>("ComponentCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -872,22 +942,17 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
 
-                    b.Property<int>("PointsTotalCalibrated")
+                    b.Property<decimal>("Points")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("PointsCalibrated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
                     b.Property<decimal>("Result")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("ResultCalibrated")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("ResultSimil")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
@@ -911,28 +976,28 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorStage", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("ComponentCollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("ComponentCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -963,16 +1028,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1006,19 +1071,20 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1038,6 +1104,9 @@ namespace Infrastructure.Main.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Weight")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -1052,8 +1121,9 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AreaId")
                         .HasColumnType("int");
@@ -1061,28 +1131,26 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("ChargeId")
                         .HasColumnType("int");
 
-                    b.Property<string>("CollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("CollaboratorId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EvaluationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("GerencyId")
                         .HasColumnType("int");
@@ -1128,29 +1196,31 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("ComponentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EvaluationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -1172,24 +1242,26 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int?>("AreaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EvaluationCollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("EvaluationCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -1200,7 +1272,10 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("AreaId");
 
-                    b.HasIndex("EvaluationCollaboratorId");
+                    b.HasIndex("EvaluationCollaboratorId")
+                        .IsUnique();
+
+                    b.HasIndex("EvaluationId");
 
                     b.ToTable("EvaluationLeader");
                 });
@@ -1213,16 +1288,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1231,9 +1306,8 @@ namespace Infrastructure.Main.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EvaluationId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -1263,24 +1337,23 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EvaluationCollaboratorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid?>("EvaluationCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -1307,16 +1380,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1350,16 +1423,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1393,16 +1466,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1451,16 +1524,16 @@ namespace Infrastructure.Main.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1496,15 +1569,15 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasColumnType("nvarchar(max)");
@@ -1551,8 +1624,8 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
@@ -1564,8 +1637,8 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1594,16 +1667,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1634,16 +1707,16 @@ namespace Infrastructure.Main.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1689,16 +1762,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1737,16 +1810,16 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1778,16 +1851,16 @@ namespace Infrastructure.Main.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTimeOffset>("CreateDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTimeOffset?>("EditDate")
-                        .HasColumnType("datetimeoffset");
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
                         .HasMaxLength(50)
@@ -1829,13 +1902,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Config.Conduct", b =>
                 {
                     b.HasOne("Domain.Main.Config.Level", "Level")
-                        .WithMany()
+                        .WithMany("Conducts")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
-                        .WithMany()
+                        .WithMany("Conducts")
                         .HasForeignKey("SubcomponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1848,13 +1921,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Config.HierarchyComponent", b =>
                 {
                     b.HasOne("Domain.Main.Config.Component", "Component")
-                        .WithMany()
+                        .WithMany("HierarchyComponents")
                         .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Hierarchy", "Hierarchy")
-                        .WithMany()
+                        .WithMany("HierarchyComponents")
                         .HasForeignKey("HierarchyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1867,7 +1940,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Config.LabelDetail", b =>
                 {
                     b.HasOne("Domain.Main.Config.Label", "Label")
-                        .WithMany()
+                        .WithMany("LabelDetails")
                         .HasForeignKey("LabelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1878,18 +1951,26 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany()
+                        .WithMany("Subcomponents")
                         .HasForeignKey("AreaId");
 
                     b.HasOne("Domain.Main.Config.Component", "Component")
-                        .WithMany()
+                        .WithMany("Subcomponents")
                         .HasForeignKey("ComponentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Main.Config.Formula", "Formula")
+                        .WithMany("Subcomponents")
+                        .HasForeignKey("FormulaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Area");
 
                     b.Navigation("Component");
+
+                    b.Navigation("Formula");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.SubcomponentValue", b =>
@@ -1899,8 +1980,8 @@ namespace Infrastructure.Main.Migrations
                         .HasForeignKey("ChargeId");
 
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
-                        .WithMany()
-                        .HasForeignKey("SubcomponentId")
+                        .WithOne("SubcomponentValue")
+                        .HasForeignKey("Domain.Main.Config.SubcomponentValue", "SubcomponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1912,7 +1993,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Employee.Area", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Gerency", "Gerency")
-                        .WithMany()
+                        .WithMany("Areas")
                         .HasForeignKey("GerencyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1923,13 +2004,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Employee.Charge", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany()
+                        .WithMany("Charges")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Hierarchy", "Hierarchy")
-                        .WithMany()
+                        .WithMany("Charges")
                         .HasForeignKey("HierarchyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1942,7 +2023,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Employee.Collaborator", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Charge", "Charge")
-                        .WithMany()
+                        .WithMany("Collaborators")
                         .HasForeignKey("ChargeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1953,7 +2034,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Employee.Hierarchy", b =>
                 {
                     b.HasOne("Domain.Main.Config.Level", "Level")
-                        .WithMany()
+                        .WithMany("Hierarchies")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1964,13 +2045,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
-                        .WithMany()
+                        .WithMany("ComponentsCollaborator")
                         .HasForeignKey("EvaluationCollaboratorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.EvaResult.EvaluationComponent", "EvaluationComponent")
-                        .WithMany()
+                        .WithMany("ComponentsCollaborator")
                         .HasForeignKey("EvaluationComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1983,7 +2064,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorConduct", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.ComponentCollaboratorDetail", "ComponentCollaboratorDetail")
-                        .WithMany()
+                        .WithMany("ComponentCollaboratorConducts")
                         .HasForeignKey("ComponentCollaboratorDetailId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1994,7 +2075,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorDetail", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.ComponentCollaborator", "ComponentCollaborator")
-                        .WithMany()
+                        .WithMany("ComponentCollaboratorDetails")
                         .HasForeignKey("ComponentCollaboratorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2005,13 +2086,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorStage", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.ComponentCollaborator", "ComponentCollaborator")
-                        .WithMany()
+                        .WithMany("ComponentCollaboratorStages")
                         .HasForeignKey("ComponentCollaboratorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany()
+                        .WithMany("ComponentCollaboratorStages")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2024,13 +2105,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentStage", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.EvaluationComponent", "EvaluationComponent")
-                        .WithMany()
+                        .WithMany("ComponentStages")
                         .HasForeignKey("EvaluationComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany()
+                        .WithMany("ComponentStages")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2043,7 +2124,7 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.Period", "Period")
-                        .WithMany()
+                        .WithMany("Evaluations")
                         .HasForeignKey("PeriodId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2054,43 +2135,43 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("AreaId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Charge", "Charge")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("ChargeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Collaborator", "Collaborator")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("CollaboratorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("EvaluationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Gerency", "Gerency")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("GerencyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Employee.Hierarchy", "Hierarchy")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("HierarchyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Level", "Level")
-                        .WithMany()
+                        .WithMany("EvaluationCollaborators")
                         .HasForeignKey("LevelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2113,13 +2194,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponent", b =>
                 {
                     b.HasOne("Domain.Main.Config.Component", "Component")
-                        .WithMany()
+                        .WithMany("EvaluationComponents")
                         .HasForeignKey("ComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
-                        .WithMany()
+                        .WithMany("EvaluationComponents")
                         .HasForeignKey("EvaluationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2132,16 +2213,24 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany()
+                        .WithMany("EvaluationLeaders")
                         .HasForeignKey("AreaId");
 
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
-                        .WithMany()
-                        .HasForeignKey("EvaluationCollaboratorId")
+                        .WithOne("EvaluationLeader")
+                        .HasForeignKey("Domain.Main.EvaResult.EvaluationLeader", "EvaluationCollaboratorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
+                        .WithMany("EvaluationLeaders")
+                        .HasForeignKey("EvaluationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Area");
+
+                    b.Navigation("Evaluation");
 
                     b.Navigation("EvaluationCollaborator");
                 });
@@ -2149,13 +2238,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationStage", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
-                        .WithMany()
+                        .WithMany("EvaluationStages")
                         .HasForeignKey("EvaluationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany()
+                        .WithMany("EvaluationStages")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2168,13 +2257,11 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderCollaborator", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
-                        .WithMany()
-                        .HasForeignKey("EvaluationCollaboratorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .WithMany("LeaderCollaborators")
+                        .HasForeignKey("EvaluationCollaboratorId");
 
                     b.HasOne("Domain.Main.EvaResult.LeaderStage", "LeaderStage")
-                        .WithMany()
+                        .WithMany("LeaderCollaborators")
                         .HasForeignKey("LeaderStageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2187,13 +2274,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderStage", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.EvaluationLeader", "EvaluationLeader")
-                        .WithMany()
+                        .WithMany("LeaderStages")
                         .HasForeignKey("EvaluationLeaderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany()
+                        .WithMany("LeaderStages")
                         .HasForeignKey("StageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2265,6 +2352,147 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Component", b =>
+                {
+                    b.Navigation("EvaluationComponents");
+
+                    b.Navigation("HierarchyComponents");
+
+                    b.Navigation("Subcomponents");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Formula", b =>
+                {
+                    b.Navigation("Subcomponents");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Label", b =>
+                {
+                    b.Navigation("LabelDetails");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Level", b =>
+                {
+                    b.Navigation("Conducts");
+
+                    b.Navigation("EvaluationCollaborators");
+
+                    b.Navigation("Hierarchies");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Stage", b =>
+                {
+                    b.Navigation("ComponentCollaboratorStages");
+
+                    b.Navigation("ComponentStages");
+
+                    b.Navigation("EvaluationStages");
+
+                    b.Navigation("LeaderStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
+                {
+                    b.Navigation("Conducts");
+
+                    b.Navigation("SubcomponentValue")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.Area", b =>
+                {
+                    b.Navigation("Charges");
+
+                    b.Navigation("EvaluationCollaborators");
+
+                    b.Navigation("EvaluationLeaders");
+
+                    b.Navigation("Subcomponents");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.Charge", b =>
+                {
+                    b.Navigation("Collaborators");
+
+                    b.Navigation("EvaluationCollaborators");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.Collaborator", b =>
+                {
+                    b.Navigation("EvaluationCollaborators");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.Gerency", b =>
+                {
+                    b.Navigation("Areas");
+
+                    b.Navigation("EvaluationCollaborators");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.Hierarchy", b =>
+                {
+                    b.Navigation("Charges");
+
+                    b.Navigation("EvaluationCollaborators");
+
+                    b.Navigation("HierarchyComponents");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
+                {
+                    b.Navigation("ComponentCollaboratorDetails");
+
+                    b.Navigation("ComponentCollaboratorStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorDetail", b =>
+                {
+                    b.Navigation("ComponentCollaboratorConducts");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
+                {
+                    b.Navigation("EvaluationCollaborators");
+
+                    b.Navigation("EvaluationComponents");
+
+                    b.Navigation("EvaluationLeaders");
+
+                    b.Navigation("EvaluationStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
+                {
+                    b.Navigation("ComponentsCollaborator");
+
+                    b.Navigation("EvaluationLeader")
+                        .IsRequired();
+
+                    b.Navigation("LeaderCollaborators");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponent", b =>
+                {
+                    b.Navigation("ComponentStages");
+
+                    b.Navigation("ComponentsCollaborator");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>
+                {
+                    b.Navigation("LeaderStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.LeaderStage", b =>
+                {
+                    b.Navigation("LeaderCollaborators");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.Period", b =>
+                {
+                    b.Navigation("Evaluations");
                 });
 #pragma warning restore 612, 618
         }

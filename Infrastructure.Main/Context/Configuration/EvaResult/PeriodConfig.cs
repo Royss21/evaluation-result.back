@@ -12,6 +12,9 @@
 
             builder.Property(p => p.EndDate)
                         .IsRequired();
+
+            builder.HasMany(b => b.Evaluations)
+                .WithOne(b => b.Period);
         }
     }
 }

@@ -3,15 +3,18 @@
     using Domain.Main.Config;
 
 
-    public class ComponentCollaboratorStage : BaseModel<string>
+    public class ComponentCollaboratorStage : BaseModel<Guid>
     {
-        public string ComponentCollaboratorId { get; set; }
+        public Guid ComponentCollaboratorId { get; set; }
         public int StageId { get; set; }
         public string Comment { get; set; } = string.Empty;
 
 
-        public ComponentCollaborator ComponentCollaborator { get; set; }
-        public Stage Stage { get; set; }
+
+
+
+        public virtual ComponentCollaborator ComponentCollaborator { get; set; }
+        public virtual Stage Stage { get; set; }
 
     }
 }

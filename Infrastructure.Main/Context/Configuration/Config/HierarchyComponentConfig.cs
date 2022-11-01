@@ -7,6 +7,12 @@
             builder.Property(p => p.Weight)
                 .IsRequired()
                 .HasDefaultValue(0);
+
+            builder.HasOne(b => b.Hierarchy)
+                    .WithMany(b => b.HierarchyComponents);
+
+            builder.HasOne(b => b.Component)
+                    .WithMany(b => b.HierarchyComponents);
         }
     }
 }

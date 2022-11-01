@@ -2,7 +2,7 @@
 {
     using Infrastructure.Main.Repository.Config.Interfaces;
 
-    public class SubcomponentValueRepository : BaseRepository<SubcomponentValue, string>, ISubcomponentValueRepository
+    public class SubcomponentValueRepository : BaseRepository<SubcomponentValue, Guid>, ISubcomponentValueRepository
     {
         public SubcomponentValueRepository(DbContextMain dbContextMain) : base(dbContextMain)
         {

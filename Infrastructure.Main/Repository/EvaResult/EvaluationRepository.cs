@@ -2,7 +2,7 @@
 {
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
 
-    public class EvaluationRepository : BaseRepository<Evaluation, string>, IEvaluationRepository
+    public class EvaluationRepository : BaseRepository<Evaluation, Guid>, IEvaluationRepository
     {
         public EvaluationRepository(DbContextMain dbContextMain) : base(dbContextMain)
         {

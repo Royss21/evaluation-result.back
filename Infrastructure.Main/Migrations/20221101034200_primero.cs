@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class migracionuno : Migration
+    public partial class primero : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -20,9 +20,9 @@ namespace Infrastructure.Main.Migrations
                     OldValues = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: false),
                     NewValues = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -38,9 +38,9 @@ namespace Infrastructure.Main.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -59,14 +59,34 @@ namespace Infrastructure.Main.Migrations
                     Action = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PathEndpoint = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EndpointService", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Formula",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    FormulaReal = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FormulaQuery = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Formula", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,9 +97,9 @@ namespace Infrastructure.Main.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -96,9 +116,9 @@ namespace Infrastructure.Main.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -115,9 +135,9 @@ namespace Infrastructure.Main.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -138,9 +158,9 @@ namespace Infrastructure.Main.Migrations
                     Sort = table.Column<int>(type: "int", nullable: false),
                     MenuDadId = table.Column<int>(type: "int", nullable: true),
                     CreateUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -164,9 +184,9 @@ namespace Infrastructure.Main.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -183,9 +203,9 @@ namespace Infrastructure.Main.Migrations
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -201,9 +221,9 @@ namespace Infrastructure.Main.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -222,9 +242,9 @@ namespace Infrastructure.Main.Migrations
                     TypeHash = table.Column<int>(type: "int", nullable: false),
                     IsLocked = table.Column<bool>(type: "bit", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -244,9 +264,9 @@ namespace Infrastructure.Main.Migrations
                     TokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     RefreshTokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -264,9 +284,9 @@ namespace Infrastructure.Main.Migrations
                     GerencyId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -294,9 +314,9 @@ namespace Infrastructure.Main.Migrations
                     MaximunValue = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Icon = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -319,9 +339,9 @@ namespace Infrastructure.Main.Migrations
                     LevelId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -339,15 +359,16 @@ namespace Infrastructure.Main.Migrations
                 name: "Evaluation",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PeriodId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Weight = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -370,9 +391,9 @@ namespace Infrastructure.Main.Migrations
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     MenuId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -402,9 +423,9 @@ namespace Infrastructure.Main.Migrations
                     EndpointServicetId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     EndpointServiceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -432,9 +453,9 @@ namespace Infrastructure.Main.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -458,15 +479,16 @@ namespace Infrastructure.Main.Migrations
                 name: "Subcomponent",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ComponentId = table.Column<int>(type: "int", nullable: false),
                     AreaId = table.Column<int>(type: "int", nullable: true),
+                    FormulaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -483,6 +505,12 @@ namespace Infrastructure.Main.Migrations
                         principalTable: "Component",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Subcomponent_Formula_FormulaId",
+                        column: x => x.FormulaId,
+                        principalTable: "Formula",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -495,9 +523,9 @@ namespace Infrastructure.Main.Migrations
                     HierarchyId = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -527,9 +555,9 @@ namespace Infrastructure.Main.Migrations
                     ComponentId = table.Column<int>(type: "int", nullable: false),
                     Weight = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -555,12 +583,13 @@ namespace Infrastructure.Main.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EvaluationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ComponentId = table.Column<int>(type: "int", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -586,14 +615,14 @@ namespace Infrastructure.Main.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EvaluationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StageId = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -617,14 +646,14 @@ namespace Infrastructure.Main.Migrations
                 name: "Conduct",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LevelId = table.Column<int>(type: "int", nullable: false),
-                    SubcomponentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SubcomponentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -649,7 +678,7 @@ namespace Infrastructure.Main.Migrations
                 name: "Collaborator",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChargeId = table.Column<int>(type: "int", nullable: false),
                     DocumentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -661,9 +690,9 @@ namespace Infrastructure.Main.Migrations
                     DateAdmission = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEgress = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -681,16 +710,16 @@ namespace Infrastructure.Main.Migrations
                 name: "SubcomponentValue",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    SubcomponentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubcomponentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChargeId = table.Column<int>(type: "int", nullable: true),
                     RelativeWeight = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     MinimunPercentage = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     MaximunPercentage = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -720,9 +749,9 @@ namespace Infrastructure.Main.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -746,18 +775,18 @@ namespace Infrastructure.Main.Migrations
                 name: "EvaluationCollaborator",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EvaluationId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GerencyId = table.Column<int>(type: "int", nullable: false),
                     ChargeId = table.Column<int>(type: "int", nullable: false),
                     AreaId = table.Column<int>(type: "int", nullable: false),
                     HierarchyId = table.Column<int>(type: "int", nullable: false),
                     LevelId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -811,23 +840,23 @@ namespace Infrastructure.Main.Migrations
                 name: "ComponentCollaborator",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EvaluationComponentId = table.Column<int>(type: "int", nullable: false),
-                    EvaluationCollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ComponentName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     HierarchyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     WeightHierarchy = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     SubTotal = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
-                    SurplusSubtotal = table.Column<decimal>(type: "money", nullable: false),
+                    ExcessSubtotal = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Total = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     TotalCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
-                    Surplus = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    Excess = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Comment = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     CommentCollaborator = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -853,12 +882,13 @@ namespace Infrastructure.Main.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    EvaluationCollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AreaId = table.Column<int>(type: "int", nullable: true),
+                    EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -869,6 +899,12 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.AreaId,
                         principalTable: "Area",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_EvaluationLeader_Evaluation_EvaluationId",
+                        column: x => x.EvaluationId,
+                        principalTable: "Evaluation",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_EvaluationLeader_EvaluationCollaborator_EvaluationCollaboratorId",
                         column: x => x.EvaluationCollaboratorId,
@@ -883,19 +919,19 @@ namespace Infrastructure.Main.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ComponentCollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ComponentCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SubcomponentName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     WeightRelative = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     PercentMinimun = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     PercentMaximun = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Result = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
-                    ResultCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
-                    ResultSimil = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
-                    PointsTotalCalibrated = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Compliance = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    Points = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    PointsCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -913,14 +949,14 @@ namespace Infrastructure.Main.Migrations
                 name: "ComponentCollaboratorStage",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ComponentCollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ComponentCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     StageId = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -949,9 +985,9 @@ namespace Infrastructure.Main.Migrations
                     EvaluationLeaderId = table.Column<int>(type: "int", nullable: false),
                     StageId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -979,11 +1015,12 @@ namespace Infrastructure.Main.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ComponentCollaboratorDetailId = table.Column<int>(type: "int", nullable: false),
                     LevelName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    ConductPoints = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    ConductPointsCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -1004,11 +1041,11 @@ namespace Infrastructure.Main.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LeaderStageId = table.Column<int>(type: "int", nullable: false),
-                    EvaluationCollaboratorId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
@@ -1018,8 +1055,7 @@ namespace Infrastructure.Main.Migrations
                         name: "FK_LeaderCollaborator_EvaluationCollaborator_EvaluationCollaboratorId",
                         column: x => x.EvaluationCollaboratorId,
                         principalTable: "EvaluationCollaborator",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_LeaderCollaborator_LeaderStage_LeaderStageId",
                         column: x => x.LeaderStageId,
@@ -1156,7 +1192,13 @@ namespace Infrastructure.Main.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_EvaluationLeader_EvaluationCollaboratorId",
                 table: "EvaluationLeader",
-                column: "EvaluationCollaboratorId");
+                column: "EvaluationCollaboratorId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EvaluationLeader_EvaluationId",
+                table: "EvaluationLeader",
+                column: "EvaluationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EvaluationStage_EvaluationId",
@@ -1234,6 +1276,11 @@ namespace Infrastructure.Main.Migrations
                 column: "ComponentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Subcomponent_FormulaId",
+                table: "Subcomponent",
+                column: "FormulaId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SubcomponentValue_ChargeId",
                 table: "SubcomponentValue",
                 column: "ChargeId");
@@ -1241,7 +1288,8 @@ namespace Infrastructure.Main.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_SubcomponentValue_SubcomponentId",
                 table: "SubcomponentValue",
-                column: "SubcomponentId");
+                column: "SubcomponentId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEndpointLocked_EndpointServiceId",
@@ -1340,6 +1388,9 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.DropTable(
                 name: "Stage");
+
+            migrationBuilder.DropTable(
+                name: "Formula");
 
             migrationBuilder.DropTable(
                 name: "EvaluationComponent");

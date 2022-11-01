@@ -2,7 +2,7 @@
 {
     using Infrastructure.Main.Repository.Config.Interfaces;
 
-    public class ConductRepository : BaseRepository<Conduct, string>, IConductRepository
+    public class ConductRepository : BaseRepository<Conduct, Guid>, IConductRepository
     {
         public ConductRepository(DbContextMain dbContextMain) : base(dbContextMain)
         {

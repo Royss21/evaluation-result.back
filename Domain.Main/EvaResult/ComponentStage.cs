@@ -10,7 +10,10 @@
         public DateTime EndDate { get; set; }
 
 
-        public EvaluationComponent EvaluationComponent  { get; set; }
-        public Stage Stage { get; set; }
+
+
+
+        public virtual EvaluationComponent EvaluationComponent  { get; set; }
+        public virtual Stage Stage { get; set; }
     }
 }

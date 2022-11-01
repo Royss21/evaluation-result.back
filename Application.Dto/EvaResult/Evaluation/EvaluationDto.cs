@@ -2,6 +2,6 @@
 {
     public class EvaluationDto : BaseEvaluationDto
     {
-        public string Id { get; set; }
+        public Guid Id { get; set; }
     }
 }

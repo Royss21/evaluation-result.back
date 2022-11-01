@@ -1,4 +1,4 @@
-﻿namespace Application.Dto.Employee.Employee
+﻿namespace Application.Dto.Employee.Collaborator
 {
     public abstract class BaseCollaboratorDto
     {

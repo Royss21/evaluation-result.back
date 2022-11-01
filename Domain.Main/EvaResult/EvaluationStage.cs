@@ -4,13 +4,16 @@
 
     public class EvaluationStage : BaseModel<int>
     {
-        public string EvaluationId { get; set; } = string.Empty;
+        public Guid EvaluationId { get; set; }
         public int StageId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
 
-        public Evaluation Evaluation { get; set; }
-        public Stage Stage { get; set; }
+
+
+
+        public virtual Evaluation Evaluation { get; set; }
+        public virtual Stage Stage { get; set; }
     }
 }

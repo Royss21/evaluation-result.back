@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.EvaResult.EvaluationComponent
 {
-    public class BaseEvaluationComponentDto
+    public abstract class BaseEvaluationComponentDto
     {
         public string EvaluationId { get; set; } = string.Empty;
         public int ComponentId { get; set; }

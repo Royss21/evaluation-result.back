@@ -7,6 +7,15 @@
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasOne(b => b.Area)
+                  .WithMany(b => b.Charges);
+
+            builder.HasOne(b => b.Hierarchy)
+                 .WithMany(b => b.Charges);
+
+            builder.HasMany(b => b.Collaborators)
+                .WithOne(b => b.Charge);
         }
     }
 }

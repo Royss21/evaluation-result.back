@@ -11,6 +11,12 @@
 
             builder.Property(p => p.Description)
                 .HasMaxLength(200);
+
+            builder.HasMany(b => b.Hierarchies)
+                .WithOne(b => b.Level);
+
+            builder.HasMany(b => b.Conducts)
+                .WithOne(b => b.Level);
         }
     }
 }

@@ -7,6 +7,9 @@
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.HasMany(b => b.Areas)
+                .WithOne(b => b.Gerency);
         }
     }
 }

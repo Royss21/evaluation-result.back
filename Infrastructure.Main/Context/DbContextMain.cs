@@ -67,6 +67,7 @@
         public DbSet<LeaderCollaborator> LeaderCollaborator { get; set; }
         public DbSet<LeaderStage> LeaderStage { get; set; }
         public DbSet<Period> Period { get; set; }
+        public DbSet<Formula> Formula { get; set; }
 
         #endregion
 
@@ -116,7 +117,8 @@
                 .ApplyConfiguration(new EvaluationStageConfig())
                 .ApplyConfiguration(new LeaderCollaboratorConfig())
                 .ApplyConfiguration(new LeaderStageConfig())
-                .ApplyConfiguration(new PeriodConfig());
+                .ApplyConfiguration(new PeriodConfig())
+                .ApplyConfiguration(new FormulaConfig());
             #endregion
 
 
@@ -276,8 +278,8 @@
                         entity.CreateUser = CurrentUserName;
                         entity.IsDeleted = false;
 
-                        if (entity is BaseModel<Guid> entityGuidId)
-                            entityGuidId.Id = Guid.NewGuid();
+                        if (entity is BaseModel<string> entityGuidId)
+                            entityGuidId.Id = Guid.NewGuid().ToString();
 
                         break;
                     case EntityState.Modified:

@@ -1,12 +1,16 @@
 ﻿namespace Domain.Main.Config
 {
-    public class Conduct : BaseModelActive<string>
+    public class Conduct : BaseModelActive<Guid>
     {
         public int LevelId { get; set; }
-        public string SubcomponentId { get; set; } = string.Empty;
+        public Guid SubcomponentId { get; set; }
         public string Description { get; set; } = string.Empty;
 
-        public Level Level { get; set; }
-        public Subcomponent Subcomponent { get; set; }
+
+
+
+
+        public virtual Level Level { get; set; }
+        public virtual Subcomponent Subcomponent { get; set; }
     }
 }
