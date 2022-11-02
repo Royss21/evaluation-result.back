@@ -13,6 +13,7 @@
             builder.Property(p => p.RefreshToken)
                 .IsRequired()
              .HasMaxLength(150);
+
         }
     }
 }

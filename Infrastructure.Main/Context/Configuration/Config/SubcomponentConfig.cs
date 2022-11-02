@@ -17,6 +17,9 @@
             builder.HasMany(b => b.Conducts)
                 .WithOne(b => b.Subcomponent);
 
+            builder.HasMany(b => b.SubcomponentValues)
+               .WithOne(b => b.Subcomponent);
+
             builder.HasOne(b => b.Component)
                 .WithMany(b => b.Subcomponents);
 

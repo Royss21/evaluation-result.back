@@ -20,7 +20,7 @@
                .HasDefaultValue(0);
 
             builder.HasOne(b => b.Subcomponent)
-                .WithOne(b => b.SubcomponentValue);
+                .WithMany(b => b.SubcomponentValues);
         }
     }
 }

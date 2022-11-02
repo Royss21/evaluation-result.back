@@ -15,6 +15,9 @@
 
             builder.HasMany(b => b.Evaluations)
                 .WithOne(b => b.Period);
+
+            builder.Property(p => p.Name)
+                .HasMaxLength(100);
         }
     }
 }

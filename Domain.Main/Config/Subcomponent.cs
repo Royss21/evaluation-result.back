@@ -8,6 +8,7 @@ namespace Domain.Main.Config
         public Subcomponent()
         {
             Conducts = new HashSet<Conduct>();
+            SubcomponentValues = new HashSet<SubcomponentValue>();
         }
         
         public int ComponentId { get; set; }
@@ -23,7 +24,7 @@ namespace Domain.Main.Config
         public virtual Component Component { get; set; }
         public virtual Area? Area { get; set; }
         public virtual Formula? Formula { get; set; }
-        public virtual SubcomponentValue SubcomponentValue { get; set; }
+        public virtual ICollection<SubcomponentValue> SubcomponentValues { get; set; }
         public virtual ICollection<Conduct> Conducts { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
             builder.Property(p => p.Description)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(1000);
 
             builder.HasOne(b => b.Level)
                 .WithMany(b => b.Conducts);

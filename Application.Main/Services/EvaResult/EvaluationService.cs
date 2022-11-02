@@ -29,7 +29,7 @@ namespace Application.Main.Services.EvaResult
                 throw new WarningException("No seleccionado las etapas del componente de COMPETENCIAS");
 
             var evaluation = _mapper.Map<Evaluation>(request);
-            if(!request.IsEvaluationTest)
+            if (!request.IsEvaluationTest)
             {
                 var countEvaluations = await CountEvaluationsCurrentPeriod();
                 var countEvaluationsConfig = await CountEvaluationByPeriodConfig();
@@ -48,7 +48,7 @@ namespace Application.Main.Services.EvaResult
             var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsDto);
             evaluationComponents.ForEach(ec => {
 
-                if(ec.ComponentId == GeneralConstants.Component.Competencies)
+                if (ec.ComponentId == GeneralConstants.Component.Competencies)
                 {
                     var componentStages = _mapper.Map<List<ComponentStage>>(request.ComponentStagesDto);
                     componentStages.ForEach(cs => cs.EvaluationComponentId = ec.Id);
@@ -62,24 +62,89 @@ namespace Application.Main.Services.EvaResult
             evaluation.EvaluationCollaborators = await RegisterCollaboratorsInEvaluation(currentDate);
 
             var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
-            foreach (var componentEvaluation in evaluationComponents)
+            foreach (var evaluationComponent in evaluation.EvaluationComponents)
             {
                 var hierarchiesComponent = dataConfigurations.Item1;
                 var subcomponents = dataConfigurations.Item2;
-                var conductas = new List<Conduct>();
+                var conducts = new List<Conduct>();
+                var levels = new List<Level>();
 
-                hierarchiesComponent = hierarchiesComponent.Where(s => s.ComponentId == componentEvaluation.ComponentId).ToList();
-                subcomponents = subcomponents.Where(s => s.ComponentId == componentEvaluation.ComponentId).ToList();
+                hierarchiesComponent = hierarchiesComponent.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
+                subcomponents = subcomponents.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
+
+                if (!hierarchiesComponent.Any())
+                    throw new WarningException($"No se ha configurado el peso de las jerarquias para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
 
                 if (!subcomponents.Any())
-                    throw new WarningException($"No se ha configurado ningun subcomponente para {GeneralConstants.Component.NameComponents[componentEvaluation.ComponentId]}");
+                    throw new WarningException($"No se ha configurado ningun subcomponente para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
 
-                if (componentEvaluation.ComponentId == GeneralConstants.Component.Competencies)
-                    conductas = await _unitOfWorkApp.Repository.ConductRepository
+                if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
+                {
+                    conducts = await _unitOfWorkApp.Repository.ConductRepository
                         .Find(c => subcomponents.Select(s => s.Id).Contains(c.SubcomponentId))
                         .Include(i => i.Level)
                         .ToListAsync();
+                    levels = await _unitOfWorkApp.Repository.LevelRepository.All().ToListAsync();
 
+                    if (!conducts.Any())
+                        throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                }
+
+                evaluationComponent.ComponentsCollaborator = evaluation.EvaluationCollaborators
+                    .Select(ec =>
+                    {
+                        var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
+
+                        if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
+                            componentCollaboratorDetails = subcomponents
+                                    .Select(s =>
+                                    {
+                                        var conductsByLevel = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
+                                                                        .ToList();
+                                        
+                                        return new ComponentCollaboratorDetail
+                                        {
+                                            SubcomponentName = s.Name,
+                                            ComponentCollaboratorConducts = conducts.Where(c => 
+                                                            c.SubcomponentId == s.Id && 
+                                                            c.LevelId == ec.LevelId
+                                                ).Select(c => new ComponentCollaboratorConduct
+                                                {
+                                                    ConductDescription = c.Description,
+                                                    LevelName = levels.First(l => l.Id == ec.LevelId).Name
+                                                }).ToList()
+                                        };
+                                    }).ToList();
+                        
+                        else
+                            componentCollaboratorDetails = subcomponents
+                                    .Where(s => s.AreaId == ec.AreaId && s.SubcomponentValues.Select(sv => sv.ChargeId).Contains(ec.ChargeId))
+                                    .Select(s =>
+                                    {
+                                        var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.ChargeId == ec.ChargeId);
+                                        
+                                        return new ComponentCollaboratorDetail
+                                        {
+                                            SubcomponentName = s.Name,
+                                            WeightRelative = subcomponentValue.RelativeWeight,
+                                            MinimunPercentage = subcomponentValue.MinimunPercentage,
+                                            MaximunPercentage = subcomponentValue.MaximunPercentage,
+                                            FormulaName = s.Formula?.Name ?? "",
+                                            FormulaQuery = s.Formula?.FormulaQuery ?? "",
+                                        };
+                                    }).ToList();
+                        
+
+
+                        return new ComponentCollaborator
+                        {
+                            WeightHierarchy = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Weight,
+                            HierarchyName = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Hierarchy.Name,
+                            StatusId = GeneralConstants.StatusGenerals.Create,
+                            ComponentCollaboratorDetails = componentCollaboratorDetails,
+                        };
+                    
+                    }).ToList();
             }
 
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
@@ -161,28 +226,17 @@ namespace Application.Main.Services.EvaResult
 
             return evaluationCollaborators;
         }
-        private async Task RegisterComponentStages(EvaluationCreateDto request, List<EvaluationComponent> componentEvaluation)
-        {
-            var componentCompetencies = componentEvaluation.FirstOrDefault(ec => ec.ComponentId == GeneralConstants.Component.Competencies);
-            if (componentCompetencies is not null)
-            {
-                var componentStages = _mapper.Map<List<ComponentStage>>(request.ComponentStagesDto);
-                componentStages.ForEach(cs => cs.EvaluationComponentId = componentCompetencies.Id);
-                //await _unitOfWorkApp.Repository.ComponentStageRepository.AddRangeAsync(componentStages);
-            }
-        }
-        private async Task<(List<HierarchyComponent>, List<Subcomponent>, List<SubcomponentValue>)> GetDataCurrentConfiguration(List<int> componentIds)
+        private async Task<(List<HierarchyComponent>, List<Subcomponent>)> GetDataCurrentConfiguration(List<int> componentIds)
         {
             var hierarchyComponents = await _unitOfWorkApp.Repository.HierarchyComponentRepository
                 .Find(hc => componentIds.Contains(hc.ComponentId))
+                .Include(hc=> hc.Hierarchy)
                 .ToListAsync();
+
             var subcomponents = await _unitOfWorkApp.Repository.SubcomponentRepository
                 .Find(s => componentIds.Contains(s.ComponentId))
                 .Include(i => i.Formula)
-                .ToListAsync();
-            var subcomponentIds = subcomponents.Select(s => s.Id).ToList();
-            var subcomponentsValue = await _unitOfWorkApp.Repository.SubcomponentValueRepository
-                .Find(sv => subcomponentIds.Contains(sv.SubcomponentId))
+                .Include(i => i.SubcomponentValues)
                 .ToListAsync();
 
             if(!hierarchyComponents.Any())
@@ -190,7 +244,7 @@ namespace Application.Main.Services.EvaResult
             if (!subcomponents.Any())
                 throw new WarningException("No se ha encontrado ningun subcomponente configurado");
 
-            return (hierarchyComponents, subcomponents, subcomponentsValue);
+            return (hierarchyComponents, subcomponents);
         }
 
         #endregion

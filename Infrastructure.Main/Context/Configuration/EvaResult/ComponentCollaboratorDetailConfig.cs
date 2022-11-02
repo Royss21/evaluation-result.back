@@ -14,11 +14,11 @@
                .IsRequired()
                .HasDefaultValue(0);
 
-            builder.Property(p => p.PercentMaximun)
+            builder.Property(p => p.MaximunPercentage)
               .IsRequired()
               .HasDefaultValue(0);
 
-            builder.Property(p => p.PercentMinimun)
+            builder.Property(p => p.MinimunPercentage)
               .IsRequired()
               .HasDefaultValue(0);
 
@@ -42,6 +42,14 @@
             builder.Property(p => p.PointsCalibrated)
                 .IsRequired()
                 .HasDefaultValue(0);
+
+            builder.Property(p => p.FormulaName)
+                .IsRequired()
+                .HasMaxLength(500);
+
+            builder.Property(p => p.FormulaQuery)
+                .IsRequired()
+                .HasMaxLength(500);
 
             builder.HasOne(b => b.ComponentCollaborator)
                 .WithMany(b => b.ComponentCollaboratorDetails);

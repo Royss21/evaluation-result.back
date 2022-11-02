@@ -6,10 +6,17 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<AuditEntity> builder)
         {
-            builder.Property(p => p.KeyValues).HasMaxLength(int.MaxValue);
-            builder.Property(p => p.NewValues).HasMaxLength(int.MaxValue);
-            builder.Property(p => p.OldValues).HasMaxLength(int.MaxValue);
-            builder.Property(p => p.TableName).HasMaxLength(50);
+            builder.Property(p => p.KeyValues)
+                .HasMaxLength(5000);
+
+            builder.Property(p => p.NewValues)
+                .HasMaxLength(100000);
+
+            builder.Property(p => p.OldValues)
+                .HasMaxLength(100000);
+
+            builder.Property(p => p.TableName)
+                .HasMaxLength(50);
         }
     }
 }

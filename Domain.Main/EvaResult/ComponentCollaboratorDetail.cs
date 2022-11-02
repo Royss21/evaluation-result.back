@@ -12,12 +12,14 @@
         public Guid ComponentCollaboratorId { get; set; }
         public string SubcomponentName { get; set; }
         public decimal WeightRelative { get; set; }
-        public decimal PercentMinimun { get; set; }
-        public decimal PercentMaximun { get; set; }
+        public decimal MinimunPercentage { get; set; }
+        public decimal MaximunPercentage { get; set; }
         public decimal Result { get; set; } 
         public decimal Compliance { get; set; }
         public decimal Points { get; set; }
         public decimal PointsCalibrated { get; set; }
+        public string FormulaName { get; set; }
+        public string FormulaQuery { get; set; }
 
 
 

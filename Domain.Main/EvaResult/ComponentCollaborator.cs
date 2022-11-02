@@ -22,11 +22,12 @@
         public decimal Excess { get; set; }
         public string Comment { get; set; } = string.Empty;
         public string CommentCollaborator { get; set; } = string.Empty;
+        public int StatusId { get; set; }
 
 
 
 
-
+       
         public virtual EvaluationComponent? EvaluationComponent { get; set; }
         public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual ICollection<ComponentCollaboratorDetail> ComponentCollaboratorDetails { get; set; }

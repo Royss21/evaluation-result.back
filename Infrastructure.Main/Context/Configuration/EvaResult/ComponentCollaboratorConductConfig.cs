@@ -10,6 +10,10 @@
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(p => p.ConductDescription)
+                .IsRequired()
+                .HasMaxLength(1000);
+
             builder.Property(p => p.ConductPoints)
                 .IsRequired()
                 .HasDefaultValue(0);

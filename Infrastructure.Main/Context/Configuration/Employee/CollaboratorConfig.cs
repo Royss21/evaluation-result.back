@@ -29,12 +29,12 @@
                 .HasMaxLength(50);
 
             builder.Property(p => p.Code)
-                .IsRequired()
+                .IsRequired(false)
                 .HasMaxLength(20);
 
-            builder.Property(p => p.DateBirthday);
+            builder.Property(p => p.DateBirthday).IsRequired(false);
             builder.Property(p => p.DateAdmission);
-            builder.Property(p => p.DateEgress);
+            builder.Property(p => p.DateEgress).IsRequired(false);
 
             builder.HasOne(b => b.Charge)
                 .WithMany(b => b.Collaborators);
