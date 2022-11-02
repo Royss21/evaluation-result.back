@@ -191,7 +191,7 @@ namespace Application.Main.Services.EvaResult
                 .FirstOrDefaultAsync();
 
             if (configuration is null)
-                throw new WarningException("No se ha encontrado recurso de configuracion");
+                throw new WarningException("No se ha encontrado recurso de configuracion de Cantidad Evaluaciones por Periodo");
 
             return (int)configuration.RealValue;
         }
