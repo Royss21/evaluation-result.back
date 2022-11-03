@@ -7,7 +7,7 @@
             EvaluationCollaborators = new HashSet<EvaluationCollaborator>();
             EvaluationComponents = new HashSet<EvaluationComponent>();
             EvaluationLeaders = new HashSet<EvaluationLeader>();
-            EvaluationStages = new HashSet<EvaluationStage>();
+            EvaluationComponentStages = new HashSet<EvaluationComponentStage>();
         }
 
         public int PeriodId { get; set; }
@@ -24,7 +24,7 @@
         public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
         public virtual ICollection<EvaluationComponent> EvaluationComponents { get; set; }
         public virtual ICollection<EvaluationLeader> EvaluationLeaders { get; set; }
-        public virtual ICollection<EvaluationStage> EvaluationStages { get; set; }
+        public virtual ICollection<EvaluationComponentStage> EvaluationComponentStages { get; set; }
 
     }
 }

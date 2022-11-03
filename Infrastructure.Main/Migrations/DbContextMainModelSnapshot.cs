@@ -57,7 +57,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Component");
+                    b.ToTable("Component", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Conduct", b =>
@@ -76,8 +76,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<DateTime?>("EditDate")
                         .HasColumnType("datetime2");
@@ -106,7 +106,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("SubcomponentId");
 
-                    b.ToTable("Conduct");
+                    b.ToTable("Conduct", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Formula", b =>
@@ -157,7 +157,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Formula");
+                    b.ToTable("Formula", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.HierarchyComponent", b =>
@@ -205,7 +205,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("HierarchyId");
 
-                    b.ToTable("HierarchyComponent");
+                    b.ToTable("HierarchyComponent", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Label", b =>
@@ -248,7 +248,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Label");
+                    b.ToTable("Label", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.LabelDetail", b =>
@@ -316,7 +316,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("LabelId");
 
-                    b.ToTable("LabelDetail");
+                    b.ToTable("LabelDetail", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Level", b =>
@@ -359,7 +359,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Level");
+                    b.ToTable("Level", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Stage", b =>
@@ -397,7 +397,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stage");
+                    b.ToTable("Stage", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
@@ -432,7 +432,7 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("FormulaId")
+                    b.Property<Guid?>("FormulaId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -453,7 +453,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("FormulaId");
 
-                    b.ToTable("Subcomponent");
+                    b.ToTable("Subcomponent", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.SubcomponentValue", b =>
@@ -507,10 +507,9 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("ChargeId");
 
-                    b.HasIndex("SubcomponentId")
-                        .IsUnique();
+                    b.HasIndex("SubcomponentId");
 
-                    b.ToTable("SubcomponentValue");
+                    b.ToTable("SubcomponentValue", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Area", b =>
@@ -553,7 +552,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("GerencyId");
 
-                    b.ToTable("Area");
+                    b.ToTable("Area", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Charge", b =>
@@ -601,7 +600,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("HierarchyId");
 
-                    b.ToTable("Charge");
+                    b.ToTable("Charge", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Collaborator", b =>
@@ -704,7 +703,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Gerency");
+                    b.ToTable("Gerency", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Hierarchy", b =>
@@ -747,7 +746,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("Hierarchy");
+                    b.ToTable("Hierarchy", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
@@ -755,16 +754,6 @@ namespace Infrastructure.Main.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.Property<string>("CommentCollaborator")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("ComponentName")
                         .IsRequired()
@@ -812,6 +801,9 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("SubTotal")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
@@ -838,7 +830,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("EvaluationComponentId");
 
-                    b.ToTable("ComponentCollaborator");
+                    b.ToTable("ComponentCollaborator", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorConduct", b =>
@@ -851,6 +843,11 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<int>("ComponentCollaboratorDetailId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ConductDescription")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.Property<decimal>("ConductPoints")
                         .ValueGeneratedOnAdd()
@@ -891,7 +888,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("ComponentCollaboratorDetailId");
 
-                    b.ToTable("ComponentCollaboratorConduct");
+                    b.ToTable("ComponentCollaboratorConduct", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorDetail", b =>
@@ -925,17 +922,27 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("FormulaName")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("FormulaQuery")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<decimal>("PercentMaximun")
+                    b.Property<decimal>("MaximunPercentage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
 
-                    b.Property<decimal>("PercentMinimun")
+                    b.Property<decimal>("MinimunPercentage")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
@@ -969,7 +976,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("ComponentCollaboratorId");
 
-                    b.ToTable("ComponentCollaboratorDetail");
+                    b.ToTable("ComponentCollaboratorDetail", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorStage", b =>
@@ -1001,6 +1008,9 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("EvaluationComponentStageId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1013,58 +1023,11 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("ComponentCollaboratorId");
 
-                    b.HasIndex("StageId");
-
-                    b.ToTable("ComponentCollaboratorStage");
-                });
-
-            modelBuilder.Entity("Domain.Main.EvaResult.ComponentStage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUser")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EditUser")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EvaluationComponentId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("StageId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EvaluationComponentId");
+                    b.HasIndex("EvaluationComponentStageId");
 
                     b.HasIndex("StageId");
 
-                    b.ToTable("ComponentStage");
+                    b.ToTable("ComponentCollaboratorStage", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
@@ -1114,7 +1077,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("PeriodId");
 
-                    b.ToTable("Evaluation");
+                    b.ToTable("Evaluation", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
@@ -1180,7 +1143,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("LevelId");
 
-                    b.ToTable("EvaluationCollaborator");
+                    b.ToTable("EvaluationCollaborator", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponent", b =>
@@ -1226,7 +1189,61 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("EvaluationId");
 
-                    b.ToTable("EvaluationComponent");
+                    b.ToTable("EvaluationComponent", "EvaResult");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponentStage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EvaluationComponentId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("EvaluationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("StageId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EvaluationComponentId");
+
+                    b.HasIndex("EvaluationId");
+
+                    b.HasIndex("StageId");
+
+                    b.ToTable("EvaluationComponentStage", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>
@@ -1275,56 +1292,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("EvaluationId");
 
-                    b.ToTable("EvaluationLeader");
-                });
-
-            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationStage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUser")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EditUser")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EvaluationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int>("StageId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EvaluationId");
-
-                    b.HasIndex("StageId");
-
-                    b.ToTable("EvaluationStage");
+                    b.ToTable("EvaluationLeader", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderCollaborator", b =>
@@ -1367,7 +1335,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("LeaderStageId");
 
-                    b.ToTable("LeaderCollaborator");
+                    b.ToTable("LeaderCollaborator", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderStage", b =>
@@ -1410,7 +1378,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("StageId");
 
-                    b.ToTable("LeaderStage");
+                    b.ToTable("LeaderStage", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.Period", b =>
@@ -1446,14 +1414,15 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Period");
+                    b.ToTable("Period", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.AuditEntity", b =>
@@ -1486,17 +1455,17 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("KeyValues")
                         .IsRequired()
-                        .HasMaxLength(2147483647)
+                        .HasMaxLength(5000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NewValues")
                         .IsRequired()
-                        .HasMaxLength(2147483647)
+                        .HasMaxLength(100000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OldValues")
                         .IsRequired()
-                        .HasMaxLength(2147483647)
+                        .HasMaxLength(100000)
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TableName")
@@ -1516,11 +1485,13 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Action")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Controller")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -1539,7 +1510,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Entity")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
@@ -1548,11 +1520,13 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Method")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PathEndpoint")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -1960,9 +1934,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasOne("Domain.Main.Config.Formula", "Formula")
                         .WithMany("Subcomponents")
-                        .HasForeignKey("FormulaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("FormulaId");
 
                     b.Navigation("Area");
 
@@ -1978,8 +1950,8 @@ namespace Infrastructure.Main.Migrations
                         .HasForeignKey("ChargeId");
 
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
-                        .WithOne("SubcomponentValue")
-                        .HasForeignKey("Domain.Main.Config.SubcomponentValue", "SubcomponentId")
+                        .WithMany("SubcomponentValues")
+                        .HasForeignKey("SubcomponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2089,6 +2061,12 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.EvaResult.EvaluationComponentStage", "EvaluationComponentStage")
+                        .WithMany("ComponentCollaboratorStages")
+                        .HasForeignKey("EvaluationComponentStageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Domain.Main.Config.Stage", "Stage")
                         .WithMany("ComponentCollaboratorStages")
                         .HasForeignKey("StageId")
@@ -2097,24 +2075,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.Navigation("ComponentCollaborator");
 
-                    b.Navigation("Stage");
-                });
-
-            modelBuilder.Entity("Domain.Main.EvaResult.ComponentStage", b =>
-                {
-                    b.HasOne("Domain.Main.EvaResult.EvaluationComponent", "EvaluationComponent")
-                        .WithMany("ComponentStages")
-                        .HasForeignKey("EvaluationComponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany("ComponentStages")
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("EvaluationComponent");
+                    b.Navigation("EvaluationComponentStage");
 
                     b.Navigation("Stage");
                 });
@@ -2208,6 +2169,31 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("Evaluation");
                 });
 
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponentStage", b =>
+                {
+                    b.HasOne("Domain.Main.EvaResult.EvaluationComponent", "EvaluationComponent")
+                        .WithMany("EvaluationComponentStages")
+                        .HasForeignKey("EvaluationComponentId");
+
+                    b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
+                        .WithMany("EvaluationComponentStages")
+                        .HasForeignKey("EvaluationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Main.Config.Stage", "Stage")
+                        .WithMany("EvaluationStages")
+                        .HasForeignKey("StageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Evaluation");
+
+                    b.Navigation("EvaluationComponent");
+
+                    b.Navigation("Stage");
+                });
+
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>
                 {
                     b.HasOne("Domain.Main.Employee.Area", "Area")
@@ -2231,25 +2217,6 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("Evaluation");
 
                     b.Navigation("EvaluationCollaborator");
-                });
-
-            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationStage", b =>
-                {
-                    b.HasOne("Domain.Main.EvaResult.Evaluation", "Evaluation")
-                        .WithMany("EvaluationStages")
-                        .HasForeignKey("EvaluationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.Config.Stage", "Stage")
-                        .WithMany("EvaluationStages")
-                        .HasForeignKey("StageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Evaluation");
-
-                    b.Navigation("Stage");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderCollaborator", b =>
@@ -2384,8 +2351,6 @@ namespace Infrastructure.Main.Migrations
                 {
                     b.Navigation("ComponentCollaboratorStages");
 
-                    b.Navigation("ComponentStages");
-
                     b.Navigation("EvaluationStages");
 
                     b.Navigation("LeaderStages");
@@ -2395,8 +2360,7 @@ namespace Infrastructure.Main.Migrations
                 {
                     b.Navigation("Conducts");
 
-                    b.Navigation("SubcomponentValue")
-                        .IsRequired();
+                    b.Navigation("SubcomponentValues");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Area", b =>
@@ -2454,11 +2418,11 @@ namespace Infrastructure.Main.Migrations
                 {
                     b.Navigation("EvaluationCollaborators");
 
+                    b.Navigation("EvaluationComponentStages");
+
                     b.Navigation("EvaluationComponents");
 
                     b.Navigation("EvaluationLeaders");
-
-                    b.Navigation("EvaluationStages");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
@@ -2473,9 +2437,14 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponent", b =>
                 {
-                    b.Navigation("ComponentStages");
-
                     b.Navigation("ComponentsCollaborator");
+
+                    b.Navigation("EvaluationComponentStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponentStage", b =>
+                {
+                    b.Navigation("ComponentCollaboratorStages");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>

@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<ComponentCollaborator> builder)
         {
+            builder.ToTable(typeof(ComponentCollaborator).Name, schema: "EvaResult");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -41,14 +42,6 @@
             builder.Property(p => p.Excess)
                .IsRequired()
                .HasDefaultValue(0);
-
-            builder.Property(p => p.Comment)
-               .IsRequired()
-               .HasMaxLength(300);
-
-            builder.Property(p => p.CommentCollaborator)
-               .IsRequired()
-               .HasMaxLength(300);
 
             builder.HasOne(b => b.EvaluationComponent)
                     .WithMany(b => b.ComponentsCollaborator);

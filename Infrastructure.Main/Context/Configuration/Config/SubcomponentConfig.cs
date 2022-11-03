@@ -4,6 +4,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Subcomponent> builder)
         {
+            builder.ToTable(typeof(Subcomponent).Name, schema: "Config");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 

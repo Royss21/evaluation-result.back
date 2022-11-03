@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Evaluation> builder)
         {
+            builder.ToTable(typeof(Evaluation).Name, schema: "EvaResult");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -29,7 +30,7 @@
             builder.HasMany(c => c.EvaluationLeaders)
                 .WithOne(e => e.Evaluation);
 
-            builder.HasMany(c => c.EvaluationStages)
+            builder.HasMany(c => c.EvaluationComponentStages)
                 .WithOne(e => e.Evaluation);
 
             builder.HasOne(c => c.Period)

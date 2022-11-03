@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<LeaderStage> builder)
         {
+            builder.ToTable(typeof(LeaderStage).Name, schema: "EvaResult");
             builder.HasOne(b => b.EvaluationLeader)
              .WithMany(b => b.LeaderStages);
 

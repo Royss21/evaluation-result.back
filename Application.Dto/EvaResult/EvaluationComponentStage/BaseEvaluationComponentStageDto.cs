@@ -1,6 +1,6 @@
-﻿namespace Application.Dto.EvaResult.ComponentStage
+﻿namespace Application.Dto.EvaResult.EvaluationComponentStage
 {
-    public class BaseComponentStageDto
+    public class BaseEvaluationComponentStageDto
     {
         public int EvaluationComponentId { get; set; }
         public int StageId { get; set; }

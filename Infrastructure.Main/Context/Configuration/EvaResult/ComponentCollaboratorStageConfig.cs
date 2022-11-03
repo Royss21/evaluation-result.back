@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<ComponentCollaboratorStage> builder)
         {
+            builder.ToTable(typeof(ComponentCollaboratorStage).Name, schema: "EvaResult");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
@@ -19,6 +20,10 @@
 
             builder.HasOne(b => b.Stage)
                .WithMany(b => b.ComponentCollaboratorStages);
+
+            builder.HasOne(b => b.EvaluationComponentStage)
+              .WithMany(b => b.ComponentCollaboratorStages);
+
         }
     }
 }

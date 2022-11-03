@@ -31,12 +31,11 @@ namespace Infrastructure.UnitOfWork
         public IComponentCollaboratorDetailRepository ComponentCollaboratorDetailRepository { get; }
         public IComponentCollaboratorRepository ComponentCollaboratorRepository { get; }
         public IComponentCollaboratorStageRepository ComponentCollaboratorStageRepository { get; }
-        public IComponentStageRepository ComponentStageRepository { get; }
         public IEvaluationCollaboratorRepository EvaluationCollaboratorRepository { get; }
         public IEvaluationComponentRepository EvaluationComponentRepository { get; }
         public IEvaluationLeaderRepository EvaluationLeaderRepository { get; }
         public IEvaluationRepository EvaluationRepository { get; }
-        public IEvaluationStageRepository EvaluationStageRepository { get; }
+        public IEvaluationComponentStageRepository EvaluationComponentStageRepository { get; }
         public ILeaderCollaboratorRepository LeaderCollaboratorRepository { get; }
         public ILeaderStageRepository LeaderStageRepository { get; }
         public IPeriodRepository PeriodRepository { get; }
@@ -61,12 +60,11 @@ namespace Infrastructure.UnitOfWork
             ComponentCollaboratorDetailRepository = new ComponentCollaboratorDetailRepository(context);
             ComponentCollaboratorRepository = new ComponentCollaboratorRepository(context);
             ComponentCollaboratorStageRepository = new ComponentCollaboratorStageRepository(context);
-            ComponentStageRepository = new ComponentStageRepository(context);
             EvaluationCollaboratorRepository = new EvaluationCollaboratorRepository(context);
             EvaluationComponentRepository = new EvaluationComponentRepository(context);
             EvaluationLeaderRepository = new EvaluationLeaderRepository(context);
             EvaluationRepository = new EvaluationRepository(context);
-            EvaluationStageRepository = new EvaluationStageRepository(context);
+            EvaluationComponentStageRepository = new EvaluationComponentStageRepository(context);
             LeaderCollaboratorRepository = new LeaderCollaboratorRepository(context);
             LeaderStageRepository = new LeaderStageRepository(context);
             PeriodRepository = new PeriodRepository(context);

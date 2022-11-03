@@ -4,6 +4,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Hierarchy> builder)
         {
+            builder.ToTable(typeof(Hierarchy).Name, schema: "Employee");
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);

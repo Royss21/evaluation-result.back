@@ -4,6 +4,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<LabelDetail> builder)
         {
+            builder.ToTable(typeof(LabelDetail).Name, schema: "Config");
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);

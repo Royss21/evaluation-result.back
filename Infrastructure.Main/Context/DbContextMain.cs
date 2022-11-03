@@ -58,12 +58,11 @@
         public DbSet<ComponentCollaboratorConduct> ComponentCollaboratorConduct { get; set; }
         public DbSet<ComponentCollaboratorDetail> ComponentCollaboratorDetail { get; set; }
         public DbSet<ComponentCollaboratorStage> ComponentCollaboratorStage { get; set; }
-        public DbSet<ComponentStage> ComponentStage { get; set; }
         public DbSet<Evaluation> Evaluation { get; set; }
         public DbSet<EvaluationCollaborator> EvaluationCollaborator { get; set; }
         public DbSet<EvaluationComponent> EvaluationComponent { get; set; }
         public DbSet<EvaluationLeader> EvaluationLeader { get; set; }
-        public DbSet<EvaluationStage> EvaluationStage { get; set; }
+        public DbSet<EvaluationComponentStage> EvaluationStage { get; set; }
         public DbSet<LeaderCollaborator> LeaderCollaborator { get; set; }
         public DbSet<LeaderStage> LeaderStage { get; set; }
         public DbSet<Period> Period { get; set; }
@@ -109,12 +108,11 @@
                 .ApplyConfiguration(new ComponentCollaboratorConductConfig())
                 .ApplyConfiguration(new ComponentCollaboratorDetailConfig())
                 .ApplyConfiguration(new ComponentCollaboratorStageConfig())
-                .ApplyConfiguration(new ComponentStageConfig())
                 .ApplyConfiguration(new EvaluationCollaboratorConfig())
                 .ApplyConfiguration(new EvaluationComponentConfig())
                 .ApplyConfiguration(new EvaluationConfig())
                 .ApplyConfiguration(new EvaluationLeaderConfig())
-                .ApplyConfiguration(new EvaluationStageConfig())
+                .ApplyConfiguration(new EvaluationComponentStageConfig())
                 .ApplyConfiguration(new LeaderCollaboratorConfig())
                 .ApplyConfiguration(new LeaderStageConfig())
                 .ApplyConfiguration(new PeriodConfig())

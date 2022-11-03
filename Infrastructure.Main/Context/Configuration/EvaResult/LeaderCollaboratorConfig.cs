@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<LeaderCollaborator> builder)
         {
+            builder.ToTable(typeof(LeaderCollaborator).Name, schema: "EvaResult");
             builder.HasOne(b => b.LeaderStage)
                 .WithMany(b => b.LeaderCollaborators);
 

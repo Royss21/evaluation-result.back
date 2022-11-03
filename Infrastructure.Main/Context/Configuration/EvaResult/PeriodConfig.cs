@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Period> builder)
         {
+            builder.ToTable(typeof(Period).Name, schema: "EvaResult");
             builder.Property(p => p.StartDate)
                         .IsRequired();
 

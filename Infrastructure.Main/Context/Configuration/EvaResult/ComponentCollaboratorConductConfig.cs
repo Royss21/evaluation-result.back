@@ -6,6 +6,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<ComponentCollaboratorConduct> builder)
         {
+            builder.ToTable(typeof(ComponentCollaboratorConduct).Name, schema: "EvaResult");
             builder.Property(p => p.LevelName)
                 .IsRequired()
                 .HasMaxLength(100);

@@ -1,7 +1,6 @@
 ﻿
 namespace Application.Main.Services.EvaResult
 {
-    using Application.Dto.EvaResult.ComponentStage;
     using Application.Dto.EvaResult.EvaluationComponent;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;

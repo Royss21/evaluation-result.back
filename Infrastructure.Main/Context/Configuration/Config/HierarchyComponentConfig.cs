@@ -4,6 +4,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<HierarchyComponent> builder)
         {
+            builder.ToTable(typeof(HierarchyComponent).Name, schema: "Config");
             builder.Property(p => p.Weight)
                 .IsRequired()
                 .HasDefaultValue(0);

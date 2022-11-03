@@ -10,7 +10,6 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
     using Domain.Main.Config;
-    using Domain.Main.Employee;
     using Domain.Main.EvaResult;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -22,10 +21,12 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<EvaluationDto> CreateAsync(EvaluationCreateDto request)
         {
-            if (!request.EvaluationComponentsDto.Any())
+            if (!request.EvaluationComponentsCreateDto.Any())
                 throw new WarningException("No hay ningun componente seleccionado para la evaluacion.");
 
-            if (request.EvaluationComponentsDto.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && !request.ComponentStagesDto.Any())
+            if (request.EvaluationComponentsCreateDto.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && 
+                !request.EvaluationComponentStagesCreateDto.Where(w=> w.ComponentId == GeneralConstants.Component.Competencies).Any()
+                )
                 throw new WarningException("No seleccionado las etapas del componente de COMPETENCIAS");
 
             var evaluation = _mapper.Map<Evaluation>(request);
@@ -39,29 +40,18 @@ namespace Application.Main.Services.EvaResult
             }
 
             var currentDate = DateTime.UtcNow.GetDatePeru();
+            var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsCreateDto);
+            var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
+            
+            evaluation.EvaluationComponents = evaluationComponents;
+            evaluation.EvaluationCollaborators = await RegisterCollaboratorsInEvaluation(currentDate);
+            evaluation.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto.Where(w => w.ComponentId is null));
             evaluation.StatusId = request.IsEvaluationTest
                                         ? GeneralConstants.StatusGenerals.Test
                                         : currentDate.RangeDateBetween(evaluation.StartDate, evaluation.EndDate)
                                             ? GeneralConstants.StatusGenerals.InProgress
                                             : GeneralConstants.StatusGenerals.Create;
 
-            var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsDto);
-            evaluationComponents.ForEach(ec => {
-
-                if (ec.ComponentId == GeneralConstants.Component.Competencies)
-                {
-                    var componentStages = _mapper.Map<List<ComponentStage>>(request.ComponentStagesDto);
-                    componentStages.ForEach(cs => cs.EvaluationComponentId = ec.Id);
-                    ec.ComponentStages = componentStages;
-                }
-
-                ec.StatusId = GeneralConstants.StatusGenerals.Create;
-            });
-
-            evaluation.EvaluationComponents = evaluationComponents;
-            evaluation.EvaluationCollaborators = await RegisterCollaboratorsInEvaluation(currentDate);
-
-            var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
             foreach (var evaluationComponent in evaluation.EvaluationComponents)
             {
                 var hierarchiesComponent = dataConfigurations.Item1;
@@ -88,8 +78,22 @@ namespace Application.Main.Services.EvaResult
 
                     if (!conducts.Any())
                         throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+
+                    evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto);
+                }
+                else
+                {
+                    var evaluationComponentDto = request.EvaluationComponentsCreateDto.First(ec => ec.ComponentId == evaluationComponent.ComponentId);
+                    evaluationComponent.EvaluationComponentStages = new List<EvaluationComponentStage> { 
+                        new EvaluationComponentStage { 
+                            StageId = GeneralConstants.Stages.Evaluation,
+                            StartDate = evaluationComponentDto.StartDate,
+                            EndDate = evaluationComponentDto.EndDate
+                        } 
+                    };
                 }
 
+                evaluationComponent.StatusId = GeneralConstants.StatusGenerals.Create;
                 evaluationComponent.ComponentsCollaborator = evaluation.EvaluationCollaborators
                     .Select(ec =>
                     {
@@ -104,6 +108,8 @@ namespace Application.Main.Services.EvaResult
                                         
                                         return new ComponentCollaboratorDetail
                                         {
+                                            FormulaName = "",
+                                            FormulaQuery = "",
                                             SubcomponentName = s.Name,
                                             ComponentCollaboratorConducts = conducts.Where(c => 
                                                             c.SubcomponentId == s.Id && 
@@ -133,11 +139,10 @@ namespace Application.Main.Services.EvaResult
                                             FormulaQuery = s.Formula?.FormulaQuery ?? "",
                                         };
                                     }).ToList();
-                        
-
 
                         return new ComponentCollaborator
                         {
+                            EvaluationCollaborator = ec,
                             WeightHierarchy = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Weight,
                             HierarchyName = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Hierarchy.Name,
                             StatusId = GeneralConstants.StatusGenerals.Create,
@@ -146,6 +151,8 @@ namespace Application.Main.Services.EvaResult
                     
                     }).ToList();
             }
+
+
 
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
             await _unitOfWorkApp.SaveChangesAsync();

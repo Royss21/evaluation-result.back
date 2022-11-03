@@ -7,7 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<EvaluationLeader> builder)
         {
-
+            builder.ToTable(typeof(EvaluationLeader).Name, schema: "EvaResult");
             builder.HasOne(b => b.EvaluationCollaborator)
                .WithOne(b => b.EvaluationLeader);
 

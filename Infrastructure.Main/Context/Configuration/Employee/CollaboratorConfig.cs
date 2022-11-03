@@ -5,6 +5,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Collaborator> builder)
         {
+            builder.ToTable(typeof(Collaborator).Name, schema: "Employee");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 

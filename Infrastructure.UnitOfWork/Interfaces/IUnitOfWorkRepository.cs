@@ -29,12 +29,11 @@ namespace Infrastructure.UnitOfWork.Interfaces
         IComponentCollaboratorDetailRepository ComponentCollaboratorDetailRepository { get; }
         IComponentCollaboratorRepository ComponentCollaboratorRepository { get; }
         IComponentCollaboratorStageRepository ComponentCollaboratorStageRepository { get; }
-        IComponentStageRepository ComponentStageRepository { get; }
         IEvaluationCollaboratorRepository EvaluationCollaboratorRepository { get; }
         IEvaluationComponentRepository EvaluationComponentRepository { get; }
         IEvaluationLeaderRepository EvaluationLeaderRepository { get; }
         IEvaluationRepository EvaluationRepository { get; }
-        IEvaluationStageRepository EvaluationStageRepository { get; }
+        IEvaluationComponentStageRepository EvaluationComponentStageRepository { get; }
         ILeaderCollaboratorRepository LeaderCollaboratorRepository { get; }
         ILeaderStageRepository LeaderStageRepository { get; }
         IPeriodRepository PeriodRepository { get; }

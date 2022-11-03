@@ -4,6 +4,8 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Component> builder)
         {
+            builder.ToTable(typeof(Component).Name, schema: "Config");
+
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);

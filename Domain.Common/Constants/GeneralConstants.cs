@@ -26,5 +26,13 @@
             public const int Complete = 5;
             public const int Finalized = 6;
         }
+
+        public class Stages
+        {
+            public const int Evaluation = 1;
+            public const int Calibration = 2;
+            public const int Feedback = 3;
+            public const int Approval = 4;
+        }
     }
 }

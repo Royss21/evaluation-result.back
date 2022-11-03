@@ -7,6 +7,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<EvaluationCollaborator> builder)
         {
+            builder.ToTable(typeof(EvaluationCollaborator).Name, schema: "EvaResult");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 

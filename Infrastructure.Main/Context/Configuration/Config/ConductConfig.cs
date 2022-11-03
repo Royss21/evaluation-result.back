@@ -4,6 +4,8 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Conduct> builder)
         {
+            builder.ToTable(typeof(Conduct).Name, schema: "Config");
+
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
