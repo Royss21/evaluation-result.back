@@ -6,7 +6,7 @@
     {
         public EvaluationComponentStage()
         {
-            ComponentCollaboratorStages = new HashSet<ComponentCollaboratorStage>();
+            ComponentCollaboratorStages = new HashSet<ComponentCollaboratorComment>();
         }
 
         public Guid EvaluationId { get; set; }
@@ -22,6 +22,6 @@
         public virtual Evaluation Evaluation { get; set; }
         public virtual Stage Stage { get; set; }
         public virtual EvaluationComponent? EvaluationComponent { get; set; }
-        public virtual ICollection<ComponentCollaboratorStage> ComponentCollaboratorStages { get; set; }
+        public virtual ICollection<ComponentCollaboratorComment> ComponentCollaboratorStages { get; set; }
     }
 }

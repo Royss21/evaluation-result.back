@@ -9,6 +9,7 @@
         {
             ComponentsCollaborator = new HashSet<ComponentCollaborator>();
             LeaderCollaborators = new HashSet<LeaderCollaborator>();
+            ComponentCollaboratorComments = new HashSet<ComponentCollaboratorComment>();
         }
 
         public Guid EvaluationId { get; set; }
@@ -33,5 +34,6 @@
         public virtual EvaluationLeader EvaluationLeader { get; set; }
         public virtual ICollection<ComponentCollaborator> ComponentsCollaborator { get; set; }
         public virtual ICollection<LeaderCollaborator> LeaderCollaborators { get; set; }
+        public virtual ICollection<ComponentCollaboratorComment> ComponentCollaboratorComments { get; set; }
     }
 }

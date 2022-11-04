@@ -57,7 +57,7 @@
         public DbSet<ComponentCollaborator> ComponentCollaborator { get; set; }
         public DbSet<ComponentCollaboratorConduct> ComponentCollaboratorConduct { get; set; }
         public DbSet<ComponentCollaboratorDetail> ComponentCollaboratorDetail { get; set; }
-        public DbSet<ComponentCollaboratorStage> ComponentCollaboratorStage { get; set; }
+        public DbSet<ComponentCollaboratorComment> ComponentCollaboratorStage { get; set; }
         public DbSet<Evaluation> Evaluation { get; set; }
         public DbSet<EvaluationCollaborator> EvaluationCollaborator { get; set; }
         public DbSet<EvaluationComponent> EvaluationComponent { get; set; }
@@ -107,7 +107,7 @@
                 .ApplyConfiguration(new ComponentCollaboratorConfig())
                 .ApplyConfiguration(new ComponentCollaboratorConductConfig())
                 .ApplyConfiguration(new ComponentCollaboratorDetailConfig())
-                .ApplyConfiguration(new ComponentCollaboratorStageConfig())
+                .ApplyConfiguration(new ComponentCollaboratorCommentConfig())
                 .ApplyConfiguration(new EvaluationCollaboratorConfig())
                 .ApplyConfiguration(new EvaluationComponentConfig())
                 .ApplyConfiguration(new EvaluationConfig())

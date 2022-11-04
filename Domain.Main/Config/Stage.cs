@@ -7,7 +7,6 @@ namespace Domain.Main.Config
         public Stage()
         {
             EvaluationStages = new HashSet<EvaluationComponentStage>();
-            ComponentCollaboratorStages = new HashSet<ComponentCollaboratorStage>();
             LeaderStages = new HashSet<LeaderStage>();
         }
 
@@ -18,7 +17,6 @@ namespace Domain.Main.Config
 
 
         public virtual ICollection<EvaluationComponentStage> EvaluationStages { get; set; }
-        public virtual ICollection<ComponentCollaboratorStage> ComponentCollaboratorStages { get; set; }
         public virtual ICollection<LeaderStage> LeaderStages { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Infrastructure.Main.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    partial class DbContextMainModelSnapshot : ModelSnapshot
+    [Migration("20221103151752_dos")]
+    partial class dos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -833,52 +835,6 @@ namespace Infrastructure.Main.Migrations
                     b.ToTable("ComponentCollaborator", "EvaResult");
                 });
 
-            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorComment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUser")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EditUser")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid>("EvaluationCollaboratorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("EvaluationComponentStageId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EvaluationCollaboratorId");
-
-                    b.HasIndex("EvaluationComponentStageId");
-
-                    b.ToTable("ComponentCollaboratorComment", "EvaResult");
-                });
-
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorConduct", b =>
                 {
                     b.Property<int>("Id")
@@ -1023,6 +979,52 @@ namespace Infrastructure.Main.Migrations
                     b.HasIndex("ComponentCollaboratorId");
 
                     b.ToTable("ComponentCollaboratorDetail", "EvaResult");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorStage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("ComponentCollaboratorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("EvaluationComponentStageId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentCollaboratorId");
+
+                    b.HasIndex("EvaluationComponentStageId");
+
+                    b.ToTable("ComponentCollaboratorStage", "EvaResult");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
@@ -2026,25 +2028,6 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("EvaluationComponent");
                 });
 
-            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorComment", b =>
-                {
-                    b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
-                        .WithMany("ComponentCollaboratorComments")
-                        .HasForeignKey("EvaluationCollaboratorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.EvaResult.EvaluationComponentStage", "EvaluationComponentStage")
-                        .WithMany("ComponentCollaboratorStages")
-                        .HasForeignKey("EvaluationComponentStageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("EvaluationCollaborator");
-
-                    b.Navigation("EvaluationComponentStage");
-                });
-
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorConduct", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.ComponentCollaboratorDetail", "ComponentCollaboratorDetail")
@@ -2065,6 +2048,25 @@ namespace Infrastructure.Main.Migrations
                         .IsRequired();
 
                     b.Navigation("ComponentCollaborator");
+                });
+
+            modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorStage", b =>
+                {
+                    b.HasOne("Domain.Main.EvaResult.ComponentCollaborator", "ComponentCollaborator")
+                        .WithMany("ComponentCollaboratorStages")
+                        .HasForeignKey("ComponentCollaboratorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Main.EvaResult.EvaluationComponentStage", "EvaluationComponentStage")
+                        .WithMany("ComponentCollaboratorStages")
+                        .HasForeignKey("EvaluationComponentStageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ComponentCollaborator");
+
+                    b.Navigation("EvaluationComponentStage");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.Evaluation", b =>
@@ -2390,6 +2392,8 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
                 {
                     b.Navigation("ComponentCollaboratorDetails");
+
+                    b.Navigation("ComponentCollaboratorStages");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorDetail", b =>
@@ -2410,8 +2414,6 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
                 {
-                    b.Navigation("ComponentCollaboratorComments");
-
                     b.Navigation("ComponentsCollaborator");
 
                     b.Navigation("EvaluationLeader")

@@ -28,7 +28,7 @@ namespace Infrastructure.UnitOfWork.Interfaces
         IComponentCollaboratorConductRepository ComponentCollaboratorConductRepository { get; }
         IComponentCollaboratorDetailRepository ComponentCollaboratorDetailRepository { get; }
         IComponentCollaboratorRepository ComponentCollaboratorRepository { get; }
-        IComponentCollaboratorStageRepository ComponentCollaboratorStageRepository { get; }
+        IComponentCollaboratorCommentRepository ComponentCollaboratorStageRepository { get; }
         IEvaluationCollaboratorRepository EvaluationCollaboratorRepository { get; }
         IEvaluationComponentRepository EvaluationComponentRepository { get; }
         IEvaluationLeaderRepository EvaluationLeaderRepository { get; }

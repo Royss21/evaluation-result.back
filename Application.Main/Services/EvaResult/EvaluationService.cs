@@ -26,10 +26,9 @@ namespace Application.Main.Services.EvaResult
 
             if (request.EvaluationComponentsCreateDto.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && 
                 !request.EvaluationComponentStagesCreateDto.Where(w=> w.ComponentId == GeneralConstants.Component.Competencies).Any()
-                )
+               )
                 throw new WarningException("No seleccionado las etapas del componente de COMPETENCIAS");
 
-            var evaluation = _mapper.Map<Evaluation>(request);
             if (!request.IsEvaluationTest)
             {
                 var countEvaluations = await CountEvaluationsCurrentPeriod();
@@ -39,6 +38,7 @@ namespace Application.Main.Services.EvaResult
                     throw new WarningException($"Llegó al limite de {countEvaluationsConfig} evaluaciones por periodo");
             }
 
+            var evaluation = _mapper.Map<Evaluation>(request);
             var currentDate = DateTime.UtcNow.GetDatePeru();
             var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsCreateDto);
             var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
@@ -51,6 +51,8 @@ namespace Application.Main.Services.EvaResult
                                         : currentDate.RangeDateBetween(evaluation.StartDate, evaluation.EndDate)
                                             ? GeneralConstants.StatusGenerals.InProgress
                                             : GeneralConstants.StatusGenerals.Create;
+            evaluation.EvaluationCollaborators.ForEach(ec => ec.ComponentCollaboratorComments = evaluation.EvaluationComponentStages
+                                                                   .Select(ecs => new ComponentCollaboratorComment { EvaluationComponentStage = ecs }).ToList());
 
             foreach (var evaluationComponent in evaluation.EvaluationComponents)
             {
@@ -79,7 +81,8 @@ namespace Application.Main.Services.EvaResult
                     if (!conducts.Any())
                         throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
 
-                    evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto);
+                    evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto
+                                                                                                                        .Where(w => w.ComponentId is not null));
                 }
                 else
                 {
@@ -93,66 +96,67 @@ namespace Application.Main.Services.EvaResult
                     };
                 }
 
-                evaluationComponent.StatusId = GeneralConstants.StatusGenerals.Create;
-                evaluationComponent.ComponentsCollaborator = evaluation.EvaluationCollaborators
-                    .Select(ec =>
+                foreach (var ec in evaluation.EvaluationCollaborators)
+                {
+                    evaluationComponent.EvaluationComponentStages.ForEach(ecs => ec.ComponentCollaboratorComments
+                                                                                    .Add(new ComponentCollaboratorComment { EvaluationComponentStage = ecs}));
+
+                    var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
+
+                    if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
+                        componentCollaboratorDetails = subcomponents
+                                .Select(s =>
+                                {
+                                    var conductsByLevel = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
+                                                                    .ToList();
+
+                                    return new ComponentCollaboratorDetail
+                                    {
+                                        FormulaName = "",
+                                        FormulaQuery = "",
+                                        SubcomponentName = s.Name,
+                                        ComponentCollaboratorConducts = conducts.Where(c =>
+                                                        c.SubcomponentId == s.Id &&
+                                                        c.LevelId == ec.LevelId
+                                            ).Select(c => new ComponentCollaboratorConduct
+                                            {
+                                                ConductDescription = c.Description,
+                                                LevelName = levels.First(l => l.Id == ec.LevelId).Name
+                                            }).ToList()
+                                    };
+                                }).ToList();
+
+                    else
+                        componentCollaboratorDetails = subcomponents
+                                .Where(s => s.AreaId == ec.AreaId && s.SubcomponentValues.Select(sv => sv.ChargeId).Contains(ec.ChargeId))
+                                .Select(s =>
+                                {
+                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.ChargeId == ec.ChargeId);
+
+                                    return new ComponentCollaboratorDetail
+                                    {
+                                        SubcomponentName = s.Name,
+                                        WeightRelative = subcomponentValue.RelativeWeight,
+                                        MinimunPercentage = subcomponentValue.MinimunPercentage,
+                                        MaximunPercentage = subcomponentValue.MaximunPercentage,
+                                        FormulaName = s.Formula?.Name ?? "",
+                                        FormulaQuery = s.Formula?.FormulaQuery ?? "",
+                                    };
+                                }).ToList();
+
+                    evaluationComponent.ComponentsCollaborator.Add(new ComponentCollaborator
                     {
-                        var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
+                        EvaluationCollaborator = ec,
+                        StatusId = GeneralConstants.StatusGenerals.Create,
+                        WeightHierarchy = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Weight,
+                        HierarchyName = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Hierarchy.Name,
+                        ComponentCollaboratorDetails = componentCollaboratorDetails
+                    });
+                }
 
-                        if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
-                            componentCollaboratorDetails = subcomponents
-                                    .Select(s =>
-                                    {
-                                        var conductsByLevel = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
-                                                                        .ToList();
-                                        
-                                        return new ComponentCollaboratorDetail
-                                        {
-                                            FormulaName = "",
-                                            FormulaQuery = "",
-                                            SubcomponentName = s.Name,
-                                            ComponentCollaboratorConducts = conducts.Where(c => 
-                                                            c.SubcomponentId == s.Id && 
-                                                            c.LevelId == ec.LevelId
-                                                ).Select(c => new ComponentCollaboratorConduct
-                                                {
-                                                    ConductDescription = c.Description,
-                                                    LevelName = levels.First(l => l.Id == ec.LevelId).Name
-                                                }).ToList()
-                                        };
-                                    }).ToList();
-                        
-                        else
-                            componentCollaboratorDetails = subcomponents
-                                    .Where(s => s.AreaId == ec.AreaId && s.SubcomponentValues.Select(sv => sv.ChargeId).Contains(ec.ChargeId))
-                                    .Select(s =>
-                                    {
-                                        var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.ChargeId == ec.ChargeId);
-                                        
-                                        return new ComponentCollaboratorDetail
-                                        {
-                                            SubcomponentName = s.Name,
-                                            WeightRelative = subcomponentValue.RelativeWeight,
-                                            MinimunPercentage = subcomponentValue.MinimunPercentage,
-                                            MaximunPercentage = subcomponentValue.MaximunPercentage,
-                                            FormulaName = s.Formula?.Name ?? "",
-                                            FormulaQuery = s.Formula?.FormulaQuery ?? "",
-                                        };
-                                    }).ToList();
-
-                        return new ComponentCollaborator
-                        {
-                            EvaluationCollaborator = ec,
-                            WeightHierarchy = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Weight,
-                            HierarchyName = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Hierarchy.Name,
-                            StatusId = GeneralConstants.StatusGenerals.Create,
-                            ComponentCollaboratorDetails = componentCollaboratorDetails,
-                        };
-                    
-                    }).ToList();
+                evaluationComponent.EvaluationComponentStages.ForEach(ecs => ecs.Evaluation = evaluation );
+                evaluationComponent.StatusId = GeneralConstants.StatusGenerals.Create;
             }
-
-
 
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
             await _unitOfWorkApp.SaveChangesAsync();

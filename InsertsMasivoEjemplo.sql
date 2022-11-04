@@ -1,29 +1,29 @@
-﻿insert into Level
+﻿insert into Config.Level
 (name, Description, CreateUser, CreateDate)
 values
 ('Nivel 1','','rmartel','Oct 31 2022 10:31PM'),
 ('Nivel 2','','rmartel','Oct 31 2022 10:31PM'),
 ('Nivel 3','','rmartel','Oct 31 2022 10:31PM')
 
-insert into Gerency (name, CreateUser, CreateDate)
+insert into Employee.Gerency (name, CreateUser, CreateDate)
 values
 ('Gerencia 1','rmartel','Oct 31 2022 10:30PM')
 
 
-insert into Area (GerencyId, name, CreateUser, CreateDate)
+insert into Employee.Area (GerencyId, name, CreateUser, CreateDate)
 values
 (1, 'Area 1','system','Oct 31 2022 10:30PM'),
 (1, 'Area 2','system','Oct 31 2022 10:30PM')
 
 
-insert into Hierarchy(LevelId, name, CreateUser, CreateDate)
+insert into Employee.Hierarchy(LevelId, name, CreateUser, CreateDate)
 values
 (1,'Gerente General','rmartel','Oct 31 2022 10:30PM'),
 (2,'Sub Gerente','rmartel','Oct 31 2022 10:30PM'),
 (3,'Jefe','rmartel','Oct 31 2022 10:30PM')
 
 
-insert into Charge (AreaId, HierarchyId, name, CreateUser, CreateDate)
+insert into Employee.Charge (AreaId, HierarchyId, name, CreateUser, CreateDate)
 values
 (1,1,'Cargo 1 Area 1','rmartel','Oct 31 2022 10:30PM'),
 (1,2,'Cargo 2 Area 1','rmartel','Oct 31 2022 10:30PM'),
@@ -32,7 +32,7 @@ values
 (2,2,'Cargo 2 Area 2','rmartel','Oct 31 2022 10:30PM'),
 (2,3,'Cargo 3 Area 2','rmartel','Oct 31 2022 10:30PM')
 
-insert into Period (name, StartDate, EndDate, CreateUser, CreateDate)
+insert into EvaResult.Period (name, StartDate, EndDate, CreateUser, CreateDate)
 values ('Period 1','2022-10-25 22:08:13.9550000','2022-10-25 22:08:13.9550000','system','Oct 31 2022 10:30PM')
 
 
@@ -45,14 +45,14 @@ values
 ('c379a686-897f-47f2-bebb-0cc3e5bb29d7',5,'33333333','Fernanda','Rofriguez','Fernanda','fer@acity.com.pe',4258,'1991-05-15 00:00:00.0000000','2020-05-01 00:00:00.0000000','2022-10-31 00:00:00.0000000','rmartel','Oct 31 2022 10:31PM',0),
 ('f39b64f3-7359-4b7d-ae71-2f3aff538ffc',6,'15151515','Hector','Julio','Hector','hec@acity.com.pe',2131,'1995-10-02 00:00:00.0000000','2022-09-10 00:00:00.0000000','2022-10-31 00:00:00.0000000','rmartel','Oct 31 2022 10:31PM',0)
 
-insert into Component
+insert into Config.Component
 (name, CreateUser, CreateDate, IsDeleted)
 values
 ('Objetivos Corporativos', 'rmartel', getdate(), 0),
 ('Objetivos de Area', 'rmartel', getdate(), 0),
 ('Competencias', 'rmartel', getdate(), 0)
 
-insert into HierarchyComponent (HierarchyId, ComponentId, Weight, CreateUser, CreateDate, IsDeleted)
+insert into Config.HierarchyComponent (HierarchyId, ComponentId, Weight, CreateUser, CreateDate, IsDeleted)
 values
 (1, 1, 20, 'rmartel', getdate(), 0),
 (1, 2, 50, 'rmartel', getdate(), 0),
@@ -64,14 +64,12 @@ values
 (3, 2, 50, 'rmartel', getdate(), 0),
 (3, 3, 30, 'rmartel', getdate(), 0)
 
-insert into Formula (id, name, Description, FormulaQuery, FormulaReal, CreateUser, CreateDate, IsDeleted)
+insert into Config.Formula (id, name, Description, FormulaQuery, FormulaReal, CreateUser, CreateDate, IsDeleted)
 values
 ('E43C9497-BC6D-465E-8832-FBF961636A2A','Formula 1', 'formula 1111','IIF(2>5, 5*2,  3*2)', 'SI(2>5, 5*2,  3*2)', 'rmartel', getdate(), 0)
 
-select * from SubcomponentValue
 
-
-insert into Subcomponent
+insert into Config.Subcomponent
 (id, ComponentId, AreaId, FormulaId, Name, Description, CreateUser, CreateDate, IsDeleted)
 values
 ('A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 1, 1, null, 'Subcomponente 1 OBJCORP', '', 'rmartel', getdate(), 0),
@@ -88,7 +86,7 @@ values
 ('42B76A33-E812-44BB-98A1-605F880C2ED6', 3, null, null, 'Subcomponente 12 COMPETE', '', 'rmartel', getdate(), 0)
 
 
-insert into SubcomponentValue
+insert into Config.SubcomponentValue
 (id, SubcomponentId, ChargeId, RelativeWeight, MinimunPercentage, MaximunPercentage, CreateUser, CreateDate, IsDeleted)
 values
 
@@ -122,7 +120,7 @@ values
 (newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 5, 20, 78, 85, 'rmartel', getdate(), 0),
 (newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 6, 25, 82, 100, 'rmartel', getdate(), 0)
 
-insert into Conduct
+insert into Config.Conduct
 (id, LevelId, SubcomponentId, IsActive, Description, CreateUser, CreateDate, IsDeleted)
 values
 (newid(),1 ,'D38F679E-A6A5-403C-99F0-032F3528B534',1, 'Conducta 1', 'rmartel', getdate(), 0),
@@ -143,10 +141,12 @@ values
 (newid(),3 ,'99654822-D86A-4C0C-AC83-859C9BA2A0F5',1, 'Conducta 10', 'rmartel', getdate(), 0)
 
 
-insert into Stage
+insert into Config.Stage
 (Name, CreateUser, CreateDate, IsDeleted)
 values
 ('Evaluacion','rmartel', getdate(), 0),
 ('Calibracion','rmartel', getdate(), 0),
 ('Feedback','rmartel', getdate(), 0),
 ('Visto Bueno','rmartel', getdate(), 0)
+
+

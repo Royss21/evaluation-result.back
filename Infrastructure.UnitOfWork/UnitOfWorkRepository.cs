@@ -30,7 +30,7 @@ namespace Infrastructure.UnitOfWork
         public IComponentCollaboratorConductRepository ComponentCollaboratorConductRepository { get; }
         public IComponentCollaboratorDetailRepository ComponentCollaboratorDetailRepository { get; }
         public IComponentCollaboratorRepository ComponentCollaboratorRepository { get; }
-        public IComponentCollaboratorStageRepository ComponentCollaboratorStageRepository { get; }
+        public IComponentCollaboratorCommentRepository ComponentCollaboratorStageRepository { get; }
         public IEvaluationCollaboratorRepository EvaluationCollaboratorRepository { get; }
         public IEvaluationComponentRepository EvaluationComponentRepository { get; }
         public IEvaluationLeaderRepository EvaluationLeaderRepository { get; }
@@ -59,7 +59,7 @@ namespace Infrastructure.UnitOfWork
             ComponentCollaboratorConductRepository = new ComponentCollaboratorConductRepository(context);
             ComponentCollaboratorDetailRepository = new ComponentCollaboratorDetailRepository(context);
             ComponentCollaboratorRepository = new ComponentCollaboratorRepository(context);
-            ComponentCollaboratorStageRepository = new ComponentCollaboratorStageRepository(context);
+            ComponentCollaboratorStageRepository = new ComponentCollaboratorCommentRepository(context);
             EvaluationCollaboratorRepository = new EvaluationCollaboratorRepository(context);
             EvaluationComponentRepository = new EvaluationComponentRepository(context);
             EvaluationLeaderRepository = new EvaluationLeaderRepository(context);

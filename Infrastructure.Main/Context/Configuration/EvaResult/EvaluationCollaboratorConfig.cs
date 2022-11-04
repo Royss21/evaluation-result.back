@@ -40,6 +40,9 @@
 
             builder.HasMany(e => e.LeaderCollaborators)
                 .WithOne(c => c.EvaluationCollaborator);
+
+            builder.HasMany(e => e.ComponentCollaboratorComments)
+                .WithOne(c => c.EvaluationCollaborator);
         }
     }
 }

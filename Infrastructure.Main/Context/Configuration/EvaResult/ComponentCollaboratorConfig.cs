@@ -52,9 +52,6 @@
             builder.HasMany(b => b.ComponentCollaboratorDetails)
                     .WithOne(b => b.ComponentCollaborator);
 
-            builder.HasMany(b => b.ComponentCollaboratorStages)
-                    .WithOne(b => b.ComponentCollaborator);
-
         }
     }
 }
