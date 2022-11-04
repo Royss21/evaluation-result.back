@@ -11,9 +11,9 @@
             public const int Competencies = 3;
 
             public static Dictionary<int, string> NameComponents = new Dictionary<int, string>{
-                {1 , "Objetivos Corporativos" },
-                {2 , "Objetivos de Area" },
-                {3 , "Competencias" }
+                {1 , "OBJETIVOS CORPORATIVOS" },
+                {2 , "OBJETIVOS DE AREA" },
+                {3 , "COMPETENCIAS" }
             };
         }
 

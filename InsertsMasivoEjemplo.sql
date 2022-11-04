@@ -150,3 +150,12 @@ values
 ('Visto Bueno','rmartel', getdate(), 0)
 
 
+--delete from EvaResult.Evaluation
+--delete from EvaResult.EvaluationComponent
+--delete from EvaResult.EvaluationCollaborator
+--delete from EvaResult.ComponentCollaboratorDetail
+--delete from EvaResult.ComponentCollaboratorConduct
+--delete from EvaResult.ComponentCollaborator
+--delete from EvaResult.EvaluationComponentStage
+--delete from EvaResult.ComponentCollaboratorComment
+
