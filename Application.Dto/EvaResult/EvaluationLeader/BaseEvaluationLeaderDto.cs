@@ -3,6 +3,7 @@
     public abstract class BaseEvaluationLeaderDto
     {
         public Guid EvaluationCollaboratorId { get; set; }
+        public int EvaluationComponentId { get; set; }
         public int? AreaId { get; set; }
         public Guid EvaluationId { get; set; }
     }

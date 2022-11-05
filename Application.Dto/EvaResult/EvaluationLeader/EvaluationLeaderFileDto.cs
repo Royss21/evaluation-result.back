@@ -9,8 +9,6 @@ namespace Application.Dto.EvaResult.EvaluationLeader
         public Guid EvaluationId { get; set; }
         public bool IsToReprocess { get; set; }
         public TypeImportLeadersEnum TypeImportLeaders { get; set; }
-
-        public List<EvaluationLeaderFileDataDto> EvaluationLeaderFileDataDto { get; set; }
     }
 
 }

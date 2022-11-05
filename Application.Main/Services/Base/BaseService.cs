@@ -1,6 +1,7 @@
 ﻿
 namespace Application.Main.Service.Base
 {
+    using ExcelDataReader;
     using Infrastructure.UnitOfWork.Interfaces;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
@@ -23,6 +24,20 @@ namespace Application.Main.Service.Base
 
             var request = httpContextAccessor?.HttpContext?.Request;
             //UsuarioActual = new UsuarioApp(httpContextAccessor?.HttpContext?.User);
+        }
+
+        public ExcelDataSetConfiguration ConfigurarDataReader()
+        {
+            return new ExcelDataSetConfiguration
+            {
+                ConfigureDataTable = _ => new ExcelDataTableConfiguration
+                {
+                    FilterRow = (rowReader) => rowReader.Depth > 2,
+                    UseHeaderRow = true,
+                    ReadHeaderRow = (rowReader) => { rowReader.Read(); rowReader.Read(); },
+                    FilterColumn = (rowReader, columnIndex) => columnIndex > 0
+                }
+            };
         }
     }
 }
