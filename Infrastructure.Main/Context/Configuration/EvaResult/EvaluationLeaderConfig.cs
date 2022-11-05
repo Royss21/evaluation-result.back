@@ -19,6 +19,9 @@
 
             builder.HasMany(b => b.LeaderStages)
               .WithOne(b => b.EvaluationLeader);
+
+            builder.HasOne(b => b.EvaluationComponent)
+              .WithMany(b => b.EvaluationLeaders);
         }
     }
 }
