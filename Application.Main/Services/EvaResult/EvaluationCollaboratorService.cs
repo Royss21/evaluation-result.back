@@ -122,7 +122,7 @@ namespace Application.Main.Services.EvaResult
                     .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id))
                     .ToListAsync();
 
-            if(leaderCollaborators.Any())
+            //if(leaderCollaborators.Any())
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }
