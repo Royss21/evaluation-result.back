@@ -21,6 +21,11 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request)
         {
+            var evaluationCollaboratorDeleted = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.CollaboratorId == request.CollaboratorId && f.IsDeleted)
+                    .OrderByDescending(o => o.CreateDate)
+                    .FirstAsync();
+
             var evaluationCollaborator = _mapper.Map<EvaluationCollaborator>(request);
             var evaluationComponents = await _unitOfWorkApp.Repository.EvaluationComponentRepository
                     .Find(f => f.EvaluationId.Equals(request.EvaluationId))
@@ -115,11 +120,13 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.SaveChangesAsync();
 
             var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
-                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id))
+                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
                     .ToListAsync();
-
             var evaluationLeaders = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
-                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id))
+                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
+                    .ToListAsync();
+            var componentCollaboratorCommnents = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
                     .ToListAsync();
 
             if (leaderCollaborators.Any())
@@ -128,6 +135,10 @@ namespace Application.Main.Services.EvaResult
             if (evaluationLeaders.Any())
                 evaluationLeaders.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
 
+            if (componentCollaboratorCommnents.Any())
+                componentCollaboratorCommnents.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
+
+            await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }
