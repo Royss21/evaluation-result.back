@@ -1,11 +1,10 @@
 ﻿namespace Api.Services.Controllers.EvaResult
 {
     using Api.Services.Controllers;
-    using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.EvaResult.EvaluationLeader;
-    using Application.Main.Exceptions;
     using Application.Main.Services.EvaResult.Interfaces;
-    using ExcelDataReader;
+    using Domain.Common.Constants;
+    using Microsoft.AspNetCore.Mvc;
     using SharedKernell.Wrappers;
 
     [Route("api/[controller]")]
@@ -22,17 +21,35 @@
         }
 
        
-        [HttpPost]
+        [HttpPost("ImportFileLeaders")]
         [SwaggerOperation(
         Summary = "Importar Masivo Evaluacion Lideres ",
         Description = "Importar EvaluationLeader",
         OperationId = "EvaluationLeader.ImportBulk",
         Tags = new[] { "EvaluationLeaderService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ImportBulk(EvaluationLeaderFileDto request)
+        public async Task<IActionResult> ImportBulk([FromForm]EvaluationLeaderFileDto request)
         {           
             var result = await _evaluationLeaderService.ImportBulkAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+
+
+        [HttpGet("DownloadTemplate/{componentId}")]
+        [SwaggerOperation(
+        Summary = "Descargar plantilla de importacion",
+        Description = "Descargar Plantilla",
+        OperationId = "EvaluationLeader.DownloadTemplate",
+        Tags = new[] { "EvaluationLeaderService" })]
+        public IActionResult DescargarPlantillaCompetencia(int componentId)
+        {
+            var rutaArchivo = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
+            var ruta = @$"{rutaArchivo}/{GeneralConstants.Component.FileNameTemplates[componentId]}";
+            var contenidoArchivo = new FileContentResult(System.IO.File.ReadAllBytes(ruta), "applicaction/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            contenidoArchivo.FileDownloadName = GeneralConstants.Component.FileNameTemplates[componentId];
+
+            return contenidoArchivo;
         }
     }
 }

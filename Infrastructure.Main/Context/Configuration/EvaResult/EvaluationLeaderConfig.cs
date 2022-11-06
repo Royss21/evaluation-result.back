@@ -9,7 +9,7 @@
         {
             builder.ToTable(typeof(EvaluationLeader).Name, schema: "EvaResult");
             builder.HasOne(b => b.EvaluationCollaborator)
-               .WithOne(b => b.EvaluationLeader);
+               .WithMany(b => b.EvaluationLeaders);
 
             builder.HasOne(b => b.Evaluation)
               .WithMany(b => b.EvaluationLeaders);
@@ -18,7 +18,8 @@
               .WithMany(b => b.EvaluationLeaders);
 
             builder.HasMany(b => b.LeaderStages)
-              .WithOne(b => b.EvaluationLeader);
+              .WithOne(b => b.EvaluationLeader)
+              .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(b => b.EvaluationComponent)
               .WithMany(b => b.EvaluationLeaders);

@@ -3,7 +3,7 @@
     public static class GeneralConstants
     {
         public const int CountEvaluationAnnualConfigId = 1;
-
+        public const int MonthsToSubtract = -3;
         public class Component
         {
             public const int CorporateObjectives = 1;
@@ -11,9 +11,14 @@
             public const int Competencies = 3;
 
             public static Dictionary<int, string> NameComponents = new Dictionary<int, string>{
-                {1 , "OBJETIVOS CORPORATIVOS" },
-                {2 , "OBJETIVOS DE AREA" },
-                {3 , "COMPETENCIAS" }
+                {CorporateObjectives , "OBJETIVOS CORPORATIVOS" },
+                {AreaObjectives , "OBJETIVOS DE AREA" },
+                {Competencies , "COMPETENCIAS" }
+            };
+
+            public static Dictionary<int, string> FileNameTemplates = new Dictionary<int, string>{
+                {AreaObjectives , "Plantilla_Importacion_De_Lideres_Objetivos_Area.xlsx" },
+                {Competencies , "Plantilla_Importacion_De_Lideres_Competencias.xlsx" }
             };
         }
 

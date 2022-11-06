@@ -59,7 +59,6 @@ namespace Application.Main.Services.EvaResult
                 var hierarchiesComponent = dataConfigurations.Item1;
                 var subcomponents = dataConfigurations.Item2;
                 var conducts = new List<Conduct>();
-                var levels = new List<Level>();
 
                 hierarchiesComponent = hierarchiesComponent.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
                 subcomponents = subcomponents.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
@@ -76,8 +75,6 @@ namespace Application.Main.Services.EvaResult
                         .Find(c => subcomponents.Select(s => s.Id).Contains(c.SubcomponentId))
                         .Include(i => i.Level)
                         .ToListAsync();
-                    levels = await _unitOfWorkApp.Repository.LevelRepository.All().ToListAsync();
-
                     if (!conducts.Any())
                         throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
 
@@ -101,27 +98,23 @@ namespace Application.Main.Services.EvaResult
                     evaluationComponent.EvaluationComponentStages.ForEach(ecs => ec.ComponentCollaboratorComments
                                                                                     .Add(new ComponentCollaboratorComment { EvaluationComponentStage = ecs}));
 
+                    var hierarchyComponent = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId);
                     var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
 
                     if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
                         componentCollaboratorDetails = subcomponents
                                 .Select(s =>
                                 {
-                                    var conductsByLevel = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
-                                                                    .ToList();
-
                                     return new ComponentCollaboratorDetail
                                     {
                                         FormulaName = "",
                                         FormulaQuery = "",
                                         SubcomponentName = s.Name,
-                                        ComponentCollaboratorConducts = conducts.Where(c =>
-                                                        c.SubcomponentId == s.Id &&
-                                                        c.LevelId == ec.LevelId
-                                            ).Select(c => new ComponentCollaboratorConduct
+                                        ComponentCollaboratorConducts = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
+                                            .Select(c => new ComponentCollaboratorConduct
                                             {
                                                 ConductDescription = c.Description,
-                                                LevelName = levels.First(l => l.Id == ec.LevelId).Name
+                                                LevelName = c.Level.Name
                                             }).ToList()
                                     };
                                 }).ToList();
@@ -148,8 +141,9 @@ namespace Application.Main.Services.EvaResult
                     {
                         EvaluationCollaborator = ec,
                         StatusId = GeneralConstants.StatusGenerals.Create,
-                        WeightHierarchy = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Weight,
-                        HierarchyName = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId).Hierarchy.Name,
+                        WeightHierarchy = hierarchyComponent.Weight,
+                        HierarchyName = hierarchyComponent.Hierarchy.Name,
+                        ComponentName = evaluationComponent.Component.Name,
                         ComponentCollaboratorDetails = componentCollaboratorDetails
                     });
                 }
@@ -208,7 +202,7 @@ namespace Application.Main.Services.EvaResult
         }
         private async Task<List<CollaboratorsToEvaluateDto>> GetCollaboratorApplyToFilterForEvaluation(DateTime currentDate)
         {
-            currentDate = currentDate.AddMonths(-3);
+            currentDate = currentDate.AddMonths(GeneralConstants.MonthsToSubtract);
 
             return await _unitOfWorkApp.Repository.CollaboratorRepository
                 .Find(c => c.DateAdmission < currentDate)

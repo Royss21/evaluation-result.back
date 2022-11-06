@@ -14,15 +14,17 @@
                 .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
                 .ForMember(x => x.LeaderStagesExistingDto, m => m.MapFrom(d => d.LeaderStages.Select(ls => new LeaderStageExistingDto
                 {
+                    Id=ls.Id,
                     StageId = ls.StageId,
                     EvaluationLeaderId = ls.EvaluationLeaderId,
                     LeaderCollaboratorsExistingDto = ls.LeaderCollaborators.Select(lc => new LeaderCollaboratorExistingDto
                     {
+                        Id=lc.Id,
                         DocumentNumber = lc.EvaluationCollaborator.Collaborator.DocumentNumber,
                         EvaluationCollaboratorId = lc.EvaluationCollaboratorId,
                         LeaderStageId = lc.LeaderStageId
                     }).ToList()
-                })));
+                }))).ReverseMap();
         }
     }
 }

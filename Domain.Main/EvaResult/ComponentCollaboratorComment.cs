@@ -1,6 +1,6 @@
 ﻿namespace Domain.Main.EvaResult
 {
-    public class ComponentCollaboratorComment : BaseModel<Guid>
+    public class ComponentCollaboratorComment : BaseModel<int>
     {
 
         public Guid EvaluationCollaboratorId { get; set; }

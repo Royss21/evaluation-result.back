@@ -906,15 +906,51 @@ namespace Infrastructure.Main.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EvaluationLeader",
+                name: "ComponentCollaboratorComment",
                 schema: "EvaResult",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AreaId = table.Column<int>(type: "int", nullable: true),
+                    EvaluationComponentStageId = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ComponentCollaboratorComment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ComponentCollaboratorComment_EvaluationCollaborator_EvaluationCollaboratorId",
+                        column: x => x.EvaluationCollaboratorId,
+                        principalSchema: "EvaResult",
+                        principalTable: "EvaluationCollaborator",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ComponentCollaboratorComment_EvaluationComponentStage_EvaluationComponentStageId",
+                        column: x => x.EvaluationComponentStageId,
+                        principalSchema: "EvaResult",
+                        principalTable: "EvaluationComponentStage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EvaluationLeader",
+                schema: "EvaResult",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     EvaluationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EvaluationComponentId = table.Column<int>(type: "int", nullable: false),
+                    AreaId = table.Column<int>(type: "int", nullable: true),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -942,6 +978,13 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.EvaluationCollaboratorId,
                         principalSchema: "EvaResult",
                         principalTable: "EvaluationCollaborator",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EvaluationLeader_EvaluationComponent_EvaluationComponentId",
+                        column: x => x.EvaluationComponentId,
+                        principalSchema: "EvaResult",
+                        principalTable: "EvaluationComponent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -978,48 +1021,6 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.ComponentCollaboratorId,
                         principalSchema: "EvaResult",
                         principalTable: "ComponentCollaborator",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ComponentCollaboratorStage",
-                schema: "EvaResult",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ComponentCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EvaluationComponentStageId = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    StageId = table.Column<int>(type: "int", nullable: false),
-                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ComponentCollaboratorStage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ComponentCollaboratorStage_ComponentCollaborator_ComponentCollaboratorId",
-                        column: x => x.ComponentCollaboratorId,
-                        principalSchema: "EvaResult",
-                        principalTable: "ComponentCollaborator",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ComponentCollaboratorStage_EvaluationComponentStage_EvaluationComponentStageId",
-                        column: x => x.EvaluationComponentStageId,
-                        principalSchema: "EvaResult",
-                        principalTable: "EvaluationComponentStage",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ComponentCollaboratorStage_Stage_StageId",
-                        column: x => x.StageId,
-                        principalSchema: "Config",
-                        principalTable: "Stage",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1096,7 +1097,7 @@ namespace Infrastructure.Main.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LeaderStageId = table.Column<int>(type: "int", nullable: false),
-                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -1111,7 +1112,8 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.EvaluationCollaboratorId,
                         principalSchema: "EvaResult",
                         principalTable: "EvaluationCollaborator",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LeaderCollaborator_LeaderStage_LeaderStageId",
                         column: x => x.LeaderStageId,
@@ -1157,6 +1159,18 @@ namespace Infrastructure.Main.Migrations
                 column: "EvaluationComponentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ComponentCollaboratorComment_EvaluationCollaboratorId",
+                schema: "EvaResult",
+                table: "ComponentCollaboratorComment",
+                column: "EvaluationCollaboratorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComponentCollaboratorComment_EvaluationComponentStageId",
+                schema: "EvaResult",
+                table: "ComponentCollaboratorComment",
+                column: "EvaluationComponentStageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ComponentCollaboratorConduct_ComponentCollaboratorDetailId",
                 schema: "EvaResult",
                 table: "ComponentCollaboratorConduct",
@@ -1167,24 +1181,6 @@ namespace Infrastructure.Main.Migrations
                 schema: "EvaResult",
                 table: "ComponentCollaboratorDetail",
                 column: "ComponentCollaboratorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComponentCollaboratorStage_ComponentCollaboratorId",
-                schema: "EvaResult",
-                table: "ComponentCollaboratorStage",
-                column: "ComponentCollaboratorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComponentCollaboratorStage_EvaluationComponentStageId",
-                schema: "EvaResult",
-                table: "ComponentCollaboratorStage",
-                column: "EvaluationComponentStageId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ComponentCollaboratorStage_StageId",
-                schema: "EvaResult",
-                table: "ComponentCollaboratorStage",
-                column: "StageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Conduct_LevelId",
@@ -1288,6 +1284,12 @@ namespace Infrastructure.Main.Migrations
                 table: "EvaluationLeader",
                 column: "EvaluationCollaboratorId",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EvaluationLeader_EvaluationComponentId",
+                schema: "EvaResult",
+                table: "EvaluationLeader",
+                column: "EvaluationComponentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EvaluationLeader_EvaluationId",
@@ -1415,11 +1417,11 @@ namespace Infrastructure.Main.Migrations
                 name: "AuditEntity");
 
             migrationBuilder.DropTable(
-                name: "ComponentCollaboratorConduct",
+                name: "ComponentCollaboratorComment",
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
-                name: "ComponentCollaboratorStage",
+                name: "ComponentCollaboratorConduct",
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
@@ -1455,11 +1457,11 @@ namespace Infrastructure.Main.Migrations
                 name: "UserToken");
 
             migrationBuilder.DropTable(
-                name: "ComponentCollaboratorDetail",
+                name: "EvaluationComponentStage",
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
-                name: "EvaluationComponentStage",
+                name: "ComponentCollaboratorDetail",
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
@@ -1503,19 +1505,19 @@ namespace Infrastructure.Main.Migrations
                 schema: "Config");
 
             migrationBuilder.DropTable(
-                name: "EvaluationComponent",
-                schema: "EvaResult");
-
-            migrationBuilder.DropTable(
                 name: "EvaluationCollaborator",
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
-                name: "Component",
-                schema: "Config");
+                name: "EvaluationComponent",
+                schema: "EvaResult");
 
             migrationBuilder.DropTable(
                 name: "Collaborator");
+
+            migrationBuilder.DropTable(
+                name: "Component",
+                schema: "Config");
 
             migrationBuilder.DropTable(
                 name: "Evaluation",

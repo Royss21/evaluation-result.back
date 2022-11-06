@@ -32,7 +32,7 @@
             builder.HasOne(e => e.Level)
                 .WithMany(c => c.EvaluationCollaborators);
 
-            builder.HasOne(e => e.EvaluationLeader)
+            builder.HasMany(e => e.EvaluationLeaders)
                 .WithOne(c => c.EvaluationCollaborator);
 
             builder.HasMany(e => e.ComponentsCollaborator)

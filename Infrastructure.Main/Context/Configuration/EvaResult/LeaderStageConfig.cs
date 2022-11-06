@@ -15,7 +15,8 @@
                 .WithMany(b => b.LeaderStages);
 
             builder.HasMany(b => b.LeaderCollaborators)
-                .WithOne(b => b.LeaderStage);
+                .WithOne(b => b.LeaderStage)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

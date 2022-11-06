@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20221103195319_tres")]
-    partial class tres
+    [Migration("20221105231807_ss")]
+    partial class ss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -837,9 +837,11 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorComment", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -1272,6 +1274,9 @@ namespace Infrastructure.Main.Migrations
                     b.Property<Guid>("EvaluationCollaboratorId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("EvaluationComponentId")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("EvaluationId")
                         .HasColumnType("uniqueidentifier");
 
@@ -1284,8 +1289,9 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("AreaId");
 
-                    b.HasIndex("EvaluationCollaboratorId")
-                        .IsUnique();
+                    b.HasIndex("EvaluationCollaboratorId");
+
+                    b.HasIndex("EvaluationComponentId");
 
                     b.HasIndex("EvaluationId");
 
@@ -1315,7 +1321,7 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("EvaluationCollaboratorId")
+                    b.Property<Guid>("EvaluationCollaboratorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
@@ -2190,8 +2196,14 @@ namespace Infrastructure.Main.Migrations
                         .HasForeignKey("AreaId");
 
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
-                        .WithOne("EvaluationLeader")
-                        .HasForeignKey("Domain.Main.EvaResult.EvaluationLeader", "EvaluationCollaboratorId")
+                        .WithMany("EvaluationLeaders")
+                        .HasForeignKey("EvaluationCollaboratorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Main.EvaResult.EvaluationComponent", "EvaluationComponent")
+                        .WithMany("EvaluationLeaders")
+                        .HasForeignKey("EvaluationComponentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -2206,13 +2218,17 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("Evaluation");
 
                     b.Navigation("EvaluationCollaborator");
+
+                    b.Navigation("EvaluationComponent");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.LeaderCollaborator", b =>
                 {
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
                         .WithMany("LeaderCollaborators")
-                        .HasForeignKey("EvaluationCollaboratorId");
+                        .HasForeignKey("EvaluationCollaboratorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Main.EvaResult.LeaderStage", "LeaderStage")
                         .WithMany("LeaderCollaborators")
@@ -2416,8 +2432,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.Navigation("ComponentsCollaborator");
 
-                    b.Navigation("EvaluationLeader")
-                        .IsRequired();
+                    b.Navigation("EvaluationLeaders");
 
                     b.Navigation("LeaderCollaborators");
                 });
@@ -2427,6 +2442,8 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("ComponentsCollaborator");
 
                     b.Navigation("EvaluationComponentStages");
+
+                    b.Navigation("EvaluationLeaders");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponentStage", b =>

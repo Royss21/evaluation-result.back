@@ -10,6 +10,7 @@
             ComponentsCollaborator = new HashSet<ComponentCollaborator>();
             LeaderCollaborators = new HashSet<LeaderCollaborator>();
             ComponentCollaboratorComments = new HashSet<ComponentCollaboratorComment>();
+            EvaluationLeaders = new HashSet<EvaluationLeader>();
         }
 
         public Guid EvaluationId { get; set; }
@@ -31,7 +32,7 @@
         public virtual Area Area { get; set; }
         public virtual Hierarchy Hierarchy { get; set; }
         public virtual Level Level { get; set; }
-        public virtual EvaluationLeader EvaluationLeader { get; set; }
+        public virtual ICollection<EvaluationLeader> EvaluationLeaders { get; set; }
         public virtual ICollection<ComponentCollaborator> ComponentsCollaborator { get; set; }
         public virtual ICollection<LeaderCollaborator> LeaderCollaborators { get; set; }
         public virtual ICollection<ComponentCollaboratorComment> ComponentCollaboratorComments { get; set; }
