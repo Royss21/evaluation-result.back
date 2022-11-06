@@ -41,6 +41,7 @@ namespace Application.Main.Services.EvaResult
             var evaluation = _mapper.Map<Evaluation>(request);
             var currentDate = DateTime.UtcNow.GetDatePeru();
             var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsCreateDto);
+            var components = await _unitOfWorkApp.Repository.ComponentRepository.All().ToListAsync();
             var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
             
             evaluation.EvaluationComponents = evaluationComponents;
@@ -143,7 +144,7 @@ namespace Application.Main.Services.EvaResult
                         StatusId = GeneralConstants.StatusGenerals.Create,
                         WeightHierarchy = hierarchyComponent.Weight,
                         HierarchyName = hierarchyComponent.Hierarchy.Name,
-                        ComponentName = evaluationComponent.Component.Name,
+                        ComponentName = components.First(c => c.Id == evaluationComponent.ComponentId).Name ,
                         ComponentCollaboratorDetails = componentCollaboratorDetails
                     });
                 }

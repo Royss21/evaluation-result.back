@@ -150,12 +150,83 @@ values
 ('Visto Bueno','rmartel', getdate(), 0)
 
 
+go 
+
+create proc uspGetLastEvaluationCollaboratorDeleted
+@collaboratorId varchar(50)
+as
+begin
+	
+	select 
+		top 1 
+		* 
+	from EvaResult.EvaluationCollaborator
+	where CollaboratorId = @collaboratorId
+	order by CreateDate desc
+
+end
+
+
+go
+
+create proc uspUpdateEvaluationCollaboratorCurrentIdInEvaluationLeader
+@evaluationCollaboratorDeletedId varchar(50),
+@evaluationCollaboratorCurrentId varchar(50)
+as
+begin
+
+	update lc
+	set
+	IsDeleted = 0
+	from EvaResult.LeaderCollaborator lc
+	inner join EvaResult.LeaderStage ls
+		on lc.LeaderStageId = ls.Id and ls.IsDeleted = 1
+	inner join  EvaResult.EvaluationLeader el
+		on ls.EvaluationLeaderId = el.Id and el.IsDeleted = 1
+	where 
+	el.EvaluationCollaboratorId = @evaluationCollaboratorDeletedId and
+	lc.IsDeleted = 1
+
+
+	update ls
+	set
+	IsDeleted = 0
+	from EvaResult.LeaderStage ls
+	inner join  EvaResult.EvaluationLeader el
+		on ls.EvaluationLeaderId = el.Id and el.IsDeleted = 1
+	where 
+	el.EvaluationCollaboratorId = @evaluationCollaboratorDeletedId and
+	ls.IsDeleted = 1
+
+
+	update EvaResult.EvaluationLeader
+	set
+	EvaluationCollaboratorId = @evaluationCollaboratorCurrentId,
+	IsDeleted = 0
+	where 
+	EvaluationCollaboratorId = @evaluationCollaboratorDeletedId
+	and IsDeleted = 1
+
+	update EvaResult.LeaderCollaborator
+	set
+	EvaluationCollaboratorId = @evaluationCollaboratorCurrentId,
+	IsDeleted = 0
+	where 
+	EvaluationCollaboratorId = @evaluationCollaboratorDeletedId
+	and IsDeleted = 1
+
+end
+
+
 --delete from EvaResult.Evaluation
 --delete from EvaResult.EvaluationComponent
 --delete from EvaResult.EvaluationCollaborator
+--delete from EvaResult.EvaluationComponentStage
 --delete from EvaResult.ComponentCollaboratorDetail
 --delete from EvaResult.ComponentCollaboratorConduct
 --delete from EvaResult.ComponentCollaborator
---delete from EvaResult.EvaluationComponentStage
 --delete from EvaResult.ComponentCollaboratorComment
+--delete from EvaResult.EvaluationLeader
+--delete from EvaResult.LeaderStage
+--delete from EvaResult.LeaderCollaborator
 

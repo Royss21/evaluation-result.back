@@ -21,12 +21,14 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request)
         {
-            var evaluationCollaboratorDeleted = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                    .Find(f => f.CollaboratorId == request.CollaboratorId && f.IsDeleted)
-                    .OrderByDescending(o => o.CreateDate)
-                    .FirstAsync();
+            var evaluationCollaboratorDeleted = (await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspGetLastEvaluationCollaboratorDeleted]", new { collaboratorId = request.CollaboratorId }))
+                    .FirstOrDefault();
 
             var evaluationCollaborator = _mapper.Map<EvaluationCollaborator>(request);
+            var evaluationComponentStages = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                    .Find(f => f.EvaluationId.Equals(request.EvaluationId))
+                    .ToListAsync();
             var evaluationComponents = await _unitOfWorkApp.Repository.EvaluationComponentRepository
                     .Find(f => f.EvaluationId.Equals(request.EvaluationId))
                     .Include(i => i.Component)
@@ -48,11 +50,10 @@ namespace Application.Main.Services.EvaResult
             foreach (var evaluationComponent in evaluationComponents)
             {
                 var conducts = new List<Conduct>();
-                var hierarchiesComponents = hierarchyComponentsOfCollaborator.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
+                var hierarchyComponent = hierarchyComponentsOfCollaborator.First(s => s.ComponentId == evaluationComponent.ComponentId);
                 var subcomponents = subcomponentsOfCollaborator.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
-                var hierarchyComponent = hierarchiesComponents.First(hc => hc.HierarchyId == request.HierarchyId);
 
-                if (!hierarchiesComponents.Any())
+                if (hierarchyComponent is null)
                     throw new WarningException($"No se ha configurado el peso de las jerarquia para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
 
                 if (!subcomponents.Any())
@@ -108,6 +109,7 @@ namespace Application.Main.Services.EvaResult
 
                 evaluationCollaborator.ComponentsCollaborator.Add(new ComponentCollaborator
                 {
+                    EvaluationComponentId = evaluationComponent.Id,
                     StatusId = GeneralConstants.StatusGenerals.Create,
                     WeightHierarchy = hierarchyComponent.Weight,
                     HierarchyName = hierarchyComponent.Hierarchy.Name,
@@ -116,36 +118,54 @@ namespace Application.Main.Services.EvaResult
                 });
             }
 
+            evaluationCollaborator.ComponentCollaboratorComments = evaluationComponentStages.Select(s => new ComponentCollaboratorComment
+                { EvaluationComponentStageId = s.Id  }).ToList();
+
             await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.AddAsync(evaluationCollaborator);
             await _unitOfWorkApp.SaveChangesAsync();
 
-            var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
-                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
-                    .ToListAsync();
-            var evaluationLeaders = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
-                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
-                    .ToListAsync();
-            var componentCollaboratorCommnents = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
-                    .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id))
-                    .ToListAsync();
+            if (evaluationCollaboratorDeleted is not null)
+            {
+                await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                        .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspUpdateEvaluationCollaboratorCurrentIdInEvaluationLeader]",
+                                                                new
+                                                                {
+                                                                    evaluationCollaboratorDeletedId = evaluationCollaboratorDeleted.Id,
+                                                                    evaluationCollaboratorCurrentId = evaluationCollaborator.Id
+                                                                });
 
-            if (leaderCollaborators.Any())
-                leaderCollaborators.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
+                var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+                        .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id), false)
+                        .ToListAsync();
 
-            if (evaluationLeaders.Any())
-                evaluationLeaders.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
-
-            if (componentCollaboratorCommnents.Any())
-                componentCollaboratorCommnents.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
-
-            await _unitOfWorkApp.SaveChangesAsync();
+                if (leaderCollaborators.Any())
+                    leaderCollaborators.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
+                
+                await _unitOfWorkApp.SaveChangesAsync();
+            }
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }
 
-        public Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var removeEvaluationCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.Id.Equals(id))
+                    .Include("ComponentsCollaborator.ComponentCollaboratorDetails.ComponentCollaboratorConducts")
+                    .Include("ComponentCollaboratorComments")
+                    .Include("EvaluationLeaders.LeaderStages.LeaderCollaborators")
+                    .ToListAsync();
+
+            var leaderCollaborator = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+                    .Find(f => f.EvaluationCollaboratorId.Equals(id))
+                    .ToListAsync();
+
+            _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.RemoveRange(removeEvaluationCollaborator);
+            _unitOfWorkApp.Repository.LeaderCollaboratorRepository.RemoveRange(leaderCollaborator);
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
         }
 
         public Task<IEnumerable<EvaluationCollaboratorDto>> GetAllAsync()

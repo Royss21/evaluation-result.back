@@ -12,7 +12,8 @@
                 .WithMany(b => b.LeaderCollaborators);
 
             builder.HasOne(b => b.EvaluationCollaborator)
-               .WithMany(b => b.LeaderCollaborators);
+               .WithMany(b => b.LeaderCollaborators)
+               .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

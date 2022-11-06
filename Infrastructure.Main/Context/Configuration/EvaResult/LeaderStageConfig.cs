@@ -8,8 +8,10 @@
         public override void ConfigureEntity(EntityTypeBuilder<LeaderStage> builder)
         {
             builder.ToTable(typeof(LeaderStage).Name, schema: "EvaResult");
+
             builder.HasOne(b => b.EvaluationLeader)
-             .WithMany(b => b.LeaderStages);
+             .WithMany(b => b.LeaderStages)
+             .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(b => b.Stage)
                 .WithMany(b => b.LeaderStages);

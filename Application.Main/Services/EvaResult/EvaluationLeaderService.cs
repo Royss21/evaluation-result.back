@@ -156,7 +156,6 @@ namespace Application.Main.Services.EvaResult
                     }).ToList();                   
             }
         }
-
         private async Task ValidateData(List<EvaluationLeaderFileDataDto> evaluationLeaderFileDataDto, TypeImportLeadersEnum typeImportLeaders)
         {
             var evaluationLeadersData = evaluationLeaderFileDataDto;
@@ -174,7 +173,6 @@ namespace Application.Main.Services.EvaResult
                     throw new WarningException("El archivo contiene algunos DNI DE COLABORADORES estan vacios");
             }
         }
-
         private async Task<List<EvaluationCollaborator>> GetDataForImport(List<EvaluationLeaderFileDataDto> evaluationLeaderFileDataDto, 
                                                                         TypeImportLeadersEnum typeImportLeaders, 
                                                                         Guid evaluationId)
@@ -228,7 +226,6 @@ namespace Application.Main.Services.EvaResult
 
             return evaluationCollaborators;
         }
-
         private async Task DeletePreviousImport(Guid evaluationId, int evaluationComponentId)
         {
             var removeEvaluationLeaders = await _unitOfWorkApp.Repository.EvaluationLeaderRepository

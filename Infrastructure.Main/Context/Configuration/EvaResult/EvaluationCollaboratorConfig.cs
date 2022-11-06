@@ -33,16 +33,20 @@
                 .WithMany(c => c.EvaluationCollaborators);
 
             builder.HasMany(e => e.EvaluationLeaders)
-                .WithOne(c => c.EvaluationCollaborator);
-
-            builder.HasMany(e => e.ComponentsCollaborator)
-                .WithOne(c => c.EvaluationCollaborator);
+                .WithOne(c => c.EvaluationCollaborator)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasMany(e => e.LeaderCollaborators)
-                .WithOne(c => c.EvaluationCollaborator);
+                .WithOne(c => c.EvaluationCollaborator)
+                .OnDelete(DeleteBehavior.ClientCascade);
+
+            builder.HasMany(e => e.ComponentsCollaborator)
+                .WithOne(c => c.EvaluationCollaborator)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasMany(e => e.ComponentCollaboratorComments)
-                .WithOne(c => c.EvaluationCollaborator);
+                .WithOne(c => c.EvaluationCollaborator)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

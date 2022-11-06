@@ -56,7 +56,8 @@
                 .WithMany(b => b.ComponentCollaboratorDetails);
 
             builder.HasMany(b => b.ComponentCollaboratorConducts)
-               .WithOne(b => b.ComponentCollaboratorDetail);
+               .WithOne(b => b.ComponentCollaboratorDetail)
+               .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }
