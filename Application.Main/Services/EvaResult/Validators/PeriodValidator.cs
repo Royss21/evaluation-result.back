@@ -48,7 +48,7 @@ namespace Application.Main.Services.EvaResult.Validators
             if (period.Id != 0)
                 predicate.And(p => p.Id != period.Id);
 
-            if (period.EndDate > period.StartDate)
+            if (period.StartDate > period.EndDate)
                 return false;
 
             predicate.And(p => (period.StartDate >= p.StartDate && period.StartDate <= p.EndDate) || (period.EndDate >= p.StartDate && period.EndDate <= p.EndDate));
