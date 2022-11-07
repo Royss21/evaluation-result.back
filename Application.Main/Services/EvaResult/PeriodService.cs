@@ -74,6 +74,14 @@ namespace Application.Main.Services.EvaResult
             var parametersDto = PrimeNgToPaginationParametersDto<PeriodDto>.Convert(primeTable);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Period, PeriodDto>(_mapper);
 
+            if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()) ||
+                                            add.StartDate.ToString().ToLower().Contains(primeTable.GlobalFilter.ToLower()) ||
+                                            add.EndDate.ToString().ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+            }
+
             var paging = await _unitOfWorkApp.Repository.PeriodRepository.FindAllPagingAsync(parametersDomain);
             var periods = await paging.Entities.ProjectTo<PeriodDto>(_mapper.ConfigurationProvider).ToListAsync();
 
