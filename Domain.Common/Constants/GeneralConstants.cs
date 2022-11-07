@@ -28,7 +28,7 @@
             public const int Create = 2;
             public const int Pending = 3;
             public const int InProgress = 4;
-            public const int Complete = 5;
+            public const int Completed = 5;
             public const int Finalized = 6;
         }
 

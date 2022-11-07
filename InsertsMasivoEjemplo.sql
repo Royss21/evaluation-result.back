@@ -217,6 +217,18 @@ begin
 
 end
 
+go
+
+create proc uspCalculateFormulaCompliance
+@formulaQuerySql varchar(2000)
+as
+begin
+
+	set @formulaQuerySql = concat('select ', @formulaQuerySql);
+
+	exec (@formulaQuerySql)
+end
+
 
 --delete from EvaResult.Evaluation
 --delete from EvaResult.EvaluationComponent

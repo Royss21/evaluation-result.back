@@ -159,28 +159,6 @@ namespace Application.Main.Services.EvaResult
             return _mapper.Map<EvaluationDto>(evaluation);
         }
 
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<IEnumerable<EvaluationDto>> GetAllAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<PaginationResultDto<EvaluationDto>> GetAllPagingAsync(PrimeTable primeTable)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<EvaluationDto> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
         #region Helpers Functions
 
         private async Task<int> CountEvaluationsCurrentPeriod()
