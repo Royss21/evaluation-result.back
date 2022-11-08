@@ -110,7 +110,7 @@ namespace Application.Main.Services.EvaResult
                 evaluationCollaborator.ComponentsCollaborator.Add(new ComponentCollaborator
                 {
                     EvaluationComponentId = evaluationComponent.Id,
-                    StatusId = GeneralConstants.StatusGenerals.Create,
+                    StatusId = GeneralConstants.Status.Create,
                     WeightHierarchy = hierarchyComponent.Weight,
                     HierarchyName = hierarchyComponent.Hierarchy.Name,
                     ComponentName = evaluationComponent.Component.Name,

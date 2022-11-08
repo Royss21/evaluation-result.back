@@ -22,7 +22,7 @@
             };
         }
 
-        public class StatusGenerals
+        public class Status
         {
             public const int Test = 1;
             public const int Create = 2;
@@ -39,5 +39,10 @@
             public const int Feedback = 3;
             public const int Approval = 4;
         }
+
+        public static List<string> ParametersFormula = new List<string>
+        {
+            "[RESULTADO]", "[%_MAXIMO]", "[%_MINIMO]"
+        };
     }
 }

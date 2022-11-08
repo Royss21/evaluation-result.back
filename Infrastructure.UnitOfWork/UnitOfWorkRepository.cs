@@ -39,6 +39,8 @@ namespace Infrastructure.UnitOfWork
         public ILeaderCollaboratorRepository LeaderCollaboratorRepository { get; }
         public ILeaderStageRepository LeaderStageRepository { get; }
         public IPeriodRepository PeriodRepository { get; }
+        public IRangeParameterRepository RangeParameterRepository { get; }
+        public IParameterValueRepository ParameterValueRepository { get; }
 
         public UnitOfWorkRepository(DbContextMain context)
         {
@@ -68,6 +70,8 @@ namespace Infrastructure.UnitOfWork
             LeaderCollaboratorRepository = new LeaderCollaboratorRepository(context);
             LeaderStageRepository = new LeaderStageRepository(context);
             PeriodRepository = new PeriodRepository(context);
+            ParameterValueRepository = new ParameterValueRepository(context);
+            RangeParameterRepository = new RangeParameterRepository(context);
         }
     }
 }

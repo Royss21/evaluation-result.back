@@ -18,8 +18,8 @@
         public decimal Compliance { get; set; }
         public decimal Points { get; set; }
         public decimal PointsCalibrated { get; set; }
-        public string? FormulaName { get; set; }
-        public string? FormulaQuery { get; set; }
+        public string FormulaName { get; set; } = string.Empty;
+        public string FormulaQuery { get; set; } = string.Empty;
 
 
 

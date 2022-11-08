@@ -5,6 +5,7 @@
 
         public Guid EvaluationCollaboratorId { get; set; }
         public int EvaluationComponentStageId { get; set; }
+        public int StatusId { get; set; }
         public string Comment { get; set; } = string.Empty;
 
 

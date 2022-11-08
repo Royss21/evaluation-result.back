@@ -3,6 +3,6 @@
     public class ComponentCollaboratorConductEvaluateDto
     {
         public int ComponentCollaboratorConductId { get; set; }
-        public decimal ConductPoints { get; set; }
+        public decimal PointValue { get; set; }
     }
 }
