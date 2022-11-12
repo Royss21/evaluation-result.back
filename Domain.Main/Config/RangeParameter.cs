@@ -11,6 +11,9 @@
         public string Description { get; set; } = string.Empty;
         public bool IsInternalConfiguration { get; set; }
 
+
+
+
         public virtual ICollection<ParameterValue> ParametersValue { get; set; }
     }
 }

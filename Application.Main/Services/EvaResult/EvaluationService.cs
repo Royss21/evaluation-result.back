@@ -159,6 +159,20 @@ namespace Application.Main.Services.EvaResult
             return _mapper.Map<EvaluationDto>(evaluation);
         }
 
+        public async Task<EvaluationInProgressDto> GetEvaluationInProgressAsync()
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.StartDate >= currentDate && currentDate <= f.EndDate)
+                    .ProjectTo<EvaluationInProgressDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            if (evaluation is null)
+                throw new WarningException("No hay ninguna evaluacion en curso.");
+
+            return evaluation;
+        }
+
         #region Helpers Functions
 
         private async Task<int> CountEvaluationsCurrentPeriod()

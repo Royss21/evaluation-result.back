@@ -5,5 +5,6 @@
     public interface IEvaluationService
     {
         Task<EvaluationDto> CreateAsync(EvaluationCreateDto request);
+        Task<EvaluationInProgressDto> GetEvaluationInProgressAsync();
     }
 }

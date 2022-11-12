@@ -11,6 +11,10 @@
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
 
+            builder.Property(p => p.Name)
+                .HasMaxLength(100)
+                .IsRequired();
+
             builder.Property(p => p.StartDate)
                 .IsRequired();
 

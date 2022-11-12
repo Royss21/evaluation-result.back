@@ -58,18 +58,18 @@
             return new OkObjectResult(new JsonResult<EvaluationDto>(result));
         }
 
-        //[HttpPut]
-        //[SwaggerOperation(
-        //Summary = "Actualizar Evaluationo",
-        //Description = "actualizar Evaluationo",
-        //OperationId = "Evaluation.Create",
-        //Tags = new[] { "EvaluationService" })]
-        //[ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> Udpate(EvaluationUpdateDto request)
-        //{
-        //    var result = await _evaluationService.UpdateAsync(request);
-        //    return new OkObjectResult(new JsonResult<bool>(result));
-        //}
+        [HttpGet("InProgress")]
+        [SwaggerOperation(
+        Summary = "Obtener Evaluacion En Curso",
+        Description = "evaluacion en curso",
+        OperationId = "Evaluation.InProgress",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationInProgressDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEvaluationInProgress()
+        {
+            var result = await _evaluationService.GetEvaluationInProgressAsync();
+            return new OkObjectResult(new JsonResult<EvaluationInProgressDto>(result));
+        }
 
         //[HttpDelete("{id}")]
         //[SwaggerOperation(
