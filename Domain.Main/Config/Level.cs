@@ -9,7 +9,6 @@ namespace Domain.Main.Config
         {
             Hierarchies = new HashSet<Hierarchy>();
             Conducts = new HashSet<Conduct>();
-            EvaluationCollaborators = new HashSet<EvaluationCollaborator>();
         }
 
         public string Name { get; set; } = string.Empty;
@@ -21,6 +20,5 @@ namespace Domain.Main.Config
 
         public virtual ICollection<Hierarchy> Hierarchies { get; set; }
         public virtual ICollection<Conduct> Conducts { get; set; }
-        public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     public interface IEvaluationCollaboratorService
     {
         Task<IEnumerable<EvaluationCollaboratorDto>> GetAllAsync();
-        Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PrimeTable primeTable);
+        Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable);
         Task<EvaluationCollaboratorDto> GetByIdAsync(Guid id);
         Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request);
         Task<bool> DeleteAsync(Guid id);

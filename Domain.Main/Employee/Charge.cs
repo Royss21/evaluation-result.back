@@ -7,7 +7,6 @@ namespace Domain.Main.Employee
         public Charge()
         {
             Collaborators = new HashSet<Collaborator>();
-            EvaluationCollaborators = new HashSet<EvaluationCollaborator>();
         }
 
         public int AreaId { get; set; }
@@ -21,7 +20,6 @@ namespace Domain.Main.Employee
         public virtual Area Area { get; set; }
         public virtual Hierarchy Hierarchy { get; set; }
         public virtual ICollection<Collaborator> Collaborators { get; set; }
-        public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
     }
 }
 

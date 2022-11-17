@@ -69,7 +69,7 @@ namespace Application.Main.Services.EvaResult
             return periods;
         }
 
-        public async Task<PaginationResultDto<PeriodDto>> GetAllPagingAsync(PrimeTable primeTable)
+        public async Task<PaginationResultDto<PeriodDto>> GetAllPagingAsync(PagingFilterDto primeTable)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<PeriodDto>.Convert(primeTable);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Period, PeriodDto>(_mapper);

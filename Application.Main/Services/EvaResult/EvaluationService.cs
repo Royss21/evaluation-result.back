@@ -99,7 +99,7 @@ namespace Application.Main.Services.EvaResult
                     evaluationComponent.EvaluationComponentStages.ForEach(ecs => ec.ComponentCollaboratorComments
                                                                                     .Add(new ComponentCollaboratorComment { EvaluationComponentStage = ecs}));
 
-                    var hierarchyComponent = hierarchiesComponent.First(hc => hc.HierarchyId == ec.HierarchyId);
+                    var hierarchyComponent = hierarchiesComponent.First(hc => hc.Hierarchy.Name.ToLower().Equals(ec.HierarchyName.ToLower()));
                     var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
 
                     if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
@@ -111,7 +111,7 @@ namespace Application.Main.Services.EvaResult
                                         FormulaName = "",
                                         FormulaQuery = "",
                                         SubcomponentName = s.Name,
-                                        ComponentCollaboratorConducts = conducts.Where(c => c.SubcomponentId == s.Id && c.LevelId == ec.LevelId)
+                                        ComponentCollaboratorConducts = conducts.Where(c => c.SubcomponentId == s.Id && c.Level.Name.ToLower().Equals(ec.LevelName.ToLower()))
                                             .Select(c => new ComponentCollaboratorConduct
                                             {
                                                 ConductDescription = c.Description,
@@ -122,10 +122,14 @@ namespace Application.Main.Services.EvaResult
 
                     else
                         componentCollaboratorDetails = subcomponents
-                                .Where(s => s.AreaId == ec.AreaId && s.SubcomponentValues.Select(sv => sv.ChargeId).Contains(ec.ChargeId))
+                                .Where(s => 
+                                        s.Area.Name.ToLower().Equals(ec.AreaName.ToLower()) && 
+                                        s.SubcomponentValues.Select(sv => sv.Charge.Name.ToLower()).Contains(ec.ChargeName.ToLower())
+                                )
                                 .Select(s =>
                                 {
-                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.ChargeId == ec.ChargeId);
+                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && 
+                                                                                    sv.Charge.Name.ToLower().Equals(ec.ChargeName.ToLower()));
 
                                     return new ComponentCollaboratorDetail
                                     {
@@ -212,11 +216,11 @@ namespace Application.Main.Services.EvaResult
             var evaluationCollaborators = collaborators.Select(c => new EvaluationCollaborator
             {
                 CollaboratorId = c.CollaboratorId,
-                GerencyId = c.GerencyId,
-                ChargeId = c.ChargeId,
-                AreaId = c.AreaId,
-                HierarchyId = c.HierarchyId,
-                LevelId = c.LevelId
+                GerencyName = c.GerencyName,
+                ChargeName = c.ChargeName,
+                AreaName = c.AreaName,
+                HierarchyName = c.HierarchyName,
+                LevelName = c.LevelName
             }).ToList();
 
             if (!evaluationCollaborators.Any())
@@ -233,8 +237,9 @@ namespace Application.Main.Services.EvaResult
 
             var subcomponents = await _unitOfWorkApp.Repository.SubcomponentRepository
                 .Find(s => componentIds.Contains(s.ComponentId))
-                .Include(i => i.Formula)
-                .Include(i => i.SubcomponentValues)
+                .Include("Area")
+                .Include("Formula")
+                .Include("SubcomponentValues.Charge")
                 .ToListAsync();
 
             if(!hierarchyComponents.Any())

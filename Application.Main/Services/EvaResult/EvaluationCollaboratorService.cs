@@ -173,7 +173,7 @@ namespace Application.Main.Services.EvaResult
             throw new NotImplementedException();
         }
 
-        public Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PrimeTable primeTable)
+        public Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable)
         {
             throw new NotImplementedException();
         }

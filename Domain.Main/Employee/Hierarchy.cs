@@ -9,7 +9,6 @@ namespace Domain.Main.Employee
         public Hierarchy()
         {
             HierarchyComponents = new HashSet<HierarchyComponent>();
-            EvaluationCollaborators = new HashSet<EvaluationCollaborator>();
             Charges = new HashSet<Charge>();
         }
 
@@ -23,6 +22,5 @@ namespace Domain.Main.Employee
         public virtual Level Level { get; set; }
         public virtual ICollection<Charge> Charges { get; set; }
         public virtual ICollection<HierarchyComponent> HierarchyComponents { get; set; }
-        public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
     }
 }

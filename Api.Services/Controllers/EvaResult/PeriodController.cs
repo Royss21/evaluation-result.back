@@ -39,7 +39,7 @@
         OperationId = "Period.GetAllPaging",
         Tags = new[] { "PeriodService" })]
         [ProducesResponseType(typeof(JsonResult<PaginationResultDto<PeriodDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllPaging([FromQuery] PrimeTable primeTable)
+        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto primeTable)
         {
             var result = await _periodService.GetAllPagingAsync(primeTable);
             return new OkObjectResult(new JsonResult<PaginationResultDto<PeriodDto>>(result));
@@ -62,7 +62,7 @@
         [SwaggerOperation(
         Summary = "Actualizar Periodo",
         Description = "actualizar Periodo",
-        OperationId = "Period.Create",
+        OperationId = "Period.Update",
         Tags = new[] { "PeriodService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Udpate(PeriodUpdateDto request)

@@ -3,10 +3,11 @@
 
 namespace Application.Main.PrimeNg.Helpers
 {
+    using Application.Dto.Pagination;
     using Application.Main.Pagination;
     public class PrimeNgToPaginationParametersDto<TDto> where TDto : class
     {
-        public static PaginationParametersDto<TDto> Convert(PrimeTable primeTable)
+        public static PaginationParametersDto<TDto> Convert(PagingFilterDto primeTable)
         {
             var filter = new List<ColumnsFilter>();
 

@@ -104,7 +104,7 @@ namespace Application.Main.Services.EvaResult
 
                         return new EvaluationLeader
                         {
-                            AreaId= evalationCollaborator.AreaId,
+                            AreaName= evalationCollaborator.AreaName,
                             EvaluationCollaboratorId = evalationCollaborator.Id,
                             EvaluationComponentId = evaluationComponent.Id,
                             EvaluationId = request.EvaluationId

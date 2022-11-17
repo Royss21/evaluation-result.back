@@ -13,7 +13,7 @@
         public Guid EvaluationId { get; set; }
         public Guid EvaluationCollaboratorId { get; set; }
         public int EvaluationComponentId { get; set; }
-        public int? AreaId { get; set; }
+        public string AreaName { get; set; } = string.Empty;
 
 
 
@@ -22,7 +22,6 @@
         public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual EvaluationComponent EvaluationComponent { get; set; }
         public virtual Evaluation Evaluation { get; set; }
-        public virtual Area? Area { get; set; }
         public virtual ICollection<LeaderStage> LeaderStages { get; set; }
     }
 }

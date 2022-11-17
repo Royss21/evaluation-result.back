@@ -14,9 +14,6 @@
             builder.HasOne(b => b.Evaluation)
               .WithMany(b => b.EvaluationLeaders);
 
-            builder.HasOne(b => b.Area)
-              .WithMany(b => b.EvaluationLeaders);
-
             builder.HasMany(b => b.LeaderStages)
               .WithOne(b => b.EvaluationLeader)
               .OnDelete(DeleteBehavior.ClientCascade);

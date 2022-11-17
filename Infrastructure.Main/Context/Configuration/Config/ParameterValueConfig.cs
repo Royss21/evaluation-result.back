@@ -17,7 +17,7 @@
                 .HasDefaultValue(0)
                 .IsRequired();
 
-            builder.HasOne(p => p.RangeParameter)
+            builder.HasOne(p => p.ParameterRange)
                 .WithMany(b => b.ParametersValue);
         }
     }

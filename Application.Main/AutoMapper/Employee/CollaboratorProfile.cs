@@ -13,11 +13,11 @@
 
             CreateMap<Collaborator, CollaboratorsToEvaluateDto>()
                 .ForMember(x => x.CollaboratorId, m => m.MapFrom(d => d.Id))
-                .ForMember(x => x.ChargeId, m => m.MapFrom(d => d.ChargeId))
-                .ForMember(x => x.AreaId, m => m.MapFrom(d => d.Charge.AreaId))
-                .ForMember(x => x.GerencyId, m => m.MapFrom(d => d.Charge.Area.GerencyId))
-                .ForMember(x => x.HierarchyId, m => m.MapFrom(d => d.Charge.HierarchyId))
-                .ForMember(x => x.LevelId, m => m.MapFrom(d => d.Charge.Hierarchy.LevelId));
+                .ForMember(x => x.ChargeName, m => m.MapFrom(d => d.Charge.Name))
+                .ForMember(x => x.AreaName, m => m.MapFrom(d => d.Charge.Area.Name))
+                .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.Charge.Area.Gerency.Name))
+                .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.Charge.Hierarchy.Name))
+                .ForMember(x => x.LevelName, m => m.MapFrom(d => d.Charge.Hierarchy.Level.Name));
         }
     }
 }

@@ -37,7 +37,8 @@ namespace Infrastructure.UnitOfWork.Interfaces
         ILeaderCollaboratorRepository LeaderCollaboratorRepository { get; }
         ILeaderStageRepository LeaderStageRepository { get; }
         IPeriodRepository PeriodRepository { get; }
-        IRangeParameterRepository RangeParameterRepository { get; }
+        IFormulaRepository FormulaRepository { get; }
+        IParameterRangeRepository ParameterRangeRepository { get; }
         IParameterValueRepository ParameterValueRepository { get; }
     }
 }

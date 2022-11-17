@@ -362,59 +362,7 @@ namespace Infrastructure.Main.Migrations
                     b.ToTable("Level", "Config");
                 });
 
-            modelBuilder.Entity("Domain.Main.Config.ParameterValue", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CreateUser")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime?>("EditDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EditUser")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("NameProperty")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<Guid>("RangeParameterId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Value")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("money")
-                        .HasDefaultValue(0m);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RangeParameterId");
-
-                    b.ToTable("ParameterValue", "Config");
-                });
-
-            modelBuilder.Entity("Domain.Main.Config.RangeParameter", b =>
+            modelBuilder.Entity("Domain.Main.Config.ParameterRange", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -454,7 +402,59 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RangeParameter", "Config");
+                    b.ToTable("ParameterRange", "Config");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.ParameterValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("NameProperty")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<Guid>("ParameterRangeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Value")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParameterRangeId");
+
+                    b.ToTable("ParameterValue", "Config");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Stage", b =>
@@ -1186,11 +1186,13 @@ namespace Infrastructure.Main.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AreaId")
-                        .HasColumnType("int");
+                    b.Property<string>("AreaName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ChargeId")
-                        .HasColumnType("int");
+                    b.Property<string>("ChargeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("CollaboratorId")
                         .HasColumnType("uniqueidentifier");
@@ -1213,35 +1215,28 @@ namespace Infrastructure.Main.Migrations
                     b.Property<Guid>("EvaluationId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("GerencyId")
-                        .HasColumnType("int");
+                    b.Property<string>("GerencyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HierarchyId")
-                        .HasColumnType("int");
+                    b.Property<string>("HierarchyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<int>("LevelId")
-                        .HasColumnType("int");
+                    b.Property<string>("LevelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AreaId");
-
-                    b.HasIndex("ChargeId");
 
                     b.HasIndex("CollaboratorId");
 
                     b.HasIndex("EvaluationId");
-
-                    b.HasIndex("GerencyId");
-
-                    b.HasIndex("HierarchyId");
-
-                    b.HasIndex("LevelId");
 
                     b.ToTable("EvaluationCollaborator", "EvaResult");
                 });
@@ -1354,8 +1349,9 @@ namespace Infrastructure.Main.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("AreaId")
-                        .HasColumnType("int");
+                    b.Property<string>("AreaName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -1387,8 +1383,6 @@ namespace Infrastructure.Main.Migrations
                         .HasDefaultValue(false);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AreaId");
 
                     b.HasIndex("EvaluationCollaboratorId");
 
@@ -1986,7 +1980,7 @@ namespace Infrastructure.Main.Migrations
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
                         .WithMany("Conducts")
                         .HasForeignKey("SubcomponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Level");
@@ -2026,13 +2020,13 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.Config.ParameterValue", b =>
                 {
-                    b.HasOne("Domain.Main.Config.RangeParameter", "RangeParameter")
+                    b.HasOne("Domain.Main.Config.ParameterRange", "ParameterRange")
                         .WithMany("ParametersValue")
-                        .HasForeignKey("RangeParameterId")
+                        .HasForeignKey("ParameterRangeId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.Navigation("RangeParameter");
+                    b.Navigation("ParameterRange");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
@@ -2067,7 +2061,7 @@ namespace Infrastructure.Main.Migrations
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
                         .WithMany("SubcomponentValues")
                         .HasForeignKey("SubcomponentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Charge");
@@ -2200,18 +2194,6 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
                 {
-                    b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany("EvaluationCollaborators")
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.Employee.Charge", "Charge")
-                        .WithMany("EvaluationCollaborators")
-                        .HasForeignKey("ChargeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Domain.Main.Employee.Collaborator", "Collaborator")
                         .WithMany("EvaluationCollaborators")
                         .HasForeignKey("CollaboratorId")
@@ -2224,37 +2206,9 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Domain.Main.Employee.Gerency", "Gerency")
-                        .WithMany("EvaluationCollaborators")
-                        .HasForeignKey("GerencyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.Employee.Hierarchy", "Hierarchy")
-                        .WithMany("EvaluationCollaborators")
-                        .HasForeignKey("HierarchyId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Main.Config.Level", "Level")
-                        .WithMany("EvaluationCollaborators")
-                        .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Area");
-
-                    b.Navigation("Charge");
-
                     b.Navigation("Collaborator");
 
                     b.Navigation("Evaluation");
-
-                    b.Navigation("Gerency");
-
-                    b.Navigation("Hierarchy");
-
-                    b.Navigation("Level");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponent", b =>
@@ -2303,10 +2257,6 @@ namespace Infrastructure.Main.Migrations
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationLeader", b =>
                 {
-                    b.HasOne("Domain.Main.Employee.Area", "Area")
-                        .WithMany("EvaluationLeaders")
-                        .HasForeignKey("AreaId");
-
                     b.HasOne("Domain.Main.EvaResult.EvaluationCollaborator", "EvaluationCollaborator")
                         .WithMany("EvaluationLeaders")
                         .HasForeignKey("EvaluationCollaboratorId")
@@ -2324,8 +2274,6 @@ namespace Infrastructure.Main.Migrations
                         .HasForeignKey("EvaluationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Area");
 
                     b.Navigation("Evaluation");
 
@@ -2459,12 +2407,10 @@ namespace Infrastructure.Main.Migrations
                 {
                     b.Navigation("Conducts");
 
-                    b.Navigation("EvaluationCollaborators");
-
                     b.Navigation("Hierarchies");
                 });
 
-            modelBuilder.Entity("Domain.Main.Config.RangeParameter", b =>
+            modelBuilder.Entity("Domain.Main.Config.ParameterRange", b =>
                 {
                     b.Navigation("ParametersValue");
                 });
@@ -2487,18 +2433,12 @@ namespace Infrastructure.Main.Migrations
                 {
                     b.Navigation("Charges");
 
-                    b.Navigation("EvaluationCollaborators");
-
-                    b.Navigation("EvaluationLeaders");
-
                     b.Navigation("Subcomponents");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Charge", b =>
                 {
                     b.Navigation("Collaborators");
-
-                    b.Navigation("EvaluationCollaborators");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Collaborator", b =>
@@ -2509,15 +2449,11 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Employee.Gerency", b =>
                 {
                     b.Navigation("Areas");
-
-                    b.Navigation("EvaluationCollaborators");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Hierarchy", b =>
                 {
                     b.Navigation("Charges");
-
-                    b.Navigation("EvaluationCollaborators");
 
                     b.Navigation("HierarchyComponents");
                 });

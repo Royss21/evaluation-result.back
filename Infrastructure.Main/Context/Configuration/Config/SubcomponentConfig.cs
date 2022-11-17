@@ -16,10 +16,12 @@
                 .HasMaxLength(200);
 
             builder.HasMany(b => b.Conducts)
-                .WithOne(b => b.Subcomponent);
+                .WithOne(b => b.Subcomponent)
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasMany(b => b.SubcomponentValues)
-               .WithOne(b => b.Subcomponent);
+               .WithOne(b => b.Subcomponent)
+               .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(b => b.Component)
                 .WithMany(b => b.Subcomponents);

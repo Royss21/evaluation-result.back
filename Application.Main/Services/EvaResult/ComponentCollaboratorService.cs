@@ -46,13 +46,13 @@ namespace Application.Main.Services.EvaResult
                     var paramatersValue = await _unitOfWorkApp.Repository.ParameterValueRepository
                             .All()
                             .ToListAsync();
-                    var rangeParametersInternal = await _unitOfWorkApp.Repository.RangeParameterRepository
+                    var parametersRangeInternal = await _unitOfWorkApp.Repository.ParameterRangeRepository
                             .Find(f => f.IsInternalConfiguration)
                             .Include(i => i.ParametersValue)
                             .FirstOrDefaultAsync();
 
-                    if (rangeParametersInternal is not null && rangeParametersInternal.ParametersValue.Any())
-                        paramatersValue.AddRange(rangeParametersInternal.ParametersValue);
+                    if (parametersRangeInternal is not null && parametersRangeInternal.ParametersValue.Any())
+                        paramatersValue.AddRange(parametersRangeInternal.ParametersValue);
 
                     componentCollaboratorDetails.ForEach(async ccd =>
                     {
@@ -64,7 +64,7 @@ namespace Application.Main.Services.EvaResult
                         foreach(var parameterValue in paramatersValue)
                         {
                             formulaQuerySql = formulaQuerySql.Replace(parameterValue.Name,
-                                    parameterValue.RangeParameterId == rangeParametersInternal.Id
+                                    parameterValue.ParameterRangeId == parametersRangeInternal.Id
                                         ? ccd.GetType().GetProperty(parameterValue.NameProperty).GetValue(ccd, null)?.ToString() ?? ""
                                         : parameterValue.Value.ToString());
                         }
@@ -90,7 +90,7 @@ namespace Application.Main.Services.EvaResult
                             .Find(f => f.Id.Equals(componentCollaborator.EvaluationCollaboratorId))
                             .FirstAsync();
                     var hasEvaluationLeaderAssigned = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
-                            .Find(f => f.AreaId == evaluationCollaborator.AreaId)
+                            .Find(f => f.AreaName.ToLower().Equals(evaluationCollaborator.AreaName.ToLower()))
                             .AnyAsync();
 
                     if(!hasEvaluationLeaderAssigned)

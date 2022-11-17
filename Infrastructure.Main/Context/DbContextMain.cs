@@ -50,7 +50,7 @@
         public DbSet<Stage> Stage { get; set; }
         public DbSet<Subcomponent> Subcomponent { get; set; }
         public DbSet<SubcomponentValue> SubcomponentValue { get; set; }
-        public DbSet<RangeParameter> RangeParameter { get; set; }
+        public DbSet<ParameterRange> ParameterRange { get; set; }
         public DbSet<ParameterValue> ParameterValue { get; set; }
         #endregion
 
@@ -103,7 +103,7 @@
                 .ApplyConfiguration(new StageConfig())
                 .ApplyConfiguration(new SubcomponentConfig())
                 .ApplyConfiguration(new SubcomponentValueConfig())
-                .ApplyConfiguration(new RangeParameterConfig())
+                .ApplyConfiguration(new ParameterRangeConfig())
                 .ApplyConfiguration(new ParameterValueConfig())
             #endregion
 

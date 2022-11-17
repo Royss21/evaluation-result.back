@@ -17,21 +17,6 @@
             builder.HasOne(e => e.Collaborator)
                 .WithMany(c => c.EvaluationCollaborators);
 
-            builder.HasOne(e => e.Gerency)
-                .WithMany(c => c.EvaluationCollaborators);
-
-            builder.HasOne(e => e.Charge)
-                .WithMany(c => c.EvaluationCollaborators);
-
-            builder.HasOne(e => e.Area)
-                .WithMany(c => c.EvaluationCollaborators);
-
-            builder.HasOne(e => e.Hierarchy)
-                .WithMany(c => c.EvaluationCollaborators);
-
-            builder.HasOne(e => e.Level)
-                .WithMany(c => c.EvaluationCollaborators);
-
             builder.HasMany(e => e.EvaluationLeaders)
                 .WithOne(c => c.EvaluationCollaborator)
                 .OnDelete(DeleteBehavior.ClientCascade);
