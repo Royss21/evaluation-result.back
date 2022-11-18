@@ -5,6 +5,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -16,8 +17,12 @@ namespace Application.Main.Services.Config
         public async Task<ConductDto> CreateAsync(ConductCreateDto request)
         {
             var conduct = _mapper.Map<Conduct>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.ConductRepository
+                    .AddAsync(conduct, new ConductCreateUpdateValidator(_unitOfWorkApp.Repository.ConductRepository));
 
-            await _unitOfWorkApp.Repository.ConductRepository.AddAsync(conduct);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<ConductDto>(conduct);
@@ -26,8 +31,12 @@ namespace Application.Main.Services.Config
         public async Task<bool> UpdateAsync(ConductUpdateDto request)
         {
             var conduct = _mapper.Map<Conduct>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.ConductRepository
+                    .UpdateAsync(conduct, new ConductCreateUpdateValidator(_unitOfWorkApp.Repository.ConductRepository));
 
-            await _unitOfWorkApp.Repository.ConductRepository.UpdateAsync(conduct);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;

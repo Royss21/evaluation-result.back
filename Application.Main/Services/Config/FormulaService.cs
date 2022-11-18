@@ -7,6 +7,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -18,8 +19,12 @@ namespace Application.Main.Services.Config
         public async Task<FormulaDto> CreateAsync(FormulaCreateDto request)
         {
             var formula = _mapper.Map<Formula>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.FormulaRepository
+                    .AddAsync(formula, new FormulaCreateUpdateValidator(_unitOfWorkApp.Repository.FormulaRepository));
 
-            await _unitOfWorkApp.Repository.FormulaRepository.AddAsync(formula);
+            if(!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<FormulaDto>(formula);
@@ -28,8 +33,12 @@ namespace Application.Main.Services.Config
         public async Task<bool> UpdateAsync(FormulaUpdateDto request)
         {
             var formula = _mapper.Map<Formula>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.FormulaRepository
+                   .UpdateAsync(formula, new FormulaCreateUpdateValidator(_unitOfWorkApp.Repository.FormulaRepository));
 
-            await _unitOfWorkApp.Repository.FormulaRepository.UpdateAsync(formula);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
@@ -46,6 +55,16 @@ namespace Application.Main.Services.Config
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IEnumerable<FormulaDto>> GetAllAsync()
+        {
+            var formulas = await _unitOfWorkApp.Repository.FormulaRepository
+                    .All()
+                    .ProjectTo<FormulaDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+            return formulas;
         }
 
         public async Task<PaginationResultDto<FormulaDto>> GetAllPagingAsync(PagingFilterDto primeTable)

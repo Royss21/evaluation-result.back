@@ -15,6 +15,9 @@ namespace Application.Main.Services.EvaResult.Validators
             _periodRepository = periodRepository;
 
             RuleFor(x => x)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage(Messages.General.FieldNonEmpty)
                 .MustAsync((period, cancel) => PeriodSharedValidator.NameExists( _periodRepository, period))
                 .WithMessage(Messages.General.NameAlreadyRegistered)
                 .MustAsync((period, cancel) => PeriodSharedValidator.DateRangeIsValid(_periodRepository, period))

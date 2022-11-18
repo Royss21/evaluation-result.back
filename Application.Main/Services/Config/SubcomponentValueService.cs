@@ -5,6 +5,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -16,8 +17,12 @@ namespace Application.Main.Services.Config
         public async Task<SubcomponentValueDto> CreateAsync(SubcomponentValueCreateDto request)
         {
             var subcomponentValue = _mapper.Map<SubcomponentValue>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.SubcomponentValueRepository
+                    .AddAsync(subcomponentValue, new SubcomponentValueCreateUpdateValidator());
 
-            await _unitOfWorkApp.Repository.SubcomponentValueRepository.AddAsync(subcomponentValue);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<SubcomponentValueDto>(subcomponentValue);
@@ -26,8 +31,12 @@ namespace Application.Main.Services.Config
         public async Task<bool> UpdateAsync(SubcomponentValueUpdateDto request)
         {
             var subcomponentValue = _mapper.Map<SubcomponentValue>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.SubcomponentValueRepository
+                    .UpdateAsync(subcomponentValue, new SubcomponentValueCreateUpdateValidator());
 
-            await _unitOfWorkApp.Repository.SubcomponentValueRepository.UpdateAsync(subcomponentValue);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;

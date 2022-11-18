@@ -85,6 +85,19 @@
             return new OkObjectResult(new JsonResult<LevelDto>(result));
         }
 
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Obtener Lista de Nivel",
+        Description = "obtener lista de Level",
+        OperationId = "Level.GetAll",
+        Tags = new[] { "LevelService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<LevelDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _levelService.GetAllAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<LevelDto>>(result));
+        }
+
         [HttpGet("{id}/HasDependencyOtherEntities")]
         [SwaggerOperation(
         Summary = "Tiene dependencia en otras entidades",

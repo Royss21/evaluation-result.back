@@ -7,6 +7,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -17,6 +18,8 @@ namespace Application.Main.Services.Config
 
         public async Task<bool> CreateBulkAsync(List<HierarchyComponentCreateDto> request)
         {
+            HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<BaseHierarchyComponentDto>>(request));
+
             var hierarchyComponents = _mapper.Map<List<HierarchyComponent>>(request);
 
             await _unitOfWorkApp.Repository.HierarchyComponentRepository.AddRangeAsync(hierarchyComponents);
@@ -27,6 +30,8 @@ namespace Application.Main.Services.Config
 
         public async Task<bool> UpdateBulkAsync(List<HierarchyComponentUpdateDto> request)
         {
+            HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<BaseHierarchyComponentDto>>(request));
+
             var hierarchyComponents = _mapper.Map<List<HierarchyComponent>>(request);
 
             _unitOfWorkApp.Repository.HierarchyComponentRepository.UpdateRange(hierarchyComponents);

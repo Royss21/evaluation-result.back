@@ -85,5 +85,18 @@
             return new OkObjectResult(new JsonResult<FormulaDto>(result));
         }
 
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Obtener Lista de Formula",
+        Description = "obtener lista de Formula",
+        OperationId = "Formula.GetAll",
+        Tags = new[] { "FormulaService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<FormulaDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _formulaService.GetAllAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<FormulaDto>>(result));
+        }
+
     }
 }

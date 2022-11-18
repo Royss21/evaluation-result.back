@@ -5,6 +5,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -16,8 +17,12 @@ namespace Application.Main.Services.Config
         public async Task<ParameterValueDto> CreateAsync(ParameterValueCreateDto request)
         {
             var parameterValue = _mapper.Map<ParameterValue>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.ParameterValueRepository
+                    .AddAsync(parameterValue, new ParameterValueCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterValueRepository));
 
-            await _unitOfWorkApp.Repository.ParameterValueRepository.AddAsync(parameterValue);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<ParameterValueDto>(parameterValue);
@@ -27,7 +32,12 @@ namespace Application.Main.Services.Config
         {
             var parameterValue = _mapper.Map<ParameterValue>(request);
 
-            await _unitOfWorkApp.Repository.ParameterValueRepository.UpdateAsync(parameterValue);
+            var resultValidator = await _unitOfWorkApp.Repository.ParameterValueRepository
+                   .UpdateAsync(parameterValue, new ParameterValueCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterValueRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;

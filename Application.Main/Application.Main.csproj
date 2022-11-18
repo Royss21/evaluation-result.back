@@ -29,8 +29,4 @@
     <ProjectReference Include="..\Infrastructure.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\Config\Validators\" />
-  </ItemGroup>
-
 </Project>

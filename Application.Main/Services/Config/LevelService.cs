@@ -7,6 +7,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -18,8 +19,12 @@ namespace Application.Main.Services.Config
         public async Task<LevelDto> CreateAsync(LevelCreateDto request)
         {
             var level = _mapper.Map<Level>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.LevelRepository
+                    .AddAsync(level, new LevelCreateUpdateValidator(_unitOfWorkApp.Repository.LevelRepository));
 
-            await _unitOfWorkApp.Repository.LevelRepository.AddAsync(level);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<LevelDto>(level);
@@ -28,8 +33,12 @@ namespace Application.Main.Services.Config
         public async Task<bool> UpdateAsync(LevelUpdateDto request)
         {
             var level = _mapper.Map<Level>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.LevelRepository
+                    .UpdateAsync(level, new LevelCreateUpdateValidator(_unitOfWorkApp.Repository.LevelRepository));
 
-            await _unitOfWorkApp.Repository.LevelRepository.UpdateAsync(level);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;

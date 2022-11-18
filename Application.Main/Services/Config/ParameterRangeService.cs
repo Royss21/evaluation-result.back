@@ -7,6 +7,7 @@ namespace Application.Main.Services.Config
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
+    using Application.Main.Services.Config.Validators;
     using Domain.Common.Constants;
     using Domain.Main.Config;
 
@@ -20,7 +21,12 @@ namespace Application.Main.Services.Config
             var parameterRange = _mapper.Map<ParameterRange>(request);
             parameterRange.IsInternalConfiguration = false;
 
-            await _unitOfWorkApp.Repository.ParameterRangeRepository.AddAsync(parameterRange);
+            var resultValidator = await _unitOfWorkApp.Repository.ParameterRangeRepository
+                    .AddAsync(parameterRange, new ParameterRangeCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterRangeRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<ParameterRangeDto>(parameterRange);
@@ -29,8 +35,12 @@ namespace Application.Main.Services.Config
         public async Task<bool> UpdateAsync(ParameterRangeUpdateDto request)
         {
             var parameterRange = _mapper.Map<ParameterRange>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.ParameterRangeRepository
+                     .UpdateAsync(parameterRange, new ParameterRangeCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterRangeRepository));
 
-            await _unitOfWorkApp.Repository.ParameterRangeRepository.UpdateAsync(parameterRange);
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
