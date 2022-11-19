@@ -28,7 +28,7 @@ namespace Application.Main.PrimeNg.Helpers
                 Start = primeTable.Start,
                 RowsCount = primeTable.Rows,
                 OrderColumn = primeTable.OrderColumn,
-                SortType = (SortTypeEnum)primeTable.SortType,
+                TypeOrder = (SortTypeEnum)primeTable.typeOrder,
                 FilterWhere = filter.Any() ? LambdaManager.ConvertToLambda<TDto>(filter) : null
             };
 

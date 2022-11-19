@@ -32,7 +32,7 @@ namespace Application.Main.Pagination
                 OrderColumn = orderByLambda?.GetLambdaExpression<TEntity>(mapper),
                 RowsCount = parameters.RowsCount,
                 Start = parameters.Start,
-                SortType = parameters.SortType,
+                SortType = parameters.TypeOrder,
                 FilterWhere = expressionEntity
             };
 

@@ -76,7 +76,7 @@ namespace Application.Main.Services.Config
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
                         .AddCondition(add => add.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()) ||
-                                            add.Description.ToString().ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+                                            add.Description.ToLower().Contains(primeTable.GlobalFilter.ToLower()));
             }
 
             var paging = await _unitOfWorkApp.Repository.LevelRepository.FindAllPagingAsync(parametersDomain);
