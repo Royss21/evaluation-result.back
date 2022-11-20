@@ -71,7 +71,7 @@ namespace Application.Main.Services.Config
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
                         .AddCondition(add => add.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()) ||
-                                            add.Description.ToString().ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+                                            add.Description.ToLower().Contains(primeTable.GlobalFilter.ToLower()));
             }
 
             var paging = await _unitOfWorkApp.Repository.ParameterRangeRepository.FindAllPagingAsync(parametersDomain);
@@ -95,6 +95,16 @@ namespace Application.Main.Services.Config
                 throw new WarningException(Messages.General.ResourceNotFound);
 
             return parameterRange;
+        }
+
+        public async Task<IEnumerable<ParameterRangeDto>> GetAllAsync()
+        {
+            var levels = await _unitOfWorkApp.Repository.ParameterRangeRepository
+                    .All()
+                    .ProjectTo<ParameterRangeDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+            return levels;
         }
     }
 }

@@ -5,7 +5,7 @@
 
     public interface IParameterValueService
     {
-
+        Task<PaginationResultDto<ParameterValueDto>> GetAllPagingAsync(ParameterValueFilterDto filter);
         Task<List<ParameterValueDto>> GetAllByParameterRangeAsync(Guid parameterRangeId);
         Task<ParameterValueDto> CreateAsync(ParameterValueCreateDto request);
         Task<bool> UpdateAsync(ParameterValueUpdateDto request);

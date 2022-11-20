@@ -1,89 +1,102 @@
 ﻿namespace Api.Services.Controllers.Config
 {
     using Api.Services.Controllers;
-    using Application.Dto.Config.Subcomponent;
+    using Application.Dto.Config.ParameterRange;
     using Application.Dto.Pagination;
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class SubcomponentController : BaseController
+    public class ParameterRangeController : BaseController
     {
-        private readonly ISubcomponentService _subcomponentService;
+        private readonly IParameterRangeService _parameterRangeService;
         private readonly ILogger<ParameterValueController> _logger;
 
-        public SubcomponentController(ISubcomponentService subcomponentService, ILogger<ParameterValueController> logger)
+        public ParameterRangeController(IParameterRangeService parameterRangeService, ILogger<ParameterValueController> logger)
         {
-            _subcomponentService = subcomponentService;
+            _parameterRangeService = parameterRangeService;
             _logger = logger;
         }
 
 
         [HttpGet("paging")]
         [SwaggerOperation(
-        Summary = "Lista Paginada Subcomponente",
-        Description = "lista paginada de subcomponente",
-        OperationId = "Subcomponent.GetAllPaging",
-        Tags = new[] { "SubcomponentService" })]
-        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<SubcomponentDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllPaging([FromQuery] SubcomponentFilterDto filter)
+        Summary = "Lista Paginada Rango de Parametro",
+        Description = "lista paginada de rango de parametro",
+        OperationId = "ParameterRange.GetAllPaging",
+        Tags = new[] { "ParameterRangeService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<ParameterRangeDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto filter)
         {
-            var result = await _subcomponentService.GetAllPagingAsync(filter);
-            return new OkObjectResult(new JsonResult<PaginationResultDto<SubcomponentDto>>(result));
+            var result = await _parameterRangeService.GetAllPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<ParameterRangeDto>>(result));
         }
 
         [HttpGet("{id}")]
         [SwaggerOperation(
-        Summary = "Obtener Subcomponente",
-        Description = "obtener subcomponente",
-        OperationId = "Subcomponent.GetById",
-        Tags = new[] { "SubcomponentService" })]
-        [ProducesResponseType(typeof(JsonResult<SubcomponentDto>), StatusCodes.Status200OK)]
+        Summary = "Obtener Rango de Parametro",
+        Description = "obtener rango de parametro",
+        OperationId = "ParameterRange.GetById",
+        Tags = new[] { "ParameterRangeService" })]
+        [ProducesResponseType(typeof(JsonResult<ParameterRangeDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var result = await _subcomponentService.GetByIdAsync(id);
-            return new OkObjectResult(new JsonResult<SubcomponentDto>(result));
+            var result = await _parameterRangeService.GetByIdAsync(id);
+            return new OkObjectResult(new JsonResult<ParameterRangeDto>(result));
         }
 
 
         [HttpPost]
         [SwaggerOperation(
-        Summary = "Crear Subcomponente",
-        Description = "crear subcomponente",
-        OperationId = "Subcomponent.Create",
-        Tags = new[] { "SubcomponentService" })]
-        [ProducesResponseType(typeof(JsonResult<SubcomponentDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(SubcomponentCreateDto Level)
+        Summary = "Crear Rango de Parametro",
+        Description = "crear rango de parametro",
+        OperationId = "ParameterRange.Create",
+        Tags = new[] { "ParameterRangeService" })]
+        [ProducesResponseType(typeof(JsonResult<ParameterRangeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(ParameterRangeCreateDto Level)
         {
-            var result = await _subcomponentService.CreateAsync(Level);
-            return new OkObjectResult(new JsonResult<SubcomponentDto>(result));
+            var result = await _parameterRangeService.CreateAsync(Level);
+            return new OkObjectResult(new JsonResult<ParameterRangeDto>(result));
         }
 
         [HttpPut]
         [SwaggerOperation(
-        Summary = "Actualizar Subcomponente",
-        Description = "actualizar subcomponente",
-        OperationId = "Subcomponent.Update",
-        Tags = new[] { "SubcomponentService" })]
+        Summary = "Actualizar Rango de Parametro",
+        Description = "actualizar rango de parametro",
+        OperationId = "ParameterRange.Update",
+        Tags = new[] { "ParameterRangeService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Udpate(SubcomponentUpdateDto request)
+        public async Task<IActionResult> Udpate(ParameterRangeUpdateDto request)
         {
-            var result = await _subcomponentService.UpdateAsync(request);
+            var result = await _parameterRangeService.UpdateAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
         [HttpDelete("{id}")]
         [SwaggerOperation(
-        Summary = "Eliminar Subcomponente",
-        Description = "eliminar subcomponente",
-        OperationId = "Subcomponent.Delete",
-        Tags = new[] { "SubcomponentService" })]
+        Summary = "Eliminar Rango de Parametro",
+        Description = "eliminar rango de parametro",
+        OperationId = "ParameterRange.Delete",
+        Tags = new[] { "ParameterRangeService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _subcomponentService.DeleteAsync(id);
+            var result = await _parameterRangeService.DeleteAsync(id);
             return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Obtener Rango de Parametro",
+        Description = "obtener rango de parametro",
+        OperationId = "ParameterRange.GetAll",
+        Tags = new[] { "ParameterRangeService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<ParameterRangeDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _parameterRangeService.GetAllAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<ParameterRangeDto>>(result));
         }
     }
 }

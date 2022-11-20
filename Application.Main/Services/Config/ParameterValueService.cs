@@ -2,7 +2,9 @@
 namespace Application.Main.Services.Config
 {
     using Application.Dto.Config.ParameterValue;
+    using Application.Dto.Pagination;
     using Application.Main.Exceptions;
+    using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
     using Application.Main.Services.Config.Validators;
@@ -54,6 +56,23 @@ namespace Application.Main.Services.Config
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<PaginationResultDto<ParameterValueDto>> GetAllPagingAsync(ParameterValueFilterDto filter)
+        {
+            var parametersDto = PrimeNgToPaginationParametersDto<ParameterValueDto>.Convert(filter);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<ParameterValue, ParameterValueDto>(_mapper);
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.ParameterRangeId.Equals(filter.ParameterRangeId));
+
+            var paging = await _unitOfWorkApp.Repository.ParameterValueRepository.FindAllPagingAsync(parametersDomain);
+            var parametersValue = await paging.Entities.ProjectTo<ParameterValueDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return new PaginationResultDto<ParameterValueDto>
+            {
+                Count = paging.Count,
+                Entities = parametersValue
+            };
         }
 
         public async Task<List<ParameterValueDto>> GetAllByParameterRangeAsync(Guid parameterRangeId)

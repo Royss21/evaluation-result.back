@@ -2,6 +2,7 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.Config.ParameterValue;
+    using Application.Dto.Pagination;
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -60,8 +61,8 @@
 
         [HttpGet("GetAllByParameterRange/{parameterRangeId}")]
         [SwaggerOperation(
-        Summary = "Obtener Listado por Rango de Parametro",
-        Description = "obtener listado por rango de parametro",
+        Summary = "Obtener Listado por Valor de Parametro",
+        Description = "obtener listado por valor de parametro",
         OperationId = "ParameterValue.GetAllByParameterRange",
         Tags = new[] { "ParameterValueService" })]
         [ProducesResponseType(typeof(JsonResult<IEnumerable<ParameterValueDto>>), StatusCodes.Status200OK)]
@@ -69,6 +70,19 @@
         {
             var result = await _parameterValueService.GetAllByParameterRangeAsync(parameterRangeId);
             return new OkObjectResult(new JsonResult<IEnumerable<ParameterValueDto>>(result));
+        }
+
+        [HttpGet("paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada Valor de Parametro",
+        Description = "lista paginada de valor de parametro",
+        OperationId = "ParameterValue.GetAllPaging",
+        Tags = new[] { "ParameterValueService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<ParameterValueDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] ParameterValueFilterDto filter)
+        {
+            var result = await _parameterValueService.GetAllPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<ParameterValueDto>>(result));
         }
 
     }
