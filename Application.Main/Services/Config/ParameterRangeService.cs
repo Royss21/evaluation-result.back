@@ -97,11 +97,11 @@ namespace Application.Main.Services.Config
             return parameterRange;
         }
 
-        public async Task<IEnumerable<ParameterRangeDto>> GetAllAsync()
+        public async Task<IEnumerable<ParameterRangeWithValuesDto>> GetAllWithValuesAsync()
         {
             var levels = await _unitOfWorkApp.Repository.ParameterRangeRepository
                     .All()
-                    .ProjectTo<ParameterRangeDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<ParameterRangeWithValuesDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
             return levels;

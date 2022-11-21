@@ -86,17 +86,17 @@
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
-        [HttpGet]
+        [HttpGet("GetAllWithValues")]
         [SwaggerOperation(
-        Summary = "Obtener Rango de Parametro",
-        Description = "obtener rango de parametro",
-        OperationId = "ParameterRange.GetAll",
+        Summary = "Obtener Rango de Parametro con sus valores",
+        Description = "obtener rango de parametro con sus valores",
+        OperationId = "ParameterRange.GetAllWithValues",
         Tags = new[] { "ParameterRangeService" })]
-        [ProducesResponseType(typeof(JsonResult<IEnumerable<ParameterRangeDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<ParameterRangeWithValuesDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllWithValues()
         {
-            var result = await _parameterRangeService.GetAllAsync();
-            return new OkObjectResult(new JsonResult<IEnumerable<ParameterRangeDto>>(result));
+            var result = await _parameterRangeService.GetAllWithValuesAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<ParameterRangeWithValuesDto>>(result));
         }
     }
 }

@@ -19,11 +19,6 @@ namespace Application.Main.Services.Config.Validators
                 .NotEmpty()
                 .WithMessage(Messages.General.FieldNonEmpty);
 
-            RuleFor(x => x.Value)
-              .NotNull()
-              .NotEmpty()
-              .WithMessage(Messages.General.FieldNonEmpty);
-
             RuleFor(x => x)
                 .MustAsync((parameterValue, cancel) => ParameterValueSharedValidator.NameExists(_parameterValueRepository, parameterValue))
                 .WithMessage(Messages.General.NameAlreadyRegistered);

@@ -10,6 +10,6 @@
         Task<ParameterRangeDto> CreateAsync(ParameterRangeCreateDto request);
         Task<bool> UpdateAsync(ParameterRangeUpdateDto request);
         Task<bool> DeleteAsync(Guid id);
-        Task<IEnumerable<ParameterRangeDto>> GetAllAsync();
+        Task<IEnumerable<ParameterRangeWithValuesDto>> GetAllWithValuesAsync();
     }
 }

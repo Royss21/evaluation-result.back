@@ -10,6 +10,8 @@
             CreateMap<ParameterRangeCreateDto, ParameterRange>().ReverseMap();
             CreateMap<ParameterRangeDto, ParameterRange>().ReverseMap();
             CreateMap<ParameterRangeUpdateDto, ParameterRange>().ReverseMap();
+
+            CreateMap<ParameterRangeWithValuesDto, ParameterRange>().ReverseMap();
         }
     }
 }
