@@ -1,7 +1,9 @@
 ﻿namespace Api.Services.Controllers.EvaResult
 {
     using Api.Services.Controllers;
+    using Application.Dto.Config.EvaluationLeader;
     using Application.Dto.EvaResult.EvaluationLeader;
+    using Application.Dto.Pagination;
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
     using Microsoft.AspNetCore.Mvc;
@@ -50,6 +52,19 @@
             contenidoArchivo.FileDownloadName = GeneralConstants.Component.FileNameTemplates[componentId];
 
             return contenidoArchivo;
+        }
+
+        [HttpGet("paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada Lideres",
+        Description = "lista paginada de Lideres",
+        OperationId = "EvaluationLeader.GetAllPaging",
+        Tags = new[] { "EvaluationLeaderService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationLeaderDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] EvaluationLeaderFilterDto filter)
+        {
+            var result = await _evaluationLeaderService.GetAllPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationLeaderDto>>(result));
         }
     }
 }

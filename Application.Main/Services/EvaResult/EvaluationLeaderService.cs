@@ -1,8 +1,11 @@
 ﻿
 namespace Application.Main.Services.EvaResult
 {
+    using Application.Dto.Config.EvaluationLeader;
     using Application.Dto.EvaResult.EvaluationLeader;
+    using Application.Dto.Pagination;
     using Application.Main.Exceptions;
+    using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
@@ -116,6 +119,39 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<PaginationResultDto<EvaluationLeaderDto>> GetAllPagingAsync(EvaluationLeaderFilterDto filter)
+        {
+            var parametersDto = PrimeNgToPaginationParametersDto<EvaluationLeaderDto>.Convert(filter);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationLeader, EvaluationLeaderDto>(_mapper);
+
+            if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add =>
+                            ($"{add.EvaluationCollaborator.Collaborator.Name} {add.EvaluationCollaborator.Collaborator.LastName} {add.EvaluationCollaborator.Collaborator.MiddleName}")
+                            .ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                        );
+            }
+
+            var paging = await _unitOfWorkApp.Repository.EvaluationLeaderRepository.FindAllPagingAsync(parametersDomain);
+            var evaluationLeaders = await paging.Entities.ProjectTo<EvaluationLeaderDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            evaluationLeaders.ForEach(async el =>
+            {
+                if(!el.AreaName.Equals(""))
+                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.CountAsync(c => c.AreaName.Equals(el.AreaName));
+                else
+                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository.CountAsync(lc => el.StagesId.Contains(lc.LeaderStageId));
+            });
+
+            return new PaginationResultDto<EvaluationLeaderDto>
+            {
+                Count = paging.Count,
+                Entities = evaluationLeaders
+            };
         }
 
 

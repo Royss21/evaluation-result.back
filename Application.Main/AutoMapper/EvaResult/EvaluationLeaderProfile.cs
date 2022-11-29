@@ -25,6 +25,12 @@
                         LeaderStageId = lc.LeaderStageId
                     }).ToList()
                 }))).ReverseMap();
+
+            CreateMap<EvaluationLeader, EvaluationLeaderDto>()
+               .ForMember(x => x.LeaderName, m => m.MapFrom(d => $"{d.EvaluationCollaborator.Collaborator.Name} {d.EvaluationCollaborator.Collaborator.LastName} {d.EvaluationCollaborator.Collaborator.MiddleName}"))
+               .ForMember(x => x.LeaderName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
+               .ForMember(x => x.StagesId, m => m.MapFrom(d => d.LeaderStages.Select(ls => ls.Id)))
+               .ReverseMap();
         }
     }
 }

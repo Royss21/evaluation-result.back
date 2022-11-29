@@ -13,7 +13,7 @@
                 .IsRequired()
                 .HasMaxLength(20);
 
-            builder.Property(p => p.FullName)
+            builder.Property(p => p.MiddleName)
                 .IsRequired()
                 .HasMaxLength(100);
 
