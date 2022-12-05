@@ -66,5 +66,18 @@
             var result = await _evaluationLeaderService.GetAllPagingAsync(filter);
             return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationLeaderDto>>(result));
         }
+
+        [HttpGet("{id}/collaborators")]
+        [SwaggerOperation(
+        Summary = "Lista de collaboradores asignados al lider",
+        Description = "Lista de collaboradores asignados al lider",
+        OperationId = "EvaluationLeader.GetAllCollaboratorByLeader",
+        Tags = new[] { "EvaluationLeaderService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<LeaderCollaboratorsDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllCollaboratorByLeader(int id, [FromQuery] LeaderCollaboratorsFilterDto filter)
+        {
+            var result = await _evaluationLeaderService.GetAllCollaboratorByLeaderAsync(id, filter);
+            return new OkObjectResult(new JsonResult<IEnumerable<LeaderCollaboratorsDto>>(result));
+        }
     }
 }

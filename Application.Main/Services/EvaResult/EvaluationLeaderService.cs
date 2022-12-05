@@ -130,8 +130,9 @@ namespace Application.Main.Services.EvaResult
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
                         .AddCondition(add =>
-                            ($"{add.EvaluationCollaborator.Collaborator.Name} {add.EvaluationCollaborator.Collaborator.LastName} {add.EvaluationCollaborator.Collaborator.MiddleName}")
-                            .ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
                         );
             }
@@ -152,6 +153,53 @@ namespace Application.Main.Services.EvaResult
                 Count = paging.Count,
                 Entities = evaluationLeaders
             };
+        }
+
+        public async Task<IEnumerable<LeaderCollaboratorsDto>> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter)
+        {
+            var leaderCollaborators = new List<LeaderCollaboratorsDto>();
+
+            if(filter.ComponentId == GeneralConstants.Component.AreaObjectives)
+            {
+                var leader = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                        .Find(f => f.Id == evaluationLeaderId)
+                        .ToListAsync();
+
+                leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                        .Find(ec => 
+                            leader.Select(s => s.AreaName.ToLower().Trim()).Contains(ec.AreaName.ToLower().Trim()) &&
+                            (
+                                ec.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                            )
+                        )
+                        .Skip(filter.PageIndex)
+                        .Take(filter.PageSize)
+                        .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync();
+            }
+            else if (filter.ComponentId == GeneralConstants.Component.Competencies)
+            {
+                leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                        .Find(ec =>
+                            ec.LeaderCollaborators.Any(a => a.LeaderStage.EvaluationLeaderId == evaluationLeaderId) &&
+                            (
+                                ec.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                                ec.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                            )
+                        )
+                        .Skip(filter.PageIndex)
+                        .Take(filter.PageSize)
+                        .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync();
+            }
+
+            return leaderCollaborators;
         }
 
 

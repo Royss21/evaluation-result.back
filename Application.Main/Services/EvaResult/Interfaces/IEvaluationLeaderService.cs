@@ -8,5 +8,6 @@
     {
         Task<bool> ImportBulkAsync(EvaluationLeaderFileDto request);
         Task<PaginationResultDto<EvaluationLeaderDto>> GetAllPagingAsync(EvaluationLeaderFilterDto filter);
+        Task<IEnumerable<LeaderCollaboratorsDto>> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter);
     }
 }
