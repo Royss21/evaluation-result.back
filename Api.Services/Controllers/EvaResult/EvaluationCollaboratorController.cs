@@ -1,13 +1,11 @@
 ﻿namespace Api.Services.Controllers.EvaResult
 {
     using Api.Services.Controllers;
-    using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.EvaResult.EvaluationCollaborator;
-    using Application.Dto.Pagination;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/evaluation-collaborator")]
     [ApiController]
     public class EvaluationCollaboratorController : BaseController
     {

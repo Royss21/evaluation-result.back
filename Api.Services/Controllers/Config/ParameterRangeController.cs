@@ -6,7 +6,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/parameter-range")]
     [ApiController]
     public class ParameterRangeController : BaseController
     {
@@ -86,7 +86,7 @@
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
-        [HttpGet("GetAllWithValues")]
+        [HttpGet("get-all-values")]
         [SwaggerOperation(
         Summary = "Obtener Rango de Parametro con sus valores",
         Description = "obtener rango de parametro con sus valores",

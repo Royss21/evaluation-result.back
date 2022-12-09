@@ -8,6 +8,7 @@
         public EvaluationLeader()
         {
             LeaderStages = new HashSet<LeaderStage>();
+            //EvaluationCollaborators = new HashSet<EvaluationCollaborator>();
         }
 
         public Guid EvaluationId { get; set; }
@@ -19,9 +20,9 @@
 
 
 
-        public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual EvaluationComponent EvaluationComponent { get; set; }
         public virtual Evaluation Evaluation { get; set; }
+        public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual ICollection<LeaderStage> LeaderStages { get; set; }
     }
 }

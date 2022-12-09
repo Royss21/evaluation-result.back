@@ -6,7 +6,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/subcomponent")]
     [ApiController]
     public class SubcomponentController : BaseController
     {

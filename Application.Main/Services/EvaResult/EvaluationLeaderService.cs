@@ -2,6 +2,7 @@
 namespace Application.Main.Services.EvaResult
 {
     using Application.Dto.Config.EvaluationLeader;
+    using Application.Dto.Employee.Area;
     using Application.Dto.EvaResult.EvaluationLeader;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
@@ -10,6 +11,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
     using Domain.Common.Enums;
+    using Domain.Main.Employee;
     using Domain.Main.EvaResult;
     using ExcelDataReader;
     using Microsoft.AspNetCore.Http;
@@ -23,17 +25,28 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<bool> ImportBulkAsync(EvaluationLeaderFileDto request)
         {
+            var areas = new List<AreaDto>();
             var evaluationComponents = await _unitOfWorkApp.Repository.EvaluationComponentRepository
                     .Find(ec => ec.EvaluationId.Equals(request.EvaluationId))
                     .ToListAsync();
-
-            if (!evaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && request.TypeImportLeaders == TypeImportLeadersEnum.Competencies)
+            
+            if (!evaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) 
+                && request.TypeImportLeaders == TypeImportLeadersEnum.Competencies)
                 throw new WarningException($"El componente de COMPETENCIAS no esta configurado para la evaluación.");
 
-            if (!evaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.AreaObjectives) && request.TypeImportLeaders == TypeImportLeadersEnum.AreaObjectives)
+            if (!evaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.AreaObjectives) 
+                && request.TypeImportLeaders == TypeImportLeadersEnum.AreaObjectives)
                 throw new WarningException($"El componente de OBJETIVOS DE AREA no esta configurado para la evaluación.");
 
+
             var evaluationLeaderFileDataDto = GetDataFromImportedFile(request.File, request.TypeImportLeaders);
+
+            if (request.TypeImportLeaders == TypeImportLeadersEnum.AreaObjectives)
+                areas = await _unitOfWorkApp.Repository.AreaRepository
+                        .Find(f => evaluationLeaderFileDataDto.Select(s => (int)s.AreaId).Contains(f.Id))
+                        .ProjectTo<AreaDto>(_mapper.ConfigurationProvider)
+                        .ToListAsync();
+
             var evaluationComponent = request.TypeImportLeaders == TypeImportLeadersEnum.Competencies
                                         ? evaluationComponents.First(ec => ec.ComponentId == GeneralConstants.Component.Competencies)
                                         : evaluationComponents.First(ec => ec.ComponentId == GeneralConstants.Component.AreaObjectives);
@@ -41,7 +54,7 @@ namespace Application.Main.Services.EvaResult
             if (request.IsToReprocess)
                 await DeletePreviousImport(request.EvaluationId, evaluationComponent.Id);
 
-            await ValidateData(evaluationLeaderFileDataDto, request.TypeImportLeaders);
+            await ValidateData(evaluationLeaderFileDataDto, request.TypeImportLeaders, areas);
 
             var evaluationCollaborators = await GetDataForImport(evaluationLeaderFileDataDto, request.TypeImportLeaders, request.EvaluationId);
             var dniLeaders = evaluationLeaderFileDataDto.Select(s => s.DniLeader).Distinct().ToList();
@@ -52,70 +65,127 @@ namespace Application.Main.Services.EvaResult
                                                             .ToListAsync()
                                                 : new List<EvaluationLeaderExistingDto>();
 
-            var dniLeadersExisting = evaluationLeadersExiting.Select(ele => ele.DocumentNumber).Distinct();
             var evaluationLeaders = new List<EvaluationLeader>();
+            var leaderStages = new List<LeaderStage>();
+            var leaderCollaborators = new List<LeaderCollaborator>();
 
             if (request.TypeImportLeaders == TypeImportLeadersEnum.Competencies)
-            {
-                evaluationLeaders = dniLeaders.Where(dniLeader => !dniLeadersExisting.Contains(dniLeader))
-                    .Select(dniLeader =>
-                    {
-                        var evaluationCollaborator = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(dniLeader));
-                        var evaluationLeaderExists = evaluationLeadersExiting.FirstOrDefault(f => f.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id));
+                dniLeaders.ForEach(dniLeader =>
+                {
 
+                    var evaluationCollaborator = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(dniLeader));
+                    var evaluationLeaderExists = evaluationLeadersExiting.FirstOrDefault(f => 
+                        f.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id) &&
+                        f.EvaluationComponentId == evaluationComponent.Id
+                    );
+
+                    //NUEVOS LIDERES
+                    if(evaluationLeaderExists is null)
+                    {
                         var stagesLeader = evaluationLeaderFileDataDto
-                                .Where(w => w.DniLeader.Equals(dniLeader) && 
-                                    (!evaluationLeaderExists?.LeaderStagesExistingDto?.Select(ls => ls.StageId)?.Contains((int)w.StageId) ?? true)
-                                )
-                                .Select(s => s.StageId)
-                                .Distinct()
-                                .Select(id => new LeaderStage {  StageId = (int)id })
-                                .ToList();
+                                    .Where(w => w.DniLeader.Equals(dniLeader))
+                                    .Select(s => s.StageId)
+                                    .Distinct()
+                                    .Select(id => new LeaderStage { StageId = (int)id })
+                                    .ToList();
 
                         stagesLeader.ForEach(sl =>
                         {
-                            var evaluationCollaboratorIdsExisting = evaluationLeaderExists?.LeaderStagesExistingDto?
-                                        .FirstOrDefault(f => f.StageId == sl.StageId)?.LeaderCollaboratorsExistingDto
-                                        .Select(lc => lc.EvaluationCollaboratorId);
-
                             sl.LeaderCollaborators = evaluationLeaderFileDataDto
                                 .Where(elf =>
                                         elf.StageId == sl.StageId &&
-                                        elf.DniLeader.Equals(dniLeader) &&
-                                        (!evaluationCollaboratorIdsExisting?.Contains(evaluationCollaborators.First(ec => ec.Collaborator.DocumentNumber.Equals(elf.DniCollaborator)).Id) ?? true)
+                                        elf.DniLeader.Equals(dniLeader)
                                 ).Select(s => new LeaderCollaborator
                                 {
                                     EvaluationCollaboratorId = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(s.DniCollaborator)).Id
                                 }).ToList();
                         });
 
-                        return new EvaluationLeader
+                        evaluationLeaders.Add(new EvaluationLeader
                         {
                             EvaluationCollaboratorId = evaluationCollaborator.Id,
                             EvaluationComponentId = evaluationComponent.Id,
                             EvaluationId = request.EvaluationId,
                             LeaderStages = stagesLeader
-                        };
-                    }).ToList();
-            }
+                        });
+                    }
+                    //LIDERES QUE YA EXISTEN 
+                    else
+                    {
+                        var stagesLeaderExisting = evaluationLeaderExists?.LeaderStagesExistingDto?.Select(ls => ls.StageId) ?? new List<int>();
+
+                        evaluationLeaderExists?.LeaderStagesExistingDto.ForEach(leaderStage =>
+                        {
+                            leaderCollaborators = evaluationLeaderFileDataDto
+                                .Where(elf =>
+                                        elf.StageId == leaderStage.StageId &&
+                                        elf.DniLeader.Equals(dniLeader)
+                                ).Select(ls => new LeaderCollaborator
+                                {
+                                    LeaderStageId = leaderStage.Id,
+                                    EvaluationCollaboratorId = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(ls.DniCollaborator)).Id
+                                }).ToList();
+                        });
+
+                        var stagesLeaderNews = evaluationLeaderFileDataDto
+                                    .Where(w => 
+                                        w.DniLeader.Equals(dniLeader) &&
+                                        !stagesLeaderExisting.Contains((int)w.StageId)
+                                    )
+                                    .Select(s => s.StageId)
+                                    .Distinct()
+                                    .Select(id => new LeaderStage { StageId = (int)id })
+                                    .ToList();
+
+                        if(stagesLeaderNews.Any())
+                            stagesLeaderNews.ForEach(sl =>
+                            {
+                                sl.EvaluationLeaderId = evaluationLeaderExists.Id;
+                                sl.LeaderCollaborators = evaluationLeaderFileDataDto
+                                    .Where(elf =>
+                                            elf.StageId == sl.StageId &&
+                                            elf.DniLeader.Equals(dniLeader)
+                                    ).Select(s => new LeaderCollaborator
+                                    {
+                                        EvaluationCollaboratorId = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(s.DniCollaborator)).Id
+                                    }).ToList();
+                            });
+                    }
+                });
             else
             {
-                evaluationLeaders = dniLeaders.Where(dniLeader => !dniLeadersExisting.Contains(dniLeader))
-                    .Select(dniLeader =>
-                    {
-                        var evalationCollaborator = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(dniLeader));
+                dniLeaders.ForEach(dniLeader =>
+                {
+                    var evaluationCollaborator = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(dniLeader));
+                    var evaluationLeaderExists = evaluationLeadersExiting.Where(f =>
+                        f.EvaluationCollaboratorId.Equals(evaluationCollaborator.Id) &&
+                        f.EvaluationComponentId == evaluationComponent.Id
+                    ).ToList();
 
-                        return new EvaluationLeader
-                        {
-                            AreaName= evalationCollaborator.AreaName,
-                            EvaluationCollaboratorId = evalationCollaborator.Id,
-                            EvaluationComponentId = evaluationComponent.Id,
-                            EvaluationId = request.EvaluationId
-                        };
+                    var areasImport = evaluationLeaderFileDataDto
+                        .Where(el => el.DniLeader.Equals(dniLeader))
+                        .Select(s => s.AreaId)
+                        .Distinct()
+                        .Select(areaId => areas.First(a => a.Id == areaId).Name)
+                        .ToList();
+
+                    var areasNews = areasImport.Where(areaName => !evaluationLeaderExists.Select(el => el.AreaName).Contains(areaName))
+                        .ToList();
+
+                    evaluationLeaders = areasNews.Select(areaName => new EvaluationLeader
+                    {
+                        AreaName = areaName,
+                        EvaluationCollaboratorId = evaluationCollaborator.Id,
+                        EvaluationComponentId = evaluationComponent.Id,
+                        EvaluationId = request.EvaluationId
                     }).ToList();
+                });
             }
 
             await _unitOfWorkApp.Repository.EvaluationLeaderRepository.AddRangeAsync(evaluationLeaders);
+            if (leaderStages.Any()) await _unitOfWorkApp.Repository.LeaderStageRepository.AddRangeAsync(leaderStages);
+            if (leaderCollaborators.Any()) await _unitOfWorkApp.Repository.LeaderCollaboratorRepository.AddRangeAsync(leaderCollaborators);
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
@@ -130,6 +200,7 @@ namespace Application.Main.Services.EvaResult
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
                         .AddCondition(add =>
+                            //add.EvaluationCollaborators.Any(ec => ec.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim())) ||
                             add.EvaluationCollaborator.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.EvaluationCollaborator.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.EvaluationCollaborator.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
@@ -155,18 +226,24 @@ namespace Application.Main.Services.EvaResult
             };
         }
 
-        public async Task<IEnumerable<LeaderCollaboratorsDto>> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter)
+        public async Task<bool> ExistsPreviousImportAsync(int componentId)
         {
-            var leaderCollaborators = new List<LeaderCollaboratorsDto>();
+            return await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                .Find(f => f.EvaluationComponent.ComponentId == componentId)
+                .AnyAsync();
+        }
 
-            if(filter.ComponentId == GeneralConstants.Component.AreaObjectives)
+        public async Task<(IEnumerable<LeaderCollaboratorsDto>, int)> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter)
+        {
+            var predicate = PredicateBuilder.New<EvaluationCollaborator>();
+
+            if (filter.ComponentId == GeneralConstants.Component.AreaObjectives)
             {
                 var leader = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
                         .Find(f => f.Id == evaluationLeaderId)
                         .ToListAsync();
 
-                leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                        .Find(ec => 
+                predicate = PredicateBuilder.New<EvaluationCollaborator>(ec =>
                             leader.Select(s => s.AreaName.ToLower().Trim()).Contains(ec.AreaName.ToLower().Trim()) &&
                             (
                                 ec.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
@@ -174,32 +251,30 @@ namespace Application.Main.Services.EvaResult
                                 ec.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                                 ec.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                                 ec.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
-                            )
-                        )
-                        .Skip(filter.PageIndex)
-                        .Take(filter.PageSize)
-                        .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
-                        .ToListAsync();
+                            ));
             }
             else if (filter.ComponentId == GeneralConstants.Component.Competencies)
-            {
-                leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                        .Find(ec =>
+                 predicate = PredicateBuilder.New<EvaluationCollaborator>(ec =>
                             ec.LeaderCollaborators.Any(a => a.LeaderStage.EvaluationLeaderId == evaluationLeaderId) &&
                             (
                                 ec.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                                 ec.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                                 ec.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                                 ec.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
-                            )
-                        )
-                        .Skip(filter.PageIndex)
-                        .Take(filter.PageSize)
-                        .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
-                        .ToListAsync();
-            }
+                            ));
 
-            return leaderCollaborators;
+            var countCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(predicate)
+                    .CountAsync();
+
+            var leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(predicate)
+                    .Skip(filter.PageIndex)
+                    .Take(filter.PageSize)
+                    .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+            return (leaderCollaborators, countCollaborators);
         }
 
 
@@ -235,26 +310,34 @@ namespace Application.Main.Services.EvaResult
                 else
                     return hojaImportarLideres.AsEnumerable().Select(row => new EvaluationLeaderFileDataDto
                     {
+                        AreaId = row["Id Area"] == DBNull.Value ? 0 : Convert.ToInt32(row["Dni Lider"]),
                         DniLeader = row["Dni Lider"] == DBNull.Value ? "" : row["Dni Lider"].ToString(),
                         LeaderName = row["Nombre Lider"] == DBNull.Value ? "" : row["Nombre Lider"].ToString(),
                     }).ToList();                   
             }
         }
-        private async Task ValidateData(List<EvaluationLeaderFileDataDto> evaluationLeaderFileDataDto, TypeImportLeadersEnum typeImportLeaders)
+        private async Task ValidateData(List<EvaluationLeaderFileDataDto> evaluationLeaderFileDataDto, TypeImportLeadersEnum typeImportLeaders, List<AreaDto> areas)
         {
-            var evaluationLeadersData = evaluationLeaderFileDataDto;
-            var stages = await _unitOfWorkApp.Repository.StageRepository.Find(s => s.Id != GeneralConstants.Stages.Approval).ToListAsync();
 
-            if (evaluationLeadersData.Any(el => string.IsNullOrWhiteSpace(el.DniLeader)))
+            if (evaluationLeaderFileDataDto.Any(el => string.IsNullOrWhiteSpace(el.DniLeader)))
                 throw new WarningException("El archivo contiene algunos DNI DE LIDERES vacios");
 
             if (typeImportLeaders == TypeImportLeadersEnum.Competencies)
             {
-                if (evaluationLeadersData.Any(el => !stages.Select(e => e.Id).Contains(el.StageId ?? 0)))
-                    throw new WarningException("El archivo contiene algunos IDS DE LAS ETAPAS vacias o no coinciden con algun ID DE ETAPA EXISTENTE");
+                var stages = await _unitOfWorkApp.Repository.StageRepository.Find(s => s.Id != GeneralConstants.Stages.Approval).ToListAsync();
 
-                if (evaluationLeadersData.Any(el => string.IsNullOrWhiteSpace(el.DniCollaborator)))
+                if (evaluationLeaderFileDataDto.Any(el => !stages.Select(e => e.Id).Contains(el.StageId ?? 0)))
+                    throw new WarningException("El archivo contiene algunos IDS DE LAS ETAPAS vacias o no coinciden con algun ID DE ETAPA DEL SISTEMA");
+
+                if (evaluationLeaderFileDataDto.Any(el => string.IsNullOrWhiteSpace(el.DniCollaborator)))
                     throw new WarningException("El archivo contiene algunos DNI DE COLABORADORES estan vacios");
+            }
+            else
+            {
+                var areasIdImport = evaluationLeaderFileDataDto.Select(el => el.AreaId).Distinct().ToList();
+
+                if(areasIdImport.Any(areaId => !areas.Select(a => a.Id).Contains((int)areaId)))
+                    throw new WarningException("El archivo contiene algunos IDS DE AREAS vacios o no coinciden con algún ID DE AREA DEL SISTEMA");
             }
         }
         private async Task<List<EvaluationCollaborator>> GetDataForImport(List<EvaluationLeaderFileDataDto> evaluationLeaderFileDataDto, 
@@ -270,8 +353,8 @@ namespace Application.Main.Services.EvaResult
             dnis.AddRange(evaluationLeaderFileDataDto.Select(elfd => elfd.DniLeader).ToList());
             dnis = dnis.Distinct().ToList();
 
-            var dateCreationEvaluation = await _unitOfWorkApp.Repository.EvaluationRepository.Find(e => e.Id.Equals(evaluationId)).FirstAsync();
-            var dateFilter = dateCreationEvaluation.CreateDate.AddMonths(GeneralConstants.MonthsToSubtract);
+            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository.Find(e => e.Id.Equals(evaluationId)).FirstAsync();
+            var dateFilter = evaluation.CreateDate.AddMonths(GeneralConstants.MonthsToSubtract);
             var collaborators = await _unitOfWorkApp.Repository.CollaboratorRepository
                     .Find(c => dnis.Contains(c.DocumentNumber) && c.DateAdmission < dateFilter)
                     .ToListAsync();
@@ -284,18 +367,18 @@ namespace Application.Main.Services.EvaResult
             {
                 dnisNotFound = dnis.Where(dni => !dniCollaboratorsActive.Contains(dni)).ToList();
 
-                throw new WarningException($"Los COLABORADORES con los siguientes DNIS no se han encontrado: {string.Join(", ", dnisNotFound)}");
+                throw new WarningException($"Los COLABORADORES con los siguientes DNIS no aplican a la evaluación: {string.Join(", ", dnisNotFound)}");
             }    
 
             var evaluationCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(ec => ec.EvaluationId.Equals(evaluationId))
                     .ToListAsync();
 
-            var collaboratorIds = collaborators.Select(c => c.Id).ToList();
-            var evaluationCollaboratorIds = evaluationCollaborators.Select(c => c.CollaboratorId).ToList();
-
             if (!evaluationCollaborators.Any())
                 throw new WarningException("No se ha encontrado colaboradores registrados en la evaluacion");
+           
+            var collaboratorIds = collaborators.Select(c => c.Id).ToList();
+            var evaluationCollaboratorIds = evaluationCollaborators.Select(c => c.CollaboratorId).ToList();
 
             if (collaboratorIds.Any(idcoll => !evaluationCollaboratorIds.Contains(idcoll)))
             {

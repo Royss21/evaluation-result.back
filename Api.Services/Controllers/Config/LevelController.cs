@@ -6,7 +6,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/level")]
     [ApiController]
     public class LevelController : BaseController
     {

@@ -5,7 +5,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/conduct")]
     [ApiController]
     public class ConductController : BaseController
     {
@@ -18,7 +18,7 @@
             _logger = logger;
         }
 
-        [HttpGet("GetAllBySubcomponent/{subcomponentId}")]
+        [HttpGet("get-all/subcomponent/{subcomponentId}")]
         [SwaggerOperation(
         Summary = "Obtener Conductas por Subcomponente",
         Description = "obtener conductas por subcomponente",

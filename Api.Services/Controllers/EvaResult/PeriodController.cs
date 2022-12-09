@@ -6,7 +6,7 @@
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/period")]
     [ApiController]
     public class PeriodController : BaseController
     {

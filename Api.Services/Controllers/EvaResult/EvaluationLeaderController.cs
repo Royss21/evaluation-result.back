@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Mvc;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/evaluation-leader")]
     [ApiController]
     public class EvaluationLeaderController : BaseController
     {
@@ -23,7 +23,7 @@
         }
 
        
-        [HttpPost("ImportFileLeaders")]
+        [HttpPost("import-file-leader")]
         [SwaggerOperation(
         Summary = "Importar Masivo Evaluacion Lideres ",
         Description = "Importar EvaluationLeader",
@@ -37,14 +37,13 @@
         }
 
 
-
-        [HttpGet("DownloadTemplate/{componentId}")]
+        [HttpGet("component/{componentId}/download-template")]
         [SwaggerOperation(
         Summary = "Descargar plantilla de importacion",
         Description = "Descargar Plantilla",
         OperationId = "EvaluationLeader.DownloadTemplate",
         Tags = new[] { "EvaluationLeaderService" })]
-        public IActionResult DescargarPlantillaCompetencia(int componentId)
+        public IActionResult DownloadTemplate(int componentId)
         {
             var rutaArchivo = Path.Combine(Directory.GetCurrentDirectory(), "Templates");
             var ruta = @$"{rutaArchivo}/{GeneralConstants.Component.FileNameTemplates[componentId]}";
@@ -73,11 +72,25 @@
         Description = "Lista de collaboradores asignados al lider",
         OperationId = "EvaluationLeader.GetAllCollaboratorByLeader",
         Tags = new[] { "EvaluationLeaderService" })]
-        [ProducesResponseType(typeof(JsonResult<IEnumerable<LeaderCollaboratorsDto>>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<object>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllCollaboratorByLeader(int id, [FromQuery] LeaderCollaboratorsFilterDto filter)
         {
             var result = await _evaluationLeaderService.GetAllCollaboratorByLeaderAsync(id, filter);
-            return new OkObjectResult(new JsonResult<IEnumerable<LeaderCollaboratorsDto>>(result));
+           
+            return new OkObjectResult(new JsonResult<object>(new { countTotal = result.Item2, collaborators = result.Item1 }));
+        }
+
+        [HttpGet("component/{componentId}/exists-previous-import")]
+        [SwaggerOperation(
+        Summary = "Existe importacion previa",
+        Description = "Existe importacion previa",
+        OperationId = "EvaluationLeader.ExistsPreviousImport",
+        Tags = new[] { "EvaluationLeaderService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ExistsPreviousImport(int componentId)
+        {
+            var result = await _evaluationLeaderService.ExistsPreviousImportAsync(componentId);
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
     }
 }

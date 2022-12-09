@@ -6,7 +6,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/parameter-value")]
     [ApiController]
     public class ParameterValueController : BaseController
     {
@@ -59,7 +59,7 @@
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
-        [HttpGet("GetAllByParameterRange/{parameterRangeId}")]
+        [HttpGet("get-all/parameter-range/{parameterRangeId}")]
         [SwaggerOperation(
         Summary = "Obtener Listado por Valor de Parametro",
         Description = "obtener listado por valor de parametro",

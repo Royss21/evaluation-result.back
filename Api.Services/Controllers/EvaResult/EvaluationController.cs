@@ -2,11 +2,10 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.Evaluation;
-    using Application.Dto.Pagination;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/evaluation")]
     [ApiController]
     public class EvaluationController : BaseController
     {
@@ -58,7 +57,7 @@
             return new OkObjectResult(new JsonResult<EvaluationDto>(result));
         }
 
-        [HttpGet("InProgress")]
+        [HttpGet("in-progress")]
         [SwaggerOperation(
         Summary = "Obtener Evaluacion En Curso",
         Description = "evaluacion en curso",

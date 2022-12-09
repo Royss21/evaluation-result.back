@@ -5,7 +5,7 @@
     using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/subcomponent-value")]
     [ApiController]
     public class SubcomponentValueController : BaseController
     {
@@ -18,7 +18,7 @@
             _logger = logger;
         }
 
-        [HttpGet("GetAllBySubcomponent/{subcomponentId}")]
+        [HttpGet("get-all/subcomponent/{subcomponentId}")]
         [SwaggerOperation(
         Summary = "Lista de valores por subcomponente",
         Description = "Listado de valores por subcomponente",
