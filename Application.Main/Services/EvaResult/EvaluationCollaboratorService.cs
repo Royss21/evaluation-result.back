@@ -4,7 +4,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.EvaResult.EvaluationCollaborator;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
-    using Application.Main.PrimeNg;
+    using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
@@ -35,16 +35,16 @@ namespace Application.Main.Services.EvaResult
                     .ToListAsync();
             var componentIds = evaluationComponents.Select(ec => ec.ComponentId).ToList();
             var hierarchyComponentsOfCollaborator = await _unitOfWorkApp.Repository.HierarchyComponentRepository
-                    .Find(h => h.HierarchyId == request.HierarchyId)
+                    .Find(h => h.Hierarchy.Name.Equals(request.HierarchyName))
                     .Include(hc => hc.Hierarchy)
                     .ToListAsync();
             var subcomponentsOfCollaborator = await _unitOfWorkApp.Repository.SubcomponentRepository
                    .Find(s => 
                         componentIds.Contains(s.ComponentId) && 
-                        (s.AreaId == request.AreaId || s.AreaId == null)
+                        (s.Area.Name.Equals(request.AreaName) || s.AreaId == null)
                     )
                    .Include("Formula")
-                   .Include("SubcomponentValues")
+                   .Include("SubcomponentValues.Charge")
                    .ToListAsync();
 
             foreach (var evaluationComponent in evaluationComponents)
@@ -62,7 +62,7 @@ namespace Application.Main.Services.EvaResult
                 if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
                 {
                     conducts = await _unitOfWorkApp.Repository.ConductRepository
-                        .Find(c => subcomponents.Select(s => s.Id).Contains(c.SubcomponentId) && c.LevelId == request.LevelId)
+                        .Find(c => subcomponents.Select(s => s.Id).Contains(c.SubcomponentId) && c.Level.Name.Equals(request.LevelName))
                         .Include(i => i.Level)
                         .ToListAsync();
 
@@ -91,10 +91,10 @@ namespace Application.Main.Services.EvaResult
                             }).ToList();
                 else
                     componentCollaboratorDetails = subcomponents
-                            .Where(s => s.SubcomponentValues.Select(sv => sv.ChargeId).Contains(request.ChargeId))
+                            .Where(s => s.SubcomponentValues.Select(sv => sv.Charge.Name).Contains(request.ChargeName))
                             .Select(s =>
                             {
-                                var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.ChargeId == request.ChargeId);
+                                var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.Charge.Name.Equals(request.ChargeName));
 
                                 return new ComponentCollaboratorDetail
                                 {
@@ -173,9 +173,33 @@ namespace Application.Main.Services.EvaResult
             throw new NotImplementedException();
         }
 
-        public Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable)
+        public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PagingFilterDto filter)
         {
-            throw new NotImplementedException();
+            var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorPagingDto>.Convert(filter);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorPagingDto>(_mapper);
+
+            if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add =>
+                            add.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.HierarchyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                        );
+            }
+
+            var paging = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.FindAllPagingAsync(parametersDomain);
+            var evaluationCollaborators = await paging.Entities.ProjectTo<EvaluationCollaboratorPagingDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return new PaginationResultDto<EvaluationCollaboratorPagingDto>
+            {
+                Count = paging.Count,
+                Entities = evaluationCollaborators
+            };
         }
 
         public Task<EvaluationCollaboratorDto> GetByIdAsync(Guid id)

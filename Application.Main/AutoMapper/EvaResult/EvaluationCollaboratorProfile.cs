@@ -8,9 +8,19 @@
     {
         public EvaluationCollaboratorProfile()
         {
-            CreateMap<EvaluationCollaborator, EvaluationCollaboratorPagingDto>().ReverseMap();
             CreateMap<EvaluationCollaboratorCreateDto, EvaluationCollaborator> ().ReverseMap();
             CreateMap<EvaluationCollaborator, EvaluationCollaboratorDto>().ReverseMap();
+
+            CreateMap<EvaluationCollaborator, EvaluationCollaboratorPagingDto>()
+                .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.Collaborator.Name} {d.Collaborator.LastName} {d.Collaborator.MiddleName}"))
+                .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.Collaborator.DocumentNumber))
+                .ForMember(x => x.IsLeaderCompetencies, m => m.MapFrom(d => d.EvaluationLeaders
+                    .Where(el => el.EvaluationCollaboratorId.Equals(d.Id) && el.AreaName.Equals("")).Any()
+                ))
+                .ForMember(x => x.IsLeaderAreaObjectives, m => m.MapFrom(d => d.EvaluationLeaders
+                    .Where(el => el.EvaluationCollaboratorId.Equals(d.Id) && !el.AreaName.Equals("")).Any()
+                ))
+                .ReverseMap();
 
             CreateMap<EvaluationCollaborator, LeaderCollaboratorsDto>()
                .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.Collaborator.Name} {d.Collaborator.LastName} {d.Collaborator.MiddleName}"))

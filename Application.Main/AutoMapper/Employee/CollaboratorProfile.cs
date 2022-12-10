@@ -18,6 +18,15 @@
                 .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.Charge.Area.Gerency.Name))
                 .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.Charge.Hierarchy.Name))
                 .ForMember(x => x.LevelName, m => m.MapFrom(d => d.Charge.Hierarchy.Level.Name));
+
+            CreateMap<Collaborator, CollaboratorNotInEvaluationDto>()
+                .ForMember(x => x.Id, m => m.MapFrom(d => d.Id))
+                .ForMember(x => x.AreaName, m => m.MapFrom(d => d.Charge.Area.Name))
+                .ForMember(x => x.ChargeName, m => m.MapFrom(d => d.Charge.Name))
+                .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.Charge.Area.Gerency.Name))
+                .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.Charge.Hierarchy.Name))
+                .ForMember(x => x.LevelName, m => m.MapFrom(d => d.Charge.Hierarchy.Level.Name))
+                .ReverseMap();
         }
     }
 }

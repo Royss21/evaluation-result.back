@@ -7,11 +7,8 @@ namespace Application.Dto.EvaResult.EvaluationCollaborator
         public Guid Id { get; set; }
         public string CollaboratorName { get; set; } = string.Empty;
         public string DocumentNumber { get; set; } = string.Empty;
-        public string HierarchyName { get; set; } = string.Empty;
-        public string ChargeName { get; set; } = string.Empty;
-        public string AreaName { get; set; } = string.Empty;
-        public string GerencyName { get; set; } = string.Empty;
-
+        public bool IsLeaderCompetencies { get; set; }
+        public bool IsLeaderAreaObjectives { get; set; }
 
         [JsonIgnore]
         public DateTime CreateDate { get; set; }
