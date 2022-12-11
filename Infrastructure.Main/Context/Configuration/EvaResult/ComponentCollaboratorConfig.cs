@@ -49,6 +49,9 @@
             builder.HasOne(b => b.EvaluationCollaborator)
                     .WithMany(b => b.ComponentsCollaborator);
 
+            builder.HasOne(b => b.Status)
+                    .WithMany(b => b.ComponentsCollaborator);
+
             builder.HasMany(b => b.ComponentCollaboratorDetails)
                     .WithOne(b => b.ComponentCollaborator)
                     .OnDelete(DeleteBehavior.ClientCascade);

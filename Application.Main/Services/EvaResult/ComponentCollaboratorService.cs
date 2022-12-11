@@ -20,7 +20,6 @@ namespace Application.Main.Services.EvaResult
             var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .Find(f => f.Id.Equals(request.ComponentCollaboratorId), false)
                     .FirstOrDefaultAsync();
-            //var componentCollaboratorConducts = new List<ComponentCollaboratorConduct>();
 
             if (componentCollaborator is null)
                 throw new WarningException("El componente a evaluar del colaborador no se ha encontrado");
@@ -122,7 +121,7 @@ namespace Application.Main.Services.EvaResult
                     var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
                             .Find(f => 
                                 f.EvaluationCollaboratorId.Equals(componentCollaborator.Id) &&
-                                new[] { GeneralConstants.Stages.Evaluation, GeneralConstants.Stages.Calibration }.Contains( f.LeaderStage.StageId)
+                                new[] { GeneralConstants.StagesIds.Evaluation, GeneralConstants.StagesIds.Calibration }.Contains( f.LeaderStage.StageId)
                             )
                             .Include(i => i.LeaderStage)
                             .ToListAsync();
@@ -133,7 +132,7 @@ namespace Application.Main.Services.EvaResult
 
                     switch (request.StageId)
                     {
-                        case GeneralConstants.Stages.Evaluation:
+                        case GeneralConstants.StagesIds.Evaluation:
 
                             var countLeaders = leaderCollaborators.Select(lc => lc.LeaderStage.EvaluationLeaderId)
                                     .Distinct()
@@ -165,7 +164,7 @@ namespace Application.Main.Services.EvaResult
 
                             break;
 
-                        case GeneralConstants.Stages.Calibration:
+                        case GeneralConstants.StagesIds.Calibration:
 
                             componentCollaboratorDetails.ForEach(ccd =>
                             {
@@ -196,9 +195,9 @@ namespace Application.Main.Services.EvaResult
                     break;
             }
 
-            componentCollaborator.StatusId = GeneralConstants.Status.Completed;
+            componentCollaborator.StatusId = GeneralConstants.StatusIds.Completed;
             componentCollaboratorComment.Comment = request.Comment;
-            componentCollaboratorComment.StatusId = GeneralConstants.Status.Completed;
+            componentCollaboratorComment.StatusId = GeneralConstants.StatusIds.Completed;
 
             var componentCollaborators = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .Find(f => f.EvaluationComponentId == request.EvaluationComponentId)
@@ -209,27 +208,48 @@ namespace Application.Main.Services.EvaResult
                     .FirstAsync();
 
             componentCollaborators.First(cc => cc.Id == componentCollaborator.Id).StatusId = componentCollaborator.StatusId;
-            var countStatusCompleted = componentCollaborators.Where(cc => cc.StatusId == GeneralConstants.Status.Completed).Count();
+            var countStatusCompleted = componentCollaborators.Where(cc => cc.StatusId == GeneralConstants.StatusIds.Completed).Count();
 
             if (componentCollaborators.Count == countStatusCompleted)
-                evaluationComponent.StatusId = GeneralConstants.Status.Completed;
+                evaluationComponent.StatusId = GeneralConstants.StatusIds.Completed;
             else
-                evaluationComponent.StatusId = GeneralConstants.Status.Pending;
+                evaluationComponent.StatusId = GeneralConstants.StatusIds.Pending;
 
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
         }
 
-        #region Helper Functions
+        public async Task<ComponentCollaboratorDto> GetEvaluationDataByIdAsync(Guid id)
+        {
+            var componenteCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
+                    .Find(f => f.Id.Equals(id))
+                    .ProjectTo<ComponentCollaboratorDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
 
+            if (componenteCollaborator is null)
+                throw new WarningException("No se encontró datos para evaluar al colaborador");
+
+            var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                    .Find(f => f.EvaluationComponentId.Equals(componenteCollaborator.EvaluationComponentId))
+                    .FirstOrDefaultAsync();
+
+            if (evaluationComponentStage is null)
+                throw new WarningException("No se encontró datos para evaluar al colaborador");
+
+            componenteCollaborator.EvaluationComponentStageId = evaluationComponentStage.Id;
+            componenteCollaborator.StageId = evaluationComponentStage.StageId;
+
+            return componenteCollaborator;
+        }
+        
+        #region Helper Functions
         private async Task<decimal> CalculateFormulaCompliance(string formulaQuerySql)
         {
             return (await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .RunSqlQuery<decimal>("[dbo].[uspCalculateFormulaCompliance]", new { formulaQuerySql }))
                     .FirstOrDefault();
         }
-
         #endregion
     }
 }

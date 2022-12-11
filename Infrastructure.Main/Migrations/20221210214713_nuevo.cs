@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class uno : Migration
+    public partial class nuevo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -268,6 +268,25 @@ namespace Infrastructure.Main.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Status",
+                schema: "Config",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Status", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -426,6 +445,37 @@ namespace Infrastructure.Main.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "RoleMenu",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    MenuId = table.Column<int>(type: "int", nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RoleMenu_Menu_MenuId",
+                        column: x => x.MenuId,
+                        principalTable: "Menu",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RoleMenu_Role_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Role",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Evaluation",
                 schema: "EvaResult",
                 columns: table => new
@@ -453,35 +503,11 @@ namespace Infrastructure.Main.Migrations
                         principalTable: "Period",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RoleMenu",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<int>(type: "int", nullable: false),
-                    MenuId = table.Column<int>(type: "int", nullable: false),
-                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleMenu", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RoleMenu_Menu_MenuId",
-                        column: x => x.MenuId,
-                        principalTable: "Menu",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_RoleMenu_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
+                        name: "FK_Evaluation_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "Config",
+                        principalTable: "Status",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -692,6 +718,13 @@ namespace Infrastructure.Main.Migrations
                         principalTable: "Evaluation",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_EvaluationComponent_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "Config",
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -730,24 +763,25 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Collaborator",
+                schema: "Employee",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ChargeId = table.Column<int>(type: "int", nullable: false),
-                    DocumentNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateBirthday = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DocumentNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    DateBirthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateAdmission = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateEgress = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateEgress = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -863,6 +897,7 @@ namespace Infrastructure.Main.Migrations
                     table.ForeignKey(
                         name: "FK_EvaluationCollaborator_Collaborator_CollaboratorId",
                         column: x => x.CollaboratorId,
+                        principalSchema: "Employee",
                         principalTable: "Collaborator",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -914,6 +949,13 @@ namespace Infrastructure.Main.Migrations
                         principalTable: "EvaluationComponent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ComponentCollaborator_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "Config",
+                        principalTable: "Status",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -947,6 +989,13 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.EvaluationComponentStageId,
                         principalSchema: "EvaResult",
                         principalTable: "EvaluationComponentStage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ComponentCollaboratorComment_Status_StatusId",
+                        column: x => x.StatusId,
+                        principalSchema: "Config",
+                        principalTable: "Status",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1142,6 +1191,7 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Collaborator_ChargeId",
+                schema: "Employee",
                 table: "Collaborator",
                 column: "ChargeId");
 
@@ -1158,6 +1208,12 @@ namespace Infrastructure.Main.Migrations
                 column: "EvaluationComponentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ComponentCollaborator_StatusId",
+                schema: "EvaResult",
+                table: "ComponentCollaborator",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ComponentCollaboratorComment_EvaluationCollaboratorId",
                 schema: "EvaResult",
                 table: "ComponentCollaboratorComment",
@@ -1168,6 +1224,12 @@ namespace Infrastructure.Main.Migrations
                 schema: "EvaResult",
                 table: "ComponentCollaboratorComment",
                 column: "EvaluationComponentStageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ComponentCollaboratorComment_StatusId",
+                schema: "EvaResult",
+                table: "ComponentCollaboratorComment",
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ComponentCollaboratorConduct_ComponentCollaboratorDetailId",
@@ -1200,6 +1262,12 @@ namespace Infrastructure.Main.Migrations
                 column: "PeriodId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Evaluation_StatusId",
+                schema: "EvaResult",
+                table: "Evaluation",
+                column: "StatusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EvaluationCollaborator_CollaboratorId",
                 schema: "EvaResult",
                 table: "EvaluationCollaborator",
@@ -1222,6 +1290,12 @@ namespace Infrastructure.Main.Migrations
                 schema: "EvaResult",
                 table: "EvaluationComponent",
                 column: "EvaluationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EvaluationComponent_StatusId",
+                schema: "EvaResult",
+                table: "EvaluationComponent",
+                column: "StatusId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EvaluationComponentStage_EvaluationComponentId",
@@ -1489,7 +1563,8 @@ namespace Infrastructure.Main.Migrations
                 schema: "EvaResult");
 
             migrationBuilder.DropTable(
-                name: "Collaborator");
+                name: "Collaborator",
+                schema: "Employee");
 
             migrationBuilder.DropTable(
                 name: "Component",
@@ -1506,6 +1581,10 @@ namespace Infrastructure.Main.Migrations
             migrationBuilder.DropTable(
                 name: "Period",
                 schema: "EvaResult");
+
+            migrationBuilder.DropTable(
+                name: "Status",
+                schema: "Config");
 
             migrationBuilder.DropTable(
                 name: "Area",

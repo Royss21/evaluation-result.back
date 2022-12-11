@@ -22,6 +22,12 @@
                 ))
                 .ReverseMap();
 
+            CreateMap<EvaluationCollaborator, EvaluationCollaboratorEvaluatePagingDto>()
+                .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.Collaborator.Name} {d.Collaborator.LastName} {d.Collaborator.MiddleName}"))
+                .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.Collaborator.DocumentNumber))
+                .ForMember(x => x.ComponentCollaboratorIds, m => m.MapFrom(d => d.ComponentsCollaborator.ToList().ToDictionary(x => x.EvaluationComponentId, x => x.Id)))
+                .ReverseMap();
+
             CreateMap<EvaluationCollaborator, LeaderCollaboratorsDto>()
                .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.Collaborator.Name} {d.Collaborator.LastName} {d.Collaborator.MiddleName}"))
                .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.Collaborator.DocumentNumber))

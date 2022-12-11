@@ -5,6 +5,5 @@ namespace Application.Dto.Config.Subcomponent
     public class SubcomponentFilterDto : PagingFilterDto
     {
         public int ComponentId { get; set; }
-
     }
 }

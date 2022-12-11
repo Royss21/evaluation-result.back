@@ -495,6 +495,44 @@ namespace Infrastructure.Main.Migrations
                     b.ToTable("Stage", "Config");
                 });
 
+            modelBuilder.Entity("Domain.Main.Config.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Status", "Config");
+                });
+
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -708,59 +746,68 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("DateAdmission")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateBirthday")
+                    b.Property<DateTime?>("DateBirthday")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateEgress")
+                    b.Property<DateTime?>("DateEgress")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DocumentNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("EditDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MiddleName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ChargeId");
 
-                    b.ToTable("Collaborator");
+                    b.ToTable("Collaborator", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Gerency", b =>
@@ -925,6 +972,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("EvaluationComponentId");
 
+                    b.HasIndex("StatusId");
+
                     b.ToTable("ComponentCollaborator", "EvaResult");
                 });
 
@@ -975,6 +1024,8 @@ namespace Infrastructure.Main.Migrations
                     b.HasIndex("EvaluationCollaboratorId");
 
                     b.HasIndex("EvaluationComponentStageId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("ComponentCollaboratorComment", "EvaResult");
                 });
@@ -1177,6 +1228,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("PeriodId");
 
+                    b.HasIndex("StatusId");
+
                     b.ToTable("Evaluation", "EvaResult");
                 });
 
@@ -1283,6 +1336,8 @@ namespace Infrastructure.Main.Migrations
                     b.HasIndex("ComponentId");
 
                     b.HasIndex("EvaluationId");
+
+                    b.HasIndex("StatusId");
 
                     b.ToTable("EvaluationComponent", "EvaResult");
                 });
@@ -2135,9 +2190,17 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.Config.Status", "Status")
+                        .WithMany("ComponentsCollaborator")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("EvaluationCollaborator");
 
                     b.Navigation("EvaluationComponent");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorComment", b =>
@@ -2154,9 +2217,17 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.Config.Status", "Status")
+                        .WithMany("ComponentCollaboratorComments")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("EvaluationCollaborator");
 
                     b.Navigation("EvaluationComponentStage");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaboratorConduct", b =>
@@ -2189,7 +2260,15 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.Config.Status", "Status")
+                        .WithMany("Evaluations")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Period");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationCollaborator", b =>
@@ -2225,9 +2304,17 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.Config.Status", "Status")
+                        .WithMany("EvaluationComponents")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Component");
 
                     b.Navigation("Evaluation");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.EvaluationComponentStage", b =>
@@ -2420,6 +2507,17 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("EvaluationStages");
 
                     b.Navigation("LeaderStages");
+                });
+
+            modelBuilder.Entity("Domain.Main.Config.Status", b =>
+                {
+                    b.Navigation("ComponentCollaboratorComments");
+
+                    b.Navigation("ComponentsCollaborator");
+
+                    b.Navigation("EvaluationComponents");
+
+                    b.Navigation("Evaluations");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Subcomponent", b =>

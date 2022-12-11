@@ -39,6 +39,9 @@
 
             builder.HasOne(c => c.Period)
                 .WithMany(e => e.Evaluations);
+
+            builder.HasOne(b => b.Status)
+                   .WithMany(b => b.Evaluations);
         }
     }
 }

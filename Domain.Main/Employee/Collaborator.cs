@@ -16,9 +16,9 @@ namespace Domain.Main.Employee
         public string Name { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string Code { get; set; } = string.Empty;
-        public DateTime DateBirthday { get; set; } 
+        public DateTime? DateBirthday { get; set; } 
         public DateTime DateAdmission { get; set; } 
-        public DateTime DateEgress { get; set; }
+        public DateTime? DateEgress { get; set; }
 
 
 

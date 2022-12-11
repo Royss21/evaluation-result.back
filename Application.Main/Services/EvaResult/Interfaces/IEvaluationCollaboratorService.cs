@@ -6,11 +6,11 @@
 
     public interface IEvaluationCollaboratorService
     {
-        Task<IEnumerable<EvaluationCollaboratorDto>> GetAllAsync();
-        Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable);
-        Task<EvaluationCollaboratorDto> GetByIdAsync(Guid id);
+
+        Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(PagingFilterDto primeTable);
         Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request);
         Task<bool> DeleteAsync(Guid id);
+        Task<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>> GetEvaluateByComponentePagingAsync(EvaluationCollaboratorEvaluateFilterDto filter);
 
     }
 }

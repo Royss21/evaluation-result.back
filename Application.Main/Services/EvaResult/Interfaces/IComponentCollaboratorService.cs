@@ -5,5 +5,6 @@
     public interface IComponentCollaboratorService
     {
         Task<bool> EvaluateAsync(ComponentCollaboratorEvaluateDto request);
+        Task<ComponentCollaboratorDto> GetEvaluationDataByIdAsync(Guid id);
     }
 }

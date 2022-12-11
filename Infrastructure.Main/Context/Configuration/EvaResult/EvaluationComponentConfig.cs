@@ -25,6 +25,9 @@
             builder.HasMany(b => b.EvaluationLeaders)
                .WithOne(b => b.EvaluationComponent);
 
+            builder.HasOne(b => b.Status)
+                   .WithMany(b => b.EvaluationComponents);
+
         }
     }
 }

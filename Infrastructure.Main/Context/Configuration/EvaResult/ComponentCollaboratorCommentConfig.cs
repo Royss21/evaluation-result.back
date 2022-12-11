@@ -19,6 +19,9 @@
             builder.HasOne(b => b.EvaluationComponentStage)
               .WithMany(b => b.ComponentCollaboratorStages);
 
+            builder.HasOne(b => b.Status)
+                   .WithMany(b => b.ComponentCollaboratorComments);
+
         }
     }
 }

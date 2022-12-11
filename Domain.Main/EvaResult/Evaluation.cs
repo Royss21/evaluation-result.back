@@ -1,4 +1,6 @@
-﻿namespace Domain.Main.EvaResult
+﻿using Domain.Main.Config;
+
+namespace Domain.Main.EvaResult
 {
     public class Evaluation : BaseModel<Guid>
     {
@@ -21,7 +23,7 @@
 
 
 
-
+        public virtual Status Status { get; set; }
         public virtual Period Period { get; set; }
         public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
         public virtual ICollection<EvaluationComponent> EvaluationComponents { get; set; }

@@ -26,10 +26,23 @@
         OperationId = "EvaluationCollaborator.GetAllPaging",
         Tags = new[] { "EvaluationCollaboratorService" })]
         [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto filter)
+        public async Task<IActionResult> GetPaging([FromQuery] PagingFilterDto filter)
         {
-            var result = await _evaluationCollaboratorService.GetAllPagingAsync(filter);
+            var result = await _evaluationCollaboratorService.GetPagingAsync(filter);
             return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>(result));
+        }
+
+        [HttpGet("evaluate-component-paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada colaboradores de la evaluacion",
+        Description = "lista paginada colaboradores de la evaluacion",
+        OperationId = "EvaluationCollaborator.GetAllEvaluateByComponentePaging",
+        Tags = new[] { "EvaluationCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEvaluateByComponentePaging([FromQuery] EvaluationCollaboratorEvaluateFilterDto filter)
+        {
+            var result = await _evaluationCollaboratorService.GetEvaluateByComponentePagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>>(result));
         }
 
         [HttpPost]

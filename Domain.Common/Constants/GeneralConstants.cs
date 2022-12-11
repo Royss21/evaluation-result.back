@@ -22,7 +22,7 @@
             };
         }
 
-        public class Status
+        public class StatusIds
         {
             public const int Test = 1;
             public const int Create = 2;
@@ -32,17 +32,12 @@
             public const int Finalized = 6;
         }
 
-        public class Stages
+        public class StagesIds
         {
             public const int Evaluation = 1;
             public const int Calibration = 2;
             public const int Feedback = 3;
             public const int Approval = 4;
         }
-
-        public static List<string> ParametersFormula = new List<string>
-        {
-            "[RESULTADO]", "[%_MAXIMO]", "[%_MINIMO]"
-        };
     }
 }

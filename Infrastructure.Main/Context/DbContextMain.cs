@@ -48,6 +48,7 @@
         public DbSet<LabelDetail> LabelDetail { get; set; }
         public DbSet<Level> Level { get; set; }
         public DbSet<Stage> Stage { get; set; }
+        public DbSet<Status> Status { get; set; }
         public DbSet<Subcomponent> Subcomponent { get; set; }
         public DbSet<SubcomponentValue> SubcomponentValue { get; set; }
         public DbSet<ParameterRange> ParameterRange { get; set; }
@@ -91,6 +92,7 @@
                 .ApplyConfiguration(new ChargeConfig())
                 .ApplyConfiguration(new GerencyConfig())
                 .ApplyConfiguration(new HierarchyConfig())
+                .ApplyConfiguration(new CollaboratorConfig())
             #endregion
 
             #region Config
@@ -101,6 +103,7 @@
                 .ApplyConfiguration(new LabelDetailConfig())
                 .ApplyConfiguration(new LevelConfig())
                 .ApplyConfiguration(new StageConfig())
+                .ApplyConfiguration(new StatusConfig())
                 .ApplyConfiguration(new SubcomponentConfig())
                 .ApplyConfiguration(new SubcomponentValueConfig())
                 .ApplyConfiguration(new ParameterRangeConfig())

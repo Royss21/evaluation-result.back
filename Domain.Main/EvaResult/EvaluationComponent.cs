@@ -18,7 +18,7 @@
 
 
 
-
+        public virtual Status Status { get; set; }
         public virtual Evaluation Evaluation { get; set; }
         public virtual Component Component { get; set; }
         public virtual ICollection<EvaluationComponentStage> EvaluationComponentStages { get; set; }

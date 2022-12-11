@@ -1,4 +1,6 @@
-﻿namespace Domain.Main.EvaResult
+﻿using Domain.Main.Config;
+
+namespace Domain.Main.EvaResult
 {
     public class ComponentCollaboratorComment : BaseModel<int>
     {
@@ -10,7 +12,7 @@
 
 
 
-
+        public virtual Status Status { get; set; }
         public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual EvaluationComponentStage EvaluationComponentStage { get; set; }
     }

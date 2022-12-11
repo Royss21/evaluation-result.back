@@ -48,10 +48,10 @@ namespace Application.Main.Services.EvaResult
             evaluation.EvaluationCollaborators = await RegisterCollaboratorsInEvaluation(currentDate);
             evaluation.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto.Where(w => w.ComponentId is null));
             evaluation.StatusId = request.IsEvaluationTest
-                                        ? GeneralConstants.Status.Test
+                                        ? GeneralConstants.StatusIds.Test
                                         : currentDate.RangeDateBetween(evaluation.StartDate, evaluation.EndDate)
-                                            ? GeneralConstants.Status.InProgress
-                                            : GeneralConstants.Status.Create;
+                                            ? GeneralConstants.StatusIds.InProgress
+                                            : GeneralConstants.StatusIds.Create;
             evaluation.EvaluationCollaborators.ForEach(ec => ec.ComponentCollaboratorComments = evaluation.EvaluationComponentStages
                                                                    .Select(ecs => new ComponentCollaboratorComment { EvaluationComponentStage = ecs }).ToList());
 
@@ -87,7 +87,7 @@ namespace Application.Main.Services.EvaResult
                     var evaluationComponentDto = request.EvaluationComponentsCreateDto.First(ec => ec.ComponentId == evaluationComponent.ComponentId);
                     evaluationComponent.EvaluationComponentStages = new List<EvaluationComponentStage> { 
                         new EvaluationComponentStage { 
-                            StageId = GeneralConstants.Stages.Evaluation,
+                            StageId = GeneralConstants.StagesIds.Evaluation,
                             StartDate = evaluationComponentDto.StartDate,
                             EndDate = evaluationComponentDto.EndDate
                         } 
@@ -145,7 +145,7 @@ namespace Application.Main.Services.EvaResult
                     evaluationComponent.ComponentsCollaborator.Add(new ComponentCollaborator
                     {
                         EvaluationCollaborator = ec,
-                        StatusId = GeneralConstants.Status.Create,
+                        StatusId = GeneralConstants.StatusIds.Create,
                         WeightHierarchy = hierarchyComponent.Weight,
                         HierarchyName = hierarchyComponent.Hierarchy.Name,
                         ComponentName = components.First(c => c.Id == evaluationComponent.ComponentId).Name ,
@@ -154,7 +154,7 @@ namespace Application.Main.Services.EvaResult
                 }
 
                 evaluationComponent.EvaluationComponentStages.ForEach(ecs => ecs.Evaluation = evaluation );
-                evaluationComponent.StatusId = GeneralConstants.Status.Create;
+                evaluationComponent.StatusId = GeneralConstants.StatusIds.Create;
             }
 
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);

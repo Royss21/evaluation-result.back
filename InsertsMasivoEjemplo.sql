@@ -36,7 +36,7 @@ insert into EvaResult.Period (name, StartDate, EndDate, CreateUser, CreateDate)
 values ('Period 1','2022-10-25 22:08:13.9550000','2022-10-25 22:08:13.9550000','system','Oct 31 2022 10:30PM')
 
 
-insert into Collaborator(id,ChargeId, DocumentNumber, MiddleName, LastName,Name,Email,Code,DateBirthday,DateAdmission,DateEgress,CreateUser,CreateDate, IsDeleted)
+insert into Employee.Collaborator(id,ChargeId, DocumentNumber, MiddleName, LastName,Name,Email,Code,DateBirthday,DateAdmission,DateEgress,CreateUser,CreateDate, IsDeleted)
 values
 ('1c1c8270-7152-40e3-b6a9-8f2244824434',1,'31313131','Fanny','Kius','Fanny','fan@acity.com.pe',3151,'1998-10-02 00:00:00.0000000','2022-10-10 00:00:00.0000000','2022-10-31 00:00:00.0000000','rmartel','Oct 31 2022 10:31PM',0),
 ('2e1041e9-7bca-4f7d-a096-afde97b00e73',2,'44444444','Guillermo','Firme','Guillermo','guille@acity.com.pe',2311,'1989-10-02 00:00:00.0000000','2019-02-01 00:00:00.0000000','2022-10-31 00:00:00.0000000','rmartel','Oct 31 2022 10:31PM',0),
@@ -149,6 +149,17 @@ values
 ('Feedback','rmartel', getdate(), 0),
 ('Visto Bueno','rmartel', getdate(), 0)
 
+
+go
+
+insert into Config.Status (name, CreateUser, CreateDate)
+values
+('Prueba','rmartel',getdate()),
+('Creado','rmartel',getdate()),
+('Pendiente','rmartel',getdate()),
+('En Progreso','rmartel',getdate()),
+('Completado','rmartel',getdate()),
+('Finalizado','rmartel',getdate())
 
 go 
 
