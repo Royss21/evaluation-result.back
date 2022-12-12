@@ -38,7 +38,7 @@ namespace Application.Main.Services.EvaResult
                     .Find(h => h.Hierarchy.Name.Equals(request.HierarchyName))
                     .Include(hc => hc.Hierarchy)
                     .ToListAsync();
-            var subcomponentsOfCollaborator = await _unitOfWorkApp.Repository.SubcomponentRepository
+            var subcomponents = await _unitOfWorkApp.Repository.SubcomponentRepository
                    .Find(s => 
                         componentIds.Contains(s.ComponentId) && 
                         (s.Area.Name.Equals(request.AreaName) || s.AreaId == null)
@@ -51,7 +51,7 @@ namespace Application.Main.Services.EvaResult
             {
                 var conducts = new List<Conduct>();
                 var hierarchyComponent = hierarchyComponentsOfCollaborator.First(s => s.ComponentId == evaluationComponent.ComponentId);
-                var subcomponents = subcomponentsOfCollaborator.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
+                var subcomponentsCompetencie = subcomponents.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
 
                 if (hierarchyComponent is null)
                     throw new WarningException($"No se ha configurado el peso de las jerarquia para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
@@ -73,7 +73,14 @@ namespace Application.Main.Services.EvaResult
                 var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
 
                 if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
-                    componentCollaboratorDetails = subcomponents
+                {
+
+                    var conductsOfCollaborator = conducts.Where(c => c.Level.Name.ToLower().Equals(evaluationCollaborator.LevelName.ToLower()));
+                    var subcomponentsOfCollaborator = subcomponents.Where(s =>
+                        conductsOfCollaborator.Select(coc => coc.SubcomponentId).Contains(s.Id)
+                    ).ToList();
+
+                    componentCollaboratorDetails = subcomponentsOfCollaborator
                             .Select(s =>
                             {
                                 return new ComponentCollaboratorDetail
@@ -81,17 +88,20 @@ namespace Application.Main.Services.EvaResult
                                     FormulaName = "",
                                     FormulaQuery = "",
                                     SubcomponentName = s.Name,
-                                    ComponentCollaboratorConducts = conducts.Where(c => c.SubcomponentId == s.Id)
-                                                            .Select(c => new ComponentCollaboratorConduct
-                                                            {
-                                                                ConductDescription = c.Description,
-                                                                LevelName = c.Level.Name
-                                                            }).ToList()
+                                    ComponentCollaboratorConducts = conductsOfCollaborator.Where(c => c.SubcomponentId.Equals(s.Id))
+                                        .Select(c => new ComponentCollaboratorConduct
+                                        {
+                                            ConductDescription = c.Description,
+                                            LevelName = c.Level.Name
+                                        }).ToList()
                                 };
                             }).ToList();
+                }
                 else
                     componentCollaboratorDetails = subcomponents
-                            .Where(s => s.SubcomponentValues.Select(sv => sv.Charge.Name).Contains(request.ChargeName))
+                            .Where(s => 
+                                s.SubcomponentValues.Select(sv => sv.Charge.Name).Contains(request.ChargeName)
+                            )
                             .Select(s =>
                             {
                                 var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && sv.Charge.Name.Equals(request.ChargeName));
@@ -118,8 +128,10 @@ namespace Application.Main.Services.EvaResult
                 });
             }
 
-            evaluationCollaborator.ComponentCollaboratorComments = evaluationComponentStages.Select(s => new ComponentCollaboratorComment
-                { EvaluationComponentStageId = s.Id  }).ToList();
+            evaluationCollaborator.ComponentCollaboratorComments = evaluationComponentStages.Select(s => new ComponentCollaboratorComment{ 
+                EvaluationComponentStageId = s.Id,
+                StatusId = GeneralConstants.StatusIds.Create
+            }).ToList();
 
             await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.AddAsync(evaluationCollaborator);
             await _unitOfWorkApp.SaveChangesAsync();
@@ -146,7 +158,6 @@ namespace Application.Main.Services.EvaResult
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }
-
         public async Task<bool> DeleteAsync(Guid id)
         {
             var removeEvaluationCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
@@ -167,7 +178,6 @@ namespace Application.Main.Services.EvaResult
 
             return true;
         }
-
         public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(PagingFilterDto filter)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorPagingDto>.Convert(filter);
@@ -180,6 +190,7 @@ namespace Application.Main.Services.EvaResult
                             add.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                             add.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                             add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
@@ -196,8 +207,6 @@ namespace Application.Main.Services.EvaResult
                 Entities = evaluationCollaborators
             };
         }
-
-
         public async Task<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>> GetEvaluateByComponentePagingAsync(EvaluationCollaboratorEvaluateFilterDto filter)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorEvaluatePagingDto>.Convert(filter);
@@ -209,7 +218,6 @@ namespace Application.Main.Services.EvaResult
             if (evaluationComponent is null)
                 throw new WarningException("El componente que desea evaluar no esta creado");
 
-
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
@@ -217,6 +225,7 @@ namespace Application.Main.Services.EvaResult
                             (add.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
                             add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                             add.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                             add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||

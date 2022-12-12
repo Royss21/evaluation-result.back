@@ -27,7 +27,7 @@ namespace Application.Main.Services.EvaResult
             if (request.EvaluationComponentsCreateDto.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && 
                 !request.EvaluationComponentStagesCreateDto.Where(w=> w.ComponentId == GeneralConstants.Component.Competencies).Any()
                )
-                throw new WarningException("No seleccionado las etapas del componente de COMPETENCIAS");
+                throw new WarningException("No ha seleccionado las etapas del componente de COMPETENCIAS");
 
             if (!request.IsEvaluationTest)
             {
@@ -52,8 +52,14 @@ namespace Application.Main.Services.EvaResult
                                         : currentDate.RangeDateBetween(evaluation.StartDate, evaluation.EndDate)
                                             ? GeneralConstants.StatusIds.InProgress
                                             : GeneralConstants.StatusIds.Create;
-            evaluation.EvaluationCollaborators.ForEach(ec => ec.ComponentCollaboratorComments = evaluation.EvaluationComponentStages
-                                                                   .Select(ecs => new ComponentCollaboratorComment { EvaluationComponentStage = ecs }).ToList());
+            evaluation.EvaluationCollaborators
+                .ForEach(ec => 
+                    ec.ComponentCollaboratorComments = evaluation.EvaluationComponentStages
+                        .Select(ecs => new ComponentCollaboratorComment { 
+                            EvaluationComponentStage = ecs,
+                            StatusId = GeneralConstants.StatusIds.Create
+                        })
+                .ToList());
 
             foreach (var evaluationComponent in evaluation.EvaluationComponents)
             {
@@ -96,14 +102,23 @@ namespace Application.Main.Services.EvaResult
 
                 foreach (var ec in evaluation.EvaluationCollaborators)
                 {
-                    evaluationComponent.EvaluationComponentStages.ForEach(ecs => ec.ComponentCollaboratorComments
-                                                                                    .Add(new ComponentCollaboratorComment { EvaluationComponentStage = ecs}));
+                    evaluationComponent.EvaluationComponentStages
+                        .ForEach(ecs => ec.ComponentCollaboratorComments.Add(new ComponentCollaboratorComment { 
+                            EvaluationComponentStage = ecs,
+                            StatusId = GeneralConstants.StatusIds.Create
+                        }));
 
                     var hierarchyComponent = hierarchiesComponent.First(hc => hc.Hierarchy.Name.ToLower().Equals(ec.HierarchyName.ToLower()));
                     var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();
 
                     if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
-                        componentCollaboratorDetails = subcomponents
+                    {
+                        var conductsOfCollaborator = conducts.Where(c => c.Level.Name.ToLower().Equals(ec.LevelName.ToLower()));
+                        var subcomponentsOfCollaborator = subcomponents.Where(s =>
+                            conductsOfCollaborator.Select(coc => coc.SubcomponentId).Contains(s.Id)
+                        ).ToList();
+
+                        componentCollaboratorDetails = subcomponentsOfCollaborator
                                 .Select(s =>
                                 {
                                     return new ComponentCollaboratorDetail
@@ -111,7 +126,7 @@ namespace Application.Main.Services.EvaResult
                                         FormulaName = "",
                                         FormulaQuery = "",
                                         SubcomponentName = s.Name,
-                                        ComponentCollaboratorConducts = conducts.Where(c => c.SubcomponentId == s.Id && c.Level.Name.ToLower().Equals(ec.LevelName.ToLower()))
+                                        ComponentCollaboratorConducts = conductsOfCollaborator.Where(c => c.SubcomponentId.Equals(s.Id))
                                             .Select(c => new ComponentCollaboratorConduct
                                             {
                                                 ConductDescription = c.Description,
@@ -119,16 +134,16 @@ namespace Application.Main.Services.EvaResult
                                             }).ToList()
                                     };
                                 }).ToList();
-
+                    }
                     else
                         componentCollaboratorDetails = subcomponents
-                                .Where(s => 
-                                        s.Area.Name.ToLower().Equals(ec.AreaName.ToLower()) && 
+                                .Where(s =>
+                                        s.Area.Name.ToLower().Equals(ec.AreaName.ToLower()) &&
                                         s.SubcomponentValues.Select(sv => sv.Charge.Name.ToLower()).Contains(ec.ChargeName.ToLower())
                                 )
                                 .Select(s =>
                                 {
-                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id && 
+                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id &&
                                                                                     sv.Charge.Name.ToLower().Equals(ec.ChargeName.ToLower()));
 
                                     return new ComponentCollaboratorDetail

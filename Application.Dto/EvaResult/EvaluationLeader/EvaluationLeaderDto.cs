@@ -9,6 +9,7 @@ namespace Application.Dto.EvaResult.EvaluationLeader
         public string DocumentNumber { get; set; } = string.Empty;
         public string LeaderName { get; set; } = string.Empty;
         public int CountAssignedCollaborator { get; set; }
+        public int ComponentId { get; set; }
 
 
         [JsonIgnore]

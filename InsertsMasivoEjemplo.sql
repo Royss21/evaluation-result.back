@@ -163,6 +163,20 @@ values
 
 go 
 
+insert into Config.Label
+(Name, Description, CreateUser, CreateDate)
+values
+('Cantidad de evaluaciones', '', 'rmartel', getdate())
+
+go
+
+insert into Config.LabelDetail
+(LabelId, Name, Description, RealValue, MinimunValue, MaximunValue,Icon, CreateUser, CreateDate)
+values
+(1, 'cantidad por año', '', 2, 0, 0,'', 'rmartel', getdate())
+
+go
+
 create proc uspGetLastEvaluationCollaboratorDeleted
 @collaboratorId varchar(50)
 as
@@ -253,3 +267,65 @@ end
 --delete from EvaResult.LeaderStage
 --delete from EvaResult.LeaderCollaborator
 
+/*
+{
+  "periodId": 2,
+  "name": "evaluacion 1",
+  "startDate": "2022-12-12T16:55:38.682Z",
+  "endDate": "2023-06-11T16:55:38.682Z",
+  "weight": 60,
+  "isEvaluationTest": false,
+  "evaluationComponentsCreateDto": [
+    {
+      "evaluationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "componentId": 1,
+      "startDate": "2022-12-13T16:55:38.682Z",
+      "endDate": "2023-01-13T16:55:38.682Z"
+    },
+ {
+      "evaluationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "componentId": 2,
+      "startDate": "2023-01-14T16:55:38.682Z",
+      "endDate": "2023-02-14T16:55:38.682Z"
+    },
+ {
+      "evaluationId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "componentId": 3,
+      "startDate": "2023-02-15T16:55:38.682Z",
+      "endDate": "2023-04-15T16:55:38.682Z"
+    }
+  ],
+  "evaluationComponentStagesCreateDto": [
+    {
+      "evaluationComponentId": null,
+      "stageId": 1,
+      "startDate": "2023-02-16T16:55:38.682Z",
+      "endDate": "2023-02-21T16:55:38.682Z",
+      "componentId": 3
+    },
+    {
+      "evaluationComponentId": null,
+      "stageId": 2,
+      "startDate": "2023-02-22T16:55:38.682Z",
+      "endDate": "2023-03-05T16:55:38.682Z",
+      "componentId": 3
+    },
+{
+      "evaluationComponentId": null,
+      "stageId": 3,
+      "startDate": "2023-03-06T16:55:38.682Z",
+      "endDate": "2023-04-06T16:55:38.682Z",
+      "componentId": null
+    },
+{
+      "evaluationComponentId": null,
+      "stageId": 4,
+      "startDate": "2023-04-07T16:55:38.682Z",
+      "endDate": "2023-05-07T16:55:38.682Z",
+      "componentId": null
+    }
+  ]
+}
+
+
+*/

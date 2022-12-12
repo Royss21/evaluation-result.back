@@ -23,16 +23,16 @@
         }
 
        
-        [HttpPost("import-file-leader")]
+        [HttpPost("import-leaders")]
         [SwaggerOperation(
         Summary = "Importar Masivo Evaluacion Lideres ",
         Description = "Importar EvaluationLeader",
-        OperationId = "EvaluationLeader.ImportBulk",
+        OperationId = "EvaluationLeader.ImportLeaders",
         Tags = new[] { "EvaluationLeaderService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> ImportBulk([FromForm]EvaluationLeaderFileDto request)
+        public async Task<IActionResult> ImportLeaders([FromForm]EvaluationLeaderFileDto request)
         {           
-            var result = await _evaluationLeaderService.ImportBulkAsync(request);
+            var result = await _evaluationLeaderService.ImportLeadersAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 

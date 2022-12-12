@@ -28,8 +28,9 @@
 
             CreateMap<EvaluationLeader, EvaluationLeaderDto>()
                .ForMember(x => x.LeaderName, m => m.MapFrom(d => $"{d.EvaluationCollaborator.Collaborator.Name} {d.EvaluationCollaborator.Collaborator.LastName} {d.EvaluationCollaborator.Collaborator.MiddleName}"))
-               .ForMember(x => x.LeaderName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
+               .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
                .ForMember(x => x.StagesId, m => m.MapFrom(d => d.LeaderStages.Select(ls => ls.Id)))
+               .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
                .ReverseMap();
 
         }

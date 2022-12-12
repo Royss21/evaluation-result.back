@@ -6,7 +6,7 @@
 
     public interface IEvaluationLeaderService
     {
-        Task<bool> ImportBulkAsync(EvaluationLeaderFileDto request);
+        Task<bool> ImportLeadersAsync(EvaluationLeaderFileDto request);
         Task<PaginationResultDto<EvaluationLeaderDto>> GetAllPagingAsync(EvaluationLeaderFilterDto filter);
         Task<(IEnumerable<LeaderCollaboratorsDto>, int)> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter);
         Task<bool> ExistsPreviousImportAsync(int componentId);
