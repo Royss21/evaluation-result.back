@@ -24,7 +24,7 @@
 
 
         public virtual Status Status { get; set; }
-        public virtual EvaluationComponent? EvaluationComponent { get; set; }
+        public virtual EvaluationComponent EvaluationComponent { get; set; }
         public virtual EvaluationCollaborator EvaluationCollaborator { get; set; }
         public virtual ICollection<ComponentCollaboratorDetail> ComponentCollaboratorDetails { get; set; }
     }

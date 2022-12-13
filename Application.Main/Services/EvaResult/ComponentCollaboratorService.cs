@@ -2,7 +2,9 @@
 namespace Application.Main.Services.EvaResult
 {
     using Application.Dto.EvaResult.ComponentCollaborator;
+    using Application.Dto.Pagination;
     using Application.Main.Exceptions;
+    using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
@@ -242,7 +244,47 @@ namespace Application.Main.Services.EvaResult
 
             return componenteCollaborator;
         }
-        
+
+        public async Task<PaginationResultDto<ComponentCollaboratorPagingDto>> GetPagingAsync(ComponentCollaboratorFilterDto filter)
+        {
+            var parametersDto = PrimeNgToPaginationParametersDto<ComponentCollaboratorPagingDto>.Convert(filter);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<ComponentCollaborator, ComponentCollaboratorPagingDto>(_mapper);
+            var evaluationComponent = await _unitOfWorkApp.Repository.EvaluationComponentRepository
+                    .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.ComponentId == filter.ComponentId)
+                    .FirstOrDefaultAsync();
+
+            if (evaluationComponent is null)
+                throw new WarningException("El componente que desea evaluar no esta creado");
+
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.EvaluationComponent.ComponentId == filter.ComponentId);
+
+            if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
+            {
+                filter.GlobalFilter = filter.GlobalFilter ?? "";
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add =>
+                            add.EvaluationCollaborator.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.EvaluationCollaborator.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.EvaluationCollaborator.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.EvaluationCollaborator.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.HierarchyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                        );
+            }
+
+            var paging = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository.FindAllPagingAsync(parametersDomain);
+            var evaluationCollaborators = await paging.Entities.ProjectTo<ComponentCollaboratorPagingDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return new PaginationResultDto<ComponentCollaboratorPagingDto>
+            {
+                Count = paging.Count,
+                Entities = evaluationCollaborators
+            };
+        }
+
         #region Helper Functions
         private async Task<decimal> CalculateFormulaCompliance(string formulaQuerySql)
         {

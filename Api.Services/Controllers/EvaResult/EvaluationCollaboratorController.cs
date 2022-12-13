@@ -32,19 +32,6 @@
             return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>(result));
         }
 
-        [HttpGet("evaluate-component-paging")]
-        [SwaggerOperation(
-        Summary = "Lista Paginada colaboradores de la evaluacion",
-        Description = "lista paginada colaboradores de la evaluacion",
-        OperationId = "EvaluationCollaborator.GetAllEvaluateByComponentePaging",
-        Tags = new[] { "EvaluationCollaboratorService" })]
-        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEvaluateByComponentePaging([FromQuery] EvaluationCollaboratorEvaluateFilterDto filter)
-        {
-            var result = await _evaluationCollaboratorService.GetEvaluateByComponentePagingAsync(filter);
-            return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>>(result));
-        }
-
         [HttpPost]
         [SwaggerOperation(
         Summary = "Agregar Colaborador a Evaluacion",

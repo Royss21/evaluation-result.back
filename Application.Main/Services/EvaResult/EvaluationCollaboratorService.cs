@@ -207,43 +207,5 @@ namespace Application.Main.Services.EvaResult
                 Entities = evaluationCollaborators
             };
         }
-        public async Task<PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>> GetEvaluateByComponentePagingAsync(EvaluationCollaboratorEvaluateFilterDto filter)
-        {
-            var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorEvaluatePagingDto>.Convert(filter);
-            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorEvaluatePagingDto>(_mapper);
-            var evaluationComponent = await _unitOfWorkApp.Repository.EvaluationComponentRepository
-                    .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.ComponentId == filter.ComponentId)
-                    .FirstOrDefaultAsync();
-
-            if (evaluationComponent is null)
-                throw new WarningException("El componente que desea evaluar no esta creado");
-
-            if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
-            {
-                parametersDomain.FilterWhere = parametersDomain.FilterWhere
-                        .AddCondition(add =>
-                            (add.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
-                            add.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
-                            add.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
-                            add.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
-                            add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
-                            add.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
-                            add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
-                            add.HierarchyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())) &&
-                            add.ComponentsCollaborator.Where(cc => cc.EvaluationCollaboratorId.Equals(evaluationComponent.Id)).Any()
-                        );
-            }
-
-            var paging = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.FindAllPagingAsync(parametersDomain);
-            var evaluationCollaborators = await paging.Entities.ProjectTo<EvaluationCollaboratorEvaluatePagingDto>(_mapper.ConfigurationProvider).ToListAsync();
-            evaluationCollaborators.ForEach(ec => ec.ComponentCollaboratorId = ec.ComponentCollaboratorIds[evaluationComponent.Id]);
-
-
-            return new PaginationResultDto<EvaluationCollaboratorEvaluatePagingDto>
-            {
-                Count = paging.Count,
-                Entities = evaluationCollaborators
-            };
-        }
     }
 }

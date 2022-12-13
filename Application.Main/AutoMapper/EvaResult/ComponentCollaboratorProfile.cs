@@ -30,6 +30,19 @@
                    }).ToList()
                ))
                .ReverseMap();
+
+
+            CreateMap<ComponentCollaborator, ComponentCollaboratorPagingDto>()
+            .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.EvaluationCollaborator.Collaborator.Name} {d.EvaluationCollaborator.Collaborator.LastName} {d.EvaluationCollaborator.Collaborator.MiddleName}"))
+            .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
+            .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Gerency.Name))
+            .ForMember(x => x.AreaName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Name))
+            .ForMember(x => x.ChargeName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Name))
+            .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Hierarchy.Name))
+            .ForMember(x => x.LevelName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Hierarchy.Level.Name))
+            .ForMember(x => x.Id, m => m.MapFrom(d => d.Id))
+            .ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
+            .ReverseMap();
         }
     }
 }

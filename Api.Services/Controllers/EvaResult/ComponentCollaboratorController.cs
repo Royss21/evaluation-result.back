@@ -44,5 +44,18 @@
             var result = await _componentCollaboratorService.EvaluateAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
+
+        [HttpGet("paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada colaboradores de la evaluacion",
+        Description = "lista paginada colaboradores de la evaluacion",
+        OperationId = "ComponentCollaborator.GetPagingByComponent",
+        Tags = new[] { "ComponentCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<ComponentCollaboratorPagingDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPaging([FromQuery] ComponentCollaboratorFilterDto filter)
+        {
+            var result = await _componentCollaboratorService.GetPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<ComponentCollaboratorPagingDto>>(result));
+        }
     }
 }
