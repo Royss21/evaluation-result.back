@@ -54,10 +54,10 @@ namespace Application.Main.Services.EvaResult
                 var subcomponentsCompetencie = subcomponents.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
 
                 if (hierarchyComponent is null)
-                    throw new WarningException($"No se ha configurado el peso de las jerarquia para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                    throw new WarningException($"No se ha configurado el peso de las jerarquia para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
                 if (!subcomponents.Any())
-                    throw new WarningException($"No se ha configurado ningun subcomponente para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                    throw new WarningException($"No se ha configurado ningun subcomponente para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
                 if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
                 {
@@ -67,7 +67,7 @@ namespace Application.Main.Services.EvaResult
                         .ToListAsync();
 
                     if (!conducts.Any())
-                        throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                        throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
                 }
 
                 var componentCollaboratorDetails = new List<ComponentCollaboratorDetail>();

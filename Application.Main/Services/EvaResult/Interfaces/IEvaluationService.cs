@@ -6,5 +6,6 @@
     {
         Task<EvaluationDto> CreateAsync(EvaluationCreateDto request);
         Task<EvaluationInProgressDto> GetEvaluationInProgressAsync();
+        Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
     }
 }

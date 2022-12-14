@@ -345,7 +345,7 @@ namespace Application.Main.Services.EvaResult
 
             if (typeImportLeaders == TypeImportLeadersEnum.Competencies)
             {
-                var stages = await _unitOfWorkApp.Repository.StageRepository.Find(s => s.Id != GeneralConstants.StagesIds.Approval).ToListAsync();
+                var stages = await _unitOfWorkApp.Repository.StageRepository.Find(s => s.Id != GeneralConstants.Stages.Approval).ToListAsync();
 
                 if (evaluationLeaderFileDataDto.Any(el => !stages.Select(e => e.Id).Contains(el.StageId ?? 0)))
                     throw new WarningException("El archivo contiene algunos IDS DE LAS ETAPAS vacias o no coinciden con algun ID DE ETAPA DEL SISTEMA");

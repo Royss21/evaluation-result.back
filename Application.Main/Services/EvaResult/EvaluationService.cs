@@ -71,10 +71,10 @@ namespace Application.Main.Services.EvaResult
                 subcomponents = subcomponents.Where(s => s.ComponentId == evaluationComponent.ComponentId).ToList();
 
                 if (!hierarchiesComponent.Any())
-                    throw new WarningException($"No se ha configurado el peso de las jerarquias para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                    throw new WarningException($"No se ha configurado el peso de las jerarquias para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
                 if (!subcomponents.Any())
-                    throw new WarningException($"No se ha configurado ningun subcomponente para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                    throw new WarningException($"No se ha configurado ningun subcomponente para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
                 if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
                 {
@@ -83,7 +83,7 @@ namespace Application.Main.Services.EvaResult
                         .Include(i => i.Level)
                         .ToListAsync();
                     if (!conducts.Any())
-                        throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.NameComponents[evaluationComponent.ComponentId]}");
+                        throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
                     evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto
                                                                                                                         .Where(w => w.ComponentId is not null));
@@ -93,7 +93,7 @@ namespace Application.Main.Services.EvaResult
                     var evaluationComponentDto = request.EvaluationComponentsCreateDto.First(ec => ec.ComponentId == evaluationComponent.ComponentId);
                     evaluationComponent.EvaluationComponentStages = new List<EvaluationComponentStage> { 
                         new EvaluationComponentStage { 
-                            StageId = GeneralConstants.StagesIds.Evaluation,
+                            StageId = GeneralConstants.Stages.Evaluation,
                             StartDate = evaluationComponentDto.StartDate,
                             EndDate = evaluationComponentDto.EndDate
                         } 
@@ -177,12 +177,12 @@ namespace Application.Main.Services.EvaResult
 
             return _mapper.Map<EvaluationDto>(evaluation);
         }
-
         public async Task<EvaluationInProgressDto> GetEvaluationInProgressAsync()
         {
             var currentDate = DateTime.UtcNow.GetDatePeru();
+
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
-                    .Find(f => f.StartDate >= currentDate && currentDate <= f.EndDate)
+                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
                     .ProjectTo<EvaluationInProgressDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
 
@@ -191,6 +191,22 @@ namespace Application.Main.Services.EvaResult
 
             return evaluation;
         }
+
+        public async Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+
+            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.Id.Equals(evaluationId))
+                    .ProjectTo<EvaluationCurrentDetailDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            if (evaluation is null)
+                throw new WarningException("No se ha encontrado datos de la evaluación");
+
+            return evaluation;
+        }
+
 
         #region Helpers Functions
 

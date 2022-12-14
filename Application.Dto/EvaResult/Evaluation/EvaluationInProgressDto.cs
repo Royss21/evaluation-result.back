@@ -2,12 +2,12 @@
 {
     public class EvaluationInProgressDto : BaseEvaluationDto
     {
+        public Guid Id { get; set; }
         public bool HasComponentCorporateObjectives { get; set; }
         public bool HasComponentAreaObjectives { get; set; }
         public bool HasComponentCompetencies { get; set; }
         public string PeriodName { get; set; } = string.Empty;
         public string EvaluationName { get; set; } = string.Empty;
         public string RangeDate { get; set; } = string.Empty;
-
     }
 }

@@ -123,7 +123,7 @@ namespace Application.Main.Services.EvaResult
                     var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
                             .Find(f => 
                                 f.EvaluationCollaboratorId.Equals(componentCollaborator.Id) &&
-                                new[] { GeneralConstants.StagesIds.Evaluation, GeneralConstants.StagesIds.Calibration }.Contains( f.LeaderStage.StageId)
+                                new[] { GeneralConstants.Stages.Evaluation, GeneralConstants.Stages.Calibration }.Contains( f.LeaderStage.StageId)
                             )
                             .Include(i => i.LeaderStage)
                             .ToListAsync();
@@ -134,7 +134,7 @@ namespace Application.Main.Services.EvaResult
 
                     switch (request.StageId)
                     {
-                        case GeneralConstants.StagesIds.Evaluation:
+                        case GeneralConstants.Stages.Evaluation:
 
                             var countLeaders = leaderCollaborators.Select(lc => lc.LeaderStage.EvaluationLeaderId)
                                     .Distinct()
@@ -166,7 +166,7 @@ namespace Application.Main.Services.EvaResult
 
                             break;
 
-                        case GeneralConstants.StagesIds.Calibration:
+                        case GeneralConstants.Stages.Calibration:
 
                             componentCollaboratorDetails.ForEach(ccd =>
                             {

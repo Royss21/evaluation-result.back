@@ -61,13 +61,26 @@
         [SwaggerOperation(
         Summary = "Obtener Evaluacion En Curso",
         Description = "evaluacion en curso",
-        OperationId = "Evaluation.InProgress",
+        OperationId = "Evaluation.GetEvaluationInProgress",
         Tags = new[] { "EvaluationService" })]
         [ProducesResponseType(typeof(JsonResult<EvaluationInProgressDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetEvaluationInProgress()
         {
             var result = await _evaluationService.GetEvaluationInProgressAsync();
             return new OkObjectResult(new JsonResult<EvaluationInProgressDto>(result));
+        }
+
+        [HttpGet("{id}")]
+        [SwaggerOperation(
+        Summary = "Obtener Evaluacion",
+        Description = "evaluacion",
+        OperationId = "Evaluation.GetEvaluationDetail",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationCurrentDetailDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEvaluationDetail(Guid id)
+        {
+            var result = await _evaluationService.GetEvaluationDetailAsync(id);
+            return new OkObjectResult(new JsonResult<EvaluationCurrentDetailDto>(result));
         }
 
         //[HttpDelete("{id}")]
