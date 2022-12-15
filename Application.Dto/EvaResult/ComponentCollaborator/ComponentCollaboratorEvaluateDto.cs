@@ -10,6 +10,6 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public int StageId { get; set; }
         public string Comment { get; set; } = string.Empty;
         public int ComponentId { get; set; }
-        public List<ComponentCollaboratorDetailEvaluateDto> ComponentCollaboratorDetailsEvaluateDto { get; set; }
+        public List<ComponentCollaboratorDetailEvaluateDto> ComponentCollaboratorDetailsEvaluate { get; set; }
     }
 }
