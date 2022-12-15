@@ -2,6 +2,7 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.Employee.Collaborator;
+    using Application.Dto.Pagination;
     using Application.Main.Services.Employee.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -16,6 +17,19 @@
         {
             _collaboratorService = collaboratorService;
             _logger = logger;
+        }
+
+        [HttpGet("not-in-evaluation/paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada de Collaborators que no estan en la evaluacion",
+        Description = "Listado paginado de collaborators que no estan en la evaluacion",
+        OperationId = "Collaborator.GetAllPagingCollaboratorNotInEvaluation",
+        Tags = new[] { "CollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<CollaboratorNotInEvaluationDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPagingCollaboratorNotInEvaluation([FromQuery] PagingFilterDto filter)
+        {
+            var result = await _collaboratorService.GetAllPagingCollaboratorNotInEvaluationAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<CollaboratorNotInEvaluationDto>>(result));
         }
 
         [HttpGet("not-in-evaluation/{evaluationId}")]

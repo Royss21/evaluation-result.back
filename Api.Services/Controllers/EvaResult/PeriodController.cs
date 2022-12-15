@@ -35,7 +35,7 @@
         [HttpGet("paging")]
         [SwaggerOperation(
         Summary = "Lista Paginada Periodos",
-        Description = "lista paginada de Periodso",
+        Description = "lista paginada de Periodo",
         OperationId = "Period.GetAllPaging",
         Tags = new[] { "PeriodService" })]
         [ProducesResponseType(typeof(JsonResult<PaginationResultDto<PeriodDto>>), StatusCodes.Status200OK)]

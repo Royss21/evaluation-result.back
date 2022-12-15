@@ -1,7 +1,4 @@
-﻿
-
-
-namespace Application.Main.Pagination
+﻿namespace Application.Main.Pagination
 {
     using SharedKernell.Pagination;
     public static class ExpressionHelpers
