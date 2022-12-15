@@ -6,6 +6,6 @@ namespace Application.Dto.EvaResult.ComponentCollaboratorDetail
     {
         public int ComponentCollaboratorDetailId { get; set; }
         public decimal ValueResult { get; set; }
-        public List<ComponentCollaboratorConductEvaluateDto>? ComponentCollaboratorConductsEvaluateDto { get; set; }
+        public List<ComponentCollaboratorConductEvaluateDto>? ComponentCollaboratorConductsEvaluate { get; set; }
     }
 }
