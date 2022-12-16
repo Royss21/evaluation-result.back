@@ -20,14 +20,14 @@ namespace Application.Main.Services.EvaResult
         {
             var isStatusCompleted = false;
             var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
-                    .Find(f => f.Id.Equals(request.ComponentCollaboratorId), false)
+                    .Find(f => f.Id.Equals(request.Id), false)
                     .FirstOrDefaultAsync();
 
             if (componentCollaborator is null)
                 throw new WarningException("El componente a evaluar del colaborador no se ha encontrado");
 
             var componentCollaboratorDetails = await _unitOfWorkApp.Repository.ComponentCollaboratorDetailRepository
-                    .Find(f => request.ComponentCollaboratorDetailsEvaluate.Select(s => s.ComponentCollaboratorDetailId).Contains(f.Id), false)
+                    .Find(f => request.ComponentCollaboratorDetailsEvaluate.Select(s => s.Id).Contains(f.Id), false)
                     .ToListAsync();
 
             if (!componentCollaboratorDetails.Any())
@@ -58,7 +58,7 @@ namespace Application.Main.Services.EvaResult
                     componentCollaboratorDetails.ForEach(async ccd =>
                     {
                         var valueResult = request.ComponentCollaboratorDetailsEvaluate
-                            .First(f=> f.ComponentCollaboratorDetailId == ccd.Id).ValueResult;
+                            .First(f=> f.Id == ccd.Id).ValueResult;
                         var formulaQuerySql = ccd.FormulaQuery;
                         ccd.Result = valueResult;
                         
@@ -100,7 +100,7 @@ namespace Application.Main.Services.EvaResult
                     componentCollaboratorDetails.ForEach(async ccd =>
                     {
                         var valueResult = request.ComponentCollaboratorDetailsEvaluate
-                            .First(f => f.ComponentCollaboratorDetailId == ccd.Id).ValueResult;
+                            .First(f => f.Id == ccd.Id).ValueResult;
 
                         ccd.Result = valueResult;
                         ccd.Compliance = valueResult < ccd.MinimunPercentage ? 0 : valueResult / ccd.MaximunPercentage;
@@ -145,10 +145,10 @@ namespace Application.Main.Services.EvaResult
                                 componentCollaboratorConducts.ForEach(ccc =>
                                 {
                                     var componentCollaboratorDto = request.ComponentCollaboratorDetailsEvaluate
-                                        .First(f =>f.ComponentCollaboratorDetailId == ccd.Id );
+                                        .First(f =>f.Id == ccd.Id );
 
                                     ccc.ConductPoints = componentCollaboratorDto.ComponentCollaboratorConductsEvaluate
-                                        .First(f => f.ComponentCollaboratorConductId == ccc.Id).PointValue;
+                                        .First(f => f.Id == ccc.Id).PointValue;
 
                                     if (countLeaders > 1)
                                         ccc.ConductPointsCalibrated = ccc.ConductPoints;
@@ -173,10 +173,10 @@ namespace Application.Main.Services.EvaResult
                                 componentCollaboratorConducts.ForEach(ccc =>
                                 {
                                     var componentCollaboratorDto = request.ComponentCollaboratorDetailsEvaluate
-                                        .First(f => f.ComponentCollaboratorDetailId == ccd.Id);
+                                        .First(f => f.Id == ccd.Id);
 
                                     ccc.ConductPointsCalibrated = componentCollaboratorDto.ComponentCollaboratorConductsEvaluate
-                                        .First(f => f.ComponentCollaboratorConductId == ccc.Id).PointValue;
+                                        .First(f => f.Id == ccc.Id).PointValue;
                                 });
 
                                 ccd.PointsCalibrated = componentCollaboratorConducts.Sum(s => s.ConductPointsCalibrated);

@@ -6,6 +6,8 @@ namespace Application.Dto.EvaResult.ComponentCollaboratorDetail
     {
         public int Id { get; set; }
         public string SubcomponentName { get; set; } = string.Empty;
+        public decimal MinimunPercentage { get; set; }
+        public decimal MaximunPercentage { get; set; }
         public List<ComponentCollaboratorConductDto>? ComponentCollaboratorConducts { get; set; }
     }
 }
