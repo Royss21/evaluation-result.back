@@ -67,6 +67,9 @@ namespace Application.Main.Services.Config
             var parametersDto = PrimeNgToPaginationParametersDto<ParameterRangeDto>.Convert(primeTable);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<ParameterRange, ParameterRangeDto>(_mapper);
 
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(a => !a.IsInternalConfiguration);
+
             if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere

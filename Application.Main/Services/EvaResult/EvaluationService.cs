@@ -1,6 +1,7 @@
 ﻿
 namespace Application.Main.Services.EvaResult
 {
+    using Application.Dto.Config.Subcomponent;
     using Application.Dto.Employee.Collaborator;
     using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.Pagination;
@@ -138,13 +139,13 @@ namespace Application.Main.Services.EvaResult
                     else
                         componentCollaboratorDetails = subcomponents
                                 .Where(s =>
-                                        s.Area.Name.ToLower().Equals(ec.AreaName.ToLower()) &&
-                                        s.SubcomponentValues.Select(sv => sv.Charge.Name.ToLower()).Contains(ec.ChargeName.ToLower())
+                                        s.AreaName.ToLower().Equals(ec.AreaName.ToLower()) &&
+                                        s.SubcomponentValues.Select(sv => sv.ChargeName.ToLower()).Contains(ec.ChargeName.ToLower())
                                 )
                                 .Select(s =>
                                 {
-                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId == s.Id &&
-                                                                                    sv.Charge.Name.ToLower().Equals(ec.ChargeName.ToLower()));
+                                    var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId.Equals(s.Id) &&
+                                                                                    sv.ChargeName.ToLower().Equals(ec.ChargeName.ToLower()));
 
                                     return new ComponentCollaboratorDetail
                                     {
@@ -152,8 +153,8 @@ namespace Application.Main.Services.EvaResult
                                         WeightRelative = subcomponentValue.RelativeWeight,
                                         MinimunPercentage = subcomponentValue.MinimunPercentage,
                                         MaximunPercentage = subcomponentValue.MaximunPercentage,
-                                        FormulaName = s.Formula?.Name ?? "",
-                                        FormulaQuery = s.Formula?.FormulaQuery ?? "",
+                                        FormulaName = s.FormulaName ?? "",
+                                        FormulaQuery = s.FormulaQuery ?? "",
                                     };
                                 }).ToList();
 
@@ -259,7 +260,7 @@ namespace Application.Main.Services.EvaResult
 
             return evaluationCollaborators;
         }
-        private async Task<(List<HierarchyComponent>, List<Subcomponent>)> GetDataCurrentConfiguration(List<int> componentIds)
+        private async Task<(List<HierarchyComponent>, List<SubcomponentDataConfigurationDto>)> GetDataCurrentConfiguration(List<int> componentIds)
         {
             var hierarchyComponents = await _unitOfWorkApp.Repository.HierarchyComponentRepository
                 .Find(hc => componentIds.Contains(hc.ComponentId))
@@ -268,12 +269,10 @@ namespace Application.Main.Services.EvaResult
 
             var subcomponents = await _unitOfWorkApp.Repository.SubcomponentRepository
                 .Find(s => componentIds.Contains(s.ComponentId))
-                .Include("Area")
-                .Include("Formula")
-                .Include("SubcomponentValues.Charge")
+                .ProjectTo<SubcomponentDataConfigurationDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            if(!hierarchyComponents.Any())
+            if (!hierarchyComponents.Any())
                 throw new WarningException("No se ha encontrado ninguna jerarquia con pesos configurados");
             if (!subcomponents.Any())
                 throw new WarningException("No se ha encontrado ningun subcomponente configurado");

@@ -13,6 +13,10 @@
                 .IsRequired(false)
                 .HasMaxLength(50);
 
+            builder.Property(p => p.EntityName)
+                .IsRequired(false)
+                .HasMaxLength(50);
+
             builder.Property(p => p.Value)
                 .HasDefaultValue(0)
                 .IsRequired();

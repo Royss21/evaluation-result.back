@@ -18,7 +18,7 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<bool> EvaluateAsync(ComponentCollaboratorEvaluateDto request)
         {
-            var isStatusCompleted = false;
+
             var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .Find(f => f.Id.Equals(request.Id), false)
                     .FirstOrDefaultAsync();
@@ -45,7 +45,7 @@ namespace Application.Main.Services.EvaResult
                 case GeneralConstants.Component.CorporateObjectives:
 
                     var paramatersValue = await _unitOfWorkApp.Repository.ParameterValueRepository
-                            .All()
+                            .Find( f=> !f.ParameterRange.IsInternalConfiguration)
                             .ToListAsync();
                     var parametersRangeInternal = await _unitOfWorkApp.Repository.ParameterRangeRepository
                             .Find(f => f.IsInternalConfiguration)
@@ -55,27 +55,26 @@ namespace Application.Main.Services.EvaResult
                     if (parametersRangeInternal is not null && parametersRangeInternal.ParametersValue.Any())
                         paramatersValue.AddRange(parametersRangeInternal.ParametersValue);
 
-                    componentCollaboratorDetails.ForEach(async ccd =>
+                    foreach(var ccd in componentCollaboratorDetails)
                     {
                         var valueResult = request.ComponentCollaboratorDetailsEvaluate
-                            .First(f=> f.Id == ccd.Id).ValueResult;
+                            .First(f => f.Id == ccd.Id).ValueResult;
                         var formulaQuerySql = ccd.FormulaQuery;
                         ccd.Result = valueResult;
-                        
-                        foreach(var parameterValue in paramatersValue)
+
+                        foreach (var parameterValue in paramatersValue)
                         {
-                            formulaQuerySql = formulaQuerySql.Replace(parameterValue.Name,
-                                    parameterValue.ParameterRangeId == parametersRangeInternal.Id
-                                        ? ccd.GetType().GetProperty(parameterValue.NameProperty).GetValue(ccd, null)?.ToString() ?? ""
-                                        : parameterValue.Value.ToString());
+                            if(formulaQuerySql.Contains(parameterValue.Name))
+                                formulaQuerySql = formulaQuerySql.Replace(parameterValue.Name,
+                                        parameterValue.ParameterRangeId == parametersRangeInternal.Id
+                                            ? ccd.GetType().GetProperty(parameterValue.NameProperty).GetValue(ccd, null)?.ToString() ?? ""
+                                            : parameterValue.Value.ToString());
                         }
 
-
-                        
                         var complianceValue = await CalculateFormulaCompliance(formulaQuerySql);
                         ccd.Compliance = complianceValue;
                         ccd.Points = complianceValue * ccd.WeightRelative;
-                    });
+                    }
 
                     componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.Points);
                     componentCollaborator.ExcessSubtotal = componentCollaborator.SubTotal > 100 ? 100 : componentCollaborator.SubTotal;
@@ -97,15 +96,15 @@ namespace Application.Main.Services.EvaResult
                     if(!hasEvaluationLeaderAssigned)
                         throw new WarningException("El colaborador no tiene un Lider asignado para evaluar su area");
 
-                    componentCollaboratorDetails.ForEach(async ccd =>
+                    foreach(var ccd in componentCollaboratorDetails)
                     {
                         var valueResult = request.ComponentCollaboratorDetailsEvaluate
-                            .First(f => f.Id == ccd.Id).ValueResult;
+                           .First(f => f.Id == ccd.Id).ValueResult;
 
                         ccd.Result = valueResult;
                         ccd.Compliance = valueResult < ccd.MinimunPercentage ? 0 : valueResult / ccd.MaximunPercentage;
                         ccd.Points = ccd.Compliance * ccd.WeightRelative;
-                    });
+                    }
 
                     componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.Points);
                     componentCollaborator.Total = componentCollaborator.WeightHierarchy * componentCollaborator.SubTotal;
@@ -129,7 +128,7 @@ namespace Application.Main.Services.EvaResult
                             .ToListAsync();
 
                     if (!leaderCollaborators.Any(lc => lc.LeaderStage.StageId == request.StageId))
-                        throw new WarningException("El colaborador no tiene un Lider asignado en esta estapa");
+                        throw new WarningException("El colaborador no tiene un Lider asignado en esta etapa");
 
 
                     switch (request.StageId)

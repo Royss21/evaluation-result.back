@@ -32,6 +32,43 @@ values
 (2,2,'Cargo 2 Area 2','rmartel','Oct 31 2022 10:30PM'),
 (2,3,'Cargo 3 Area 2','rmartel','Oct 31 2022 10:30PM')
 
+go
+
+insert into config.ParameterRange
+(id, name, Description, IsInternalConfiguration, CreateUser, CreateDate)
+values
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', 'Parametro Internos', '', 1, 'rmartel', getdate()),
+('9FFA613E-378B-4683-9C92-5728864DC0A1', 'Rango de 0 hasta 74.99', '', 0, 'rmartel', getdate()),
+('C86C556E-9F26-48FA-A175-7E8D2C2F6C60', 'Rango de 75 hasta 80<', '', 0, 'rmartel', getdate()),
+('B5F9B1B2-5F9D-4909-A5C8-1AAD47CD8BAA', 'Rango de 80 hasta 90<', '', 0, 'rmartel', getdate())
+
+go
+
+insert into config.ParameterValue
+( ParameterRangeId,name, EntityName, Value, NameProperty,  CreateUser, CreateDate)
+values
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropValorReal', 'ComponentCollaboratorDetail', 0, 'Result','rmartel', getdate()),
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMeta', 'ComponentCollaboratorDetail', 0, 'MaximunPercentage','rmartel', getdate()),
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMinimo', 'ComponentCollaboratorDetail', 0, 'MinimunPercentage','rmartel', getdate()),
+('9FFA613E-378B-4683-9C92-5728864DC0A1', '@Nota1', '', 0.00, '','rmartel', getdate()),
+('9FFA613E-378B-4683-9C92-5728864DC0A1', '@CisRealMinimo1', '', 0.00, '','rmartel', getdate()),
+('9FFA613E-378B-4683-9C92-5728864DC0A1', '@CisRealMaximo1', '', 0.7499, '','rmartel', getdate()),
+('C86C556E-9F26-48FA-A175-7E8D2C2F6C60', '@Nota2', '', 0.5000, '','rmartel', getdate()),
+('C86C556E-9F26-48FA-A175-7E8D2C2F6C60', '@CisRealMinimo2', '', 0.7500, '','rmartel', getdate()),
+('C86C556E-9F26-48FA-A175-7E8D2C2F6C60', '@CisRealMaximo2', '', 0.7999, '','rmartel', getdate()),
+('B5F9B1B2-5F9D-4909-A5C8-1AAD47CD8BAA', '@Nota3', '', 0.7500, '','rmartel', getdate()),
+('B5F9B1B2-5F9D-4909-A5C8-1AAD47CD8BAA', '@CisRealMinimo3', '', 0.8000, '','rmartel', getdate()),
+('B5F9B1B2-5F9D-4909-A5C8-1AAD47CD8BAA', '@CisRealMaximo3', '', 0.8999, '','rmartel', getdate())
+
+go
+
+insert into config.Formula
+(id, name, Description, FormulaReal, FormulaQuery, CreateUser, CreateDate, IsDeleted)
+values
+('BEA08DCC-AE3A-4C08-946E-B47F5F9CD6FD', 'Formula Objetivo', '', '', 'IIF(@PropValorReal<@PropMinimo,0,IIF((@PropValorReal/@PropMeta)*100 > 120, 120/100, @PropValorReal/@PropMeta))', 'rmartel', getdate(), 0),
+('E43C9497-BC6D-465E-8832-FBF961636A2A', 'Formula Objetivo Especial', '', '', 'IIF(@PropValorReal<=@CisRealMaximo1, 0, IIF((@PropValorReal>=@CisRealMinimo2 AND @PropValorReal<=@CisRealMaximo2), @Nota2, IIF((@PropValorReal>=@CisRealMinimo3 AND @PropValorReal<=@CisRealMaximo3), @Nota3, @PropValorReal)))', 'rmartel', getdate(), 0)
+
+
 insert into EvaResult.Period (name, StartDate, EndDate, CreateUser, CreateDate)
 values ('Period 1','2022-10-25 22:08:13.9550000','2022-10-25 22:08:13.9550000','system','Oct 31 2022 10:30PM')
 
@@ -54,27 +91,23 @@ values
 
 insert into Config.HierarchyComponent (HierarchyId, ComponentId, Weight, CreateUser, CreateDate, IsDeleted)
 values
-(1, 1, 20, 'rmartel', getdate(), 0),
-(1, 2, 50, 'rmartel', getdate(), 0),
-(1, 3, 30, 'rmartel', getdate(), 0),
-(2, 1, 20, 'rmartel', getdate(), 0),
-(2, 2, 50, 'rmartel', getdate(), 0),
-(2, 3, 30, 'rmartel', getdate(), 0),
-(3, 1, 20, 'rmartel', getdate(), 0),
-(3, 2, 50, 'rmartel', getdate(), 0),
-(3, 3, 30, 'rmartel', getdate(), 0)
-
-insert into Config.Formula (id, name, Description, FormulaQuery, FormulaReal, CreateUser, CreateDate, IsDeleted)
-values
-('E43C9497-BC6D-465E-8832-FBF961636A2A','Formula 1', 'formula 1111','IIF(2>5, 5*2,  3*2)', 'SI(2>5, 5*2,  3*2)', 'rmartel', getdate(), 0)
+(1, 1, 0.20, 'rmartel', getdate(), 0),
+(1, 2, 0.50, 'rmartel', getdate(), 0),
+(1, 3, 0.30, 'rmartel', getdate(), 0),
+(2, 1, 0.20, 'rmartel', getdate(), 0),
+(2, 2, 0.50, 'rmartel', getdate(), 0),
+(2, 3, 0.30, 'rmartel', getdate(), 0),
+(3, 1, 0.20, 'rmartel', getdate(), 0),
+(3, 2, 0.50, 'rmartel', getdate(), 0),
+(3, 3, 0.30, 'rmartel', getdate(), 0)
 
 
 insert into Config.Subcomponent
 (id, ComponentId, AreaId, FormulaId, Name, Description, CreateUser, CreateDate, IsDeleted)
 values
-('A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 1, 1, null, 'Subcomponente 1 OBJCORP', '', 'rmartel', getdate(), 0),
+('A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 1, 1, 'BEA08DCC-AE3A-4C08-946E-B47F5F9CD6FD', 'Subcomponente 1 OBJCORP', '', 'rmartel', getdate(), 0),
 ('12A5F857-F067-4EC5-968C-5284616A2929', 1, 1, 'E43C9497-BC6D-465E-8832-FBF961636A2A', 'Subcomponente 2 OBJCORP', '', 'rmartel', getdate(), 0),
-('6A74384F-2DA1-4B23-8569-C00206FDFA98', 1, 2, null, 'Subcomponente 3 OBJCORP', '', 'rmartel', getdate(), 0),
+('6A74384F-2DA1-4B23-8569-C00206FDFA98', 1, 2, 'BEA08DCC-AE3A-4C08-946E-B47F5F9CD6FD', 'Subcomponente 3 OBJCORP', '', 'rmartel', getdate(), 0),
 ('F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 1, 2, 'E43C9497-BC6D-465E-8832-FBF961636A2A', 'Subcomponente 4 OBJCORP', '', 'rmartel', getdate(), 0),
 ('DA886354-B2BB-483A-8430-F2F5DC31E9B9', 2, 1, null, 'Subcomponente 5 KPIAREA', '', 'rmartel', getdate(), 0),
 ('BBFABC97-44DB-4925-91D6-C8B42827B1C1', 2, 1, null, 'Subcomponente 6 KPIAREA', '', 'rmartel', getdate(), 0),
@@ -91,34 +124,34 @@ insert into Config.SubcomponentValue
 values
 
 --OBJCOPR
-(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 1, 15, 75, 90, 'rmartel', getdate(), 0),
-(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 2, 20, 65, 100, 'rmartel', getdate(), 0),
-(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 3, 20, 80, 95, 'rmartel', getdate(), 0),
-(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 1, 15, 75, 99, 'rmartel', getdate(), 0),
-(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 2, 20, 78, 85, 'rmartel', getdate(), 0),
-(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 3, 25, 82, 100, 'rmartel', getdate(), 0),
-
-(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 4, 15, 75, 90, 'rmartel', getdate(), 0),
-(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 5, 20, 65, 100, 'rmartel', getdate(), 0),
-(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 6, 20, 80, 95, 'rmartel', getdate(), 0),
-(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 4, 15, 75, 99, 'rmartel', getdate(), 0),
-(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 5, 20, 78, 85, 'rmartel', getdate(), 0),
-(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 6, 25, 82, 100, 'rmartel', getdate(), 0),
-
---KPI AREA
-(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 1, 15, 75, 90, 'rmartel', getdate(), 0),
-(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 2, 20, 65, 100, 'rmartel', getdate(), 0),
-(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 3, 20, 80, 95, 'rmartel', getdate(), 0),
-(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 1, 15, 75, 99, 'rmartel', getdate(), 0),
-(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 2, 20, 78, 85, 'rmartel', getdate(), 0),
-(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 3, 25, 82, 100, 'rmartel', getdate(), 0),
-
-(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 4, 15, 75, 90, 'rmartel', getdate(), 0),
-(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 5, 20, 65, 100, 'rmartel', getdate(), 0),
-(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 6, 20, 80, 95, 'rmartel', getdate(), 0),
-(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 4, 15, 75, 99, 'rmartel', getdate(), 0),
-(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 5, 20, 78, 85, 'rmartel', getdate(), 0),
-(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 6, 25, 82, 100, 'rmartel', getdate(), 0)
+(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 1, 0.15, 0.75, 0.90, 'rmartel', getdate(), 0),
+(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 2, 0.20, 0.65, 1, 'rmartel', getdate(), 0),
+(newid(),'A22EA277-F2F5-49B5-89F2-1FDECDA8A003', 3, 0.20, 0.80, 0.95, 'rmartel', getdate(), 0),
+(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 1, 0.15, 0.75, 0.99, 'rmartel', getdate(), 0),
+(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 2, 0.20, 0.78, 0.85, 'rmartel', getdate(), 0),
+(newid(),'12A5F857-F067-4EC5-968C-5284616A2929', 3, 0.25, 0.82, 1, 'rmartel', getdate(), 0),
+														  		
+(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 4, 0.15, 0.75, 0.90, 'rmartel', getdate(), 0),
+(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 5, 0.20, 0.65, 1, 'rmartel', getdate(), 0),
+(newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 6, 0.20, 0.80, 0.95, 'rmartel', getdate(), 0),
+(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 4, 0.15, 0.75, 0.99, 'rmartel', getdate(), 0),
+(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 5, 0.20, 0.78, 0.85, 'rmartel', getdate(), 0),
+(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 6, 0.25, 0.82, 0.100, 'rmartel', getdate(), 0),
+														  		
+--KPI AREA												  		
+(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 1, 0.15, 0.75, 0.90, 'rmartel', getdate(), 0),
+(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 2, 0.20, 0.65, 1, 'rmartel', getdate(), 0),
+(newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 3, 0.20, 0.80, 0.95, 'rmartel', getdate(), 0),
+(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 1, 0.15, 0.75, 0.99, 'rmartel', getdate(), 0),
+(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 2, 0.20, 0.78, 0.85, 'rmartel', getdate(), 0),
+(newid(),'DA886354-B2BB-483A-8430-F2F5DC31E9B9', 3, 0.25, 0.82, 1, 'rmartel', getdate(), 0),
+														  		
+(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 4, 0.15, 0.75, 0.90, 'rmartel', getdate(), 0),
+(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 5, 0.20, 0.65, 1, 'rmartel', getdate(), 0),
+(newid(),'E66C2F20-FC0E-4F89-9A9E-4D1367D91D9A', 6, 0.20, 0.80, 0.95, 'rmartel', getdate(), 0),
+(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 4, 0.15, 0.75, 0.99, 'rmartel', getdate(), 0),
+(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 5, 0.20, 0.78, 0.85, 'rmartel', getdate(), 0),
+(newid(),'0C24DF55-1C5A-45DC-B0BE-576F1B6D2192', 6, 0.25, 0.82, 1, 'rmartel', getdate(), 0)
 
 insert into Config.Conduct
 (id, LevelId, SubcomponentId, IsActive, Description, CreateUser, CreateDate, IsDeleted)
@@ -174,6 +207,7 @@ insert into Config.LabelDetail
 (LabelId, Name, Description, RealValue, MinimunValue, MaximunValue,Icon, CreateUser, CreateDate)
 values
 (1, 'cantidad por año', '', 2, 0, 0,'', 'rmartel', getdate())
+
 
 go
 
@@ -268,12 +302,14 @@ end
 --delete from EvaResult.LeaderCollaborator
 
 /*
+
+
 {
   "periodId": 2,
   "name": "evaluacion 1",
   "startDate": "2022-12-12T16:55:38.682Z",
   "endDate": "2023-06-11T16:55:38.682Z",
-  "weight": 60,
+  "weight": 0.60,
   "isEvaluationTest": false,
   "evaluationComponentsCreateDto": [
     {

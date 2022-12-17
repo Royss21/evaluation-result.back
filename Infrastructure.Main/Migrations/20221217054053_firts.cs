@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class nuevo : Migration
+    public partial class firts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -427,6 +427,7 @@ namespace Infrastructure.Main.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Value = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     NameProperty = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EntityName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -485,7 +486,7 @@ namespace Infrastructure.Main.Migrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Weight = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
+                    Weight = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     StatusId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20221210214713_nuevo")]
-    partial class nuevo
+    [Migration("20221217054053_firts")]
+    partial class firts
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -427,6 +427,10 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("EntityName")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -1221,10 +1225,10 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Weight")
+                    b.Property<decimal>("Weight")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
                     b.HasKey("Id");
 

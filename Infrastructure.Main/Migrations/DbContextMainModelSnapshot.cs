@@ -428,6 +428,10 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("EntityName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1219,10 +1223,10 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Weight")
+                    b.Property<decimal>("Weight")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
 
                     b.HasKey("Id");
 

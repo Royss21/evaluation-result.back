@@ -100,7 +100,8 @@ namespace Application.Main.Services.EvaResult
                 else
                     componentCollaboratorDetails = subcomponents
                             .Where(s => 
-                                s.SubcomponentValues.Select(sv => sv.Charge.Name).Contains(request.ChargeName)
+                                s.SubcomponentValues.Select(sv => sv.Charge.Name).Contains(request.ChargeName) &&
+                                s.ComponentId == evaluationComponent.ComponentId
                             )
                             .Select(s =>
                             {

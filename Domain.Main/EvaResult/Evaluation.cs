@@ -17,7 +17,7 @@ namespace Domain.Main.EvaResult
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int Weight { get; set; }
+        public decimal Weight { get; set; }
         public int StatusId { get; set; }
 
 
