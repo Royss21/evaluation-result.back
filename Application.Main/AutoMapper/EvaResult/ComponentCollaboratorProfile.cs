@@ -22,6 +22,8 @@
                    {
                        Id = ccd.Id,
                        SubcomponentName = ccd.SubcomponentName,
+                       MaximunPercentage = ccd.MaximunPercentage,
+                       MinimunPercentage = ccd.MinimunPercentage,
                        ComponentCollaboratorConducts = ccd.ComponentCollaboratorConducts.Select(ccc => new ComponentCollaboratorConductDto
                        {
                            Id = ccc.Id,
