@@ -5,5 +5,6 @@ namespace Application.Main.Services.Employee.Interfaces
     public interface IChargeService
     {
         Task<IEnumerable<ChargeDto>> GetAllAsync();
+        Task<ChargeDto> GetByIdAsync(int id);
     }
 }

@@ -22,5 +22,18 @@
 
             return hierarchy;
         }
+
+        public async Task<HierarchyDto> GetByIdAsync(int id)
+        {
+            var hierarchy = await _unitOfWorkApp.Repository.HierarchyRepository
+                    .Find(c => c.Id == id)
+                    .ProjectTo<HierarchyDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            if (hierarchy is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            return hierarchy;
+        }
     }
 }

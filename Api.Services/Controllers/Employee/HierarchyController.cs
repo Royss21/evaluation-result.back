@@ -29,5 +29,18 @@
             var result = await _hierarchyService.GetAllAsync();
             return new OkObjectResult(new JsonResult<List<HierarchyDto>>(result.ToList()));
         }
+
+        [HttpGet("{id}")]
+        [SwaggerOperation(
+        Summary = "Obtener Jerarquía",
+        Description = "Obtener Jerarquía",
+        OperationId = "HierarchyService.GetById",
+        Tags = new[] { "HierarchyService" })]
+        [ProducesResponseType(typeof(JsonResult<HierarchyDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _hierarchyService.GetByIdAsync(id);
+            return new OkObjectResult(new JsonResult<HierarchyDto>(result));
+        }
     }
 }

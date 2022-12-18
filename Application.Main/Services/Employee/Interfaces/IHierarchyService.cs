@@ -4,5 +4,6 @@
     public interface IHierarchyService
     {
         Task<IEnumerable<HierarchyDto>> GetAllAsync();
+        Task<HierarchyDto> GetByIdAsync(int id);
     }
 }

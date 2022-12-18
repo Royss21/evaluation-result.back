@@ -30,5 +30,18 @@
             return new OkObjectResult(new JsonResult<List<ChargeDto>>(result.ToList()));
         }
 
+        [HttpGet("{id}")]
+        [SwaggerOperation(
+        Summary = "Obtener Cargo",
+        Description = "Obtener Cargo",
+        OperationId = "ChargeService.GetById",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<ChargeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _chargeService.GetByIdAsync(id);
+            return new OkObjectResult(new JsonResult<ChargeDto>(result));
+        }
+
     }
 }
