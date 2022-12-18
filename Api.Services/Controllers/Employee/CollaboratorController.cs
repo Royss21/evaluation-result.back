@@ -19,6 +19,33 @@
             _logger = logger;
         }
 
+        [HttpPost]
+        [SwaggerOperation(
+        Summary = "Crear colaborador",
+        Description = "crear colaborador",
+        OperationId = "CollaboratorService.Create",
+        Tags = new[] { "CollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<CollaboratorNotInEvaluationDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(CollaboratorNotInEvaluationCreateDto request)
+        {
+            var result = await _collaboratorService.CreateAsync(request);
+            return new OkObjectResult(new JsonResult<CollaboratorNotInEvaluationDto>(result));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualiza colaborador",
+        Description = "Actualizar colaborador",
+        OperationId = "CollaboratorService.Update",
+        Tags = new[] { "CollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<CollaboratorNotInEvaluationDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(CollaboratorUpdateDto request)
+        {
+            var result = await _collaboratorService.UpdateAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+
         [HttpGet("not-in-evaluation/paging")]
         [SwaggerOperation(
         Summary = "Lista Paginada de Collaborators que no estan en la evaluacion",

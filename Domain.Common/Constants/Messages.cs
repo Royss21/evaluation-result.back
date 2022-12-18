@@ -55,5 +55,10 @@
             public const string PercentageValidate = "El % minimo no debe ser mayor al % maximo";
         }
 
+        public static class Collaborator
+        {
+            public const string ChargeRequired = "El Cargo es requerido";
+        }
+
     }
 }

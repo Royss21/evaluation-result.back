@@ -3,6 +3,6 @@
     public abstract class BaseHierarchyDto
     {
         public string Name { get; set; } = string.Empty;
-        public int IdLevel { get; set; }
+        public int LevelId { get; set; }
     }
 }

@@ -1,16 +1,47 @@
 ﻿namespace Application.Main.Services.Employee
 {
-    using Application.Dto.Employee.Collaborator;
+    using Domain.Main.Employee;
     using Application.Dto.Pagination;
     using Application.Main.Pagination;
+    using Application.Main.Exceptions;
     using Application.Main.Service.Base;
+    using Application.Dto.Employee.Collaborator;
     using Application.Main.Services.Employee.Interfaces;
-    using Domain.Main.Employee;
+    using Application.Main.Services.Employee.Validators;
 
     public class CollaboratorService : BaseService, ICollaboratorService
     {
         public CollaboratorService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
+
+        public async Task<CollaboratorNotInEvaluationDto> CreateAsync(CollaboratorNotInEvaluationCreateDto request)
+        {
+            var collaborator = _mapper.Map<Collaborator>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository
+                .AddAsync(collaborator, new CollaboratorNotInEvaluationCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return _mapper.Map<CollaboratorNotInEvaluationDto>(collaborator);
+
+        }
+
+        public async Task<bool> UpdateAsync(CollaboratorUpdateDto request)
+        {
+            var collaborator = _mapper.Map<Collaborator>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository
+                .UpdateAsync(collaborator, new CollaboratorNotInEvaluationCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
+        }
 
         public async Task<IEnumerable<CollaboratorNotInEvaluationDto>> GetAllCollaboratorNotInEvaluationAsync(Guid evaluationId)
         {
@@ -49,5 +80,6 @@
                 Entities = collaborators
             };
         }
+
     }
 }

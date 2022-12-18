@@ -7,6 +7,6 @@ namespace Application.Dto.Employee.Gerency
         public int Id { get; set; }
 
         [JsonIgnore]
-        public DateTimeOffset CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }
     }
 }

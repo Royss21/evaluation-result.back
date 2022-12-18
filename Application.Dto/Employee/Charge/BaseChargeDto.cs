@@ -3,7 +3,7 @@
     public abstract class BaseChargeDto
     {
         public string Name { get; set; } = string.Empty;
-        public int IdArea { get; set; }
-        public int IdHierarchy { get; set; }
+        public int AreaId { get; set; }
+        public int HierarchyId { get; set; }
     }
 }
