@@ -33,5 +33,18 @@
             return charge;
         }
 
+        public async Task<IEnumerable<ChargeDto>> GetByIdAreaAsync(int id)
+        {
+            var charge = await _unitOfWorkApp.Repository.ChargeRepository
+                   .Find(c => c.AreaId == id)
+                   .ProjectTo<ChargeDto>(_mapper.ConfigurationProvider)
+                   .ToListAsync();
+
+            if (charge is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            return charge;
+        }
+
     }
 }

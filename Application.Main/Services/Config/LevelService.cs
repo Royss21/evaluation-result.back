@@ -1,15 +1,15 @@
 ﻿
 namespace Application.Main.Services.Config
 {
-    using Application.Dto.Config.Level;
+    using Domain.Main.Config;
+    using Domain.Common.Constants;
     using Application.Dto.Pagination;
-    using Application.Main.Exceptions;
     using Application.Main.Pagination;
+    using Application.Main.Exceptions;
+    using Application.Dto.Config.Level;
     using Application.Main.Service.Base;
     using Application.Main.Services.Config.Interfaces;
     using Application.Main.Services.Config.Validators;
-    using Domain.Common.Constants;
-    using Domain.Main.Config;
 
     public class LevelService : BaseService, ILevelService
     {

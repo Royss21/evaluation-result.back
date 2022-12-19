@@ -66,6 +66,19 @@
             return area;
         }
 
+        public async Task<AreaDto> GetByIdGerency(int id)
+        {
+            var area = await _unitOfWorkApp.Repository.AreaRepository
+                    .Find(c => c.GerencyId == id)
+                    .ProjectTo<AreaDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            if (area is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            return area;
+        }
+
         public async Task<PaginationResultDto<AreaDto>> GetAllPagingAsync(PagingFilterDto primeTable)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<AreaDto>.Convert(primeTable);
@@ -82,5 +95,6 @@
                 Entities = areas
             };
         }
+
     }
 }

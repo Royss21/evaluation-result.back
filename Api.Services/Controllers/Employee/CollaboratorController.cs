@@ -25,11 +25,11 @@
         Description = "crear colaborador",
         OperationId = "CollaboratorService.Create",
         Tags = new[] { "CollaboratorService" })]
-        [ProducesResponseType(typeof(JsonResult<CollaboratorNotInEvaluationDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<CollaboratorDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(CollaboratorNotInEvaluationCreateDto request)
         {
             var result = await _collaboratorService.CreateAsync(request);
-            return new OkObjectResult(new JsonResult<CollaboratorNotInEvaluationDto>(result));
+            return new OkObjectResult(new JsonResult<CollaboratorDto>(result));
         }
 
         [HttpPut]
@@ -46,32 +46,32 @@
         }
 
 
-        [HttpGet("not-in-evaluation/paging")]
+        [HttpGet("paging")]
         [SwaggerOperation(
-        Summary = "Lista Paginada de Collaborators que no estan en la evaluacion",
-        Description = "Listado paginado de collaborators que no estan en la evaluacion",
-        OperationId = "Collaborator.GetAllPagingCollaboratorNotInEvaluation",
+        Summary = "Lista Paginada de Colaboradores",
+        Description = "Listado Paginado de Colaboradores",
+        OperationId = "Collaborator.GetAllPaging",
         Tags = new[] { "CollaboratorService" })]
-        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<CollaboratorNotInEvaluationDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllPagingCollaboratorNotInEvaluation([FromQuery] PagingFilterDto filter)
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<CollaboratorDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto filter)
         {
-            var result = await _collaboratorService.GetAllPagingCollaboratorNotInEvaluationAsync(filter);
-            return new OkObjectResult(new JsonResult<PaginationResultDto<CollaboratorNotInEvaluationDto>>(result));
+            var result = await _collaboratorService.GetAllPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<CollaboratorDto>>(result));
         }
 
-        [HttpGet("not-in-evaluation/{evaluationId}")]
+        [HttpGet("not-in-evaluation/{evaluationid}")]
         [SwaggerOperation(
-        Summary = "Lista de Collaborators que no estan en la evaluacion",
-        Description = "Listado de collaborators que no estan en la evaluacion",
+        Summary = "lista de collaborators que no estan en la evaluacion",
+        Description = "listado de collaborators que no estan en la evaluacion",
         OperationId = "Collaborator.GetAllCollaboratorNotInEvaluation",
         Tags = new[] { "CollaboratorService" })]
         [ProducesResponseType(typeof(JsonResult<IEnumerable<CollaboratorNotInEvaluationDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllCollaboratorNotInEvaluation(Guid evaluationId)
+        public async Task<IActionResult> GetAllCollaboratorNotInEvaluation(Guid evaluationid)
         {
-            var result = await _collaboratorService.GetAllCollaboratorNotInEvaluationAsync(evaluationId);
+            var result = await _collaboratorService.GetAllCollaboratorNotInEvaluationAsync(evaluationid);
             return new OkObjectResult(new JsonResult<IEnumerable<CollaboratorNotInEvaluationDto>>(result));
         }
 
-       
+
     }
 }

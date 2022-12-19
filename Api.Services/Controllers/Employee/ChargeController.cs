@@ -43,5 +43,18 @@
             return new OkObjectResult(new JsonResult<ChargeDto>(result));
         }
 
+        [HttpGet("by-area/{id}")]
+        [SwaggerOperation(
+        Summary = "Obtener Cargo por Área",
+        Description = "Obtener Cargo por Área",
+        OperationId = "ChargeService.GetByIdArea",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<ChargeDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetByFilters(int id)
+        {
+            var result = await _chargeService.GetByIdAreaAsync(id);
+            return new OkObjectResult(new JsonResult<List<ChargeDto>>(result.ToList()));
+        }
+
     }
 }

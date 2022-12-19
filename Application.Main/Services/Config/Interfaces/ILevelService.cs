@@ -1,7 +1,7 @@
 ﻿namespace Application.Main.Services.Config.Interfaces
 {
-    using Application.Dto.Config.Level;
     using Application.Dto.Pagination;
+    using Application.Dto.Config.Level;
 
     public interface ILevelService
     {

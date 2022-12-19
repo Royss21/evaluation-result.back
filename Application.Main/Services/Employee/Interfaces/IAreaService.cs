@@ -8,6 +8,7 @@
     {
         Task<IEnumerable<AreaDto>> GetAllAsync();
         Task<PaginationResultDto<AreaDto>> GetAllPagingAsync(PagingFilterDto primeTable);
+        Task<AreaDto> GetByIdGerency(int id);
         Task<AreaDto> GetByIdAsync(int id);
         Task<bool> CreateAsync(AreaCreateDto request);
         Task<bool> DeleteAsync(int id);

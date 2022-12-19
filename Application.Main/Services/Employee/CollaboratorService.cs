@@ -14,7 +14,7 @@
         public CollaboratorService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public async Task<CollaboratorNotInEvaluationDto> CreateAsync(CollaboratorNotInEvaluationCreateDto request)
+        public async Task<CollaboratorDto> CreateAsync(CollaboratorNotInEvaluationCreateDto request)
         {
             var collaborator = _mapper.Map<Collaborator>(request);
             var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository
@@ -25,7 +25,7 @@
 
             await _unitOfWorkApp.SaveChangesAsync();
 
-            return _mapper.Map<CollaboratorNotInEvaluationDto>(collaborator);
+            return _mapper.Map<CollaboratorDto>(collaborator);
 
         }
 
@@ -56,10 +56,10 @@
                     .ToListAsync();
         }
 
-        public async Task<PaginationResultDto<CollaboratorNotInEvaluationDto>> GetAllPagingCollaboratorNotInEvaluationAsync(PagingFilterDto primeTable)
+        public async Task<PaginationResultDto<CollaboratorDto>> GetAllPagingAsync(PagingFilterDto primeTable)
         {
-            var parametersDto = PrimeNgToPaginationParametersDto<CollaboratorNotInEvaluationDto>.Convert(primeTable);
-            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Collaborator, CollaboratorNotInEvaluationDto>(_mapper);
+            var parametersDto = PrimeNgToPaginationParametersDto<CollaboratorDto>.Convert(primeTable);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Collaborator, CollaboratorDto>(_mapper);
 
             if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
             {
@@ -72,14 +72,14 @@
             }
 
             var paging = await _unitOfWorkApp.Repository.CollaboratorRepository.FindAllPagingAsync(parametersDomain);
-            var collaborators = await paging.Entities.ProjectTo<CollaboratorNotInEvaluationDto>(_mapper.ConfigurationProvider).ToListAsync();
+            var collaborators = await paging.Entities.ProjectTo<CollaboratorDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            return new PaginationResultDto<CollaboratorNotInEvaluationDto>
+            return new PaginationResultDto<CollaboratorDto>
             {
                 Count = paging.Count,
                 Entities = collaborators
             };
-        }
 
+        }
     }
 }
