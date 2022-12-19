@@ -8,5 +8,6 @@
         Task<bool> EvaluateAsync(ComponentCollaboratorEvaluateDto request);
         Task<ComponentCollaboratorDto> GetEvaluationDataByIdAsync(Guid id);
         Task<PaginationResultDto<ComponentCollaboratorPagingDto>> GetPagingAsync(ComponentCollaboratorFilterDto filter);
+        Task<bool> UpdateStatusAsync(UpdateStatusDto request);
     }
 }

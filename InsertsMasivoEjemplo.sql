@@ -136,7 +136,7 @@ values
 (newid(),'F22BDCB7-F528-44A2-9267-1B2CE55D5E34', 6, 0.20, 0.80, 0.95, 'rmartel', getdate(), 0),
 (newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 4, 0.15, 0.75, 0.99, 'rmartel', getdate(), 0),
 (newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 5, 0.20, 0.78, 0.85, 'rmartel', getdate(), 0),
-(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 6, 0.25, 0.82, 0.100, 'rmartel', getdate(), 0),
+(newid(),'6A74384F-2DA1-4B23-8569-C00206FDFA98', 6, 0.25, 0.82, 1, 'rmartel', getdate(), 0),
 														  		
 --KPI AREA												  		
 (newid(),'BBFABC97-44DB-4925-91D6-C8B42827B1C1', 1, 0.15, 0.75, 0.90, 'rmartel', getdate(), 0),

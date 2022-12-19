@@ -113,7 +113,7 @@ namespace Application.Main.Services.EvaResult
                 case GeneralConstants.Component.Competencies:
 
                     var componentCollaboratorConducts = await _unitOfWorkApp.Repository.ComponentCollaboratorConductRepository
-                            .Find(f => componentCollaboratorDetails.Select(s => s.Id).Contains(f.ComponentCollaboratorDetailId))
+                            .Find(f => componentCollaboratorDetails.Select(s => s.Id).Contains(f.ComponentCollaboratorDetailId), false)
                             .ToListAsync();
 
                     if (!componentCollaboratorConducts.Any())
@@ -121,7 +121,7 @@ namespace Application.Main.Services.EvaResult
 
                     var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
                             .Find(f => 
-                                f.EvaluationCollaboratorId.Equals(componentCollaborator.Id) &&
+                                f.EvaluationCollaboratorId.Equals(componentCollaborator.EvaluationCollaboratorId) &&
                                 new[] { GeneralConstants.Stages.Evaluation, GeneralConstants.Stages.Calibration }.Contains( f.LeaderStage.StageId)
                             )
                             .Include(i => i.LeaderStage)
@@ -141,7 +141,7 @@ namespace Application.Main.Services.EvaResult
 
                             componentCollaboratorDetails.ForEach(ccd =>
                             {
-                                componentCollaboratorConducts.ForEach(ccc =>
+                                componentCollaboratorConducts.Where(w => w.ComponentCollaboratorDetailId == ccd.Id).ForEach(ccc =>
                                 {
                                     var componentCollaboratorDto = request.ComponentCollaboratorDetailsEvaluate
                                         .First(f =>f.Id == ccd.Id );
@@ -153,10 +153,12 @@ namespace Application.Main.Services.EvaResult
                                         ccc.ConductPointsCalibrated = ccc.ConductPoints;
                                 });
 
-                                ccd.Points = componentCollaboratorConducts.Sum(s => s.ConductPoints);
+                                ccd.Points = componentCollaboratorConducts.Where(w => w.ComponentCollaboratorDetailId == ccd.Id)
+                                    .Sum(s => s.ConductPoints);
 
                                 if (countLeaders > 1)
-                                    ccd.PointsCalibrated = componentCollaboratorConducts.Sum(s => s.ConductPointsCalibrated);
+                                    ccd.PointsCalibrated = componentCollaboratorConducts.Where(w => w.ComponentCollaboratorDetailId == ccd.Id)
+                                        .Sum(s => s.ConductPointsCalibrated);
                             });
 
                             componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.Points);
@@ -223,6 +225,11 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<ComponentCollaboratorDto> GetEvaluationDataByIdAsync(Guid id)
         {
+            await UpdateStatusAsync(new UpdateStatusDto { 
+                Id= id,
+                StatusId = GeneralConstants.StatusIds.InProgress
+            });
+
             var componenteCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .Find(f => f.Id.Equals(id))
                     .ProjectTo<ComponentCollaboratorDto>(_mapper.ConfigurationProvider)
@@ -242,6 +249,24 @@ namespace Application.Main.Services.EvaResult
             componenteCollaborator.StageId = evaluationComponentStage.StageId;
 
             return componenteCollaborator;
+        }
+
+        public async Task<bool> UpdateStatusAsync(UpdateStatusDto request)
+        {
+            var componentCollaboratorUpdate = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
+                        .Find(f => f.Id.Equals(request.Id), false)
+                        .FirstAsync();
+
+            if (new[] { GeneralConstants.StatusIds.Create,
+                GeneralConstants.StatusIds.Pending, 
+                GeneralConstants.StatusIds.InProgress 
+                }.Contains(componentCollaboratorUpdate.StatusId))
+            {
+                componentCollaboratorUpdate.StatusId = request.StatusId;
+                await _unitOfWorkApp.SaveChangesAsync();
+            }
+
+            return true;
         }
 
         public async Task<PaginationResultDto<ComponentCollaboratorPagingDto>> GetPagingAsync(ComponentCollaboratorFilterDto filter)

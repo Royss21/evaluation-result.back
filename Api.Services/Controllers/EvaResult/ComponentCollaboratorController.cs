@@ -57,5 +57,18 @@
             var result = await _componentCollaboratorService.GetPagingAsync(filter);
             return new OkObjectResult(new JsonResult<PaginationResultDto<ComponentCollaboratorPagingDto>>(result));
         }
+
+        [HttpPut("status")]
+        [SwaggerOperation(
+        Summary = "Actualizar estado",
+        Description = "Actualizar estado",
+        OperationId = "ComponentCollaborator.UpdateStatus",
+        Tags = new[] { "ComponentCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateStatus(UpdateStatusDto request)
+        {
+            var result = await _componentCollaboratorService.UpdateStatusAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
     }
 }
