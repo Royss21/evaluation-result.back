@@ -66,15 +66,12 @@
             return area;
         }
 
-        public async Task<AreaDto> GetByIdGerency(int id)
+        public async Task<IEnumerable<AreaDto>> GetByIdGerency(int id)
         {
             var area = await _unitOfWorkApp.Repository.AreaRepository
-                    .Find(c => c.GerencyId == id)
+                    .Find(x => x.GerencyId == id)
                     .ProjectTo<AreaDto>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync();
-
-            if (area is null)
-                throw new WarningException(Messages.General.ResourceNotFound);
+                    .ToListAsync();
 
             return area;
         }

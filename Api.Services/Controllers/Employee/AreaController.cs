@@ -45,17 +45,17 @@
             return new OkObjectResult(new JsonResult<PaginationResultDto<AreaDto>>(result));
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("by-gerency/{id}")]
         [SwaggerOperation(
         Summary = "Obtener Área por Gerencia",
         Description = "Obtener Área por Gerencia",
         OperationId = "AreaService.GetByIdGerency",
         Tags = new[] { "AreaService" })]
-        [ProducesResponseType(typeof(JsonResult<AreaDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<AreaDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetByIdGerency(int id)
         {
             var result = await _areaService.GetByIdGerency(id);
-            return new OkObjectResult(new JsonResult<AreaDto>(result));
+            return new OkObjectResult(new JsonResult<List<AreaDto>>(result.ToList()));
         }
 
         [HttpPost]
