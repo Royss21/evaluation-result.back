@@ -309,6 +309,24 @@ namespace Application.Main.Services.EvaResult
             };
         }
 
+        public async Task<bool> IsDateRangeToEvaluateAsync(Guid evaluationId, int stageId, int? componentId)
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+            var componentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                     .Find(f =>
+                         f.EvaluationId.Equals(evaluationId) && f.StageId == stageId ||
+                         (componentId != null ? f.EvaluationComponent.ComponentId == componentId : f.EvaluationComponentId == null)
+                     ).FirstOrDefaultAsync();
+
+            if (componentStage is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            if (currentDate >= componentStage.StartDate && currentDate <= componentStage.EndDate)
+                return true;
+            else
+                return false;
+        }
+
         #region Helper Functions
         private async Task<decimal> CalculateFormulaCompliance(string formulaQuerySql)
         {

@@ -32,6 +32,19 @@
             return new OkObjectResult(new JsonResult<ComponentCollaboratorDto>(result));
         }
 
+        [HttpGet("enable-evaluation")]
+        [SwaggerOperation(
+        Summary = "Validar que la evaluacion",
+        Description = "Validar que la evaluacion a realizarse este habilitada dentro de las fecha actual",
+        OperationId = "ComponentCollaborator.IsDateRangeToEvaluate",
+        Tags = new[] { "ComponentCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> IsDateRangeToEvaluate(Guid evaluationId, int stageId, int? componentId)
+        {
+            var result = await _componentCollaboratorService.IsDateRangeToEvaluateAsync(evaluationId, stageId, componentId);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
         [HttpPost("evaluate")]
         [SwaggerOperation(
         Summary = "Evaluar a colaborador",
