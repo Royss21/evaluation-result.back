@@ -8,7 +8,7 @@
         Task<IEnumerable<CollaboratorNotInEvaluationDto>> GetAllCollaboratorNotInEvaluationAsync(Guid evaluationId);
         
         Task<bool> UpdateAsync(CollaboratorUpdateDto request);
-        Task<CollaboratorDto> CreateAsync(CollaboratorNotInEvaluationCreateDto request);
+        Task<CollaboratorDto> CreateAsync(CollaboratorCreateDto request);
         Task<PaginationResultDto<CollaboratorDto>> GetAllPagingAsync(PagingFilterDto primeTable);
 
     }

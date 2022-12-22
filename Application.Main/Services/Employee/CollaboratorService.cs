@@ -14,7 +14,7 @@
         public CollaboratorService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public async Task<CollaboratorDto> CreateAsync(CollaboratorNotInEvaluationCreateDto request)
+        public async Task<CollaboratorDto> CreateAsync(CollaboratorCreateDto request)
         {
             var collaborator = _mapper.Map<Collaborator>(request);
             var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository

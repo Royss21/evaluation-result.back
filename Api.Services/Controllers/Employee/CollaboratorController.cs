@@ -26,7 +26,7 @@
         OperationId = "CollaboratorService.Create",
         Tags = new[] { "CollaboratorService" })]
         [ProducesResponseType(typeof(JsonResult<CollaboratorDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(CollaboratorNotInEvaluationCreateDto request)
+        public async Task<IActionResult> Create(CollaboratorCreateDto request)
         {
             var result = await _collaboratorService.CreateAsync(request);
             return new OkObjectResult(new JsonResult<CollaboratorDto>(result));

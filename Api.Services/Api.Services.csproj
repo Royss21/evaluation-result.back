@@ -33,11 +33,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
     <ProjectReference Include="..\Application.IoC\Application.IoC.csproj" />
     <ProjectReference Include="..\Application.Main\Application.Main.csproj" />
     <ProjectReference Include="..\Application.Security\Application.Security.csproj" />
     <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
+    <ProjectReference Include="..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
