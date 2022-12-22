@@ -4,6 +4,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.Config.Subcomponent;
     using Application.Dto.Employee.Collaborator;
     using Application.Dto.EvaResult.Evaluation;
+    using Application.Dto.EvaResult.Period;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
     using Application.Main.PrimeNg;
@@ -178,20 +179,7 @@ namespace Application.Main.Services.EvaResult
 
             return _mapper.Map<EvaluationDto>(evaluation);
         }
-        public async Task<EvaluationInProgressDto> GetEvaluationInProgressAsync()
-        {
-            var currentDate = DateTime.UtcNow.GetDatePeru();
 
-            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
-                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
-                    .ProjectTo<EvaluationInProgressDto>(_mapper.ConfigurationProvider)
-                    .FirstOrDefaultAsync();
-
-            if (evaluation is null)
-                throw new WarningException("No hay ninguna evaluacion en curso.");
-
-            return evaluation;
-        }
 
         public async Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
         {

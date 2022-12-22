@@ -1,11 +1,11 @@
 ﻿namespace Application.Main.Services.EvaResult.Interfaces
 {
     using Application.Dto.EvaResult.Evaluation;
+    using Application.Dto.EvaResult.Period;
 
     public interface IEvaluationService
     {
         Task<EvaluationDto> CreateAsync(EvaluationCreateDto request);
-        Task<EvaluationInProgressDto> GetEvaluationInProgressAsync();
         Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
     }
 }

@@ -10,6 +10,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Services.EvaResult.Validators;
     using Domain.Common.Constants;
     using Domain.Main.EvaResult;
+    using Application.Dto.EvaResult.Evaluation;
 
     public class PeriodService : BaseService, IPeriodService
     {
@@ -105,6 +106,31 @@ namespace Application.Main.Services.EvaResult
             return period;
         }
 
-        
+        public async Task<PeriodInProgressDto> GetPeriodInProgressAsync()
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+
+            var periodInProgress = await _unitOfWorkApp.Repository.PeriodRepository
+                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
+                    .ProjectTo<PeriodInProgressDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            if (periodInProgress is null)
+                throw new WarningException("No hay ningun periodo en curso");
+
+            var evaluationCurrent = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate && f.PeriodId == periodInProgress.PeriodId)
+                    .ProjectTo<EvaluationCurrentDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+                    
+            if(evaluationCurrent is not null)
+            {
+                periodInProgress.EvaluationCurrent = evaluationCurrent;
+            }
+
+            return periodInProgress;
+        }
+
+
     }
 }

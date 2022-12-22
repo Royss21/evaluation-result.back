@@ -84,5 +84,18 @@
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
+        [HttpGet("in-progress")]
+        [SwaggerOperation(
+        Summary = "Obtener Periodo En Curso",
+        Description = "periodo en curso",
+        OperationId = "Period.GetPeriodInProgress",
+        Tags = new[] { "PeriodService" })]
+        [ProducesResponseType(typeof(JsonResult<PeriodInProgressDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPeriodInProgress()
+        {
+            var result = await _periodService.GetPeriodInProgressAsync();
+            return new OkObjectResult(new JsonResult<PeriodInProgressDto>(result));
+        }
+
     }
 }

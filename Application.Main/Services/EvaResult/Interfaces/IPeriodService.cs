@@ -12,6 +12,7 @@
         Task<PeriodDto> CreateAsync(PeriodCreateDto request);
         Task<bool> UpdateAsync(PeriodUpdateDto request);
         Task<bool> DeleteAsync(int id);
+        Task<PeriodInProgressDto> GetPeriodInProgressAsync();
 
     }
 }

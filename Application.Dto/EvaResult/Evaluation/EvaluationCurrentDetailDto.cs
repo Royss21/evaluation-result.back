@@ -1,7 +1,10 @@
-﻿namespace Application.Dto.EvaResult.Evaluation
+﻿using Application.Dto.EvaResult.Period;
+
+namespace Application.Dto.EvaResult.Evaluation
 {
-    public class EvaluationCurrentDetailDto : EvaluationInProgressDto
+    public class EvaluationCurrentDetailDto : PeriodInProgressDto
     {
+
         public bool IsEnableImportLeaders { get; set; }
         public List<ComponentRangeDate> Components { get; set; }
         public List<StageRangeDate> StagesEvaluation { get; set; }

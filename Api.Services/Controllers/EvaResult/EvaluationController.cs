@@ -2,6 +2,7 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.Evaluation;
+    using Application.Dto.EvaResult.Period;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -57,18 +58,7 @@
             return new OkObjectResult(new JsonResult<EvaluationDto>(result));
         }
 
-        [HttpGet("in-progress")]
-        [SwaggerOperation(
-        Summary = "Obtener Evaluacion En Curso",
-        Description = "evaluacion en curso",
-        OperationId = "Evaluation.GetEvaluationInProgress",
-        Tags = new[] { "EvaluationService" })]
-        [ProducesResponseType(typeof(JsonResult<EvaluationInProgressDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetEvaluationInProgress()
-        {
-            var result = await _evaluationService.GetEvaluationInProgressAsync();
-            return new OkObjectResult(new JsonResult<EvaluationInProgressDto>(result));
-        }
+       
 
         [HttpGet("{id}")]
         [SwaggerOperation(
