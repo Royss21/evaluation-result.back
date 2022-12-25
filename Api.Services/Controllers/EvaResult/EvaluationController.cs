@@ -60,7 +60,7 @@
 
        
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}/detail")]
         [SwaggerOperation(
         Summary = "Obtener Evaluacion",
         Description = "evaluacion",
