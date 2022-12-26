@@ -1,15 +1,11 @@
-﻿
-
-namespace Domain.Main.Security
+﻿namespace Domain.Main.Security
 {
-    
-    using Domain.Main.Authentication;
     public class UserEndpointLocked : BaseModel<int>
     {
-        public Guid UserId { get; set; }
-        public Guid EndpointId { get; set; }
+        public string UserId { get; set; }
+        public string EndpointServicetId { get; set; }
 
-        public User User { get; set; }
-        public Endpoint Endpoint { get; set; }
+        public User? User { get; set; }
+        public EndpointService? EndpointService { get; set; }
     }
 }

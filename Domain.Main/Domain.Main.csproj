@@ -7,13 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Config\Component.cs~RF53569496.TMP" />
+    <None Remove="Employee\Charge.cs~RF534a9f6e.TMP" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SharedKernell\SharedKernell\SharedKernell.csproj" />
     <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
+    <ProjectReference Include="..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
   </ItemGroup>
 
 </Project>

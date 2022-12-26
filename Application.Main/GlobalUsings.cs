@@ -1,0 +1,14 @@
+﻿global using Application.Main.PrimeNg;
+global using Application.Main.PrimeNg.Helpers;
+global using Application.Main.PrimeNg.Operadores;
+global using AutoMapper;
+global using AutoMapper.Extensions.ExpressionMapping;
+global using AutoMapper.QueryableExtensions;
+global using LinqKit;
+global using Microsoft.EntityFrameworkCore;
+global using SharedKernell.Enum;
+global using SharedKernell.Helpers;
+global using SharedKernell.TreeExpressions;
+global using System.Collections;
+global using System.Linq.Expressions;
+global using System.Reflection;

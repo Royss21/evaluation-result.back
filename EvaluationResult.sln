@@ -25,11 +25,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application.Security", "App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api.Services", "Api.Services\Api.Services.csproj", "{0AA6364B-C8DE-4E13-A969-94DCEABBCC62}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernell", "..\SharedKernell\SharedKernell\SharedKernell.csproj", "{0FC07646-D260-44B5-AE23-B590C756308E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain.Common", "Domain.Common\Domain.Common.csproj", "{0CE0F513-D799-4C76-85C3-40AF48C01384}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.UnitOfWork", "Infrastructure.UnitOfWork\Infrastructure.UnitOfWork.csproj", "{29BA845D-2552-4BDC-9EF8-D36C432B798A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Scripts", "00.Scripts", "{56888E1F-CFA9-4922-8B0C-E21AEF940B91}"
+	ProjectSection(SolutionItems) = preProject
+		InsertsMasivoEjemplo.sql = InsertsMasivoEjemplo.sql
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernell", "shared-kernell-net6\SharedKernell\SharedKernell.csproj", "{FCD27292-C569-42D4-8C6A-CD822887AD6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +70,6 @@ Global
 		{0AA6364B-C8DE-4E13-A969-94DCEABBCC62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0AA6364B-C8DE-4E13-A969-94DCEABBCC62}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0AA6364B-C8DE-4E13-A969-94DCEABBCC62}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0FC07646-D260-44B5-AE23-B590C756308E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FC07646-D260-44B5-AE23-B590C756308E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FC07646-D260-44B5-AE23-B590C756308E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FC07646-D260-44B5-AE23-B590C756308E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0CE0F513-D799-4C76-85C3-40AF48C01384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CE0F513-D799-4C76-85C3-40AF48C01384}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CE0F513-D799-4C76-85C3-40AF48C01384}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -77,6 +78,10 @@ Global
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCD27292-C569-42D4-8C6A-CD822887AD6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCD27292-C569-42D4-8C6A-CD822887AD6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCD27292-C569-42D4-8C6A-CD822887AD6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCD27292-C569-42D4-8C6A-CD822887AD6A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

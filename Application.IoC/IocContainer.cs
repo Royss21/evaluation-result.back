@@ -2,13 +2,13 @@
 namespace Application.IoC
 {
     using Application.Main;
-    using Application.Security.Contrasenia;
+    using Application.Security.Jwt;
     using Application.Security.JWT;
+    using Application.Security.Password;
     using Hangfire;
     using Hangfire.MemoryStorage;
     using Infrastructure.UnitOfWork;
     using Infrastructure.UnitOfWork.Interfaces;
-    using SharedKernell.Email;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Configuration;
@@ -16,6 +16,7 @@ namespace Application.IoC
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
     using NetCore.AutoRegisterDi;
+    using SharedKernell.Mail;
     using System.Reflection;
 
     public static class IocContainer
@@ -23,11 +24,9 @@ namespace Application.IoC
         public static IServiceCollection AddDependencyInjectionInterfacesApp(this IServiceCollection services)
         {
             
-            services.AddScoped<IJwtFabrica, JwtFabrica>();
-            services.AddScoped<IContraseniaFabrica, ContraseniaFabrica>();
-            services.AddScoped<IEmailHelper, EmailHelper>();
-            //services.AddScoped<IRestWsHelper, RestWsHelper>();
-            //services.AddScoped<IAuthenticationProvider, AuthProviderService>();
+            services.AddScoped<IJwtFactory, JwtFactory>();
+            services.AddScoped<IPasswordFactory, PasswordFactory>();
+            services.AddScoped<IMailHelper, MailHelper>();
 
             services.AddDependencyInjectionAppService();
             services.AddDependencyInjectionRepository();
@@ -37,9 +36,9 @@ namespace Application.IoC
 
         private static void AddDependencyInjectionAppService(this IServiceCollection services)
         {
-            services.RegisterAssemblyPublicNonGenericClasses(Assembly.GetAssembly(typeof(AssemblyServicio)))
-                .Where(c => c.Name.EndsWith("Servicio"))
-                .AsPublicImplementedInterfaces(ServiceLifetime.Scoped);
+            services.RegisterAssemblyPublicNonGenericClasses(Assembly.GetAssembly(typeof(AssemblyService)))
+                .Where(c => c.Name.EndsWith("Service"))
+                .AsPublicImplementedInterfaces(ServiceLifetime.Transient);
         }
 
         private static void AddDependencyInjectionRepository(this IServiceCollection services)
@@ -49,13 +48,12 @@ namespace Application.IoC
 
         public static IServiceCollection AddCustomAuthenticationApp(this IServiceCollection services, IConfiguration configuration)
         {
-            var jwtOptions = configuration.GetSection("JwtEmisorOpciones").Get<JwtEmisorOpciones>();
+            var jwtOptions = configuration.GetSection("JwtOption").Get<JwtOption>();
             var tokenValidationParameters = new TokenValidationParameters
             {
-
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = false,
+                ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = jwtOptions.Issuer,
                 ValidAudience = jwtOptions.Audience,
@@ -80,11 +78,11 @@ namespace Application.IoC
         {
             services.AddCors(options =>
             {
-                var urlList = configuration.GetSection("AllowedOrigin").GetChildren().ToArray()
+                var urls = configuration.GetSection("AllowedOrigin").GetChildren().ToArray()
                     .Select(c => c.Value?.TrimEnd('/'))
                     .ToArray();
                 options.AddPolicy("CorsPolicy",
-                    builder => builder.WithOrigins(urlList)
+                    builder => builder.WithOrigins(urls)
                         .AllowAnyMethod()
                         .AllowAnyHeader()
                         .AllowCredentials());
@@ -97,7 +95,7 @@ namespace Application.IoC
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Sistema ChloeAtelier", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "System Evaluation Result", Version = "v1" });
                 c.EnableAnnotations();
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
@@ -138,17 +136,12 @@ namespace Application.IoC
 
         public static IServiceCollection AddHangfireConfig(this IServiceCollection services, IConfiguration configuration)
         {
-
-            //services.Configure<CronJobConfig>(configuration.GetSection("CronJobConfig"));
-
-            // Add Hangfire services.
             services.AddHangfire(config => config
                .SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                .UseSimpleAssemblyNameTypeSerializer()
                .UseRecommendedSerializerSettings()
                .UseMemoryStorage());
 
-            // Add the processing server as IHostedService
             services.AddHangfireServer();
 
             return services;

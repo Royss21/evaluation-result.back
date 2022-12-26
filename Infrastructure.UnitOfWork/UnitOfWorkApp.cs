@@ -1,19 +1,19 @@
 ﻿
 namespace Infrastructure.UnitOfWork
 {
-    using Infrastructure.Main.Contexto;
+    using Infrastructure.Main.Context;
     using Infrastructure.UnitOfWork.Interfaces;
 
     public class UnitOfWorkApp : IUnitOfWorkApp, IDisposable
     {
-        private readonly DbContextoPrincipal _contextoPrincipal;
+        private readonly DbContextMain _context;
         private bool _disposed;
-        public IUnitOfWorkRepositorio Repositorio { get; }
+        public IUnitOfWorkRepository Repository { get; }
 
-        public UnitOfWorkApp(DbContextoPrincipal contextoPrincipal)
+        public UnitOfWorkApp(DbContextMain context)
         {
-            _contextoPrincipal = contextoPrincipal;
-            Repositorio = new UnitOfWorkRepository(contextoPrincipal);
+            _context = context;
+            Repository = new UnitOfWorkRepository(context);
         }
 
         public void Dispose()
@@ -24,31 +24,31 @@ namespace Infrastructure.UnitOfWork
 
         public Task SaveChangesAsync()
         {
-            return _contextoPrincipal.SaveChangesAsync();
+            return _context.SaveChangesAsync();
         }
 
         public async Task BeginTransactionAsync()
         {
-            await _contextoPrincipal.Database.BeginTransactionAsync();
+            await _context.Database.BeginTransactionAsync();
         }
 
         public async Task CommitTransactionAsync()
         {
-            await _contextoPrincipal.SaveChangesAsync();
-            await _contextoPrincipal.Database.CommitTransactionAsync();
+            await _context.SaveChangesAsync();
+            await _context.Database.CommitTransactionAsync();
         }
 
         protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
                 if (disposing)
-                    _contextoPrincipal.Dispose();
+                    _context.Dispose();
             _disposed = true;
         }
 
         public void RollbackTransaction()
         {
-            _contextoPrincipal.Database.RollbackTransaction();
+            _context.Database.RollbackTransaction();
         }
     }
 }

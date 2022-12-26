@@ -5,18 +5,18 @@ namespace Infrastructure.Data.MainModule.Repository
         where TEntity : class
         where TId : IComparable<TId>
     {
-        protected DbContextMain DbContextMain { get; }
+        protected DbContextMain _dbContextMain { get; }
         protected DbSet<TEntity> DbSet { get; set; }
 
-        public BaseRepositorio(DbContextMain DbContextMain)
+        public BaseRepository(DbContextMain dbContextMain)
         {
-            DbContextMain = DbContextMain;
-            DbSet = DbContextMain.Set<TEntity>();
+            _dbContextMain = dbContextMain;
+            DbSet = _dbContextMain.Set<TEntity>();
         }
 
-        public BaseRepositorio(DbContextMain DbContextMain, DbSet<TEntity> dbSet)
+        public BaseRepository(DbContextMain dbContextMain, DbSet<TEntity> dbSet)
         {
-            DbContextMain = DbContextMain;
+            _dbContextMain = dbContextMain;
             DbSet = dbSet;
         }
 
@@ -24,7 +24,7 @@ namespace Infrastructure.Data.MainModule.Repository
         public virtual async Task<TEntity> AddAsync(TEntity entity)
         {
             await DbSet.AddAsync(entity);
-            DbContextMain.Entry(entity).State = EntityState.Added;
+            _dbContextMain.Entry(entity).State = EntityState.Added;
             return entity;
         }
 
@@ -50,7 +50,7 @@ namespace Infrastructure.Data.MainModule.Repository
 
         public async Task<TEntity> GetAsync(TId id)
         {
-            var keyProperty = DbContextMain.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey().Properties[0];
+            var keyProperty = _dbContextMain.Model.FindEntityType(typeof(TEntity)).FindPrimaryKey().Properties[0];
             var keyId = (object) Convert.ChangeType(id, typeof(TId));
             var dbSet = (IQueryable<TEntity>) DbSet;
 
@@ -68,6 +68,20 @@ namespace Infrastructure.Data.MainModule.Repository
             var validateEntityResult = await ValidateEntityAsync(entity, validation);
 
             return await AddEntityAsync(entity, validateEntityResult);
+        }
+
+        public async Task<ValidationResult> AddRangeAsync(IEnumerable<TEntity> entities, IValidator<TEntity> validation)
+        {
+            foreach(var entity in entities)
+            {
+                var validateEntityResult = await ValidateEntityAsync(entity, validation);
+                if (!validateEntityResult.IsValid)
+                    return validateEntityResult;
+            }
+
+            await DbSet.AddRangeAsync(entities);
+
+            return new ValidationResult();
         }
 
         public async Task<ValidationResult> UpdateAsync(TEntity entity, params IValidator<TEntity>[] validaciones)
@@ -92,7 +106,7 @@ namespace Infrastructure.Data.MainModule.Repository
         {
             var validateEntityResult = await ValidateEntityAsync(entity, validaciones);
 
-            if (validateEntityResult.IsValid) DbContextMain.Remove(entity);
+            if (validateEntityResult.IsValid) _dbContextMain.Remove(entity);
 
             return validateEntityResult;
         }
@@ -101,7 +115,7 @@ namespace Infrastructure.Data.MainModule.Repository
         {
             var validateEntityResult = await ValidateEntityAsync(entity, validation);
 
-            if (validateEntityResult.IsValid) DbContextMain.Remove(entity);
+            if (validateEntityResult.IsValid) _dbContextMain.Remove(entity);
             return validateEntityResult;
         }
 
@@ -141,14 +155,14 @@ namespace Infrastructure.Data.MainModule.Repository
         {
             if (validationResultEntity.IsValid)
                 //await DbSet.AddAsync(entity);
-                await DbContextMain.AddAsync(entity);
+                await _dbContextMain.AddAsync(entity);
 
             return validationResultEntity;
         }
 
         public async Task<IEnumerable<TDto>> RunSqlQuery<TDto>(string sqlQuery, object parameters = null)
         {
-            return await DbContextMain.FromSqlQueryAsync<TDto>(sqlQuery, parameters);
+            return await _dbContextMain.FromSqlQueryAsync<TDto>(sqlQuery, parameters);
         }
 
         public async Task AddRangeAsync(IEnumerable<TEntity> entities)
@@ -174,7 +188,7 @@ namespace Infrastructure.Data.MainModule.Repository
                 UpdateByProperties = updateByProperties, PreserveInsertOrder = preserveInsertOrder,
                 SetOutputIdentity = setOutputIdentity
             };
-            await DbContextMain.BulkDeleteAsync(entities.ToList(), bulkConfig);
+            await _dbContextMain.BulkDeleteAsync(entities.ToList(), bulkConfig);
         }
 
         public async Task BulkInsertAsync(IEnumerable<TEntity> entities, List<string> updateByProperties = null,
@@ -185,7 +199,7 @@ namespace Infrastructure.Data.MainModule.Repository
                 UpdateByProperties = updateByProperties, PreserveInsertOrder = preserveInsertOrder,
                 SetOutputIdentity = setOutputIdentity
             };
-            await DbContextMain.BulkInsertAsync(entities.ToList(), bulkConfig);
+            await _dbContextMain.BulkInsertAsync(entities.ToList(), bulkConfig);
         }
 
         public async Task BulkInsertOrUpdateAsync(IEnumerable<TEntity> entities, List<string> updateByProperties = null,
@@ -196,7 +210,7 @@ namespace Infrastructure.Data.MainModule.Repository
                 UpdateByProperties = updateByProperties, PreserveInsertOrder = preserveInsertOrder,
                 SetOutputIdentity = setOutputIdentity
             };
-            await DbContextMain.BulkInsertOrUpdateAsync(entities.ToList(), bulkConfig);
+            await _dbContextMain.BulkInsertOrUpdateAsync(entities.ToList(), bulkConfig);
         }
 
         public async Task BulkInsertOrUpdateOrDeleteAsync(IEnumerable<TEntity> entities,
@@ -207,7 +221,7 @@ namespace Infrastructure.Data.MainModule.Repository
                 UpdateByProperties = updateByProperties, PreserveInsertOrder = preserveInsertOrder,
                 SetOutputIdentity = setOutputIdentity
             };
-            await DbContextMain.BulkInsertOrUpdateOrDeleteAsync(entities.ToList(), bulkConfig);
+            await _dbContextMain.BulkInsertOrUpdateOrDeleteAsync(entities.ToList(), bulkConfig);
         }
 
         public virtual async Task<PaginationResult<TEntity>> FindAllPagingAsync(
@@ -222,7 +236,7 @@ namespace Infrastructure.Data.MainModule.Repository
             if (DbSet.Local.All(p => p != entity))
             {
                 DbSet.Attach(entity);
-                var entry = DbContextMain.Entry(entity);
+                var entry = _dbContextMain.Entry(entity);
                 entry.State = EntityState.Modified;
             }
         }
@@ -231,24 +245,24 @@ namespace Infrastructure.Data.MainModule.Repository
         {
             DbSet.Attach(entity);
 
-            var entry = DbContextMain.Entry(entity);
+            var entry = _dbContextMain.Entry(entity);
             entry.State = EntityState.Deleted;
         }
 
         protected IQueryable<TEntity> GetDataWithFilter(PaginationParameters<TEntity> parameters, bool @readonly = true)
         {
             var dbSet = parameters.Include != null ? parameters.Include(DbSet) : (IQueryable<TEntity>) DbSet;
-            return (@readonly ? dbSet.AsNoTracking() : dbSet).Where(parameters.WhereFylter ?? (f=> true));
+            return (@readonly ? dbSet.AsNoTracking() : dbSet).Where(parameters.FilterWhere ?? (f=> true));
         }
 
         protected async Task<PaginationResult<TNewEntity>> PagingAsync<TNewEntity>(
             PaginationParameters<TNewEntity> parameters, IQueryable<TNewEntity> pagingQuery) where TNewEntity : class
         {
-            if (parameters.SortColumn != null)
+            if (parameters.OrderColumn != null)
             {
                 pagingQuery = parameters.SortType == SortTypeEnum.Asc
-                    ? Queryable.OrderBy(pagingQuery, (dynamic) parameters.SortColumn)
-                    : Queryable.OrderByDescending(pagingQuery, (dynamic) parameters.SortColumn);
+                    ? Queryable.OrderBy(pagingQuery, (dynamic) parameters.OrderColumn)
+                    : Queryable.OrderByDescending(pagingQuery, (dynamic) parameters.OrderColumn);
             }
 
             return new PaginationResult<TNewEntity>

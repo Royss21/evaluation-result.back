@@ -9,7 +9,7 @@ namespace Application.Main.PrimeNg.Operadores
         {
             var endsWithMethod = typeof(string).GetMethod("EndsWith", new[] {typeof(string)});
 
-            return Expression.Call(TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField),
+            return Expression.Call(TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField),
                 endsWithMethod, expressionValue);
         }
     }

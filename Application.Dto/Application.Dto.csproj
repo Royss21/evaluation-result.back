@@ -7,11 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Administrador\" />
+    <Compile Remove="Administrador\**" />
+    <EmbeddedResource Remove="Administrador\**" />
+    <None Remove="Administrador\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="2.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain.Common\Domain.Common.csproj" />
+    <ProjectReference Include="..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
   </ItemGroup>
 
 </Project>

@@ -6,7 +6,7 @@
             Expression expressionValue)
             where T : class
         {
-            return Expression.NotEqual(TreeExpressionHelper.ObtenerAccesoMiembroLambda<T>(parameterExpression, itemField),
+            return Expression.NotEqual(TreeExpressionHelper.GetLambdaMemberAccess<T>(parameterExpression, itemField),
                 expressionValue);
         }
     }

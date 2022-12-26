@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -7,24 +7,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Services\Administrador\**" />
+    <EmbeddedResource Remove="Services\Administrador\**" />
+    <EntityDeploy Remove="Services\Administrador\**" />
+    <None Remove="Services\Administrador\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="5.1.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.7.30" />
     <PackageReference Include="LinqKit" Version="1.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Aplicacion.Dto\Application.Dto.csproj" />
-    <ProjectReference Include="..\Aplicacion.Seguridad\Application.Security.csproj" />
-    <ProjectReference Include="..\Infraestructura.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="AutoMapper\Perfiles\Administrador\" />
-    <Folder Include="AutoMapper\Perfiles\Seguridad\" />
-    <Folder Include="Servicios\Administrador\Interfaces\" />
+    <ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
+    <ProjectReference Include="..\Infrastructure.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
+    <ProjectReference Include="..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
   </ItemGroup>
 
 </Project>

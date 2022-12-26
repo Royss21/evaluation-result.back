@@ -1,8 +1,9 @@
 ﻿
 namespace Api.Services.Helpers
 {
-    using Application.Main.Excepciones;
+    using Application.Main.Exceptions;
     using SharedKernell.Helpers;
+    using SharedKernell.Wrappers;
     using System.Net;
     using System.Text.Json;
 
@@ -26,39 +27,39 @@ namespace Api.Services.Helpers
             catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
-                var estadoCode = (int)HttpStatusCode.InternalServerError;
-                var resultado = new JsonErrorResult(estadoCode);
+                var statusCode = (int)HttpStatusCode.InternalServerError;
+                var result = new JsonErrorResult(statusCode);
 
                 switch (ex)
                 {
-                    case AdvertenciaExcepcion advertenciaExcepcion:
-                        resultado.CodigoEstado = (int)HttpStatusCode.InternalServerError;
-                        resultado.Mensaje = ex.Message;
+                    case WarningException warningException:
+                        result.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        result.Message = ex.Message;
                         break;
-                    case NoAutorizadoExcepcion noAutorizadoExcepcion:
-                        resultado.CodigoEstado = (int)HttpStatusCode.Unauthorized;
-                        resultado.Mensaje = ex.Message;
+                    case UnauthorizedException unauthorizedException:
+                        result.StatusCode = (int)HttpStatusCode.Unauthorized;
+                        result.Message = ex.Message;
                         break;
-                    case ProhibidoExcepcion prohibidoExcepcion:
-                        resultado.CodigoEstado = (int)HttpStatusCode.Forbidden;
-                        resultado.Mensaje = ex.Message;
+                    case ForbiddenException forbiddenException:
+                        result.StatusCode = (int)HttpStatusCode.Forbidden;
+                        result.Message = ex.Message;
                         break;
-                    case ValidadorExcepcion validadorExcepcion:
-                        resultado.CodigoEstado = (int)HttpStatusCode.BadRequest;
-                        resultado.Mensaje = ex.Message;
+                    case ValidatorException validatorException:
+                        result.StatusCode = (int)HttpStatusCode.BadRequest;
+                        result.Message = ex.Message;
                         break;
                     case Exception exception:
-                        resultado.CodigoEstado = (int)HttpStatusCode.InternalServerError;
-                        resultado.Mensaje = "Ha ocurrido un error en el servidor";
+                        result.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        result.Message = "Ha ocurrido un error en el servidor";
                         break;
                     default:
                         break;
                 }
 
                 context.Response.ContentType = "application/json";
-                context.Response.StatusCode = resultado.CodigoEstado;
+                context.Response.StatusCode = result.StatusCode;
 
-                await context.Response.WriteAsync(await JsonConverter.SerializeContent(resultado, options: new JsonSerializerOptions
+                await context.Response.WriteAsync(await JsonConverter.SerializeContent(result, options: new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 }).ReadAsStringAsync());

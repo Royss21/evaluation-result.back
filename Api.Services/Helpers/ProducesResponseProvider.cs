@@ -1,6 +1,8 @@
 ﻿namespace Api.Services.Helpers
 {
     using Microsoft.AspNetCore.Mvc.ApplicationModels;
+    using SharedKernell.Wrappers;
+
     public class ProducesResponseProvider : IApplicationModelProvider
     {
         public int Order => 3;
@@ -15,7 +17,7 @@
             {
                 foreach (ActionModel action in controller.Actions)
                 {
-                    if (!controller.ControllerName.Contains("Autenticacion"))
+                    if (!controller.ControllerName.Contains("Authentication"))
                     {
                         action.Filters.Add(new ProducesResponseTypeAttribute(typeof(JsonErrorResult), StatusCodes.Status401Unauthorized));
                         action.Filters.Add(new ProducesResponseTypeAttribute(typeof(JsonErrorResult), StatusCodes.Status403Forbidden));

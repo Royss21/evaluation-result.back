@@ -1,0 +1,13 @@
+﻿namespace Application.Dto.EvaResult.EvaluationCollaborator
+{
+    public abstract class BaseEvaluationCollaboratorDto
+    {
+        public Guid EvaluationId { get; set; }
+        public Guid CollaboratorId { get; set; }
+        public string GerencyName { get; set; } = string.Empty;
+        public string ChargeName { get; set; } = string.Empty;
+        public string AreaName { get; set; } = string.Empty;
+        public string HierarchyName { get; set; } = string.Empty;
+        public string LevelName { get; set; } = string.Empty;
+    }
+}

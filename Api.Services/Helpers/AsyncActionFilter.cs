@@ -1,9 +1,9 @@
 ﻿
 namespace Api.Services.Helpers
 {
-    using Application.Main.Excepciones;
+    using Application.Main.Exceptions;
     using Application.Main.Servicios.Generico.Interfaces;
-    using Domain.Common.Constantes;
+    using Domain.Common.Constants;
     using Microsoft.AspNetCore.Mvc.Filters;
     using SharedKernell.Helpers;
 
@@ -25,38 +25,38 @@ namespace Api.Services.Helpers
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var actionDescription = context.ActionDescriptor;
-            var actionName = actionDescription?.RouteValues["action"]?.ToString() ?? "";
-            var controllerName = actionDescription?.RouteValues["controller"]?.ToString() ?? "";
-            var method = _httpContextAccessor?.HttpContext?.Request.Method ?? "";
-            var endpoint = $"{method}.{controllerName}.{actionName}";
+            //var actionDescription = context.ActionDescriptor;
+            //var actionName = actionDescription?.RouteValues["action"]?.ToString() ?? "";
+            //var controllerName = actionDescription?.RouteValues["controller"]?.ToString() ?? "";
+            //var method = _httpContextAccessor?.HttpContext?.Request.Method ?? "";
+            //var endpoint = $"{method}.{controllerName}.{actionName}";
 
-            if (!string.IsNullOrWhiteSpace(endpoint) && 
-                !endpoint.Contains("Authentication") &&
-                _httpContextAccessor?.HttpContext?.User is not null)
-            {
-                var claims = _httpContextAccessor.HttpContext.User;
-                var userId = claims.FindFirst(Claims.Identificador)?.Value?.Decrypt();
+            //if (!string.IsNullOrWhiteSpace(endpoint) && 
+            //    !endpoint.Contains("Authentication") &&
+            //    _httpContextAccessor?.HttpContext?.User is not null)
+            //{
+            //    var claims = _httpContextAccessor.HttpContext.User;
+            //    var userId = claims.FindFirst(Claims.Identificate)?.Value?.Decrypt();
 
-                if (!string.IsNullOrWhiteSpace(userId))
-                {
-                    var memoryCacheService = _serviceProvider.GetService<IMemoriaCacheServicio>();
-                    var endpointLocked = memoryCacheService.ObtenerDatoCache($"{Messages.MemoriaCache.UsuarioEndpointsBloqueados}{userId}") as List<string>;
+            //    if (!string.IsNullOrWhiteSpace(userId))
+            //    {
+            //        var memoryCacheService = _serviceProvider.GetService<IMemoryCacheService>();
+            //        var endpointLocked = memoryCacheService.GetDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userId}") as List<string>;
 
-                    if (endpointLocked is null)
-                        await next();
-                    else
-                    {
-                        if (!endpointLocked.Contains(endpoint))
-                            await next();
-                        else
-                            throw new ProhibidoExcepcion(Messages.Autenticacion.EndpointProhibido);
-                    }
-                }
-                else
-                    throw new NoAutorizadoExcepcion(Messages.Autenticacion.NoAutorizado);
-            }
-            else
+            //        if (endpointLocked is null)
+            //            await next();
+            //        else
+            //        {
+            //            if (endpointLocked.Contains(endpoint))
+            //                throw new ForbiddenException(Messages.Authentication.EndpointForbidden);
+            //            else
+            //                await next();
+            //        }
+            //    }
+            //    else
+            //        throw new UnauthorizedException(Messages.Authentication.NoAuthorize);
+            //}
+            //else
                 await next();
         }
     }

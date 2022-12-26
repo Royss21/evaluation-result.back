@@ -1,8 +1,4 @@
 ﻿
-
-@model Application.Dto.ModeloCorreos.CorreoPruebaDto;
-
-
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -25,18 +21,8 @@
                                             <h3 style="font-family:'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;color:#000;margin:40px 0 0;line-height:1.2;font-weight:400;font-size:18px">
                                                 Carpeta Digital - Esmetal
                                             </h3>
-                                            @{
-                                                <p>Estimado(a): <strong>@Model.NombreCompletos </strong></p>
-                                                <p>con usuario @Model.NombreUsuario</p>
-                                            }
-                                            <ul>
-                                                @{
-                                                    foreach(string endpoint in Model.Endpoints)
-                                                    {
-                                                        <li>@endpoint</li>   
-                                                    }
-                                                }
-                                            </ul>
+                                            
+                                            <ul></ul>
                                         </td>
                                     </tr>
 

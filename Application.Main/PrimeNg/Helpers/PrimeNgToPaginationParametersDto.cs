@@ -1,16 +1,19 @@
 ﻿
 
+
 namespace Application.Main.PrimeNg.Helpers
 {
+    using Application.Dto.Pagination;
+    using Application.Main.Pagination;
     public class PrimeNgToPaginationParametersDto<TDto> where TDto : class
     {
-        public static PaginacionParametrosDto<TDto> Convert(PrimeTable primeTable)
+        public static PaginationParametersDto<TDto> Convert(PagingFilterDto primeTable)
         {
             var filter = new List<ColumnsFilter>();
 
-            if (primeTable.Filtros != null)
+            if (primeTable.Filters != null)
             {
-                filter = primeTable.Filtros
+                filter = primeTable.Filters
                     .Where(p => !string.IsNullOrWhiteSpace(p.Value.Value) && p.Key != "global")
                     .Select(p => new ColumnsFilter
                     {
@@ -20,13 +23,13 @@ namespace Application.Main.PrimeNg.Helpers
                     }).ToList();
             }
 
-            var filterParameterDto = new PaginacionParametrosDto<TDto>
+            var filterParameterDto = new PaginationParametersDto<TDto>
             {
-                Empieza = primeTable.Empieza,
-                CantidadFilas = primeTable.Filas,
-                ColumnaOrden = primeTable.ColumnaOrden,
-                TipoOrden = (TipoOrdenEnum)primeTable.TipoOrden,
-                FiltroWhere = filter.Any() ? LambdaManager.ConvertToLambda<TDto>(filter) : null
+                Start = primeTable.Start,
+                RowsCount = primeTable.Rows,
+                OrderColumn = primeTable.OrderColumn,
+                TypeOrder = (SortTypeEnum)primeTable.typeOrder,
+                FilterWhere = filter.Any() ? LambdaManager.ConvertToLambda<TDto>(filter) : null
             };
 
             return filterParameterDto;
