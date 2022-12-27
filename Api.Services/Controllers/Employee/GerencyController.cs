@@ -18,6 +18,32 @@
             this._logger = logger;
         }
 
+        [HttpPost]
+        [SwaggerOperation(
+        Summary = "Crear Gerencia",
+        Description = "Crear Gerencia",
+        OperationId = "GerencyService.Create",
+        Tags = new[] { "GerencyService" })]
+        [ProducesResponseType(typeof(JsonResult<GerencyDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(GerencyCreateDto request)
+        {
+            var result = await _gerencyService.CreateAsync(request);
+            return new OkObjectResult(new JsonResult<GerencyDto>(result));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualiza Gerencia",
+        Description = "Actualizar Gerencia",
+        OperationId = "GerencyService.Update",
+        Tags = new[] { "GerencyService" })]
+        [ProducesResponseType(typeof(JsonResult<GerencyDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(GerencyUpdateDto request)
+        {
+            var result = await _gerencyService.UpdateAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
         [HttpGet("paging")]
         [SwaggerOperation(
         Summary = "Lista Paginada de Gerencias",
@@ -42,6 +68,19 @@
         {
             var result = await _gerencyService.GetAllAsync();
             return new OkObjectResult(new JsonResult<IEnumerable<GerencyDto>>(result));
+        }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar Gerencia",
+        Description = "Eliminar Gerencia",
+        OperationId = "GerencyService.Delete",
+        Tags = new[] { "GerencyService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _gerencyService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
     }
 }

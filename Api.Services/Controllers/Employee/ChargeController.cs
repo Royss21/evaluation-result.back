@@ -17,6 +17,32 @@
             _logger = logger;
         }
 
+        [HttpPost]
+        [SwaggerOperation(
+        Summary = "Crear Cargo",
+        Description = "Crear Cargo",
+        OperationId = "ChargeService.Create",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<ChargeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(ChargeCreateDto request)
+        {
+            var result = await _chargeService.CreateAsync(request);
+            return new OkObjectResult(new JsonResult<ChargeDto>(result));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualizar Cargo",
+        Description = "Actualizar Cargo",
+        OperationId = "ChargeService.Update",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<ChargeDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Create(ChargeUpdateDto request)
+        {
+            var result = await _chargeService.UpdateAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
         [HttpGet]
         [SwaggerOperation(
         Summary = "Lista de Cargos",

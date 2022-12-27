@@ -5,8 +5,7 @@
 
     public interface ICollaboratorService
     {
-        Task<IEnumerable<CollaboratorNotInEvaluationDto>> GetAllCollaboratorNotInEvaluationAsync(Guid evaluationId);
-        
+        Task<IEnumerable<CollaboratorNotInEvaluationDto>> GetAllCollaboratorNotInEvaluationAsync(Guid evaluationId);        
         Task<bool> UpdateAsync(CollaboratorUpdateDto request);
         Task<CollaboratorDto> CreateAsync(CollaboratorCreateDto request);
         Task<PaginationResultDto<CollaboratorDto>> GetAllPagingAsync(PagingFilterDto primeTable);

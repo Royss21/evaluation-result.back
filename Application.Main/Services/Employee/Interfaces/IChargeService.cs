@@ -6,6 +6,8 @@ namespace Application.Main.Services.Employee.Interfaces
     {
         Task<IEnumerable<ChargeDto>> GetAllAsync();
         Task<ChargeDto> GetByIdAsync(int id);
+        Task<ChargeDto> CreateAsync(ChargeCreateDto request);
+        Task<bool> UpdateAsync(ChargeUpdateDto request);
         Task<IEnumerable<ChargeDto>> GetByIdAreaAsync(int id);
     }
 }

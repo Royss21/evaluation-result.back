@@ -5,14 +5,44 @@
     using System.Collections.Generic;
     using Application.Dto.Pagination;
     using Application.Main.Pagination;
+    using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Dto.Employee.Gerency;
     using Application.Main.Services.Employee.Interfaces;
+    using Application.Main.Services.Employee.Validators;
+    using Domain.Common.Constants;
 
     public class GerencyService : BaseService, IGerencyService
     {
         public GerencyService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
+
+        public async Task<GerencyDto> CreateAsync(GerencyCreateDto request)
+        {
+            var gerency = _mapper.Map<Gerency>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.GerencyRepository
+                .AddAsync(gerency, new GerencyCreateUpdateValidation(_unitOfWorkApp.Repository.GerencyRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
+            await _unitOfWorkApp.SaveChangesAsync();
+            return _mapper.Map<GerencyDto>(gerency);
+        }
+
+        public async Task<bool> UpdateAsync(GerencyUpdateDto request)
+        {
+            var gerency = _mapper.Map<Gerency>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.GerencyRepository
+                .UpdateAsync(gerency, new GerencyCreateUpdateValidation(_unitOfWorkApp.Repository.GerencyRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
+        }
 
         public async Task<IEnumerable<GerencyDto>> GetAllAsync()
         {
@@ -43,6 +73,19 @@
                 Count = paging.Count,
                 Entities = gerencies
             };
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var gerency =  await _unitOfWorkApp.Repository.GerencyRepository.GetAsync(id);
+
+            if (gerency is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+            
+            await _unitOfWorkApp.Repository.GerencyRepository.DeleteAsync(gerency);
+            await _unitOfWorkApp.SaveChangesAsync();
+            
+            return true;
         }
     }
 }

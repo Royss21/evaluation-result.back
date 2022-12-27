@@ -60,5 +60,16 @@
             public const string ChargeRequired = "El Cargo es requerido";
         }
 
+        public static class Hierarchy
+        {
+            public const string LevelRequired = "El nivel es requerido";
+        }
+
+        public static class Charge
+        {
+            public const string AreaRequired = "El área es requerida";
+            public const string HierarchyRequired = "La jerarquía es requerida";
+        }
+
     }
 }

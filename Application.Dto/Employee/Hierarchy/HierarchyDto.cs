@@ -5,6 +5,7 @@ namespace Application.Dto.Employee.Hierarchy
     public class HierarchyDto : BaseHierarchyDto
     {
         public int Id { get; set; }
+        public string LevelName { get; set; } = string.Empty;
 
         [JsonIgnore]
         public DateTime CreateDate { get; set; }

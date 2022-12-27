@@ -5,6 +5,8 @@ namespace Application.Dto.Employee.Charge
     public class ChargeDto : BaseChargeDto
     {
         public int Id { get; set; }
+        public string AreaName { get; set; } = string.Empty;
+        public string HierarchyName { get; set; } = string.Empty;
 
         [JsonIgnore]
         public DateTime CreateDate { get; set; }
