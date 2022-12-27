@@ -2,8 +2,8 @@
 {
     public abstract class BaseEvaluationComponentDto
     {
-        public Guid EvaluationId { get; set; }
-        public int ComponentId { get; set; }
+        public Guid EvaluationId { get; set; } = Guid.Empty;
+        public int ComponentId { get; set; }    
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
     }
