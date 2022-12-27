@@ -16,25 +16,25 @@
                .ForMember(x => x.HasComponentAreaObjectives, m => m.MapFrom(d => d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.AreaObjectives)))
                .ForMember(x => x.HasComponentCompetencies, m => m.MapFrom(d => d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies)))
                .ForMember(x => x.Name, m => m.MapFrom(d => d.Name))
-               .ForMember(x => x.RangeDate, m => m.MapFrom(d => "Desde " + $"{d.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {d.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de")));
+               .ForMember(x => x.RangeDate, m => m.MapFrom(d => "Desde el " + $"{d.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {d.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de")));
 
 
             CreateMap<Evaluation, EvaluationCurrentDetailDto>()
+               .ForMember(x => x.PeriodName, m => m.MapFrom(d => d.Period.Name))
+               .ForMember(x => x.PeriodId, m => m.MapFrom(d => d.Period.Id))
+               .ForMember(x => x.IsEnableImportLeaders, m => m.MapFrom(d => d.EvaluationComponents.Any(a => new[] { GeneralConstants.Component.AreaObjectives, GeneralConstants.Component.Competencies }.Contains(a.ComponentId))))
                .ForMember(x => x.EvaluationCurrent, m => m.MapFrom(d => new EvaluationCurrentDto
                {
                    HasComponentCorporateObjectives = d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.CorporateObjectives),
                    HasComponentAreaObjectives = d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.AreaObjectives),
                    HasComponentCompetencies = d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies),
                    Name = d.Name,
-                   RangeDate = "Desde " + $"{d.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {d.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
+                   RangeDate = "Desde el " + $"{d.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {d.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
                    Id = d.Id
                }))
-               .ForMember(x => x.PeriodName, m => m.MapFrom(d => d.Period.Name))
-               .ForMember(x => x.PeriodId, m => m.MapFrom(d => d.Period.Id))
-               .ForMember(x => x.IsEnableImportLeaders, m => m.MapFrom(d => d.EvaluationComponents.Any(a => new[] { GeneralConstants.Component.AreaObjectives, GeneralConstants.Component.Competencies }.Contains(a.ComponentId))))
                .ForMember(x => x.StagesEvaluation, m => m.MapFrom(d => d.EvaluationComponentStages.Where(w => w.EvaluationComponentId == null).Select(ecs => new StageRangeDateDto
                {
-                   RangeDate = "Desde " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
+                   RangeDate = "Desde el " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
                    StageId = ecs.StageId,
                    StageName = $"Etapa de {GeneralConstants.Stages.StagesName[ecs.StageId]}"
                }).OrderBy(o => o.StageId)))
@@ -45,13 +45,18 @@
                     RangeDate = GeneralConstants.Component.Competencies != ec.ComponentId
                         ? ec.EvaluationComponentStages
                             .Where(w => w.EvaluationComponentId == ec.Id)
-                            .Select(s => "Desde " + $"{s.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {s.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"))
+                            .Select(s => "Desde el " + $"{s.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {s.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"))
                             .First()
-                        : "",
+                        : "Desde el " + 
+                          @$"
+                             {ec.EvaluationComponentStages.First(f => f.StageId == GeneralConstants.Stages.Evaluation).StartDate.ToString("dd [P1] MMMMM, yyyy")}
+                             hasta el
+                             {ec.EvaluationComponentStages.First(f => f.StageId == GeneralConstants.Stages.Calibration).EndDate.ToString("dd [P1] MMMMM, yyyy")}
+                           ".Replace("[P1]", "de"),
                     Stages = GeneralConstants.Component.Competencies == ec.ComponentId
                         ? ec.EvaluationComponentStages.Select(ecs => new StageRangeDateDto
                         { 
-                                RangeDate = "Desde " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
+                                RangeDate = "Desde el " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
                                 StageId = ecs.StageId,
                                 StageName = $"Etapa de {GeneralConstants.Stages.StagesName[ecs.StageId]}"
                         }).OrderBy(o => o.StageId).ToList()

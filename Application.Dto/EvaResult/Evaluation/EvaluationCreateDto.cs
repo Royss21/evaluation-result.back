@@ -7,7 +7,7 @@ namespace Application.Dto.EvaResult.Evaluation
     public class EvaluationCreateDto : BaseEvaluationDto
     {
         public bool IsEvaluationTest { get; set; }
-        public List<EvaluationComponentCreateDto> EvaluationComponentsCreateDto { get; set; }
-        public List<EvaluationComponentStageCreateDto> EvaluationComponentStagesCreateDto { get; set; }
+        public List<EvaluationComponentCreateDto> EvaluationComponents { get; set; }
+        public List<EvaluationComponentStageCreateDto> EvaluationComponentStages { get; set; }
     }
 }

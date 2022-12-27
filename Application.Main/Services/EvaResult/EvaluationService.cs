@@ -23,11 +23,11 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<EvaluationDto> CreateAsync(EvaluationCreateDto request)
         {
-            if (!request.EvaluationComponentsCreateDto.Any())
+            if (!request.EvaluationComponents.Any())
                 throw new WarningException("No hay ningun componente seleccionado para la evaluacion.");
 
-            if (request.EvaluationComponentsCreateDto.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && 
-                !request.EvaluationComponentStagesCreateDto.Where(w=> w.ComponentId == GeneralConstants.Component.Competencies).Any()
+            if (request.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.Competencies) && 
+                !request.EvaluationComponentStages.Where(w=> w.ComponentId == GeneralConstants.Component.Competencies).Any()
                )
                 throw new WarningException("No ha seleccionado las etapas del componente de COMPETENCIAS");
 
@@ -42,13 +42,13 @@ namespace Application.Main.Services.EvaResult
 
             var evaluation = _mapper.Map<Evaluation>(request);
             var currentDate = DateTime.UtcNow.GetDatePeru();
-            var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponentsCreateDto);
+            var evaluationComponents = _mapper.Map<List<EvaluationComponent>>(request.EvaluationComponents);
             var components = await _unitOfWorkApp.Repository.ComponentRepository.All().ToListAsync();
             var dataConfigurations = await GetDataCurrentConfiguration(evaluationComponents.Select(ce => ce.ComponentId).ToList());
             
             evaluation.EvaluationComponents = evaluationComponents;
             evaluation.EvaluationCollaborators = await RegisterCollaboratorsInEvaluation(currentDate);
-            evaluation.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto.Where(w => w.ComponentId is null));
+            evaluation.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStages.Where(w => w.ComponentId is null));
             evaluation.StatusId = request.IsEvaluationTest
                                         ? GeneralConstants.StatusIds.Test
                                         : currentDate.RangeDateBetween(evaluation.StartDate, evaluation.EndDate)
@@ -87,12 +87,12 @@ namespace Application.Main.Services.EvaResult
                     if (!conducts.Any())
                         throw new WarningException($"No se ha configurado conductas para el componente de {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]}");
 
-                    evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStagesCreateDto
+                    evaluationComponent.EvaluationComponentStages = _mapper.Map<List<EvaluationComponentStage>>(request.EvaluationComponentStages
                                                                                                                         .Where(w => w.ComponentId is not null));
                 }
                 else
                 {
-                    var evaluationComponentDto = request.EvaluationComponentsCreateDto.First(ec => ec.ComponentId == evaluationComponent.ComponentId);
+                    var evaluationComponentDto = request.EvaluationComponents.First(ec => ec.ComponentId == evaluationComponent.ComponentId);
                     evaluationComponent.EvaluationComponentStages = new List<EvaluationComponentStage> { 
                         new EvaluationComponentStage { 
                             StageId = GeneralConstants.Stages.Evaluation,
