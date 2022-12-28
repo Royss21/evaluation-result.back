@@ -8,6 +8,8 @@
     using Application.Dto.Employee.Charge;
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
+    using Application.Dto.Pagination;
+    using Application.Main.Pagination;
 
     public class ChargeService : BaseService, IChargeService
     {
@@ -74,6 +76,27 @@
                 throw new Exceptions.WarningException(Messages.General.ResourceNotFound);
 
             return charge;
+        }
+
+        public async Task<PaginationResultDto<ChargeDto>> GetAllPagingAsync(PagingFilterDto primeTable)
+        {
+            var parametersDto = PrimeNgToPaginationParametersDto<ChargeDto>.Convert(primeTable);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Charge, ChargeDto>(_mapper);
+
+            if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+            }
+
+            var paging = await _unitOfWorkApp.Repository.ChargeRepository.FindAllPagingAsync(parametersDomain);
+            var charges = await paging.Entities.ProjectTo<ChargeDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return new PaginationResultDto<ChargeDto>
+            {
+                Count = paging.Count,
+                Entities = charges
+            };
         }
     }
 }

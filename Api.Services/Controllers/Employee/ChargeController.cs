@@ -3,6 +3,7 @@
     using SharedKernell.Wrappers;
     using Application.Dto.Employee.Charge;
     using Application.Main.Services.Employee.Interfaces;
+    using Application.Dto.Pagination;
 
     [Route("api/charge")]
     [ApiController]
@@ -54,6 +55,19 @@
         {
             var result = await _chargeService.GetAllAsync();
             return new OkObjectResult(new JsonResult<List<ChargeDto>>(result.ToList()));
+        }
+
+        [HttpGet("paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada de Cargos",
+        Description = "lista paginada de Cargos",
+        OperationId = "ChargeService.GetAllPaging",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<ChargeDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto primeTable)
+        {
+            var result = await _chargeService.GetAllPagingAsync(primeTable);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<ChargeDto>>(result));
         }
 
         [HttpGet("{id}")]
