@@ -36,7 +36,9 @@
                {
                    RangeDate = "Desde el " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
                    StageId = ecs.StageId,
-                   StageName = $"Etapa de {GeneralConstants.Stages.StagesName[ecs.StageId]}"
+                   StageName = $"Etapa de {GeneralConstants.Stages.StagesName[ecs.StageId]}",
+                   StartDate = ecs.StartDate,
+                   EndDate = ecs.EndDate,
                }).OrderBy(o => o.StageId)))
                .ForMember(x => x.Components, m => m.MapFrom(d => d.EvaluationComponents.Select(ec => new ComponentRangeDateDto { 
                
@@ -53,9 +55,20 @@
                              hasta el
                              {ec.EvaluationComponentStages.First(f => f.StageId == GeneralConstants.Stages.Calibration).EndDate.ToString("dd [P1] MMMMM, yyyy")}
                            ".Replace("[P1]", "de"),
+
+                    StartDate = ec.EvaluationComponentStages
+                                .Where(w => w.EvaluationComponentId == ec.Id)
+                                .First().StartDate,
+
+                   EndDate = ec.EvaluationComponentStages
+                                .Where(w => w.EvaluationComponentId == ec.Id)
+                                .First().EndDate,
+
                     Stages = GeneralConstants.Component.Competencies == ec.ComponentId
                         ? ec.EvaluationComponentStages.Select(ecs => new StageRangeDateDto
                         { 
+                                StartDate= ecs.StartDate,
+                                EndDate = ecs.EndDate,
                                 RangeDate = "Desde el " + $"{ecs.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {ecs.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"),
                                 StageId = ecs.StageId,
                                 StageName = $"Etapa de {GeneralConstants.Stages.StagesName[ecs.StageId]}"

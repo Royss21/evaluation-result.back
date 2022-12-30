@@ -80,7 +80,7 @@
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> UpdateStatus(UpdateStatusDto request)
         {
-            var result = await _componentCollaboratorService.UpdateStatusAsync(request);
+            var result = await _componentCollaboratorService.UpdateStatusCommentAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
     }

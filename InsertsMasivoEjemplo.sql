@@ -199,15 +199,22 @@ go
 insert into Config.Label
 (Name, Description, CreateUser, CreateDate)
 values
-('Cantidad de evaluaciones', '', 'rmartel', getdate())
+('Cantidad de evaluaciones', '', 'rmartel', getdate()),
+('Puntajes de competencias', '', 'rmartel', getdate(), 0),
+('Total de Competencias', '', 'rmartel', getdate(),0)
 
-go
+
 
 insert into Config.LabelDetail
 (LabelId, Name, Description, RealValue, MinimunValue, MaximunValue,Icon, CreateUser, CreateDate)
 values
-(1, 'cantidad por año', '', 2, 0, 0,'', 'rmartel', getdate())
-
+(1, 'cantidad por año', '', 2, 0, 0,'', 'rmartel', getdate()),
+(2,'Punto 1', '', 1, 0,0,'',getdate(), 'rmartel'),
+(2,'Punto 2', '', 2, 0,0,'',getdate(), 'rmartel'),
+(2,'Punto 3', '', 3, 0,0,'',getdate(), 'rmartel'),
+(2,'Punto 4', '', 4, 0,0,'',getdate(), 'rmartel'),
+(2,'Punto 5', '', 5, 0,0,'',getdate(), 'rmartel'),
+(3, 'Total', '', 18,0,0,'',getdate(), 'rmartel')
 
 go
 

@@ -34,7 +34,10 @@ namespace Application.Main.Services.EvaResult
                 throw new WarningException("Los objetivos/competencias del colaborador no se han encontrado");
 
             var componentCollaboratorComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
-                    .Find(f => f.EvaluationComponentStageId == request.EvaluationComponentStageId, false)
+                    .Find(f => 
+                        f.EvaluationComponentStageId == request.EvaluationComponentStageId &&
+                        f.EvaluationCollaboratorId.Equals(componentCollaborator.EvaluationCollaboratorId)
+                    , false)
                     .FirstOrDefaultAsync();
 
             if (componentCollaboratorComment is null)
@@ -131,6 +134,18 @@ namespace Application.Main.Services.EvaResult
                         throw new WarningException("El colaborador no tiene un Lider asignado en esta etapa");
 
 
+                    var countCompetence = await _unitOfWorkApp.Repository.LabelDetailRepository
+                                   .Find(f => f.LabelId == GeneralConstants.CountCompetenceLabelId)
+                                   .Select(s => s.RealValue)
+                                   .FirstOrDefaultAsync();
+
+                    var maximumScore = await _unitOfWorkApp.Repository.LabelDetailRepository
+                            .Find(f => f.LabelId == GeneralConstants.PointsCompetenceLabelId)
+                            .Select(s => s.RealValue)
+                            .MaxAsync();
+
+                    var topScore = countCompetence * maximumScore;
+
                     switch (request.StageId)
                     {
                         case GeneralConstants.Stages.Evaluation:
@@ -161,9 +176,17 @@ namespace Application.Main.Services.EvaResult
                                         .Sum(s => s.ConductPointsCalibrated);
                             });
 
+                           
                             componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.Points);
-                            componentCollaborator.Total = 0;
-                            componentCollaborator.Total = 0;
+                            componentCollaborator.ComplianceCompetence = (componentCollaborator.SubTotal * topScore);
+                            componentCollaborator.Total = componentCollaborator.WeightHierarchy  * componentCollaborator.ComplianceCompetence;
+
+                            if (countLeaders > 1)
+                            {
+                                componentCollaborator.SubTotalCalibrated = componentCollaborator.SubTotal;
+                                componentCollaborator.ComplianceCompetenceCalibrated = componentCollaborator.ComplianceCompetence;
+                                componentCollaborator.TotalCalibrated = componentCollaborator.Total;
+                            }
 
                             break;
 
@@ -171,21 +194,26 @@ namespace Application.Main.Services.EvaResult
 
                             componentCollaboratorDetails.ForEach(ccd =>
                             {
-                                componentCollaboratorConducts.ForEach(ccc =>
+                                componentCollaboratorDetails.ForEach(ccd =>
                                 {
-                                    var componentCollaboratorDto = request.ComponentCollaboratorDetailsEvaluate
-                                        .First(f => f.Id == ccd.Id);
+                                    componentCollaboratorConducts.Where(w => w.ComponentCollaboratorDetailId == ccd.Id).ForEach(ccc =>
+                                    {
+                                        var componentCollaboratorDto = request.ComponentCollaboratorDetailsEvaluate
+                                            .First(f => f.Id == ccd.Id);
 
-                                    ccc.ConductPointsCalibrated = componentCollaboratorDto.ComponentCollaboratorConductsEvaluate
-                                        .First(f => f.Id == ccc.Id).PointValue;
+                                        ccc.ConductPointsCalibrated = componentCollaboratorDto.ComponentCollaboratorConductsEvaluate
+                                            .First(f => f.Id == ccc.Id).PointValueCalibrated;
+                                    });
+
+                                    ccd.PointsCalibrated = componentCollaboratorConducts.Where(w => w.ComponentCollaboratorDetailId == ccd.Id)
+                                        .Sum(s => s.ConductPointsCalibrated);
+
                                 });
-
-                                ccd.PointsCalibrated = componentCollaboratorConducts.Sum(s => s.ConductPointsCalibrated);
                             });
 
-                            componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.PointsCalibrated);
-                            componentCollaborator.Total = 0;
-                            componentCollaborator.Total = 0;
+                            componentCollaborator.SubTotalCalibrated = componentCollaboratorDetails.Sum(s => s.PointsCalibrated);
+                            componentCollaborator.ComplianceCompetenceCalibrated = (componentCollaborator.SubTotalCalibrated * topScore);
+                            componentCollaborator.TotalCalibrated = componentCollaborator.WeightHierarchy * componentCollaborator.ComplianceCompetenceCalibrated;
 
                             break;
 
@@ -225,7 +253,7 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<ComponentCollaboratorDto> GetEvaluationDataByIdAsync(Guid id)
         {
-            await UpdateStatusAsync(new UpdateStatusDto { 
+            await UpdateStatusCommentAsync(new UpdateStatusDto { 
                 Id= id,
                 StatusId = GeneralConstants.StatusIds.InProgress
             });
@@ -238,31 +266,56 @@ namespace Application.Main.Services.EvaResult
             if (componenteCollaborator is null)
                 throw new WarningException("No se encontró datos para evaluar al colaborador");
 
-            var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                    .Find(f => f.EvaluationComponentId.Equals(componenteCollaborator.EvaluationComponentId))
-                    .FirstOrDefaultAsync();
+            var evaluationComponentStage = await GetEvaluationComponentStageAsync(componenteCollaborator.ComponentId, componenteCollaborator.EvaluationComponentId);
 
             if (evaluationComponentStage is null)
                 throw new WarningException("No se encontró datos para evaluar al colaborador");
 
+            var comment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                     .Find(f =>
+                         f.EvaluationCollaboratorId.Equals(componenteCollaborator.EvaluationCollaboratorId) &&
+                         f.EvaluationComponentStageId == evaluationComponentStage.Id
+                     ).FirstAsync();
+
             componenteCollaborator.EvaluationComponentStageId = evaluationComponentStage.Id;
             componenteCollaborator.StageId = evaluationComponentStage.StageId;
+            componenteCollaborator.StatusId = comment.StatusId;
+            componenteCollaborator.Comment = (await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f => 
+                        f.EvaluationComponentStageId == componenteCollaborator.EvaluationComponentStageId && 
+                        f.EvaluationCollaboratorId.Equals(componenteCollaborator.EvaluationCollaboratorId)
+                    )
+                    .Select(s => s.Comment)
+                    .FirstOrDefaultAsync()) ?? "";
 
             return componenteCollaborator;
         }
 
-        public async Task<bool> UpdateStatusAsync(UpdateStatusDto request)
+        public async Task<bool> UpdateStatusCommentAsync(UpdateStatusDto request)
         {
-            var componentCollaboratorUpdate = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
-                        .Find(f => f.Id.Equals(request.Id), false)
+            var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
+                        .Find(f => f.Id.Equals(request.Id))
+                        .Select(s => new { 
+                            ComponentId = s.EvaluationComponent.ComponentId,
+                            EvaluationCollaboratorId =  s.EvaluationCollaboratorId,
+                            EvaluationComponentId = s.EvaluationComponentId
+                        })
                         .FirstAsync();
+
+            var evaluationComponentStage = await GetEvaluationComponentStageAsync(componentCollaborator.ComponentId,componentCollaborator.EvaluationComponentId);
+            var evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f =>
+                        f.EvaluationCollaboratorId.Equals(componentCollaborator.EvaluationCollaboratorId) &&
+                        f.EvaluationComponentStageId == evaluationComponentStage.Id, 
+                        false
+                    ).FirstAsync();
 
             if (new[] { GeneralConstants.StatusIds.Create,
                 GeneralConstants.StatusIds.Pending, 
                 GeneralConstants.StatusIds.InProgress 
-                }.Contains(componentCollaboratorUpdate.StatusId))
+                }.Contains(evaluationStatusComment.StatusId))
             {
-                componentCollaboratorUpdate.StatusId = request.StatusId;
+                evaluationStatusComment.StatusId = request.StatusId;
                 await _unitOfWorkApp.SaveChangesAsync();
             }
 
@@ -302,6 +355,17 @@ namespace Application.Main.Services.EvaResult
             var paging = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository.FindAllPagingAsync(parametersDomain);
             var evaluationCollaborators = await paging.Entities.ProjectTo<ComponentCollaboratorPagingDto>(_mapper.ConfigurationProvider).ToListAsync();
 
+            foreach(var cc in evaluationCollaborators)
+            {
+                var evaluationComponentStage = await GetEvaluationComponentStageAsync(cc.ComponentId,cc.EvaluationComponentId);
+                var evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f =>
+                        f.EvaluationCollaboratorId.Equals(cc.EvaluationCollaboratorId) &&
+                        f.EvaluationComponentStageId == evaluationComponentStage.Id
+                    ).FirstAsync();
+                cc.StatusId = evaluationStatusComment.StatusId;
+
+            }
             return new PaginationResultDto<ComponentCollaboratorPagingDto>
             {
                 Count = paging.Count,
@@ -333,6 +397,21 @@ namespace Application.Main.Services.EvaResult
             return (await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .RunSqlQuery<decimal>("[dbo].[uspCalculateFormulaCompliance]", new { formulaQuerySql }))
                     .FirstOrDefault();
+        }
+        private async Task<EvaluationComponentStage> GetEvaluationComponentStageAsync(int componentId, int evaluationComponentId)
+        {
+            var predicate = PredicateBuilder.New<EvaluationComponentStage>(true);
+            predicate.And(f => f.EvaluationComponentId == evaluationComponentId);
+
+            if (componentId == GeneralConstants.Component.Competencies)
+            {
+                var currentDate = DateTime.UtcNow.GetDatePeru();
+                predicate.And(f => currentDate >= f.StartDate && currentDate <= f.EndDate);
+            }
+
+            return await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                .Find(predicate)
+                .FirstAsync();
         }
         #endregion
     }

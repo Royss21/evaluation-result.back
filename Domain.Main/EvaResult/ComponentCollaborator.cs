@@ -15,7 +15,10 @@
         public string HierarchyName { get; set; } = string.Empty;
         public decimal WeightHierarchy { get; set; }
         public decimal SubTotal { get; set; }
+        public decimal SubTotalCalibrated { get; set; }
         public decimal ExcessSubtotal { get; set; }
+        public decimal ComplianceCompetence { get; set; }
+        public decimal ComplianceCompetenceCalibrated { get; set; }
         public decimal Total { get; set; }
         public decimal TotalCalibrated { get; set; }
         public decimal Excess { get; set; }

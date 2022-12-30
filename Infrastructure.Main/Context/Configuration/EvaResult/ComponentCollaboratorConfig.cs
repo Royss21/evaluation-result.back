@@ -27,17 +27,30 @@
                .IsRequired()
                .HasDefaultValue(0);
 
+            builder.Property(p => p.SubTotalCalibrated)
+              .IsRequired()
+              .HasDefaultValue(0);
+
+            builder.Property(p => p.ComplianceCompetence)
+                .IsRequired()
+                .HasDefaultValue(0);
+
+            builder.Property(p => p.ComplianceCompetenceCalibrated)
+                .IsRequired()
+                .HasDefaultValue(0);
+
             builder.Property(p => p.ExcessSubtotal)
-             .IsRequired()
-             .HasDefaultValue(0);
+                .IsRequired()
+                .HasDefaultValue(0);
 
             builder.Property(p => p.Total)
                .IsRequired()
                .HasDefaultValue(0);
 
             builder.Property(p => p.TotalCalibrated)
-               .IsRequired()
-               .HasDefaultValue(0);
+              .IsRequired()
+              .HasDefaultValue(0);
+
 
             builder.Property(p => p.Excess)
                .IsRequired()

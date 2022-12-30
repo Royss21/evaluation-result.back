@@ -17,8 +17,10 @@
             CreateMap<ComponentCollaborator, ComponentCollaboratorDto>()
                .ForMember(x => x.Id, m => m.MapFrom(d => d.Id))
                .ForMember(x => x.EvaluationComponentId, m => m.MapFrom(d => d.EvaluationComponentId))
+               .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
                .ForMember(x => x.StatusName, m => m.MapFrom(d => d.Status.Name))
-               .ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
+               //.ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
+               .ForMember(x => x.EvaluationCollaboratorId, m => m.MapFrom(d => d.EvaluationCollaboratorId))
                .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Gerency.Name))
                .ForMember(x => x.AreaName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Name))
                .ForMember(x => x.ChargeName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Name))
@@ -36,7 +38,9 @@
                        ComponentCollaboratorConducts = ccd.ComponentCollaboratorConducts.Select(ccc => new ComponentCollaboratorConductDto
                        {
                            Id = ccc.Id,
-                           ConductDescription = ccc.ConductDescription
+                           ConductDescription = ccc.ConductDescription,
+                           PointValue = ccc.ConductPoints,
+                           PointValueCalibrated = ccc.ConductPointsCalibrated,
                        }).ToList()
                    }).ToList()
                ))
@@ -53,6 +57,9 @@
             .ForMember(x => x.LevelName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Hierarchy.Level.Name))
             .ForMember(x => x.Id, m => m.MapFrom(d => d.Id))
             .ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
+            .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
+            .ForMember(x => x.EvaluationComponentId, m => m.MapFrom(d => d.EvaluationComponentId))
+            .ForMember(x => x.EvaluationCollaboratorId, m => m.MapFrom(d => d.EvaluationCollaboratorId))
             .ReverseMap();
         }
     }

@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public decimal PointValue { get; set; }
+        public decimal PointValueCalibrated { get; set; }
     }
 }

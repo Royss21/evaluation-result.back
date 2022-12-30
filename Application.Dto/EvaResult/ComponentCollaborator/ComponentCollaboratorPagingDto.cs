@@ -15,8 +15,10 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public string LevelName { get; set; } = string.Empty;
         public int StatusId { get; set; }
 
-        [JsonIgnore]
-        public DateTime CreateDate { get; set; }
+        [JsonIgnore] public DateTime CreateDate { get; set; }
+        [JsonIgnore]  public int ComponentId { get; set; }
+        [JsonIgnore]  public Guid EvaluationCollaboratorId { get; set; }
+        [JsonIgnore] public int EvaluationComponentId { get; set; }
 
     }
 }

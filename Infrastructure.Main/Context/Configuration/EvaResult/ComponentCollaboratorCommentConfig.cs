@@ -11,7 +11,7 @@
 
             builder.Property(p => p.Comment)
                 .IsRequired()
-                .HasMaxLength(200);
+                .HasMaxLength(2000);
 
             builder.HasOne(b => b.EvaluationCollaborator)
                .WithMany(b => b.ComponentCollaboratorComments);

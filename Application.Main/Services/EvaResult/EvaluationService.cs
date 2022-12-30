@@ -209,7 +209,7 @@ namespace Application.Main.Services.EvaResult
         private async Task<int> CountEvaluationByPeriodConfig()
         {
             var configuration = await _unitOfWorkApp.Repository.LabelDetailRepository
-                .Find(e => e.LabelId == GeneralConstants.CountEvaluationAnnualConfigId)
+                .Find(e => e.LabelId == GeneralConstants.CountEvaluationAnnualLabelId)
                 .FirstOrDefaultAsync();
 
             if (configuration is null)

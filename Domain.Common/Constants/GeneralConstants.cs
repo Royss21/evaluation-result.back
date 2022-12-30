@@ -2,7 +2,9 @@
 {
     public static class GeneralConstants
     {
-        public const int CountEvaluationAnnualConfigId = 1;
+        public const int CountEvaluationAnnualLabelId = 1;
+        public const int PointsCompetenceLabelId = 2;
+        public const int CountCompetenceLabelId = 3;
         public const int MonthsToSubtract = -3;
         public class Component
         {

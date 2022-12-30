@@ -9,6 +9,8 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public int EvaluationComponentStageId { get; set; }
         public int StageId { get; set; }
         public int ComponentId { get; set; }
+        public string Comment { get; set; } = string.Empty;
+        public Guid EvaluationCollaboratorId { get; set; }
 
         public string GerencyName { get; set; } = string.Empty;
         public string ChargeName { get; set; } = string.Empty;
@@ -17,7 +19,7 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public string LevelName { get; set; } = string.Empty;
         public string CollaboratorName { get; set; } = string.Empty;
         public string StatusName { get; set; } = string.Empty;
-        public string StatusId { get; set; } = string.Empty;
+        public int StatusId { get; set; }
 
         public List<ComponentCollaboratorDetailDto> ComponentCollaboratorDetails { get; set; }
     }
