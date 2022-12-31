@@ -9,6 +9,8 @@ namespace Infrastructure.UnitOfWork
     using Infrastructure.Main.Repository.Config;
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
     using Infrastructure.Main.Repository.EvaResult;
+    using Infrastructure.Main.Repository.Security.Interfaces;
+    using Infrastructure.Main.Repository.Security;
 
     public class UnitOfWorkRepository : IUnitOfWorkRepository
     {
@@ -43,6 +45,15 @@ namespace Infrastructure.UnitOfWork
         public IParameterRangeRepository ParameterRangeRepository { get; }
         public IParameterValueRepository ParameterValueRepository { get; }
 
+        public IEndpointRepository EndpointRepository { get; }
+        public IMenuRepository MenuRepository { get; }
+        public IRoleMenuRepository RoleMenuRepository { get; }
+        public IRoleRepository RoleRepository { get; }
+        public IUserEndpointLockedRepository UserEndpointLockedRepository { get; }
+        public IUserRepository UserRepository { get; }
+        public IUserRoleRepository UserRoleRepository { get; }
+        public IUserTokenRepository UserTokenRepository { get; }
+
         public UnitOfWorkRepository(DbContextMain context)
         {
             ChargeRepository = new ChargeRepository(context);
@@ -74,6 +85,15 @@ namespace Infrastructure.UnitOfWork
             FormulaRepository = new FormulaRepository(context);
             ParameterValueRepository = new ParameterValueRepository(context);
             ParameterRangeRepository = new ParameterRangeRepository(context);
+
+            EndpointRepository = new EndpointRepository(context);
+            MenuRepository = new MenuRepository(context);
+            RoleMenuRepository = new RoleMenuRepository(context);
+            RoleRepository = new RoleRepository(context);
+            UserEndpointLockedRepository = new UserEndpointLockedRepository(context);
+            UserRepository = new UserRepository(context);
+            UserRoleRepository = new UserRoleRepository(context);
+            UserTokenRepository = new UserTokenRepository(context);
         }
     }
 }

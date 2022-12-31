@@ -19,7 +19,7 @@ namespace Application.Security.Password
             var parts = hash.Split('.');
 
             if (parts.Length != 3)
-                throw new Exception("La contrasenia no tiene el formato correcto");
+                throw new Exception("La contraseña no tiene el formato correcto");
 
             var opcion = _options.Options[index];
             var iterations = Convert.ToInt32(parts[0]);

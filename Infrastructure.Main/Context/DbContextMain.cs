@@ -24,13 +24,14 @@
         }
 
         public DbSet<AuditEntity> AuditEntity { get; set; }
-        public DbSet<Menu> Menu { get; set; } public DbSet<Role> Role { get; set; }
-        public DbSet<RoleMenu> RoleMenu { get; set; }
-        public DbSet<UserEndpointLocked> UserEndpointLocked { get; set; }
         public DbSet<EndpointService> EndpointService { get; set; }
+        public DbSet<Menu> Menu { get; set; }
+        public DbSet<Role> Role { get; set; }
+        public DbSet<RoleMenu> RoleMenu { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<UserToken> UserToken { get; set; }
+        public DbSet<UserEndpointLocked> UserEndpointLocked { get; set; }
         public DbSet<UserRole> UserRole { get; set; }
+        public DbSet<UserToken> UserToken { get; set; }
 
         #region Employee
         public DbSet<Area> Area { get; set; }
@@ -79,13 +80,14 @@
 
             builder
                 .ApplyConfiguration(new AuditConfig())
+                .ApplyConfiguration(new EndpointServiceConfig())
+                .ApplyConfiguration(new MenuConfig())
                 .ApplyConfiguration(new RoleConfig())
                 .ApplyConfiguration(new RoleMenuConfig())
-                .ApplyConfiguration(new UserEnpointLockedConfig())
-                .ApplyConfiguration(new EndpointServiceConfig())
                 .ApplyConfiguration(new UserConfig())
-                .ApplyConfiguration(new UserTokenConfig())
+                .ApplyConfiguration(new UserEnpointLockedConfig())
                 .ApplyConfiguration(new UserRoleConfig())
+                .ApplyConfiguration(new UserTokenConfig())
 
             #region Collaborator
                 .ApplyConfiguration(new AreaConfig())

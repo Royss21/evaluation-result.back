@@ -3,7 +3,7 @@
 namespace Infrastructure.Main.Context.Configuration.Security
 {
     using Infrastructure.Main.Context.Base;
-    public class EndpointServiceConfig : BaseEntityTypeConfig<EndpointService, string>
+    public class EndpointServiceConfig : BaseEntityTypeConfig<EndpointService, Guid>
     {
         public override void ConfigureEntity(EntityTypeBuilder<EndpointService> builder)
         {
@@ -22,6 +22,8 @@ namespace Infrastructure.Main.Context.Configuration.Security
             builder.Property(p => p.PathEndpoint)
                 .HasMaxLength(100);
 
+            builder.HasMany(p => p.UserEndpointsLocked)
+                .WithOne(p => p.EndpointService);
         }
     }
 }

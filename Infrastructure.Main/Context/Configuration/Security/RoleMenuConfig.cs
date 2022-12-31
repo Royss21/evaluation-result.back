@@ -7,6 +7,12 @@
         public override void ConfigureEntity(EntityTypeBuilder<RoleMenu> builder)
         {
 
+
+            builder.HasOne(p => p.Role)
+                .WithMany(p => p.RolesMenu);
+
+            builder.HasOne(p => p.Menu)
+                .WithMany(p => p.RolesMenu);
         }
     }
 }

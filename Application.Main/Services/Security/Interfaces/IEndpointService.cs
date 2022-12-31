@@ -1,6 +1,6 @@
-﻿namespace Application.Main.Servicios.Seguridad.Interfaces
+﻿namespace Application.Main.Services.Security.Interfaces
 {
-    public interface IEndpointServicio
+    public interface IEndpointService
     {
         //Task<IEnumerable<EndpointDto>> ObtenerTodoAsync();
         //Task<PaginacionResultadoDto<EndpointDto>> ObtenerTodoPaginadoAsync(PrimeTable primeTable);

@@ -16,6 +16,9 @@
 
             builder.Property(p => p.Icon)
                 .HasMaxLength(50);
+
+            builder.HasMany(p => p.RolesMenu)
+                .WithOne(p => p.Menu);
         }
     }
 }

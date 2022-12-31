@@ -1,5 +1,5 @@
 ﻿
-namespace Domain.Main.Validadores.EndpointValidaciones
+namespace Domain.Main.Services.Security.Validators.EndpointValidators
 {
     public class EndpointCrearValidador //: ValidadorBase<Endpoint>
     {

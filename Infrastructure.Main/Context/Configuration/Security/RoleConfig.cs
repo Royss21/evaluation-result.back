@@ -12,6 +12,12 @@
 
             builder.Property(p => p.Description)
                 .HasMaxLength(200);
+
+            builder.HasMany(p => p.RolesMenu)
+                .WithOne(p => p.Role);
+
+            builder.HasMany(p => p.UserRoles)
+                .WithOne(p => p.Role);
         }
     }
 }

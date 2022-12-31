@@ -1,45 +1,49 @@
-﻿namespace Application.Main.Services.Seguridad
+﻿
+namespace Application.Main.Services.Security
 {
-    public class AutenticacionServicio //: IAutenticacionServicio
+    using Application.Main.Servicios.Generico.Interfaces;
+    using Application.Security.Jwt;
+    using Application.Security.Password;
+    using Infrastructure.UnitOfWork.Interfaces;
+    using Microsoft.IdentityModel.Tokens;
+
+    public class AuthenticationService //: IAuthenticationService
     {
-        //private readonly IContraseniaFabrica _contraseniaFabrica;
-        //private readonly IUnitOfWorkApp _unitOfWorkApp;
-        //private readonly IMapper _mapper;
-        //private readonly IJwtFabrica _jwtFabrica;
-        //private readonly IMemoryCacheService _memoriaCacheServicio;
-        //private readonly ICorreoServicio _correoServicio;
-        //private readonly TokenValidationParameters _tokenValidationParameters;
+        private readonly IPasswordFactory _passwordFactory;
+        private readonly IJwtFactory _jwtFactory;
+        private readonly IMemoryCacheService _memoryCacheService;
+        private readonly IUnitOfWorkApp _unitOfWorkApp;
+        private readonly IMapper _mapper;
+        private readonly TokenValidationParameters _tokenValidationParameters;
 
-        //public AutenticacionServicio(
-        //    IContraseniaFabrica contraseniaFabrica,
-        //    IJwtFabrica jwtFabrica,
-        //    IUnitOfWorkApp unitOfWorkApp,
-        //    IMapper mapper,
-        //    IMemoryCacheService memoriaCacheServicio,
-        //    ICorreoServicio correoServicio,
-        //    TokenValidationParameters tokenValidationParameters
-        //)
-        //{
-        //    _contraseniaFabrica = contraseniaFabrica;
-        //    _jwtFabrica = jwtFabrica;
-        //    _unitOfWorkApp = unitOfWorkApp;
-        //    _mapper = mapper;
-        //    _tokenValidationParameters = tokenValidationParameters;
-        //    _correoServicio = correoServicio;
-        //    _memoriaCacheServicio = memoriaCacheServicio;
-        //}
+        public AuthenticationService(
+            IPasswordFactory passwordFactory,
+            IJwtFactory jwtFactory,
+            IUnitOfWorkApp unitOfWorkApp,
+            IMapper mapper,
+            IMemoryCacheService memoryCacheService,
+            TokenValidationParameters tokenValidationParameters
+        )
+        {
+            _passwordFactory = passwordFactory;
+            _jwtFactory = jwtFactory;
+            _unitOfWorkApp = unitOfWorkApp;
+            _mapper = mapper;
+            _tokenValidationParameters = tokenValidationParameters;
+            _memoryCacheService = memoryCacheService;
+        }
 
-        //public async Task<AccesoDto> IniciarSesion(IniciarSesionReqDto iniciarSesionDto, Controller controller)
+        //public async Task<AccessDto> IniciarSesion(LoginSesionReqDto loginSesionReq, Controller controller)
         //{
-        //    var usuarioPersonaDto = await _unitOfWorkApp.Repositorio.UsuarioRepositorio
-        //        .Find(u => u.NombreUsuario.Trim().Equals(iniciarSesionDto.NombreUsuario.Trim()))
+        //    var usuarioPersonaDto = await _unitOfWorkApp.Repository.UserRepository
+        //        .Find(u => u.UserName.Trim().Equals(loginSesionReq.UserName.Trim()))
         //        .ProjectTo<UsuarioPersonaTokenDto>(_mapper.ConfigurationProvider)
         //        .FirstOrDefaultAsync();
 
         //    if (usuarioPersonaDto is null)
-        //        throw new AdvertenciaExcepcion(string.Format(Mensajes.General.RecursoNoEncontrado, typeof(UsuarioPersonaTokenDto).Name));
+        //        throw new WarningException(string.Format(Messages.General.ResourceNotFound, typeof(UsuarioPersonaTokenDto).Name));
 
-        //    if (!_contraseniaFabrica.Verificar(usuarioPersonaDto.Contrasenia,
+        //    if (!_passwordFactory.Verificar(usuarioPersonaDto.Contrasenia,
         //        iniciarSesionDto.Contrasenia,
         //        usuarioPersonaDto.TipoHash)
         //     )
@@ -54,15 +58,15 @@
         //        RolId = new Guid(iniciarSesionDto.RolId)
         //    }, false);
 
-        //    var endpointsBloqueados = await _unitOfWorkApp.Repositorio.UsuarioEndpointBloqueadoRepositorio
+        //    var endpointsBloqueados = await _unitOfWorkApp.Repository.UsuarioEndpointBloqueadoRepository
         //        .Find(ueb => ueb.UsuarioId.Equals(usuarioPersonaDto.Id))
         //        .Select(c => c.Endpoint.RutaEndpoint)
         //        .ToListAsync();
 
         //    if (endpointsBloqueados.Any())
-        //        _memoriaCacheServicio.GuardarDatoCache(endpointsBloqueados, $"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
+        //        _memoryCacheService.GuardarDatoCache(endpointsBloqueados, $"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
         //    else
-        //        _memoriaCacheServicio.RemoverDatoCache($"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
+        //        _memoryCacheService.RemoverDatoCache($"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
 
         //    //var email = new Email
         //    //{
@@ -73,27 +77,27 @@
         //    //};
 
         //    //BackgroundJob.Enqueue(() => _correoServicio.Enviar(email));
-        //    BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
+        //    //BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
 
         //    return _mapper.Map<AccesoDto>(usuarioTokenApp);
         //}
         //public async Task<IniciarSesionResDto> ValidarUsuario(string nombreUsuario)
         //{
-        //    var usuario = await _unitOfWorkApp.Repositorio.UsuarioRepositorio
+        //    var usuario = await _unitOfWorkApp.Repository.UsuarioRepository
         //        .Find(u => u.NombreUsuario.Trim().Equals(nombreUsuario.Trim()))
         //        .FirstOrDefaultAsync();
 
         //    if (usuario is null)
         //        throw new AdvertenciaExcepcion(string.Format(Mensajes.General.RecursoNoEncontrado, typeof(Usuario).Name));
 
-        //    var rolesUsuario = await _unitOfWorkApp.Repositorio.UsuarioRolRepositorio
+        //    var rolesUsuario = await _unitOfWorkApp.Repository.UsuarioRolRepository
         //        .Find(ur => ur.UsuarioId.Equals(usuario.Id))
         //        .ToListAsync();
 
         //    if (rolesUsuario is null || !rolesUsuario.Any())
         //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.RolNoAsignado);
 
-        //    var roles = await _unitOfWorkApp.Repositorio.RolRepositorio
+        //    var roles = await _unitOfWorkApp.Repository.RolRepository
         //        .Find(r => rolesUsuario.Select(eu => eu.RolId).Contains(r.Id))
         //        .ProjectTo<RolDto>(_mapper.ConfigurationProvider)
         //        .ToListAsync();
@@ -120,7 +124,7 @@
         //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.TokenNoCaducado);
 
         //    var soloToken = true;
-        //    var usuarioTokenExistente = await _unitOfWorkApp.Repositorio.UsuarioTokenRepositorio
+        //    var usuarioTokenExistente = await _unitOfWorkApp.Repository.UsuarioTokenRepository
         //            .Find(ut => ut.RefrescarToken.Equals(tokenReq.TokenRefrescar), @readonly: false)
         //            .FirstOrDefaultAsync();
 
@@ -163,7 +167,7 @@
 
         //public async Task CrearActualizarToken(UsuarioTokenApp usuarioTokenApp, Guid usuarioId)
         //{
-        //    var usuarioTokenExistente = await _unitOfWorkApp.Repositorio.UsuarioTokenRepositorio
+        //    var usuarioTokenExistente = await _unitOfWorkApp.Repository.UsuarioTokenRepository
         //        .Find(ut => ut.UsuarioId.Equals(usuarioId), @readonly: false)
         //        .FirstOrDefaultAsync();
 
@@ -173,7 +177,7 @@
 
         //    if (usuarioTokenExistente is null)
         //    {
-        //        await _unitOfWorkApp.Repositorio.UsuarioTokenRepositorio.AddAsync(new UsuarioToken
+        //        await _unitOfWorkApp.Repository.UsuarioTokenRepository.AddAsync(new UsuarioToken
         //        {
         //            Token = usuarioTokenApp.Token,
         //            FechaExpiracionToken = usuarioTokenApp.Expiracion,

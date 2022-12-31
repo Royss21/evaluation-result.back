@@ -2,9 +2,9 @@
 {
     public class UserClaim
     {
-        public string Id { get; set; }
-        public string FullName { get; set; }
-        public string UserName { get; set; }
-        public string IdRole { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string FullName { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string IdRole { get; set; } = string.Empty;
     }
 }

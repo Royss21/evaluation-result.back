@@ -1,6 +1,6 @@
-﻿namespace Application.Main.Services.Seguridad
+﻿namespace Application.Main.Services.Security
 {
-    public class UsuarioServicio //: BaseService, IUsuarioServicio
+    public class UserService //: BaseService, IUsuarioServicio
     {
         //private readonly IContraseniaFabrica _contraseniaFabrica;
         //public UsuarioServicio(IContraseniaFabrica contraseniaFabrica, IServiceProvider serviceProvider) : base(serviceProvider)

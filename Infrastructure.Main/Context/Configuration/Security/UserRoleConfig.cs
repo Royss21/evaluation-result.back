@@ -6,7 +6,11 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<UserRole> builder)
         {
+            builder.HasOne(p => p.User)
+                .WithMany(p => p.UserRoles);
 
+            builder.HasOne(p => p.Role)
+                .WithMany(p => p.UserRoles);
         }
     }
 }

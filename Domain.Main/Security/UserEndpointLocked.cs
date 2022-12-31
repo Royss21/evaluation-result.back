@@ -2,10 +2,10 @@
 {
     public class UserEndpointLocked : BaseModel<int>
     {
-        public string UserId { get; set; }
-        public string EndpointServicetId { get; set; }
+        public Guid UserId { get; set; }
+        public Guid EndpointServiceId { get; set; }
 
-        public User? User { get; set; }
-        public EndpointService? EndpointService { get; set; }
+        public virtual User User { get; set; }
+        public virtual EndpointService EndpointService { get; set; }
     }
 }

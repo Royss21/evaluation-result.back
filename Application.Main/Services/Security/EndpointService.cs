@@ -1,6 +1,6 @@
-﻿namespace Application.Main.Servicios.Entidades
+﻿namespace Application.Main.Services.Security
 {
-    public class EndpointServicio //: BaseService, IEndpointServicio
+    public class EndpointService //: BaseService, IEndpointServicio
     {
         //public EndpointServicio(IServiceProvider serviceProvider) : base(serviceProvider)
         //{ }

@@ -7,7 +7,11 @@ namespace Infrastructure.Main.Context.Configuration.Security
     {
         public override void ConfigureEntity(EntityTypeBuilder<UserEndpointLocked> builder)
         {
+            builder.HasOne(p => p.User)
+               .WithMany(p => p.UserEndpointsLocked);
 
+            builder.HasOne(p => p.EndpointService)
+               .WithMany(p => p.UserEndpointsLocked);
         }
     }
 }

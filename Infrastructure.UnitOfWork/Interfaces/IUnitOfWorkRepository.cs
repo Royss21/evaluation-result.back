@@ -6,6 +6,7 @@ namespace Infrastructure.UnitOfWork.Interfaces
     using Infrastructure.Main.Repository.Employee.Interfaces;
     using Infrastructure.Main.Repository.Config.Interfaces;
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
+    using Infrastructure.Main.Repository.Security.Interfaces;
 
     public interface IUnitOfWorkRepository
     {
@@ -40,5 +41,14 @@ namespace Infrastructure.UnitOfWork.Interfaces
         IFormulaRepository FormulaRepository { get; }
         IParameterRangeRepository ParameterRangeRepository { get; }
         IParameterValueRepository ParameterValueRepository { get; }
+
+        IEndpointRepository EndpointRepository { get; }
+        IMenuRepository MenuRepository { get; }
+        IRoleMenuRepository RoleMenuRepository { get; }
+        IRoleRepository RoleRepository { get; }
+        IUserEndpointLockedRepository UserEndpointLockedRepository { get; }
+        IUserRepository UserRepository { get; }
+        IUserRoleRepository UserRoleRepository { get; }
+        IUserTokenRepository UserTokenRepository { get; }
     }
 }

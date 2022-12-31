@@ -1,6 +1,6 @@
-﻿namespace Application.Main.Services.Seguridad.Interfaces
+﻿namespace Application.Main.Services.Security.Interfaces
 {
-    public interface IUsuarioServicio
+    public interface IUserService
     {
         //Task<IEnumerable<UsuarioDto>> ObtenerTodoAsync();
         //Task<bool> CrearAsync(UsuarioCrearDto request);

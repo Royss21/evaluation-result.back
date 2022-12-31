@@ -14,8 +14,6 @@ namespace Application.Security.JWT
         public DateTime NotBefore => DateTime.UtcNow.GetDatePeru();
         public DateTime IssuedAt => DateTime.UtcNow.GetDatePeru();
         public TimeSpan ValidFor { get; set; } = TimeSpan.FromHours(12);
-        public Func<Task<string>> JtiGenerator =>
-            () => Task.FromResult(Guid.NewGuid().ToString());
 
         public string SecurityKey { get; set; }
 
