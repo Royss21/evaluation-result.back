@@ -6,6 +6,11 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<User> builder)
         {
+            builder.ToTable(typeof(User).Name, schema: "Security");
+
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
             builder.Property(p => p.UserName)
                 .IsRequired()
               .HasMaxLength(100);

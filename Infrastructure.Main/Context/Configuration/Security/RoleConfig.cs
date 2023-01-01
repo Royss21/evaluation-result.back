@@ -6,6 +6,8 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Role> builder)
         {
+            builder.ToTable(typeof(Role).Name, schema: "Security");
+
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(50);

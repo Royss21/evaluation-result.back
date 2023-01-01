@@ -6,6 +6,8 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<AuditEntity> builder)
         {
+            builder.ToTable(typeof(AuditEntity).Name, schema: "Security");
+
             builder.Property(p => p.KeyValues)
                 .HasMaxLength(5000);
 

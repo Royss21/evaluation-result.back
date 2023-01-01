@@ -1,5 +1,4 @@
-﻿
-namespace Application.Dto.Security
+﻿namespace Application.Dto.Security.Authentication
 {
     using Application.Dto.Security.Role;
     public class LoginSesionResDto

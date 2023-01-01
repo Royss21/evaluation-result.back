@@ -32,7 +32,7 @@ namespace Application.Security.JWT
                 new Claim(Claims.Identificate, usuarioApp.Id.ToString().Encrypt()),
                 new Claim(Claims.FullName, usuarioApp.FullName.Encrypt()),
                 new Claim(Claims.UserName, usuarioApp.UserName.Encrypt()),
-                new Claim(Claims.Role, usuarioApp.IdRole.ToString().Encrypt()),
+                new Claim(Claims.Role, usuarioApp.RoleId.ToString().Encrypt()),
             });
         }
 

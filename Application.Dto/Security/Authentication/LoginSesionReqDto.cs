@@ -1,10 +1,9 @@
-﻿
-namespace Application.Dto.Security
+﻿namespace Application.Dto.Security.Authentication
 {
     public class LoginSesionReqDto
     {
         public string UserName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
-        public Guid RoleId { get; set; }
+        public int RoleId { get; set; }
     }
 }

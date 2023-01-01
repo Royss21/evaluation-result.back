@@ -7,6 +7,7 @@ namespace Infrastructure.Main.Context.Configuration.Security
     {
         public override void ConfigureEntity(EntityTypeBuilder<UserEndpointLocked> builder)
         {
+            builder.ToTable(typeof(UserEndpointLocked).Name, schema: "Security");
             builder.HasOne(p => p.User)
                .WithMany(p => p.UserEndpointsLocked);
 

@@ -1,13 +1,22 @@
 ﻿
 namespace Application.Main.Services.Security
 {
+    using Application.Dto.Security.Authentication;
+    using Application.Dto.Security.Role;
+    using Application.Dto.Security.User;
+    using Application.Main.Exceptions;
+    using Application.Main.Services.Security.Interfaces;
     using Application.Main.Servicios.Generico.Interfaces;
+    using Application.Security.Entities;
     using Application.Security.Jwt;
     using Application.Security.Password;
+    using Domain.Common.Constants;
     using Infrastructure.UnitOfWork.Interfaces;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.IdentityModel.Tokens;
+    using System.IdentityModel.Tokens.Jwt;
 
-    public class AuthenticationService //: IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IPasswordFactory _passwordFactory;
         private readonly IJwtFactory _jwtFactory;
@@ -33,135 +42,133 @@ namespace Application.Main.Services.Security
             _memoryCacheService = memoryCacheService;
         }
 
-        //public async Task<AccessDto> IniciarSesion(LoginSesionReqDto loginSesionReq, Controller controller)
-        //{
-        //    var usuarioPersonaDto = await _unitOfWorkApp.Repository.UserRepository
-        //        .Find(u => u.UserName.Trim().Equals(loginSesionReq.UserName.Trim()))
-        //        .ProjectTo<UsuarioPersonaTokenDto>(_mapper.ConfigurationProvider)
-        //        .FirstOrDefaultAsync();
+        public async Task<AccessDto> LoginSesionAsync(LoginSesionReqDto loginSesionReq, Controller controller)
+        {
+            var userInfoToken = await _unitOfWorkApp.Repository.UserRepository
+                .Find(u => u.UserName.Trim().Equals(loginSesionReq.UserName.Trim()))
+                .ProjectTo<UserInfoTokenDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
 
-        //    if (usuarioPersonaDto is null)
-        //        throw new WarningException(string.Format(Messages.General.ResourceNotFound, typeof(UsuarioPersonaTokenDto).Name));
+            if (userInfoToken is null)
+                throw new WarningException(string.Format(Messages.General.ResourceNotFound, "User Information Token"));
 
-        //    if (!_passwordFactory.Verificar(usuarioPersonaDto.Contrasenia,
-        //        iniciarSesionDto.Contrasenia,
-        //        usuarioPersonaDto.TipoHash)
-        //     )
-        //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.ContraseniaIncorrecta);
+            if (!_passwordFactory.VerifyPassword(userInfoToken.Password,
+                loginSesionReq.Password,
+                userInfoToken.HashType)
+             )
+                throw new WarningException(Messages.Authentication.InvalidPassword);
 
-        //    var usuarioTokenApp = _jwtFabrica.ObtenerJwt(new UsuarioClaim
-        //    {
-        //        CompaniaId = usuarioPersonaDto.CompaniaId,
-        //        Id = usuarioPersonaDto.Id,
-        //        NombreUsuario = usuarioPersonaDto.NombreUsuario,
-        //        NombreCompleto = $"{usuarioPersonaDto.Nombres} {usuarioPersonaDto.Apellidos}",
-        //        RolId = new Guid(iniciarSesionDto.RolId)
-        //    }, false);
+            var usuarioTokenApp = _jwtFactory.GetJwt(new UserClaim
+            {
+                Id = userInfoToken.Id,
+                UserName = userInfoToken.UserName,
+                FullName = userInfoToken.FullName,
+                RoleId = loginSesionReq.RoleId
+            }, false);
 
-        //    var endpointsBloqueados = await _unitOfWorkApp.Repository.UsuarioEndpointBloqueadoRepository
-        //        .Find(ueb => ueb.UsuarioId.Equals(usuarioPersonaDto.Id))
-        //        .Select(c => c.Endpoint.RutaEndpoint)
-        //        .ToListAsync();
+            var endpointsBloqueados = await _unitOfWorkApp.Repository.UserEndpointLockedRepository
+                .Find(uel => uel.UserId.Equals(userInfoToken.Id))
+                .Select(c => c.EndpointService.PathEndpoint)
+                .ToListAsync();
 
-        //    if (endpointsBloqueados.Any())
-        //        _memoryCacheService.GuardarDatoCache(endpointsBloqueados, $"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
-        //    else
-        //        _memoryCacheService.RemoverDatoCache($"{Mensajes.MemoriaCache.UsuarioEndpointsBloqueados}{usuarioPersonaDto.Id}");
+            if (endpointsBloqueados.Any())
+                _memoryCacheService.SaveDataCache(endpointsBloqueados, $"{Messages.MemoryCache.UserEndpointLocked}{userInfoToken.Id}");
+            else
+                _memoryCacheService.RemoveDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userInfoToken.Id}");
 
-        //    //var email = new Email
-        //    //{
-        //    //    Asunto = "INICIO SESION",
-        //    //    Correos = new List<string> { "martel.royss21@gmail.com" },
-        //    //    CorreosCopiar = new List<string> { "martel.royss21@gmail.com" },
-        //    //    Cuerpo = _correoServicio.CargarCuerpoCorreo<CorreoPruebaDto>(CorreoTemplateEnum.CorreoPrueba, controller, new CorreoPruebaDto { NombreCompletos = "royss", NombreUsuario = "rmartel", Endpoints = endpointsBloqueados })
-        //    //};
+            //var email = new Email
+            //{
+            //    Asunto = "INICIO SESION",
+            //    Correos = new List<string> { "martel.royss21@gmail.com" },
+            //    CorreosCopiar = new List<string> { "martel.royss21@gmail.com" },
+            //    Cuerpo = _correoServicio.CargarCuerpoCorreo<CorreoPruebaDto>(CorreoTemplateEnum.CorreoPrueba, controller, new CorreoPruebaDto { NombreCompletos = "royss", NombreUsuario = "rmartel", Endpoints = endpointsBloqueados })
+            //};
 
-        //    //BackgroundJob.Enqueue(() => _correoServicio.Enviar(email));
-        //    //BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
+            //BackgroundJob.Enqueue(() => _correoServicio.Enviar(email));
+            //BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
 
-        //    return _mapper.Map<AccesoDto>(usuarioTokenApp);
-        //}
-        //public async Task<IniciarSesionResDto> ValidarUsuario(string nombreUsuario)
-        //{
-        //    var usuario = await _unitOfWorkApp.Repository.UsuarioRepository
-        //        .Find(u => u.NombreUsuario.Trim().Equals(nombreUsuario.Trim()))
-        //        .FirstOrDefaultAsync();
+            return _mapper.Map<AccessDto>(usuarioTokenApp);
+        }
+        public async Task<LoginSesionResDto> ValidateUserAsync(string userName)
+        {
+            var user = await _unitOfWorkApp.Repository.UserRepository
+                .Find(u => u.UserName.Trim().Equals(userName.Trim()))
+                .FirstOrDefaultAsync();
 
-        //    if (usuario is null)
-        //        throw new AdvertenciaExcepcion(string.Format(Mensajes.General.RecursoNoEncontrado, typeof(Usuario).Name));
+            if (user is null)
+                throw new WarningException(string.Format(Messages.General.ResourceNotFound, "User"));
 
-        //    var rolesUsuario = await _unitOfWorkApp.Repository.UsuarioRolRepository
-        //        .Find(ur => ur.UsuarioId.Equals(usuario.Id))
-        //        .ToListAsync();
+            var userRoles = await _unitOfWorkApp.Repository.UserRoleRepository
+                .Find(ur => ur.UserId.Equals(user.Id))
+                .ToListAsync();
 
-        //    if (rolesUsuario is null || !rolesUsuario.Any())
-        //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.RolNoAsignado);
+            if (userRoles is null || !userRoles.Any())
+                throw new WarningException(Messages.Authentication.RoleNotAssigned);
 
-        //    var roles = await _unitOfWorkApp.Repository.RolRepository
-        //        .Find(r => rolesUsuario.Select(eu => eu.RolId).Contains(r.Id))
-        //        .ProjectTo<RolDto>(_mapper.ConfigurationProvider)
-        //        .ToListAsync();
+            var roles = await _unitOfWorkApp.Repository.RoleRepository
+                .Find(r => userRoles.Select(eu => eu.RoleId).Contains(r.Id))
+                .ProjectTo<RoleDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
 
-        //    return new IniciarSesionResDto { Roles = roles };
-        //}
-        //public async Task<AccesoDto> RefrescarToken(TokenReqDto tokenReq)
-        //{
-        //    var jwtTokenHandler = new JwtSecurityTokenHandler();
-        //    var principal = jwtTokenHandler.ValidateToken(tokenReq.Token, _tokenValidationParameters, out var validarToken);
+            return new LoginSesionResDto { Roles = roles };
+        }
+        public async Task<AccessDto> RefreshTokenAsync(TokenDto tokenReq)
+        {
+            var jwtTokenHandler = new JwtSecurityTokenHandler();
+            var principal = jwtTokenHandler.ValidateToken(tokenReq.Token, _tokenValidationParameters, out var validarToken);
 
-        //    if (validarToken is JwtSecurityToken jwtSecurityToken)
-        //    {
-        //        var resultado = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
+            if (validarToken is JwtSecurityToken jwtSecurityToken)
+            {
+                var result = jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase);
 
-        //        if (!resultado)
-        //            throw new AdvertenciaExcepcion(Mensajes.Autenticacion.TokenInvalido);
-        //    }
+                if (!result)
+                    throw new WarningException(Messages.Authentication.InvalidToken);
+            }
 
-        //    var fechaExpiracionUtc = long.Parse(principal.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-        //    var fechaExp = CoreHelper.UnixTimeStampToDateTime(fechaExpiracionUtc);
+            var dateExpiredUtc = long.Parse(principal.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
+            var dateExpired = CoreHelper.UnixTimeStampToDateTime(dateExpiredUtc);
 
-        //    if (fechaExp > DateTime.UtcNow.ObtenerFechaPeru())
-        //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.TokenNoCaducado);
+            if (dateExpired > DateTime.UtcNow.GetDatePeru())
+                throw new WarningException(Messages.Authentication.NotExpiredToken);
 
-        //    var soloToken = true;
-        //    var usuarioTokenExistente = await _unitOfWorkApp.Repository.UsuarioTokenRepository
-        //            .Find(ut => ut.RefrescarToken.Equals(tokenReq.TokenRefrescar), @readonly: false)
-        //            .FirstOrDefaultAsync();
+            var onlyToken = true;
+            var userTokenExists = await _unitOfWorkApp.Repository.UserTokenRepository
+                    .Find(ut => ut.RefreshToken.Equals(tokenReq.RefreshToken), @readonly: false)
+                    .FirstOrDefaultAsync();
 
-        //    if (usuarioTokenExistente is null)
-        //        throw new AdvertenciaExcepcion(string.Format(Mensajes.General.RecursoNoEncontrado, typeof(UsuarioToken).Name));
+            if (userTokenExists is null)
+                throw new WarningException(string.Format(Messages.General.ResourceNotFound, "User Token"));
 
-        //    if (usuarioTokenExistente.EsActivo)
-        //    {
-        //        if (DateTime.UtcNow.ObtenerFechaPeru() > usuarioTokenExistente.FechaExpiracionRefrescarToken)
-        //            soloToken = false;
+            if (userTokenExists.IsActive)
+            {
+                if (DateTime.UtcNow.GetDatePeru() > userTokenExists.RefreshTokenExpirationDate)
+                    onlyToken = false;
 
-        //        var token = new JwtSecurityTokenHandler().ReadJwtToken(tokenReq.Token);
-        //        var usuarioTokenApp = _jwtFabrica.ObtenerJwt(new UsuarioClaim
-        //        {
-        //            CompaniaId = new Guid(token.Claims.First(c => c.Type.Equals(Claims.Compania)).Value.Desencriptar()),
-        //            Id = new Guid(token.Claims.First(c => c.Type.Equals(Claims.Identificador)).Value.Desencriptar()),
-        //            NombreUsuario = token.Claims.First(c => c.Type.Equals(Claims.NombreUsuario)).Value.Desencriptar(),
-        //            NombreCompleto = token.Claims.First(c => c.Type.Equals(Claims.NombresCompletos)).Value.Desencriptar(),
-        //            RolId = new Guid(token.Claims.First(c => c.Type.Equals(Claims.Rol)).Value.Desencriptar())
-        //        }, soloToken);
+                var token = new JwtSecurityTokenHandler().ReadJwtToken(tokenReq.Token);
+                var userTokenApp = _jwtFactory.GetJwt(new UserClaim
+                {
+                    Id = new Guid(token.Claims.First(c => c.Type.Equals(Claims.Identificate)).Value.Decrypt()),
+                    UserName = token.Claims.First(c => c.Type.Equals(Claims.UserName)).Value.Decrypt(),
+                    FullName = token.Claims.First(c => c.Type.Equals(Claims.FullName)).Value.Decrypt(),
+                    RoleId = Convert.ToInt32(token.Claims.First(c => c.Type.Equals(Claims.Role)).Value.Decrypt())
+                }, onlyToken);
 
-        //        usuarioTokenExistente.Token = usuarioTokenApp.Token;
-        //        usuarioTokenExistente.FechaExpiracionToken = usuarioTokenApp.Expiracion;
+                userTokenExists.Token = userTokenApp.Token;
+                userTokenExists.TokenExpirationDate = userTokenApp.ExpirationDate;
 
-        //        if (!soloToken)
-        //        {
-        //            usuarioTokenExistente.RefrescarToken = usuarioTokenApp.TokenRefrescar;
-        //            usuarioTokenExistente.FechaExpiracionRefrescarToken = (DateTime)usuarioTokenApp.ExpiracionTokenRefrescar;
-        //        }
+                if (!onlyToken)
+                {
+                    userTokenExists.RefreshToken = userTokenApp.RefreshToken;
+                    userTokenExists.RefreshTokenExpirationDate = (DateTime)userTokenApp.RefreshTokenExpirationDate;
+                }
 
-        //        await _unitOfWorkApp.SaveChangesAsync();
+                await _unitOfWorkApp.SaveChangesAsync();
 
-        //        return _mapper.Map<AccesoDto>(usuarioTokenApp);
-        //    }
-        //    else
-        //        throw new AdvertenciaExcepcion(Mensajes.Autenticacion.IniciarSesion);
-        //}
+                return _mapper.Map<AccessDto>(userTokenApp);
+            }
+            else
+                throw new WarningException(Messages.Authentication.ReLogging);
+        }
 
 
 

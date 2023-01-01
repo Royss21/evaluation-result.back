@@ -6,6 +6,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<UserRole> builder)
         {
+            builder.ToTable(typeof(UserRole).Name, schema: "Security");
             builder.HasOne(p => p.User)
                 .WithMany(p => p.UserRoles);
 

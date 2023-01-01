@@ -6,7 +6,7 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<RoleMenu> builder)
         {
-
+            builder.ToTable(typeof(RoleMenu).Name, schema: "Security");
 
             builder.HasOne(p => p.Role)
                 .WithMany(p => p.RolesMenu);

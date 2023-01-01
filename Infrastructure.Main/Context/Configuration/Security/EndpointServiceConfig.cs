@@ -7,6 +7,11 @@ namespace Infrastructure.Main.Context.Configuration.Security
     {
         public override void ConfigureEntity(EntityTypeBuilder<EndpointService> builder)
         {
+            builder.ToTable(typeof(EndpointService).Name, schema: "Security");
+
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd();
+
             builder.Property(p => p.Entity)
                 .HasMaxLength(100);
 

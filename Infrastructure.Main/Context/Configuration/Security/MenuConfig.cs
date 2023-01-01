@@ -6,6 +6,8 @@
     {
         public override void ConfigureEntity(EntityTypeBuilder<Menu> builder)
         {
+            builder.ToTable(typeof(Menu).Name, schema: "Security");
+
             builder.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(100);

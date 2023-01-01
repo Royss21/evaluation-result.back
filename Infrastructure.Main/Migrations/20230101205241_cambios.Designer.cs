@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20221217054053_firts")]
-    partial class firts
+    [Migration("20230101205241_cambios")]
+    partial class cambios
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -903,6 +903,16 @@ namespace Infrastructure.Main.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("ComplianceCompetence")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("ComplianceCompetenceCalibrated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.Property<string>("ComponentName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -957,6 +967,11 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("money")
                         .HasDefaultValue(0m);
 
+                    b.Property<decimal>("SubTotalCalibrated")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("money")
+                        .HasDefaultValue(0m);
+
                     b.Property<decimal>("Total")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("money")
@@ -993,8 +1008,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -1634,13 +1649,14 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AuditEntity");
+                    b.ToTable("AuditEntity", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.EndpointService", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Action")
                         .IsRequired()
@@ -1689,7 +1705,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EndpointService");
+                    b.ToTable("EndpointService", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.Menu", b =>
@@ -1705,46 +1721,50 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("CreateUser")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime?>("EditDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EditUser")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Icon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.Property<int?>("MenuDadId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MenuId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Sort")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("MenuDadId");
 
-                    b.ToTable("Menu");
+                    b.ToTable("Menu", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.Role", b =>
@@ -1787,7 +1807,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Role", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.RoleMenu", b =>
@@ -1830,13 +1850,14 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("RoleMenu");
+                    b.ToTable("RoleMenu", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.User", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -1853,6 +1874,13 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HashType")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -1864,25 +1892,31 @@ namespace Infrastructure.Main.Migrations
                     b.Property<bool>("IsLocked")
                         .HasColumnType("bit");
 
-                    b.Property<string>("NameUser")
+                    b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MiddleName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Names")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("TypeHash")
-                        .HasColumnType("int");
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.UserEndpointLocked", b =>
@@ -1908,21 +1942,16 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("EndpointServiceId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("EndpointServicetId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("EndpointServiceId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1930,7 +1959,7 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserEndpointLocked");
+                    b.ToTable("UserEndpointLocked", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.UserRole", b =>
@@ -1964,9 +1993,8 @@ namespace Infrastructure.Main.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -1974,13 +2002,14 @@ namespace Infrastructure.Main.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserRole");
+                    b.ToTable("UserRole", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Security.UserToken", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime2");
@@ -2007,8 +2036,8 @@ namespace Infrastructure.Main.Migrations
 
                     b.Property<string>("RefreshToken")
                         .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<DateTime>("RefreshTokenExpirationDate")
                         .HasColumnType("datetime2");
@@ -2021,13 +2050,15 @@ namespace Infrastructure.Main.Migrations
                     b.Property<DateTime>("TokenExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserToken");
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserToken", "Security");
                 });
 
             modelBuilder.Entity("Domain.Main.Config.Conduct", b =>
@@ -2425,13 +2456,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Security.RoleMenu", b =>
                 {
                     b.HasOne("Domain.Main.Security.Menu", "Menu")
-                        .WithMany()
+                        .WithMany("RolesMenu")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Security.Role", "Role")
-                        .WithMany()
+                        .WithMany("RolesMenu")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2444,11 +2475,13 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Security.UserEndpointLocked", b =>
                 {
                     b.HasOne("Domain.Main.Security.EndpointService", "EndpointService")
-                        .WithMany()
-                        .HasForeignKey("EndpointServiceId");
+                        .WithMany("UserEndpointsLocked")
+                        .HasForeignKey("EndpointServiceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Domain.Main.Security.User", "User")
-                        .WithMany()
+                        .WithMany("UserEndpointsLocked")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2461,18 +2494,29 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.Security.UserRole", b =>
                 {
                     b.HasOne("Domain.Main.Security.Role", "Role")
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Security.User", "User")
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Role");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Main.Security.UserToken", b =>
+                {
+                    b.HasOne("Domain.Main.Security.User", "User")
+                        .WithOne("UserToken")
+                        .HasForeignKey("Domain.Main.Security.UserToken", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -2621,6 +2665,33 @@ namespace Infrastructure.Main.Migrations
             modelBuilder.Entity("Domain.Main.EvaResult.Period", b =>
                 {
                     b.Navigation("Evaluations");
+                });
+
+            modelBuilder.Entity("Domain.Main.Security.EndpointService", b =>
+                {
+                    b.Navigation("UserEndpointsLocked");
+                });
+
+            modelBuilder.Entity("Domain.Main.Security.Menu", b =>
+                {
+                    b.Navigation("RolesMenu");
+                });
+
+            modelBuilder.Entity("Domain.Main.Security.Role", b =>
+                {
+                    b.Navigation("RolesMenu");
+
+                    b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("Domain.Main.Security.User", b =>
+                {
+                    b.Navigation("UserEndpointsLocked");
+
+                    b.Navigation("UserRoles");
+
+                    b.Navigation("UserToken")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

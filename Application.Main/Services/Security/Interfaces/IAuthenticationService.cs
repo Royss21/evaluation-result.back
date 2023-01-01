@@ -1,12 +1,12 @@
 ﻿
 namespace Application.Main.Services.Security.Interfaces
 {
-    using Application.Dto.Security;
+    using Application.Dto.Security.Authentication;
     using Microsoft.AspNetCore.Mvc;
     public interface IAuthenticationService
     {
-        Task<LoginSesionResDto> ValidateUser(string usuario);
-        Task<AccessDto> LoginSesion(LoginSesionReqDto loginSesionReq, Controller controller);
-        Task<AccessDto> RefreshToken(TokenDto tokenReq);
+        Task<LoginSesionResDto> ValidateUserAsync(string usuario);
+        Task<AccessDto> LoginSesionAsync(LoginSesionReqDto loginSesionReq, Controller controller);
+        Task<AccessDto> RefreshTokenAsync(TokenDto tokenReq);
     }
 }

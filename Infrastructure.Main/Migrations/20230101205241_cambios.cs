@@ -5,12 +5,15 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class firts : Migration
+    public partial class cambios : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "Employee");
+
+            migrationBuilder.EnsureSchema(
+                name: "Security");
 
             migrationBuilder.EnsureSchema(
                 name: "Config");
@@ -20,6 +23,7 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AuditEntity",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -60,9 +64,10 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "EndpointService",
+                schema: "Security",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Entity = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Method = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Controller = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -161,21 +166,21 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Menu",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MenuId = table.Column<int>(type: "int", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Icon = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sort = table.Column<int>(type: "int", nullable: false),
                     MenuDadId = table.Column<int>(type: "int", nullable: true),
-                    CreateUser = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Icon = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Sort = table.Column<int>(type: "int", nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditUser = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -184,6 +189,7 @@ namespace Infrastructure.Main.Migrations
                     table.ForeignKey(
                         name: "FK_Menu_Menu_MenuDadId",
                         column: x => x.MenuDadId,
+                        principalSchema: "Security",
                         principalTable: "Menu",
                         principalColumn: "Id");
                 });
@@ -231,6 +237,7 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Role",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -288,13 +295,17 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "User",
+                schema: "Security",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    NameUser = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Names = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    TypeHash = table.Column<int>(type: "int", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    HashType = table.Column<int>(type: "int", nullable: false),
                     IsLocked = table.Column<bool>(type: "bit", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -306,28 +317,6 @@ namespace Infrastructure.Main.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserToken",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Token = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    RefreshToken = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
-                    TokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    RefreshTokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserToken", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -447,6 +436,7 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "RoleMenu",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -465,12 +455,14 @@ namespace Infrastructure.Main.Migrations
                     table.ForeignKey(
                         name: "FK_RoleMenu_Menu_MenuId",
                         column: x => x.MenuId,
+                        principalSchema: "Security",
                         principalTable: "Menu",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_RoleMenu_Role_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "Security",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -515,13 +507,13 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserEndpointLocked",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    EndpointServicetId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EndpointServiceId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EndpointServiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -534,11 +526,14 @@ namespace Infrastructure.Main.Migrations
                     table.ForeignKey(
                         name: "FK_UserEndpointLocked_EndpointService_EndpointServiceId",
                         column: x => x.EndpointServiceId,
+                        principalSchema: "Security",
                         principalTable: "EndpointService",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserEndpointLocked_User_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Security",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -546,11 +541,12 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateTable(
                 name: "UserRole",
+                schema: "Security",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     RoleId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -564,12 +560,44 @@ namespace Infrastructure.Main.Migrations
                     table.ForeignKey(
                         name: "FK_UserRole_Role_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "Security",
                         principalTable: "Role",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_UserRole_User_UserId",
                         column: x => x.UserId,
+                        principalSchema: "Security",
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserToken",
+                schema: "Security",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Token = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    RefreshToken = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    TokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    RefreshTokenExpirationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserToken", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserToken_User_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "Security",
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -923,7 +951,10 @@ namespace Infrastructure.Main.Migrations
                     HierarchyName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     WeightHierarchy = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     SubTotal = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    SubTotalCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     ExcessSubtotal = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    ComplianceCompetence = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
+                    ComplianceCompetenceCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Total = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     TotalCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     Excess = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
@@ -969,7 +1000,7 @@ namespace Infrastructure.Main.Migrations
                     EvaluationCollaboratorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     EvaluationComponentStageId = table.Column<int>(type: "int", nullable: false),
                     StatusId = table.Column<int>(type: "int", nullable: false),
-                    Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -1384,6 +1415,7 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Menu_MenuDadId",
+                schema: "Security",
                 table: "Menu",
                 column: "MenuDadId");
 
@@ -1395,11 +1427,13 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleMenu_MenuId",
+                schema: "Security",
                 table: "RoleMenu",
                 column: "MenuId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoleMenu_RoleId",
+                schema: "Security",
                 table: "RoleMenu",
                 column: "RoleId");
 
@@ -1435,29 +1469,41 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEndpointLocked_EndpointServiceId",
+                schema: "Security",
                 table: "UserEndpointLocked",
                 column: "EndpointServiceId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserEndpointLocked_UserId",
+                schema: "Security",
                 table: "UserEndpointLocked",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRole_RoleId",
+                schema: "Security",
                 table: "UserRole",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRole_UserId",
+                schema: "Security",
                 table: "UserRole",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserToken_UserId",
+                schema: "Security",
+                table: "UserToken",
+                column: "UserId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AuditEntity");
+                name: "AuditEntity",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "ComponentCollaboratorComment",
@@ -1488,20 +1534,24 @@ namespace Infrastructure.Main.Migrations
                 schema: "Config");
 
             migrationBuilder.DropTable(
-                name: "RoleMenu");
+                name: "RoleMenu",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "SubcomponentValue",
                 schema: "Config");
 
             migrationBuilder.DropTable(
-                name: "UserEndpointLocked");
+                name: "UserEndpointLocked",
+                schema: "Security");
 
             migrationBuilder.DropTable(
-                name: "UserRole");
+                name: "UserRole",
+                schema: "Security");
 
             migrationBuilder.DropTable(
-                name: "UserToken");
+                name: "UserToken",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "EvaluationComponentStage",
@@ -1524,20 +1574,24 @@ namespace Infrastructure.Main.Migrations
                 schema: "Config");
 
             migrationBuilder.DropTable(
-                name: "Menu");
+                name: "Menu",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "Subcomponent",
                 schema: "Config");
 
             migrationBuilder.DropTable(
-                name: "EndpointService");
+                name: "EndpointService",
+                schema: "Security");
 
             migrationBuilder.DropTable(
-                name: "Role");
+                name: "Role",
+                schema: "Security");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "User",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "ComponentCollaborator",

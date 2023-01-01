@@ -1,50 +1,42 @@
-﻿namespace Application.Main.Services.Security
+﻿
+namespace Application.Main.Services.Security
 {
-    public class UserService //: BaseService, IUsuarioServicio
+    using Application.Dto.Security.User;
+    using Application.Main.Service.Base;
+    using Application.Main.Services.Security.Interfaces;
+    using Application.Security.Password;
+    using Domain.Main.Security;
+
+    public class UserService : BaseService, IUserService
     {
-        //private readonly IContraseniaFabrica _contraseniaFabrica;
-        //public UsuarioServicio(IContraseniaFabrica contraseniaFabrica, IServiceProvider serviceProvider) : base(serviceProvider)
-        //{
-        //    _contraseniaFabrica = contraseniaFabrica;
-        //}
+        private readonly IPasswordFactory _passwordFactory;
+        public UserService(IPasswordFactory passwordFactory, IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+            _passwordFactory = passwordFactory;
+        }
 
-        //public async Task<bool> CrearAsync(UsuarioCrearDto request)
-        //{
-        //    (int tipoHash, string contraseniaHash) = _contraseniaFabrica.Hash(request.Contrasenia);
+        public async Task<UserDto> CreateAsync(UserCreateDto request)
+        {
+            (int hashType, string passwordHash) = _passwordFactory.Hash(request.Password);
 
-        //    var usuario = _mapper.Map<Usuario>(request);
-        //    usuario.TipoHash = tipoHash;
-        //    usuario.Contrasenia = contraseniaHash;
+            var user = _mapper.Map<User>(request);
+            user.HashType = hashType;
+            user.Password = passwordHash;
 
-        //    await _unitOfWorkApp.Repositorio.UsuarioRepositorio.AddAsync(usuario);
-        //    await _unitOfWorkApp.SaveChangesAsync();
+            user.UserRoles = request.RolesId.Select(roleId => new UserRole { RoleId = roleId }).ToList();
 
-        //    return true;
-        //}
+            await _unitOfWorkApp.Repository.UserRepository.AddAsync(user);
+            await _unitOfWorkApp.SaveChangesAsync();
 
-        //public async Task<bool> CrearConCompaniaAsync(UsuarioCompaniaCrearDto request)
-        //{
-        //    (int tipoHash, string contraseniaHash) = _contraseniaFabrica.Hash(request.Contrasenia);
+            return _mapper.Map<UserDto>(user);
+        }
 
-        //    var usuario = _mapper.Map<Usuario>(request);
-        //    usuario.TipoHash = tipoHash;
-        //    usuario.Contrasenia = contraseniaHash;
-
-        //    await _unitOfWorkApp.Repositorio.UsuarioRepositorio.AddAsync(usuario);
-        //    await _unitOfWorkApp.SaveChangesAsync();
-
-        //    return true;
-        //}
-
-
-        //public async Task<IEnumerable<UsuarioDto>> ObtenerTodoAsync()
-        //{
-        //    var usuarios = await _unitOfWorkApp.Repositorio.UsuarioRepositorio
-        //            .All()
-        //            .ProjectTo<UsuarioDto>(_mapper.ConfigurationProvider)
-        //            .ToListAsync();
-
-        //    return usuarios;
-        //}
+        public async Task<IEnumerable<UserDto>> GetAllAsync()
+        {
+            return await _unitOfWorkApp.Repository.UserRepository
+                    .All()
+                    .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+        }
     }
 }
