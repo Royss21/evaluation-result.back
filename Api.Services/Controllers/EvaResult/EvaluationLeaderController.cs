@@ -92,5 +92,18 @@
             var result = await _evaluationLeaderService.ExistsPreviousImportAsync(componentId);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
+
+        [HttpGet("{evaluationCollaboratorId}/evaluate-component")]
+        [SwaggerOperation(
+        Summary = "Obtener componenetes que evalua el lider",
+        Description = "Obtener componenetes que evalua el lider",
+        OperationId = "EvaluationLeader.GetComponentsToEvaluate",
+        Tags = new[] { "EvaluationLeaderService" })]
+        [ProducesResponseType(typeof(JsonResult<LeaderEvaluateComponentDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetComponentsToEvaluate(Guid evaluationCollaboratorId)
+        {
+            var result = await _evaluationLeaderService.GetComponentsToEvaluateAsync(evaluationCollaboratorId);
+            return new OkObjectResult(new JsonResult<LeaderEvaluateComponentDto>(result));
+        }
     }
 }

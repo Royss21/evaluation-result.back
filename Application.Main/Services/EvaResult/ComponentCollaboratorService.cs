@@ -2,11 +2,13 @@
 namespace Application.Main.Services.EvaResult
 {
     using Application.Dto.EvaResult.ComponentCollaborator;
+    using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
+    using DocumentFormat.OpenXml.Office2010.Excel;
     using Domain.Common.Constants;
     using Domain.Main.EvaResult;
     using System.Threading.Tasks;
@@ -264,12 +266,12 @@ namespace Application.Main.Services.EvaResult
                     .FirstOrDefaultAsync();
 
             if (componenteCollaborator is null)
-                throw new WarningException("No se encontró datos para evaluar al colaborador");
+                throw new WarningException("No se encontró datos para evaluar del colaborador");
 
             var evaluationComponentStage = await GetEvaluationComponentStageAsync(componenteCollaborator.ComponentId, componenteCollaborator.EvaluationComponentId);
 
             if (evaluationComponentStage is null)
-                throw new WarningException("No se encontró datos para evaluar al colaborador");
+                throw new WarningException("No se encontró datos para evaluar del colaborador");
 
             var comment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                      .Find(f =>
@@ -291,22 +293,31 @@ namespace Application.Main.Services.EvaResult
             return componenteCollaborator;
         }
 
-        public async Task<bool> UpdateStatusCommentAsync(UpdateStatusDto request)
+        public async Task<bool> UpdateStatusCommentAsync(UpdateStatusDto request, bool isUpdateComponent = true)
         {
-            var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
-                        .Find(f => f.Id.Equals(request.Id))
-                        .Select(s => new { 
-                            ComponentId = s.EvaluationComponent.ComponentId,
-                            EvaluationCollaboratorId =  s.EvaluationCollaboratorId,
-                            EvaluationComponentId = s.EvaluationComponentId
-                        })
-                        .FirstAsync();
+            var evaluationStatusComment = new ComponentCollaboratorComment();
 
-            var evaluationComponentStage = await GetEvaluationComponentStageAsync(componentCollaborator.ComponentId,componentCollaborator.EvaluationComponentId);
-            var evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+            if (isUpdateComponent)
+            {
+                var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
+                            .Find(f => f.Id.Equals(request.Id))
+                            .Select(s => new { 
+                                ComponentId = s.EvaluationComponent.ComponentId,
+                                EvaluationCollaboratorId =  s.EvaluationCollaboratorId,
+                                EvaluationComponentId = s.EvaluationComponentId
+                            })
+                            .FirstAsync();
+
+                var evaluationComponentStage = await GetEvaluationComponentStageAsync(componentCollaborator.ComponentId,componentCollaborator.EvaluationComponentId);
+                
+                request.EvaluationComponentStageId = evaluationComponentStage.Id;
+                request.EvaluationCollaboratorId = componentCollaborator.EvaluationCollaboratorId;
+            }
+
+            evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f =>
-                        f.EvaluationCollaboratorId.Equals(componentCollaborator.EvaluationCollaboratorId) &&
-                        f.EvaluationComponentStageId == evaluationComponentStage.Id, 
+                        f.EvaluationCollaboratorId.Equals(request.EvaluationCollaboratorId) &&
+                        f.EvaluationComponentStageId == request.EvaluationComponentStageId, 
                         false
                     ).FirstAsync();
 
@@ -366,6 +377,7 @@ namespace Application.Main.Services.EvaResult
                 cc.StatusId = evaluationStatusComment.StatusId;
 
             }
+
             return new PaginationResultDto<ComponentCollaboratorPagingDto>
             {
                 Count = paging.Count,
@@ -391,27 +403,36 @@ namespace Application.Main.Services.EvaResult
                 return false;
         }
 
+        public async Task<EvaluationComponentStage> GetEvaluationComponentStageAsync(int? componentId = null, int? evaluationComponentId = null, Guid? evaluationId = null)
+        {
+            var predicate = PredicateBuilder.New<EvaluationComponentStage>(true);
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+            
+            if (evaluationId is not null)
+            {
+                predicate.And(f => f.EvaluationId.Equals(evaluationId) && currentDate >= f.StartDate && currentDate <= f.EndDate);
+            }
+            else
+            {
+                predicate.And(f => f.EvaluationComponentId == evaluationComponentId);
+
+                if (componentId == GeneralConstants.Component.Competencies)
+                    predicate.And(f => currentDate >= f.StartDate && currentDate <= f.EndDate);
+            }
+
+            return await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                .Find(predicate)
+                .FirstAsync();
+        }
+
+
+
         #region Helper Functions
         private async Task<decimal> CalculateFormulaCompliance(string formulaQuerySql)
         {
             return (await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                     .RunSqlQuery<decimal>("[dbo].[uspCalculateFormulaCompliance]", new { formulaQuerySql }))
                     .FirstOrDefault();
-        }
-        private async Task<EvaluationComponentStage> GetEvaluationComponentStageAsync(int componentId, int evaluationComponentId)
-        {
-            var predicate = PredicateBuilder.New<EvaluationComponentStage>(true);
-            predicate.And(f => f.EvaluationComponentId == evaluationComponentId);
-
-            if (componentId == GeneralConstants.Component.Competencies)
-            {
-                var currentDate = DateTime.UtcNow.GetDatePeru();
-                predicate.And(f => currentDate >= f.StartDate && currentDate <= f.EndDate);
-            }
-
-            return await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                .Find(predicate)
-                .FirstAsync();
         }
         #endregion
     }

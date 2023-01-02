@@ -1,8 +1,9 @@
-﻿using Application.Dto.EvaResult.ComponentCollaboratorDetail;
-
+﻿
 namespace Application.Dto.EvaResult.ComponentCollaborator
 {
-    public class ComponentCollaboratorDto
+    using Application.Dto.EvaResult.ComponentCollaboratorDetail;
+    using Application.Dto.EvaResult.EvaluationCollaborator;
+    public class ComponentCollaboratorDto: CollaboratorInformationDto
     {
         public Guid Id { get; set; }
         public int EvaluationComponentId { get; set; }
@@ -12,12 +13,7 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public string Comment { get; set; } = string.Empty;
         public Guid EvaluationCollaboratorId { get; set; }
 
-        public string GerencyName { get; set; } = string.Empty;
-        public string ChargeName { get; set; } = string.Empty;
-        public string AreaName { get; set; } = string.Empty;
-        public string HierarchyName { get; set; } = string.Empty;
-        public string LevelName { get; set; } = string.Empty;
-        public string CollaboratorName { get; set; } = string.Empty;
+        
         public string StatusName { get; set; } = string.Empty;
         public int StatusId { get; set; }
 

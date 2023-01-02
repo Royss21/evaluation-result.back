@@ -15,6 +15,7 @@ namespace Application.Dto.EvaResult.Evaluation
 
     public class ComponentRangeDateDto
     {
+        public int EvaluationComponentId { get; set; }
         public int ComponentId { get; set; }
         public string ComponentName { get; set; } = string.Empty;
         public string RangeDate { get; set; } = string.Empty;

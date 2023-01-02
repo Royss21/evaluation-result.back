@@ -1,6 +1,7 @@
 ﻿namespace Api.Services.Controllers.EvaResult
 {
     using Api.Services.Controllers;
+    using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.EvaResult.EvaluationCollaborator;
     using Application.Dto.Pagination;
     using Application.Main.Services.EvaResult.Interfaces;
@@ -32,6 +33,19 @@
             return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>(result));
         }
 
+        [HttpGet("{id}/evaluation-result/{evaluationId}")]
+        [SwaggerOperation(
+        Summary = "Obtener datos de resultado de la evaluacion",
+        Description = "obtener datos de resultado de la evaluacion",
+        OperationId = "EvaluationCollaborator.GetEvaluationResultById",
+        Tags = new[] { "EvaluationCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationCollaboratorResultDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEvaluationResultById(Guid id, Guid evaluationId)
+        {
+            var result = await _evaluationCollaboratorService.GetEvaluationResultByIdAsync(evaluationId, id);
+            return new OkObjectResult(new JsonResult<EvaluationCollaboratorResultDto>(result));
+        }
+
         [HttpPost]
         [SwaggerOperation(
         Summary = "Agregar Colaborador a Evaluacion",
@@ -55,6 +69,19 @@
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await _evaluationCollaboratorService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualizar estado de etapa de la evaluacion",
+        Description = "Actualizar estado de etapa de la evaluacion",
+        OperationId = "EvaluationCollaborator.SaveCommentEvaluationStage",
+        Tags = new[] { "EvaluationCollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> SaveCommentEvaluationStage(CommentEvaluationDto request)
+        {
+            var result = await _evaluationCollaboratorService.SaveCommentEvaluationStageAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 

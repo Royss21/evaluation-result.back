@@ -11,7 +11,6 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
     using Domain.Common.Enums;
-    using Domain.Main.Employee;
     using Domain.Main.EvaResult;
     using ExcelDataReader;
     using Microsoft.AspNetCore.Http;
@@ -298,6 +297,18 @@ namespace Application.Main.Services.EvaResult
             return (leaderCollaborators, countCollaborators);
         }
 
+        public async Task<LeaderEvaluateComponentDto> GetComponentsToEvaluateAsync(Guid evaluationCollaboratorId)
+        {
+            var evaluationLeader = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                    .Find(f => f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId))
+                    .ToListAsync();
+
+            return new LeaderEvaluateComponentDto
+            {
+                EvaluationId = evaluationLeader.First().EvaluationId,
+                EvaluationComponentsId = string.Join(",", evaluationLeader.Select(s => s.EvaluationComponentId).Distinct())
+            };
+        }
 
         #region Helper Functions
 

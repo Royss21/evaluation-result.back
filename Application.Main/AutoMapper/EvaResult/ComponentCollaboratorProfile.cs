@@ -19,7 +19,6 @@
                .ForMember(x => x.EvaluationComponentId, m => m.MapFrom(d => d.EvaluationComponentId))
                .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
                .ForMember(x => x.StatusName, m => m.MapFrom(d => d.Status.Name))
-               //.ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
                .ForMember(x => x.EvaluationCollaboratorId, m => m.MapFrom(d => d.EvaluationCollaboratorId))
                .ForMember(x => x.GerencyName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Gerency.Name))
                .ForMember(x => x.AreaName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Area.Name))
@@ -43,8 +42,29 @@
                            PointValueCalibrated = ccc.ConductPointsCalibrated,
                        }).ToList()
                    }).ToList()
-               ))
-               .ReverseMap();
+               ));
+
+            CreateMap<ComponentCollaborator, ComponentCollaboratorResultDto>()
+              .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
+              .ForMember(x => x.ResultObjectives, m => m.MapFrom(d => d.ComponentCollaboratorDetails
+                  .Select(ccd => new ComponentCollaboratorDetailResultDto
+                  {
+                      SubcomponentName = ccd.SubcomponentName,
+                      MaximunPercentage = ccd.MaximunPercentage,
+                      MinimunPercentage = ccd.MinimunPercentage,
+                      WeightRelative = ccd.WeightRelative,
+                      Compliance = ccd.Compliance,
+                      Result = ccd.Result,
+                      Points = ccd.Points,
+                      PointsCalibrated = ccd.PointsCalibrated,
+                      ResultConducts = ccd.ComponentCollaboratorConducts.Select(ccc => new ComponentCollaboratorConductResultDto
+                      {
+                          ConductDescription = ccc.ConductDescription,
+                          ConductPoints = ccc.ConductPoints,
+                          ConductPointsCalibrated = ccc.ConductPointsCalibrated
+                      }).ToList()
+                  }).ToList()
+              ));
 
 
             CreateMap<ComponentCollaborator, ComponentCollaboratorPagingDto>()

@@ -2,7 +2,9 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.ComponentCollaborator;
+    using Application.Dto.EvaResult.EvaluationCollaborator;
     using Application.Dto.Pagination;
+    using Application.Main.Services.EvaResult;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 

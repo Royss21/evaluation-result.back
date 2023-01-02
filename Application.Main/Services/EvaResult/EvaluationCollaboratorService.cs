@@ -1,6 +1,8 @@
 ﻿
 namespace Application.Main.Services.EvaResult
 {
+    using Application.Dto.EvaResult.ComponentCollaborator;
+    using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.EvaResult.EvaluationCollaborator;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
@@ -16,8 +18,13 @@ namespace Application.Main.Services.EvaResult
 
     public class EvaluationCollaboratorService : BaseService, IEvaluationCollaboratorService
     {
-        public EvaluationCollaboratorService(IServiceProvider serviceProvider) : base(serviceProvider)
-        { }
+        public readonly IComponentCollaboratorService _componentCollaboratorService;
+        public EvaluationCollaboratorService(
+            IServiceProvider serviceProvider, IComponentCollaboratorService componentCollaboratorService
+        ) : base(serviceProvider)
+        {
+            _componentCollaboratorService = componentCollaboratorService;
+        }
 
         public async Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request)
         {
@@ -159,6 +166,7 @@ namespace Application.Main.Services.EvaResult
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
             var removeEvaluationCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
@@ -179,6 +187,88 @@ namespace Application.Main.Services.EvaResult
 
             return true;
         }
+
+        public async Task<EvaluationCollaboratorResultDto> GetEvaluationResultByIdAsync(Guid evaluationId, Guid evaluationCollaboratorId)
+        {
+            var evaluationComponentStage = await _componentCollaboratorService.GetEvaluationComponentStageAsync(evaluationId: evaluationId);
+
+            await _componentCollaboratorService.UpdateStatusCommentAsync(new UpdateStatusDto
+            {
+                EvaluationComponentStageId = evaluationComponentStage.Id,
+                EvaluationCollaboratorId = evaluationCollaboratorId,
+                StatusId = GeneralConstants.StatusIds.InProgress
+            }, false);
+
+            var evaluationCollaboratorResult = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.Id.Equals(evaluationCollaboratorId))
+                    .ProjectTo<EvaluationCollaboratorResultDto>(_mapper.ConfigurationProvider)
+                    .FirstAsync();
+
+            if (evaluationCollaboratorResult is null)
+                throw new WarningException("No se encontró datos del colaborador");
+
+
+            var componentsCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
+                    .Find(f =>
+                        f.EvaluationComponent.EvaluationId.Equals(evaluationId) &&
+                        f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId)
+                    )
+                    .ProjectTo<ComponentCollaboratorResultDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+            if (componentsCollaborator is null || !componentsCollaborator.Any())
+                throw new WarningException("No se encontró componentes del colaborador");
+
+
+            var comments = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f =>f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId))
+                    .Include(i=> i.EvaluationComponentStage)
+                    .ToListAsync();
+            var currentComent = comments.First(c => c.EvaluationComponentStageId == evaluationComponentStage.Id);
+
+            componentsCollaborator.ForEach(cc =>
+            {
+                if(cc.ComponentId == GeneralConstants.Component.Competencies)
+                {
+                    cc.EvaluationComment = comments.First(f => 
+                        f.EvaluationComponentStage.EvaluationComponentId == cc.EvaluationComponentId &&
+                        f.EvaluationComponentStage.StageId == GeneralConstants.Stages.Evaluation
+                    ).Comment;
+
+                    cc.CalibrationComment = comments.First(f =>
+                        f.EvaluationComponentStage.EvaluationComponentId == cc.EvaluationComponentId &&
+                        f.EvaluationComponentStage.StageId == GeneralConstants.Stages.Calibration
+                    ).Comment;
+                }
+                else
+                    cc.EvaluationComment = comments.First(f => f.EvaluationComponentStage.EvaluationComponentId == cc.EvaluationComponentId).Comment;
+            });
+
+            evaluationCollaboratorResult.ResultComponents = componentsCollaborator;
+            evaluationCollaboratorResult.StageId = evaluationComponentStage.StageId;
+            evaluationCollaboratorResult.EvaluationComponentStageId = evaluationComponentStage.Id;
+            evaluationCollaboratorResult.StatusId = currentComent.StatusId;
+            evaluationCollaboratorResult.ComponentCollaboratorCommentId = currentComent.Id;
+            evaluationCollaboratorResult.ApprovalComment = comments.First(f => f.EvaluationComponentStage.StageId == GeneralConstants.Stages.Approval).Comment;
+            evaluationCollaboratorResult.FeedbackComment = comments.First(f => f.EvaluationComponentStage.StageId == GeneralConstants.Stages.Feedback).Comment;
+
+            return evaluationCollaboratorResult;
+        }
+
+        public async Task<bool> SaveCommentEvaluationStageAsync(CommentEvaluationDto request)
+        {
+            var componentCollaboratorComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                .Find(f => f.Id == request.ComponentCollaboratorCommentId, false)
+                .FirstAsync();
+
+            componentCollaboratorComment.Comment = request.Comment;
+            componentCollaboratorComment.StatusId = GeneralConstants.StatusIds.Completed;
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(PagingFilterDto filter)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorPagingDto>.Convert(filter);

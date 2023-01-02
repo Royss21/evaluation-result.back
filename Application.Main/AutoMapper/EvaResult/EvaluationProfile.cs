@@ -44,6 +44,7 @@
                
                     ComponentName = GeneralConstants.Component.ComponentsName[ec.ComponentId],
                     ComponentId = ec.ComponentId,
+                    EvaluationComponentId = ec.Id,
                     RangeDate = GeneralConstants.Component.Competencies != ec.ComponentId
                         ? ec.EvaluationComponentStages
                             .Where(w => w.EvaluationComponentId == ec.Id)
@@ -75,7 +76,6 @@
                         }).OrderBy(o => o.StageId).ToList()
                         : new List<StageRangeDateDto>()                        
                })));
-
 
         }
     }

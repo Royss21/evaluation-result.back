@@ -179,14 +179,11 @@ namespace Application.Main.Services.EvaResult
 
             return _mapper.Map<EvaluationDto>(evaluation);
         }
-
-
         public async Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
         {
-            var currentDate = DateTime.UtcNow.GetDatePeru();
 
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
-                    .Find(f => f.Id.Equals(evaluationId))
+                    .Find(p => p.Id.Equals(evaluationId))
                     .ProjectTo<EvaluationCurrentDetailDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
 
