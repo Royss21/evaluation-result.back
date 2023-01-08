@@ -38,7 +38,7 @@
         OperationId = "HierarchyService.Update",
         Tags = new[] { "HierarchyService" })]
         [ProducesResponseType(typeof(JsonResult<HierarchyDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(HierarchyUpdateDto request)
+        public async Task<IActionResult> Update(HierarchyUpdateDto request)
         {
             var result = await _hierarchyService.UpdateAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
@@ -81,6 +81,19 @@
         {
             var result = await _hierarchyService.GetByIdAsync(id);
             return new OkObjectResult(new JsonResult<HierarchyDto>(result));
+        }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar Jerarquía",
+        Description = "Eliminar Jerarquía",
+        OperationId = "HierarchyService.Delete",
+        Tags = new[] { "HierarchyService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _hierarchyService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
     }
 }

@@ -74,6 +74,22 @@ namespace Application.Main.Services.Employee.Validators
             return result is null;
         }
 
+        public static async Task<bool> DocumentNumberExists(ICollaboratorRepository collaboratorNotInRepository, Collaborator collaborator)
+        {
+            var predicate = PredicateBuilder.New<Collaborator>(true);
+
+            if (!collaborator.Id.Equals(Guid.Empty))
+                predicate.And(p => !p.Id.Equals(collaborator.Id));
+
+            predicate.And(p => EF.Functions.Like(p.DocumentNumber.Trim().ToLower(), collaborator.DocumentNumber.Trim().ToLower()));
+
+            var result = await collaboratorNotInRepository
+                    .Find(predicate)
+                    .FirstOrDefaultAsync();
+
+            return result is null;
+        }
+
         public static async Task<bool> ChargeRequired(Collaborator collaborator)
         {
             if (collaborator.ChargeId <= 0)

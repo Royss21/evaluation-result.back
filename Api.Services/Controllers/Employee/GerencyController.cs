@@ -1,10 +1,10 @@
 ﻿namespace Api.Services.Controllers.Employee
 {
-    using Api.Services.Controllers;
-    using Application.Dto.Employee.Gerency;
-    using Application.Dto.Pagination;
-    using Application.Main.Services.Employee.Interfaces;
     using SharedKernell.Wrappers;
+    using Api.Services.Controllers;
+    using Application.Dto.Pagination;
+    using Application.Dto.Employee.Gerency;
+    using Application.Main.Services.Employee.Interfaces;
 
     [Route("api/gerency")]
     [ApiController]

@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.Security.User
 {
-    public abstract class BaseUser
+    public abstract class BaseUserDto
     {
         public string UserName { get; set; } = string.Empty;
         public string Names { get; set; } = string.Empty;

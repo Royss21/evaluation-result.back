@@ -10,5 +10,6 @@
         Task<HierarchyDto> CreateAsync(HierarchyCreateDto request);
         Task<PaginationResultDto<HierarchyDto>> GetAllPagingAsync(PagingFilterDto primeTable);
         Task<HierarchyDto> GetByIdAsync(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }

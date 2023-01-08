@@ -1,16 +1,16 @@
 ﻿
 namespace Application.Main.Services.EvaResult
 {
-    using Application.Dto.EvaResult.Period;
+    using Domain.Main.EvaResult;
+    using Domain.Common.Constants;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
     using Application.Main.Pagination;
-    using Application.Main.Services.EvaResult.Interfaces;
     using Application.Main.Service.Base;
-    using Application.Main.Services.EvaResult.Validators;
-    using Domain.Common.Constants;
-    using Domain.Main.EvaResult;
+    using Application.Dto.EvaResult.Period;
     using Application.Dto.EvaResult.Evaluation;
+    using Application.Main.Services.EvaResult.Interfaces;
+    using Application.Main.Services.EvaResult.Validators;
 
     public class PeriodService : BaseService, IPeriodService
     {

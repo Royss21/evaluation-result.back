@@ -6,7 +6,7 @@
     using Application.Main.Services.Employee.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/area")]
     [ApiController]
     public class AreaController : BaseController
     {

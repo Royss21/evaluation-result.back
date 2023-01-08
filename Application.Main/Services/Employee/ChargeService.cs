@@ -3,13 +3,13 @@
     using Domain.Main.Employee;
     using System.ComponentModel;
     using Domain.Common.Constants;
+    using Application.Dto.Pagination;
+    using Application.Main.Pagination;
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Dto.Employee.Charge;
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
-    using Application.Dto.Pagination;
-    using Application.Main.Pagination;
 
     public class ChargeService : BaseService, IChargeService
     {
@@ -97,6 +97,19 @@
                 Count = paging.Count,
                 Entities = charges
             };
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var charge = await _unitOfWorkApp.Repository.ChargeRepository.GetAsync(id);
+
+            if (charge is null)
+                throw new System.ComponentModel.WarningException(Messages.General.ResourceNotFound);
+
+            await _unitOfWorkApp.Repository.ChargeRepository.DeleteAsync(charge);
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
         }
     }
 }

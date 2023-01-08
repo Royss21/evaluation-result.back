@@ -19,14 +19,15 @@
 
         public static class General
         {
-            public const string ResourceNotFound = "El recurso no ha sido encontrado - ({0})";
             public const string FieldNonEmpty = "El campo no puede estar vacio";
-            public const string EmailAlreadyRegistered = "El Correo ingresado ya se encuentra registrado";
+            public const string FieldMaxLength = "El campo ha excedido tamaño permitido";
+            public const string ResourceNotFound = "El recurso no ha sido encontrado - ({0})";
             public const string NameAlreadyRegistered = "El Nombre ingresado ya se encuentra registrado";
-            public const string DescriptionAlreadyRegistered = "La descripcion ingresada ya se encuentra registrado";
-            public const string PhoneAlreadyRegistered = "El Telefono ingresado ya se encuentra registrado";
             public const string MovilAlreadyRegistered = "El Movil ingresado ya se encuentra registrado";
             public const string CodeAlreadyRegistered = "El Código ingresado ya se encuentra registrado";
+            public const string EmailAlreadyRegistered = "El Correo ingresado ya se encuentra registrado";
+            public const string PhoneAlreadyRegistered = "El Telefono ingresado ya se encuentra registrado";
+            public const string DescriptionAlreadyRegistered = "La descripcion ingresada ya se encuentra registrado";
             public const string RangeDatesIsNotValid = "El intervalo de fechas ingresadas es incorrecta y/o existe en otros registros.";
         }
 
@@ -69,6 +70,11 @@
         {
             public const string AreaRequired = "El área es requerida";
             public const string HierarchyRequired = "La jerarquía es requerida";
+        }
+
+        public static class User
+        {
+            public const string UsernameAlreadyRegistered = "El nombre de usuario ya se encuentra registrado";
         }
 
     }
