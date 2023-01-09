@@ -1,6 +1,6 @@
 ﻿namespace Application.Dto.Security.User
 {
-    public class UserDto : BaseUser
+    public class UserDto : BaseUserDto
     {
         public bool IsLocked { get; set; }
     }

@@ -1,11 +1,12 @@
 ﻿namespace Api.Services.Controllers.Autenticacion
 {
     using Api.Services.Controllers;
+    using Application.Dto.Pagination;
     using Application.Dto.Security.User;
     using Application.Main.Services.Security.Interfaces;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : BaseController
     {
@@ -42,6 +43,45 @@
         {
             var resultado = await _userService.CreateAsync(request);
             return new OkObjectResult(new JsonResult<UserDto>(resultado));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualizar Usuario",
+        Description = "Actualizar Usuario",
+        OperationId = "UserService.Update",
+        Tags = new[] { "UserService" })]
+        [ProducesResponseType(typeof(JsonResult<UserDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(UserUpdateDto request)
+        {
+            var result = await _userService.UpdateAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+        [HttpGet("paging")]
+        [SwaggerOperation(
+        Summary = "Lista Paginada de Usuarios",
+        Description = "Lista Paginada de Usuarios",
+        OperationId = "UserService.GetAllPaging",
+        Tags = new[] { "UserService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<UserDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPaging([FromQuery] PagingFilterDto filter)
+        {
+            var result = await _userService.GetAllPagingAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<UserDto>>(result));
+        }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar Usuario",
+        Description = "Eliminar Usuario",
+        OperationId = "UserService.Delete",
+        Tags = new[] { "UserService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _userService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
     }
 }

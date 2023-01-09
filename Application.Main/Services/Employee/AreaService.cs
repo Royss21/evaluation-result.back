@@ -1,14 +1,14 @@
 ﻿namespace Application.Main.Services.Employee
 {
-    using Application.Dto.Employee.Area;
+    using Domain.Main.Employee;
+    using Domain.Common.Constants;
     using Application.Dto.Pagination;
     using Application.Main.Exceptions;
     using Application.Main.Pagination;
+    using Application.Dto.Employee.Area;
     using Application.Main.Service.Base;
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
-    using Domain.Common.Constants;
-    using Domain.Main.Employee;
 
     public class AreaService : BaseService, IAreaService
     {

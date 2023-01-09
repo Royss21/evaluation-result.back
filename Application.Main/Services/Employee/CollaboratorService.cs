@@ -8,6 +8,7 @@
     using Application.Dto.Employee.Collaborator;
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
+    using Domain.Common.Constants;
 
     public class CollaboratorService : BaseService, ICollaboratorService
     {
@@ -18,7 +19,7 @@
         {
             var collaborator = _mapper.Map<Collaborator>(request);
             var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository
-                .AddAsync(collaborator, new CollaboratorNotInEvaluationCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
+                .AddAsync(collaborator, new CollaboratorCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
@@ -33,7 +34,7 @@
         {
             var collaborator = _mapper.Map<Collaborator>(request);
             var resultValidator = await _unitOfWorkApp.Repository.CollaboratorRepository
-                .UpdateAsync(collaborator, new CollaboratorNotInEvaluationCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
+                .UpdateAsync(collaborator, new CollaboratorCreateUpdateValidation(_unitOfWorkApp.Repository.CollaboratorRepository));
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
@@ -80,6 +81,19 @@
                 Entities = collaborators
             };
 
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var collaborator = await _unitOfWorkApp.Repository.CollaboratorRepository.GetAsync(id);
+
+            if (collaborator is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            await _unitOfWorkApp.Repository.CollaboratorRepository.DeleteAsync(collaborator);
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
         }
     }
 }

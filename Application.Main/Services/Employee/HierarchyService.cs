@@ -89,5 +89,18 @@
 
             return hierarchy;
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var hierarchy = await _unitOfWorkApp.Repository.HierarchyRepository.GetAsync(id);
+
+            if (hierarchy is null)
+                throw new System.ComponentModel.WarningException(Messages.General.ResourceNotFound);
+
+            await _unitOfWorkApp.Repository.HierarchyRepository.DeleteAsync(hierarchy);
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

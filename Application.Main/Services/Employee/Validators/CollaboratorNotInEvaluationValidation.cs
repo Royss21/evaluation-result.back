@@ -7,11 +7,11 @@ namespace Application.Main.Services.Employee.Validators
     using Domain.Common.Constants;
     using Infrastructure.Main.Repository.Employee.Interfaces;
 
-    public class CollaboratorNotInEvaluationCreateUpdateValidation : BaseValidator<Collaborator>
+    public class CollaboratorCreateUpdateValidation : BaseValidator<Collaborator>
     {
         private readonly ICollaboratorRepository _collaboratorNotInRepository;
 
-        public CollaboratorNotInEvaluationCreateUpdateValidation(ICollaboratorRepository collaboratorNotInRepository) : base()
+        public CollaboratorCreateUpdateValidation(ICollaboratorRepository collaboratorNotInRepository) : base()
         {
             _collaboratorNotInRepository = collaboratorNotInRepository;
 
@@ -46,17 +46,17 @@ namespace Application.Main.Services.Employee.Validators
                 .WithMessage(Messages.General.FieldNonEmpty);
 
             RuleFor(x => x)
-                .MustAsync((collaborator, cancel) => CollaboratorNotInEvaluationSharedValidator.EmailExists(_collaboratorNotInRepository, collaborator))
+                .MustAsync((collaborator, cancel) => CollaboratorSharedValidator.EmailExists(_collaboratorNotInRepository, collaborator))
                 .WithMessage(Messages.General.EmailAlreadyRegistered);
 
             RuleFor(x => x)
-                .MustAsync((collaborator, cancel) => CollaboratorNotInEvaluationSharedValidator.ChargeRequired(collaborator))
+                .MustAsync((collaborator, cancel) => CollaboratorSharedValidator.ChargeRequired(collaborator))
                 .WithMessage(Messages.Collaborator.ChargeRequired);
 
         }
     }
 
-    public static class CollaboratorNotInEvaluationSharedValidator
+    public static class CollaboratorSharedValidator
     {
         public static async Task<bool> EmailExists(ICollaboratorRepository collaboratorNotInRepository, Collaborator collaborator)
         {
@@ -66,6 +66,22 @@ namespace Application.Main.Services.Employee.Validators
                 predicate.And(p => !p.Id.Equals(collaborator.Id));
 
             predicate.And(p => EF.Functions.Like(p.Email.Trim().ToLower(), collaborator.Email.Trim().ToLower()));
+
+            var result = await collaboratorNotInRepository
+                    .Find(predicate)
+                    .FirstOrDefaultAsync();
+
+            return result is null;
+        }
+
+        public static async Task<bool> DocumentNumberExists(ICollaboratorRepository collaboratorNotInRepository, Collaborator collaborator)
+        {
+            var predicate = PredicateBuilder.New<Collaborator>(true);
+
+            if (!collaborator.Id.Equals(Guid.Empty))
+                predicate.And(p => !p.Id.Equals(collaborator.Id));
+
+            predicate.And(p => EF.Functions.Like(p.DocumentNumber.Trim().ToLower(), collaborator.DocumentNumber.Trim().ToLower()));
 
             var result = await collaboratorNotInRepository
                     .Find(predicate)

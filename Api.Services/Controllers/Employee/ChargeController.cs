@@ -96,5 +96,18 @@
             return new OkObjectResult(new JsonResult<List<ChargeDto>>(result.ToList()));
         }
 
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar Área",
+        Description = "Eliminar Área",
+        OperationId = "ChargeService.Delete",
+        Tags = new[] { "ChargeService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _chargeService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
     }
 }

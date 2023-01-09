@@ -20,7 +20,7 @@
                 .WithMessage(Messages.General.FieldNonEmpty);
 
             RuleFor(x => x)
-                .MustAsync((charge, cancel) => NameExists(charge))
+                .MustAsync((charge, cancel) => ChargeSharedValidator.NameExists(_chargeRepository, charge))
                 .WithMessage(Messages.General.NameAlreadyRegistered);
 
             RuleFor(x => x)
@@ -30,17 +30,6 @@
             RuleFor(x => x)
                 .MustAsync((charge, cancel) => ChargeSharedValidator.HierarchyRequired(charge))
                 .WithMessage(Messages.Charge.HierarchyRequired);
-        }
-
-        async Task<bool> NameExists(Charge charge)
-        {
-            var predicate = PredicateBuilder.New<Charge>(true);
-            predicate.And(p => EF.Functions.Like(p.Name.Trim(), charge.Name.Trim()));
-            var result = await _chargeRepository
-                   .Find(predicate)
-                   .FirstOrDefaultAsync();
-
-            return result is null;
         }
     }
 
@@ -60,6 +49,22 @@
                 return false;
 
             return true;
+        }
+
+        public static async Task<bool> NameExists(IChargeRepository chargeRepository, Charge charge)
+        {
+            var predicate = PredicateBuilder.New<Charge>(true);
+
+            if (charge.Id != 0)
+                predicate.And(p => p.Id != charge.Id);
+
+            predicate.And(p => EF.Functions.Like(p.Name.Trim().ToLower(), charge.Name.Trim().ToLower()));
+
+            var result = await chargeRepository
+                   .Find(predicate)
+                   .FirstOrDefaultAsync();
+
+            return result is null;
         }
     }
 }

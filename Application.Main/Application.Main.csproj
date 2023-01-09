@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application.Dto\Application.Dto.csproj" />
+    <ProjectReference Include="..\Application.Security\Application.Security.csproj" />
     <ProjectReference Include="..\Infrastructure.UnitOfWork\Infrastructure.UnitOfWork.csproj" />
     <ProjectReference Include="..\shared-kernell-net6\SharedKernell\SharedKernell.csproj" />
   </ItemGroup>

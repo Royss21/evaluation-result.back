@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Authorization;
     using SharedKernell.Wrappers;
 
-    [Route("api/[controller]")]
+    [Route("api/authentication")]
     [ApiController]
     [AllowAnonymous]
     public class AuthenticationController : Controller

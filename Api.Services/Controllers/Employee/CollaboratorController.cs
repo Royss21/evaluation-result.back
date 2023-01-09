@@ -38,7 +38,7 @@
         Description = "Actualizar colaborador",
         OperationId = "CollaboratorService.Update",
         Tags = new[] { "CollaboratorService" })]
-        [ProducesResponseType(typeof(JsonResult<CollaboratorNotInEvaluationDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<CollaboratorDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Update(CollaboratorUpdateDto request)
         {
             var result = await _collaboratorService.UpdateAsync(request);
@@ -72,6 +72,17 @@
             return new OkObjectResult(new JsonResult<IEnumerable<CollaboratorNotInEvaluationDto>>(result));
         }
 
-
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar Colaborador",
+        Description = "eliminar colaborador",
+        OperationId = "Collaborator.Delete",
+        Tags = new[] { "CollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _collaboratorService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
     }
 }

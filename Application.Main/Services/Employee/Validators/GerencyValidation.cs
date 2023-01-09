@@ -20,15 +20,24 @@
                 .WithMessage(Messages.General.FieldNonEmpty);
 
             RuleFor(x => x)
-                .MustAsync((gerency, cancel) => NameExists(gerency))
+                .MustAsync((gerency, cancel) => GerencySharedValidator.NameExists(_gerencyRepository, gerency))
                 .WithMessage(Messages.General.NameAlreadyRegistered);
         }
 
-        async Task<bool> NameExists(Gerency gerency)
+    }
+
+    public static class GerencySharedValidator
+    {
+        public static async Task<bool> NameExists(IGerencyRepository levelRepository, Gerency gerency)
         {
             var predicate = PredicateBuilder.New<Gerency>(true);
-            predicate.And(p => EF.Functions.Like(p.Name.Trim(), gerency.Name.Trim()));
-            var result = await _gerencyRepository
+
+            if (gerency.Id != 0)
+                predicate.And(p => p.Id != gerency.Id);
+
+            predicate.And(p => EF.Functions.Like(p.Name.Trim().ToLower(), gerency.Name.Trim().ToLower()));
+
+            var result = await levelRepository
                    .Find(predicate)
                    .FirstOrDefaultAsync();
 
