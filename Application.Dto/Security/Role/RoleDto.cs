@@ -1,9 +1,11 @@
 ﻿namespace Application.Dto.Security.Role
 {
-    public class RoleDto
+    using System.Text.Json.Serialization;
+    public class RoleDto : BaseRoleDto
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Description { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public DateTime CreateDate { get; set; }
     }
 }

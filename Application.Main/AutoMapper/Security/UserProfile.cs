@@ -1,4 +1,5 @@
 ﻿using Application.Dto.Security.Authentication;
+using Application.Dto.Security.Role;
 using Application.Dto.Security.User;
 using Application.Security.Entities;
 using Domain.Main.Security;
@@ -19,8 +20,10 @@ namespace Application.Main.AutoMapper.Security
                     .ReverseMap();
 
             CreateMap<UserTokenApp, AccessDto>().ReverseMap();
-            CreateMap<User, UserDto>();
             CreateMap<UserCreateDto, User>();
+
+            CreateMap<User, UserDto>()
+                .ForMember(x => x.Roles, m => m.MapFrom(d => d.UserRoles.Select(s => new RoleDto { Id = s.Role.Id, Name = s.Role.Name }).ToList()));
         }
 
     }

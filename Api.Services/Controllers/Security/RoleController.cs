@@ -18,6 +18,19 @@
             this._logger = logger;
         }
 
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Lista de Roles",
+        Description = "Listado de Roles",
+        OperationId = "RoleService.GetAll",
+        Tags = new[] { "RoleService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<RoleDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _roleService.GetAllAsync();
+            return new OkObjectResult(new JsonResult<List<RoleDto>>(result.ToList()));
+        }
+
         [HttpPost]
         [SwaggerOperation(
         Summary = "Crear Rol",

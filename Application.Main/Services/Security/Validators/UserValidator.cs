@@ -64,7 +64,7 @@
             if (!user.Id.Equals(Guid.Empty))
                 predicate.And(p => !p.Id.Equals(user.Id));
 
-            predicate.And(p => EF.Functions.Like(p.Email.Trim().ToLower(), user.Email.Trim().ToLower()));
+            predicate.And(p => EF.Functions.Like(p.UserName.Trim().ToLower(), user.UserName.Trim().ToLower()));
 
             var result = await userRepository
                     .Find(predicate)

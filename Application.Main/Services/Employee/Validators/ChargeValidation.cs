@@ -1,9 +1,9 @@
 ﻿namespace Application.Main.Services.Employee.Validators
 {
-    using Domain.Common.Constants;
+    using FluentValidation;
     using Domain.Main.Base;
     using Domain.Main.Employee;
-    using FluentValidation;
+    using Domain.Common.Constants;
     using Infrastructure.Main.Repository.Employee.Interfaces;
 
     public class ChargeCreateUpdateValidation : BaseValidator<Charge>
