@@ -17,6 +17,7 @@
             CreateMap<HierarchyComponent, HierarchyComponentUpdateDto>().ReverseMap();
             CreateMap<BaseHierarchyComponentDto, HierarchyComponentUpdateDto>().ReverseMap();
             CreateMap<BaseHierarchyComponentDto, HierarchyComponentCreateDto>().ReverseMap();
+
         }
     }
 }

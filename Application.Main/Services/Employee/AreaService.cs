@@ -15,12 +15,26 @@
         public AreaService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public async Task<bool> CreateAsync(AreaCreateDto request)
+        public async Task<AreaDto> CreateAsync(AreaCreateDto request)
         {
             var area = _mapper.Map<Area>(request);
 
             var resultValidator = await _unitOfWorkApp.Repository.AreaRepository
                 .AddAsync(area, new AreaCreateValidator(_unitOfWorkApp.Repository.AreaRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return _mapper.Map<AreaDto>(area);
+        }
+
+        public async Task<bool> UpdateAsync(AreaUpdateDto request)
+        {
+            var area = _mapper.Map<Area>(request);
+            var resultValidator = await _unitOfWorkApp.Repository.AreaRepository
+                    .UpdateAsync(area, new AreaCreateValidator(_unitOfWorkApp.Repository.AreaRepository));
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
@@ -92,6 +106,5 @@
                 Entities = areas
             };
         }
-
     }
 }

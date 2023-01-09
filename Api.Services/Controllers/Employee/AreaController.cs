@@ -65,9 +65,22 @@
         OperationId = "Area.Create",
         Tags = new[] { "AreaService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(AreaCreateDto area)
+        public async Task<IActionResult> Create(AreaCreateDto request)
         {
-            var result = await _areaService.CreateAsync(area);
+            var result = await _areaService.CreateAsync(request);
+            return new OkObjectResult(new JsonResult<AreaDto>(result));
+        }
+
+        [HttpPut]
+        [SwaggerOperation(
+        Summary = "Actualizar Area",
+        Description = "Actualizar area",
+        OperationId = "Area.Update",
+        Tags = new[] { "AreaService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(AreaUpdateDto request)
+        {
+            var result = await _areaService.UpdateAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 

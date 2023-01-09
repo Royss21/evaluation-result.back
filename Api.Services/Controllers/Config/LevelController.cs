@@ -1,10 +1,10 @@
 ﻿namespace Api.Services.Controllers.Config
 {
-    using Api.Services.Controllers;
-    using Application.Dto.Config.Level;
-    using Application.Dto.Pagination;
-    using Application.Main.Services.Config.Interfaces;
     using SharedKernell.Wrappers;
+    using Api.Services.Controllers;
+    using Application.Dto.Pagination;
+    using Application.Dto.Config.Level;
+    using Application.Main.Services.Config.Interfaces;
 
     [Route("api/level")]
     [ApiController]
