@@ -66,7 +66,6 @@
                   }).ToList()
               ));
 
-
             CreateMap<ComponentCollaborator, ComponentCollaboratorPagingDto>()
             .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.EvaluationCollaborator.Collaborator.Name} {d.EvaluationCollaborator.Collaborator.LastName} {d.EvaluationCollaborator.Collaborator.MiddleName}"))
             .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.DocumentNumber))
