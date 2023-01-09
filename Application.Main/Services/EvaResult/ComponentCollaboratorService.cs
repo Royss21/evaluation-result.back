@@ -293,11 +293,11 @@ namespace Application.Main.Services.EvaResult
             return componenteCollaborator;
         }
 
-        public async Task<bool> UpdateStatusCommentAsync(UpdateStatusDto request, bool isUpdateComponent = true)
+        public async Task<bool> UpdateStatusCommentAsync(UpdateStatusDto request)
         {
             var evaluationStatusComment = new ComponentCollaboratorComment();
 
-            if (isUpdateComponent)
+            if (request.IsUpdateComponent)
             {
                 var componentCollaborator = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository
                             .Find(f => f.Id.Equals(request.Id))
@@ -316,8 +316,8 @@ namespace Application.Main.Services.EvaResult
 
             evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f =>
-                        f.EvaluationCollaboratorId.Equals(request.EvaluationCollaboratorId) &&
-                        f.EvaluationComponentStageId == request.EvaluationComponentStageId, 
+                        (f.EvaluationCollaboratorId.Equals(request.EvaluationCollaboratorId) &&
+                        f.EvaluationComponentStageId == request.EvaluationComponentStageId) , 
                         false
                     ).FirstAsync();
 

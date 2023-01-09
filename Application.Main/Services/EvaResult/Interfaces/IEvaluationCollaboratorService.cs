@@ -12,5 +12,6 @@
         Task<bool> DeleteAsync(Guid id);
         Task<EvaluationCollaboratorResultDto> GetEvaluationResultByIdAsync(Guid evaluationId, Guid evaluationCollaboratorId);
         Task<bool> SaveCommentEvaluationStageAsync(CommentEvaluationDto request);
+        Task<PaginationResultDto<EvaluationCollaboratorReviewPagingDto>> GetPagingCollaboratorReviewStageEvaluationAsync(EvaluationCollaboratorReviewFilterDto filter);
     }
 }

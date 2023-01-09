@@ -12,8 +12,6 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
         public int ComponentId { get; set; }
         public string Comment { get; set; } = string.Empty;
         public Guid EvaluationCollaboratorId { get; set; }
-
-        
         public string StatusName { get; set; } = string.Empty;
         public int StatusId { get; set; }
 

@@ -192,7 +192,6 @@ namespace Application.Main.Services.EvaResult
 
             return evaluation;
         }
-
         public async Task<IEnumerable<EvaluationCurrentDetailDto>> GetAllAsync()
         {
 
@@ -206,8 +205,6 @@ namespace Application.Main.Services.EvaResult
 
             return evaluations;
         }
-
-
 
         #region Helpers Functions
         private async Task<int> CountEvaluationsCurrentPeriod()

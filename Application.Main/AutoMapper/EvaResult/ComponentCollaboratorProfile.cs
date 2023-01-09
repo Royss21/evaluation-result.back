@@ -76,7 +76,6 @@
             .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Hierarchy.Name))
             .ForMember(x => x.LevelName, m => m.MapFrom(d => d.EvaluationCollaborator.Collaborator.Charge.Hierarchy.Level.Name))
             .ForMember(x => x.Id, m => m.MapFrom(d => d.Id))
-            .ForMember(x => x.StatusId, m => m.MapFrom(d => d.StatusId))
             .ForMember(x => x.ComponentId, m => m.MapFrom(d => d.EvaluationComponent.ComponentId))
             .ForMember(x => x.EvaluationComponentId, m => m.MapFrom(d => d.EvaluationComponentId))
             .ForMember(x => x.EvaluationCollaboratorId, m => m.MapFrom(d => d.EvaluationCollaboratorId))
