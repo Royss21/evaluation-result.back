@@ -196,8 +196,9 @@ namespace Application.Main.Services.EvaResult
             {
                 EvaluationComponentStageId = evaluationComponentStage.Id,
                 EvaluationCollaboratorId = evaluationCollaboratorId,
-                StatusId = GeneralConstants.StatusIds.InProgress
-            }, false);
+                StatusId = GeneralConstants.StatusIds.InProgress,
+                IsUpdateComponent = false
+            });
 
             var evaluationCollaboratorResult = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(f => f.Id.Equals(evaluationCollaboratorId))
@@ -267,6 +268,56 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<PaginationResultDto<EvaluationCollaboratorReviewPagingDto>> GetPagingCollaboratorReviewStageEvaluationAsync(EvaluationCollaboratorReviewFilterDto filter)
+        {
+            var collaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.Evaluation.EvaluationComponentStages.Select(ecs => ecs.StageId).Contains(filter.StageId))
+                    .ProjectTo<EvaluationCollaboratorReviewPagingDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+            var evaluationComponentStageId = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.StageId == filter.StageId)
+                .Select(s => s.Id)
+                .FirstAsync();
+
+            var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorReviewPagingDto>.Convert(filter);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorReviewPagingDto>(_mapper);
+
+            if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add =>
+                            add.Collaborator.Name.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.LastName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.MiddleName.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.Collaborator.DocumentNumber.ToLower().Trim().Contains(filter.GlobalFilter.ToLower().Trim()) ||
+                            add.AreaName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.ChargeName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
+                            add.HierarchyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
+                        );
+
+
+            }
+
+            var paging = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.FindAllPagingAsync(parametersDomain);
+            var evaluationCollaborators = await paging.Entities.ProjectTo<EvaluationCollaboratorReviewPagingDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            foreach(var ec  in evaluationCollaborators)
+            {
+                var currentComent = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                       .Find(f => f.EvaluationCollaboratorId.Equals(ec.Id) && f.EvaluationComponentStageId == evaluationComponentStageId)
+                       .FirstAsync();
+
+                ec.StatusId = currentComent.StatusId;
+            }
+
+            return new PaginationResultDto<EvaluationCollaboratorReviewPagingDto>
+            {
+                Count = paging.Count,
+                Entities = evaluationCollaborators
+            };
         }
 
         public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(PagingFilterDto filter)

@@ -7,7 +7,6 @@ namespace Application.Dto.EvaResult.ComponentCollaborator
     public class ComponentCollaboratorPagingDto : CollaboratorInformationDto
     {
         public Guid Id { get; set; }
-        public string DocumentNumber { get; set; } = string.Empty;
         public int StatusId { get; set; }
 
         [JsonIgnore] public DateTime CreateDate { get; set; }

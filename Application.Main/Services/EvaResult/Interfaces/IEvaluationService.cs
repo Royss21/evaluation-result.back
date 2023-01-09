@@ -7,5 +7,6 @@
     {
         Task<EvaluationDto> CreateAsync(EvaluationCreateDto request);
         Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
+        Task<IEnumerable<EvaluationCurrentDetailDto>> GetAllAsync();
     }
 }

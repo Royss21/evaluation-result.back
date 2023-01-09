@@ -192,10 +192,21 @@ namespace Application.Main.Services.EvaResult
 
             return evaluation;
         }
+        public async Task<IEnumerable<EvaluationCurrentDetailDto>> GetAllAsync()
+        {
 
+            var evaluations = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => true)
+                    .ProjectTo<EvaluationCurrentDetailDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+            if (evaluations is null)
+                throw new WarningException("No se ha encontrado historial de evaluaciones");
+
+            return evaluations;
+        }
 
         #region Helpers Functions
-
         private async Task<int> CountEvaluationsCurrentPeriod()
         {
             var currentDate = DateTime.UtcNow.GetDatePeru();

@@ -73,6 +73,19 @@
             return new OkObjectResult(new JsonResult<EvaluationCurrentDetailDto>(result));
         }
 
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Obtener Listado de Evaluaciones",
+        Description = "Obtener Listado de Evaluaciones",
+        OperationId = "Evaluation.GetEvaluationDetail",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationCurrentDetailDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _evaluationService.GetAllAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<EvaluationCurrentDetailDto>>(result));
+        }
+
         //[HttpDelete("{id}")]
         //[SwaggerOperation(
         //Summary = "Eliminar Evaluationo",
