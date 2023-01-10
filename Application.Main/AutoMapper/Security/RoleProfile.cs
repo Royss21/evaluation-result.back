@@ -7,7 +7,9 @@ namespace Application.Main.AutoMapper.Security
     {
         public RoleProfile()
         {
-            CreateMap<Role, RoleDto>();
+            CreateMap<Role, RoleDto>().ReverseMap();
+            CreateMap<RoleCreateDto, Role>();
+            CreateMap<RoleUpdateDto, Role>();
         }
 
     }

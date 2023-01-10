@@ -38,11 +38,11 @@
         Description = "crear",
         OperationId = "Usuario.Create",
         Tags = new[] { "UserService" })]
-        [ProducesResponseType(typeof(JsonResult<UserDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<UserResponseDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(UserCreateDto request)
         {
             var resultado = await _userService.CreateAsync(request);
-            return new OkObjectResult(new JsonResult<UserDto>(resultado));
+            return new OkObjectResult(new JsonResult<UserResponseDto>(resultado));
         }
 
         [HttpPut]

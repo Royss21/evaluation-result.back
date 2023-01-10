@@ -1,8 +1,8 @@
 ﻿namespace Application.Dto.Security.User
 {
-    public class UserUpdateDto : BaseUserDto
+    public class UserResponseDto : BaseUserDto
     {
         public Guid Id { get; set; }
-        public List<int> RolesId { get; set; }
+        public bool IsLocked { get; set; }
     }
 }

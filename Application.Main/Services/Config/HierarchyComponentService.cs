@@ -57,8 +57,8 @@ namespace Application.Main.Services.Config
 
         public async Task<PaginationResultDto<HierarchyComponentPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable)
         {
-            var parametersDto = PrimeNgToPaginationParametersDto<HierarchyComponentDto>.Convert(primeTable);
-            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<HierarchyComponent, HierarchyComponentDto>(_mapper);
+            var parametersDto = PrimeNgToPaginationParametersDto<HierarchyComponentPagingDto>.Convert(primeTable);
+            var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<HierarchyComponent, HierarchyComponentPagingDto>(_mapper);
 
             if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
             {
@@ -69,10 +69,13 @@ namespace Application.Main.Services.Config
 
             var paging = await _unitOfWorkApp.Repository.HierarchyComponentRepository.FindAllPagingAsync(parametersDomain);
             var hierarchyComponents = await paging.Entities.ProjectTo<HierarchyComponentDto>(_mapper.ConfigurationProvider).ToListAsync();
-            var hierarchyPaging = hierarchyComponents.Select(s => s.HierarchyName).Distinct().Select(name => new HierarchyComponentPagingDto
+
+            var hierarchyPaging = hierarchyComponents.Select(s => new { s.HierarchyId, s.HierarchyName }).Distinct().Select(hierarchy => new HierarchyComponentPagingDto
             {
-                HierarchyName = name,
-                HierarchyComponents = hierarchyComponents.Where(w => w.HierarchyName.ToLower().Equals(name.ToLower())).ToList()
+                HierarchyId = hierarchy.HierarchyId,
+                HierarchyName = hierarchy.HierarchyName,
+                Components = hierarchyComponents.Where(w => w.HierarchyName.ToLower().Equals(hierarchy.HierarchyName.ToLower()))
+                    .Select(x => new HierarchyOnlyComponent(x.ComponentId, x.ComponentName, x.Weight)).ToList()
             }).ToList();
 
             return new PaginationResultDto<HierarchyComponentPagingDto>
@@ -81,6 +84,33 @@ namespace Application.Main.Services.Config
                 Entities = hierarchyPaging
             };
         }
+
+        //public async Task<PaginationResultDto<HierarchyComponentPagingDto>> GetAllPagingAsync(PagingFilterDto primeTable)
+        //{
+        //    var parametersDto = PrimeNgToPaginationParametersDto<HierarchyComponentPagingDto>.Convert(primeTable);
+        //    var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<HierarchyComponent, HierarchyComponentPagingDto>(_mapper);
+
+        //    if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
+        //    {
+        //        parametersDomain.FilterWhere = parametersDomain.FilterWhere
+        //                .AddCondition(add => add.Hierarchy.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()))
+        //                .AddCondition(add => add.Weight.ToString().ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+        //    }
+
+        //    var paging = await _unitOfWorkApp.Repository.HierarchyComponentRepository.FindAllPagingAsync(parametersDomain);
+        //    var hierarchyComponents = await paging.Entities.ProjectTo<HierarchyComponentDto>(_mapper.ConfigurationProvider).ToListAsync();
+        //    var hierarchyPaging = hierarchyComponents.Select(s => s.HierarchyName).Distinct().Select(name => new HierarchyComponentPagingDto
+        //    {
+        //        HierarchyName = name,
+        //        HierarchyComponents = hierarchyComponents.Where(w => w.HierarchyName.ToLower().Equals(name.ToLower())).ToList()
+        //    }).ToList();
+
+        //    return new PaginationResultDto<HierarchyComponentPagingDto>
+        //    {
+        //        Count = hierarchyPaging.Count(),
+        //        Entities = hierarchyPaging
+        //    };
+        //}
 
         public async Task<List<HierarchyComponentDto>> GetByHierarchAsync(int hierarchyId)
         {

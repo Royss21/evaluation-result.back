@@ -6,7 +6,7 @@ namespace Application.Main.Services.Security.Interfaces
     public interface IUserService
     {
         Task<IEnumerable<UserDto>> GetAllAsync();
-        Task<UserDto> CreateAsync(UserCreateDto request);
+        Task<UserResponseDto> CreateAsync(UserCreateDto request);
         Task<bool> UpdateAsync(UserUpdateDto request);
         Task<bool> DeleteAsync(Guid id);
         Task<PaginationResultDto<UserDto>> GetAllPagingAsync(PagingFilterDto primeTable);

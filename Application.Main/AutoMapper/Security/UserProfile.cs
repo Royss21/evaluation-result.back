@@ -21,9 +21,20 @@ namespace Application.Main.AutoMapper.Security
 
             CreateMap<UserTokenApp, AccessDto>().ReverseMap();
             CreateMap<UserCreateDto, User>();
+            CreateMap<UserUpdateDto, User>();
+
+            CreateMap<User, UserResponseDto>()
+                .ForMember(x => x.Names, m => m.MapFrom(d => d.Names))
+                .ForMember(x => x.MiddleName, m => m.MapFrom(d => d.MiddleName))
+                .ForMember(x => x.LastName, m => m.MapFrom(d => d.LastName))
+                .ForMember(x => x.UserName, m => m.MapFrom(d => d.UserName))
+                .ForMember(x => x.IsLocked, m => m.MapFrom(d => d.IsLocked))
+                .ForMember(x => x.Email, m => m.MapFrom(d => d.Email))
+                .ReverseMap();
 
             CreateMap<User, UserDto>()
-                .ForMember(x => x.Roles, m => m.MapFrom(d => d.UserRoles.Select(s => new RoleDto { Id = s.Role.Id, Name = s.Role.Name }).ToList()));
+                .ForMember(x => x.Roles, m => m.MapFrom(d => d.UserRoles.Select(s => new RoleDto { Id = s.Role.Id, Name = s.Role.Name }).ToList()))
+                .ReverseMap();
         }
 
     }

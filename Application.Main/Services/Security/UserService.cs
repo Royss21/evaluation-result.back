@@ -20,14 +20,14 @@ namespace Application.Main.Services.Security
             _passwordFactory = passwordFactory;
         }
 
-        public async Task<UserDto> CreateAsync(UserCreateDto request)
+        public async Task<UserResponseDto> CreateAsync(UserCreateDto request)
         {
             (int hashType, string passwordHash) = _passwordFactory.Hash(request.Password);
 
             var user = _mapper.Map<User>(request);
 
             var resultValidator = await _unitOfWorkApp.Repository.UserRepository.AddAsync(
-                user, new UserValidator(_unitOfWorkApp.Repository.UserRepository));
+                user, new UserCreateValidator(_unitOfWorkApp.Repository.UserRepository));
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
@@ -40,27 +40,22 @@ namespace Application.Main.Services.Security
             await _unitOfWorkApp.Repository.UserRepository.AddAsync(user);
             await _unitOfWorkApp.SaveChangesAsync();
 
-            return _mapper.Map<UserDto>(user);
+            return _mapper.Map<UserResponseDto>(user);
         }
 
         public async Task<bool> UpdateAsync(UserUpdateDto request)
         {
-            (int hashType, string passwordHash) = _passwordFactory.Hash(request.Password);
-
             var user = _mapper.Map<User>(request);
 
             var resultValidator = await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(
-                user, new UserValidator(_unitOfWorkApp.Repository.UserRepository));
+                user, new UserUpdateValidator(_unitOfWorkApp.Repository.UserRepository));
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
-            user.HashType = hashType;
-            user.Password = passwordHash;
-
             user.UserRoles = request.RolesId.Select(roleId => new UserRole { RoleId = roleId }).ToList();
 
-            await _unitOfWorkApp.Repository.UserRepository.AddAsync(user);
+            await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(user);
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;

@@ -6,11 +6,11 @@
     using Domain.Common.Constants;
     using Infrastructure.Main.Repository.Security.Interfaces;
 
-    public class UserValidator : BaseValidator<User>
+    public class UserCreateValidator : BaseValidator<User>
     {
         private readonly IUserRepository _userRepository;
 
-        public UserValidator(IUserRepository userRepository)
+        public UserCreateValidator(IUserRepository userRepository)
         {
             _userRepository = userRepository;
 
