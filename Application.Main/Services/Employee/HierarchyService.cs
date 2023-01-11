@@ -13,6 +13,7 @@
     using Application.Dto.Employee.Hierarchy;
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
+    using Domain.Main.Config;
 
     public class HierarchyService : BaseService, IHierarchyService
     {
@@ -21,6 +22,11 @@
         public async Task<HierarchyDto> CreateAsync(HierarchyCreateDto request)
         {
             var hierarchy = _mapper.Map<Hierarchy>(request);
+            var components = await _unitOfWorkApp.Repository.ComponentRepository.All().ToListAsync();
+            
+            hierarchy.HierarchyComponents = components.Select(comp => new HierarchyComponent 
+                { ComponentId = comp.Id }).ToList();
+
             var resultValidator = await _unitOfWorkApp.Repository.HierarchyRepository
                 .AddAsync(hierarchy, new HierarchyCreateUpdateValidation(_unitOfWorkApp.Repository.HierarchyRepository));
 

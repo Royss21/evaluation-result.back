@@ -8,8 +8,6 @@
         public HierarchyComponentProfile()
         {
             CreateMap<HierarchyComponent, HierarchyComponentDto>()
-                .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.Hierarchy.Name))
-                .ForMember(x => x.ComponentName, m => m.MapFrom(d => d.Component.Name))
                 .ReverseMap();
 
             CreateMap<HierarchyComponent, HierarchyComponentPagingDto>()

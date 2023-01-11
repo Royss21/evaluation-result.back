@@ -70,18 +70,18 @@ namespace Application.Main.Services.Config
             var paging = await _unitOfWorkApp.Repository.HierarchyComponentRepository.FindAllPagingAsync(parametersDomain);
             var hierarchyComponents = await paging.Entities.ProjectTo<HierarchyComponentDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            var hierarchyPaging = hierarchyComponents.Select(s => new { s.HierarchyId, s.HierarchyName }).Distinct().Select(hierarchy => new HierarchyComponentPagingDto
-            {
-                HierarchyId = hierarchy.HierarchyId,
-                HierarchyName = hierarchy.HierarchyName,
-                Components = hierarchyComponents.Where(w => w.HierarchyName.ToLower().Equals(hierarchy.HierarchyName.ToLower()))
-                    .Select(x => new HierarchyOnlyComponent(x.ComponentId, x.ComponentName, x.Weight)).ToList()
-            }).ToList();
+            //var hierarchyPaging = hierarchyComponents.Select(s => new { s.HierarchyId }).Distinct().Select(hierarchy => new HierarchyComponentPagingDto
+            //{
+            //    HierarchyId = hierarchy.HierarchyId,
+            //    Components = hierarchyComponents.Where(w => w.HierarchyName.ToLower().Equals(hierarchy.HierarchyName.ToLower()))
+            //        .Select(x => new HierarchyOnlyComponent(x.ComponentId, x.ComponentName, x.Weight)).ToList()
+            //}).ToList();
 
+            //TODO
             return new PaginationResultDto<HierarchyComponentPagingDto>
             {
-                Count = hierarchyPaging.Count(),
-                Entities = hierarchyPaging
+                Count = 0,
+                Entities = null 
             };
         }
 

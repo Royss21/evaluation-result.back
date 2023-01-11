@@ -32,5 +32,18 @@
             var result = await _hierarchyComponentService.GetAllPagingAsync(filter);
             return new OkObjectResult(new JsonResult<PaginationResultDto<HierarchyComponentPagingDto>>(result));
         }
+
+        [HttpPost]
+        [SwaggerOperation(
+        Summary = "Asignar pesos por jerarquía",
+        Description = "Asignar pesos por jerarquía",
+        OperationId = "HierarchyComponentService.Asign",
+        Tags = new[] { "HierarchyComponentService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Asign(List<HierarchyComponentCreateDto> request)
+        {
+            var result = await _hierarchyComponentService.CreateBulkAsync(request);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
     }
 }
