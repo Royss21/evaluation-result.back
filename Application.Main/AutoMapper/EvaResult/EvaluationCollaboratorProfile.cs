@@ -38,6 +38,7 @@
               .ForMember(x => x.HierarchyName, m => m.MapFrom(d => d.Collaborator.Charge.Hierarchy.Name))
               .ForMember(x => x.LevelName, m => m.MapFrom(d => d.Collaborator.Charge.Hierarchy.Level.Name))
               .ForMember(x => x.DocumentNumber, m => m.MapFrom(d => d.Collaborator.DocumentNumber))
+              .ForMember(x => x.EvaluationId, m => m.MapFrom(d => d.EvaluationId))
               .ForMember(x => x.CollaboratorName, m => m.MapFrom(d => $"{d.Collaborator.Name} {d.Collaborator.LastName} {d.Collaborator.MiddleName}"));
 
 

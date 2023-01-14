@@ -5,8 +5,9 @@
 
     public interface IEvaluationService
     {
-        Task<EvaluationDto> CreateAsync(EvaluationCreateDto request);
-        Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
-        Task<IEnumerable<EvaluationCurrentDetailDto>> GetAllAsync();
+        Task<bool> CreateAsync(EvaluationCreateDto request);
+        Task<EvaluationDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
+        Task<IEnumerable<EvaluationDetailDto>> GetAllEvaluationDetailAsync();
+        //Task<IEnumerable<EvaluationDDDto>> GetAllAsync();
     }
 }

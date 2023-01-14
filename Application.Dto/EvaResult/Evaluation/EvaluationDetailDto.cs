@@ -1,13 +1,11 @@
 ﻿using Application.Dto.EvaResult.Period;
 using Newtonsoft.Json;
 using SharedKernell.Helpers;
-using static iTextSharp.text.pdf.qrcode.Version;
 
 namespace Application.Dto.EvaResult.Evaluation
 {
-    public class EvaluationCurrentDetailDto : PeriodInProgressDto
+    public class EvaluationDetailDto : PeriodInProgressDto
     {
-
         public bool IsEnableImportLeaders { get; set; }
         public List<ComponentRangeDateDto> Components { get; set; }
         public List<StageRangeDateDto> StagesEvaluation { get; set; }

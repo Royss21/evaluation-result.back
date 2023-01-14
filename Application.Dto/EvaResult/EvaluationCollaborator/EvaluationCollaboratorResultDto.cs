@@ -7,6 +7,7 @@ namespace Application.Dto.EvaResult.Evaluation
     public class EvaluationCollaboratorResultDto : CollaboratorInformationDto
     {
         public Guid Id { get; set; }
+        public Guid EvaluationId { get; set; }
         public int EvaluationComponentStageId { get; set; }
         public int ComponentCollaboratorCommentId { get; set; }
         public int StageId { get; set; }

@@ -2,7 +2,6 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.Evaluation;
-    using Application.Dto.EvaResult.Period;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -29,7 +28,7 @@
         //public async Task<IActionResult> GetAll()
         //{
         //    var result = await _evaluationService.GetAllAsync();
-        //    return new OkObjectResult(new JsonResult<List<EvaluationDto>>(result.ToList()));
+        //    return new OkObjectResult(new JsonResult<IEnumerable<EvaluationDto>>(result));
         //}
 
         //[HttpGet("paging")]
@@ -51,11 +50,11 @@
         Description = "crear Evaluation",
         OperationId = "Evaluation.Create",
         Tags = new[] { "EvaluationService" })]
-        [ProducesResponseType(typeof(JsonResult<EvaluationDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(EvaluationCreateDto Evaluation)
         {
             var result = await _evaluationService.CreateAsync(Evaluation);
-            return new OkObjectResult(new JsonResult<EvaluationDto>(result));
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
 
        
@@ -66,24 +65,24 @@
         Description = "evaluacion",
         OperationId = "Evaluation.GetEvaluationDetail",
         Tags = new[] { "EvaluationService" })]
-        [ProducesResponseType(typeof(JsonResult<EvaluationCurrentDetailDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<EvaluationDetailDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetEvaluationDetail(Guid id)
         {
             var result = await _evaluationService.GetEvaluationDetailAsync(id);
-            return new OkObjectResult(new JsonResult<EvaluationCurrentDetailDto>(result));
+            return new OkObjectResult(new JsonResult<EvaluationDetailDto>(result));
         }
 
-        [HttpGet]
+        [HttpGet("all-detail")]
         [SwaggerOperation(
         Summary = "Obtener Listado de Evaluaciones",
         Description = "Obtener Listado de Evaluaciones",
-        OperationId = "Evaluation.GetEvaluationDetail",
+        OperationId = "Evaluation.GetAllEvaluationDetail",
         Tags = new[] { "EvaluationService" })]
-        [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationCurrentDetailDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll()
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationDetailDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllEvaluationDetail()
         {
-            var result = await _evaluationService.GetAllAsync();
-            return new OkObjectResult(new JsonResult<IEnumerable<EvaluationCurrentDetailDto>>(result));
+            var result = await _evaluationService.GetAllEvaluationDetailAsync();
+            return new OkObjectResult(new JsonResult<IEnumerable<EvaluationDetailDto>>(result));
         }
 
         //[HttpDelete("{id}")]

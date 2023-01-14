@@ -1,4 +1,6 @@
 ﻿using Application.Dto.EvaResult.Evaluation;
+using SharedKernell.Helpers;
+using System.Text.Json.Serialization;
 
 namespace Application.Dto.EvaResult.Period
 {
@@ -6,8 +8,6 @@ namespace Application.Dto.EvaResult.Period
     {
         public int PeriodId { get; set; }
         public string PeriodName { get; set; } = string.Empty;
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public EvaluationCurrentDto EvaluationCurrent { get; set; }
+        public EvaluationDto Evaluation { get; set; }
     }
 }

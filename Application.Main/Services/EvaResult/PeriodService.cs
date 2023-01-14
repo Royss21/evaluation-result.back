@@ -120,12 +120,12 @@ namespace Application.Main.Services.EvaResult
 
             var evaluationCurrent = await _unitOfWorkApp.Repository.EvaluationRepository
                     .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate && f.PeriodId == periodInProgress.PeriodId)
-                    .ProjectTo<EvaluationCurrentDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<EvaluationDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
                     
             if(evaluationCurrent is not null)
             {
-                periodInProgress.EvaluationCurrent = evaluationCurrent;
+                periodInProgress.Evaluation = evaluationCurrent;
             }
 
             return periodInProgress;

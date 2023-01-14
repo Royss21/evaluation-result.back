@@ -21,7 +21,7 @@ namespace Application.Main.Services.EvaResult
         public EvaluationService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public async Task<EvaluationDto> CreateAsync(EvaluationCreateDto request)
+        public async Task<bool> CreateAsync(EvaluationCreateDto request)
         {
             if (!request.EvaluationComponents.Any())
                 throw new WarningException("No hay ningun componente seleccionado para la evaluacion.");
@@ -177,14 +177,14 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
             await _unitOfWorkApp.SaveChangesAsync();
 
-            return _mapper.Map<EvaluationDto>(evaluation);
+            return true;
         }
-        public async Task<EvaluationCurrentDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
+        public async Task<EvaluationDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
         {
 
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
                     .Find(p => p.Id.Equals(evaluationId))
-                    .ProjectTo<EvaluationCurrentDetailDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<EvaluationDetailDto>(_mapper.ConfigurationProvider)
                     .FirstOrDefaultAsync();
 
             if (evaluation is null)
@@ -192,12 +192,12 @@ namespace Application.Main.Services.EvaResult
 
             return evaluation;
         }
-        public async Task<IEnumerable<EvaluationCurrentDetailDto>> GetAllAsync()
+        public async Task<IEnumerable<EvaluationDetailDto>> GetAllEvaluationDetailAsync()
         {
 
             var evaluations = await _unitOfWorkApp.Repository.EvaluationRepository
                     .Find(f => true)
-                    .ProjectTo<EvaluationCurrentDetailDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<EvaluationDetailDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 
             if (evaluations is null)
@@ -205,6 +205,14 @@ namespace Application.Main.Services.EvaResult
 
             return evaluations;
         }
+
+        //public async Task<IEnumerable<EvaluationDDDto>> GetAllAsync()
+        //{
+        //    return await _unitOfWorkApp.Repository.EvaluationRepository
+        //        .Find(f => true)
+        //        .ProjectTo<EvaluationDDDto>(_mapper.ConfigurationProvider)
+        //        .ToListAsync();
+        //}
 
         #region Helpers Functions
         private async Task<int> CountEvaluationsCurrentPeriod()
