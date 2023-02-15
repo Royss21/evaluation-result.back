@@ -106,6 +106,20 @@ namespace Application.Main.Services.EvaResult
             return period;
         }
 
+        public async Task<PeriodDto> GetCurrentDatePeriodAsync()
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+            var period = await _unitOfWorkApp.Repository.PeriodRepository
+                   .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
+                   .ProjectTo<PeriodDto>(_mapper.ConfigurationProvider)
+                   .FirstOrDefaultAsync();
+
+            if (period is null)
+                throw new WarningException(Messages.General.ResourceNotFound);
+
+            return period;
+        }
+
         public async Task<PeriodInProgressDto> GetPeriodInProgressAsync()
         {
             var currentDate = DateTime.UtcNow.GetDatePeru();

@@ -32,6 +32,19 @@
             return new OkObjectResult(new JsonResult<List<PeriodDto>>(result.ToList()));
         }
 
+        [HttpGet("current-dates")]
+        [SwaggerOperation(
+        Summary = "Obtener fechas del periodo actual",
+        Description = "Listado de Periodos",
+        OperationId = "Period.GetAll",
+        Tags = new[] { "PeriodService" })]
+        [ProducesResponseType(typeof(JsonResult<PeriodDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCurrentDatePeriod()
+        {
+            var result = await _periodService.GetCurrentDatePeriodAsync();
+            return new OkObjectResult(new JsonResult<PeriodDto>(result));
+        }
+
         [HttpGet("paging")]
         [SwaggerOperation(
         Summary = "Lista Paginada Periodos",
