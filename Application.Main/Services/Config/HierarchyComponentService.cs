@@ -18,7 +18,7 @@ namespace Application.Main.Services.Config
 
         public async Task<bool> CreateBulkAsync(List<HierarchyComponentCreateDto> request)
         {
-            //HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<BaseHierarchyComponentDto>>(request));
+            HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<HierarchyComponent>>(request));
 
             var hierarchyComponents = _mapper.Map<List<HierarchyComponent>>(request);
 
@@ -30,12 +30,12 @@ namespace Application.Main.Services.Config
 
         public async Task<bool> UpdateBulkAsync(List<HierarchyComponentUpdateDto> request)
         {
-            HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<HierarchyComponentUpdateDto>>(request));
+            //HierarchyComponentValidator.ValidateComponents(_mapper.Map<List<BaseHierarchyComponentDto>>(request));
 
-            var hierarchyComponents = _mapper.Map<List<HierarchyComponent>>(request);
+            //var hierarchyComponents = _mapper.Map<List<HierarchyComponent>>(request);
 
-            _unitOfWorkApp.Repository.HierarchyComponentRepository.UpdateRange(hierarchyComponents);
-            await _unitOfWorkApp.SaveChangesAsync();
+            //_unitOfWorkApp.Repository.HierarchyComponentRepository.UpdateRange(hierarchyComponents);
+            //await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
         }

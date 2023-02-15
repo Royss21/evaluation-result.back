@@ -73,12 +73,14 @@ namespace Application.Main.Services.Config
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
                                                 .AddCondition(add => add.Name.ToLower().Contains(filter.GlobalFilter.ToLower()) ||
-                                                                     add.Description.ToLower().Contains(filter.GlobalFilter.ToLower()));
+                                                                     add.Description.ToLower().Contains(filter.GlobalFilter.ToLower()) ||
+                                                                     add.Area.Name.ToLower().Contains(filter.GlobalFilter.ToLower()) ||
+                                                                     add.Formula.Name.ToLower().Contains(filter.GlobalFilter.ToLower()));
 
-                if (new[] { GeneralConstants.Component.AreaObjectives, GeneralConstants.Component.CorporateObjectives}.Contains(filter.ComponentId))
-                    parametersDomain.FilterWhere = parametersDomain.FilterWhere
-                                                    .AddCondition(add => add.Area.Name.ToLower().Contains(filter.GlobalFilter.ToLower()) ||
-                                                                         add.Formula.Name.ToLower().Contains(filter.GlobalFilter.ToLower()));
+                //if (new[] { GeneralConstants.Component.AreaObjectives, GeneralConstants.Component.CorporateObjectives}.Contains(filter.ComponentId))
+                //    parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                //                                    .AddCondition(add => add.Area.Name.ToLower().Contains(filter.GlobalFilter.ToLower()) ||
+                //                                                         add.Formula.Name.ToLower().Contains(filter.GlobalFilter.ToLower()));
             }
 
             var paging = await _unitOfWorkApp.Repository.SubcomponentRepository.FindAllPagingAsync(parametersDomain);
