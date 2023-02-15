@@ -8,7 +8,7 @@ namespace Application.Main.Services.Config.Validators
     public static class HierarchyComponentValidator
     {
 
-        public static void ValidateComponents(List<BaseHierarchyComponentDto> request)
+        public static void ValidateComponents(List<HierarchyComponentUpdateDto> request)
         {
             if (request.Any(s => s.Weight <= 0))
                 throw new WarningException(Messages.HierarchyComponent.SomeComponentHasZeroWeight);

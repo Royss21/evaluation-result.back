@@ -33,16 +33,16 @@
             return new OkObjectResult(new JsonResult<PaginationResultDto<HierarchyComponentPagingDto>>(result));
         }
 
-        [HttpPost]
+        [HttpPut]
         [SwaggerOperation(
         Summary = "Asignar pesos por jerarquía",
         Description = "Asignar pesos por jerarquía",
         OperationId = "HierarchyComponentService.Asign",
         Tags = new[] { "HierarchyComponentService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Asign(List<HierarchyComponentCreateDto> request)
+        public async Task<IActionResult> Asign(List<HierarchyComponentUpdateDto> request)
         {
-            var result = await _hierarchyComponentService.CreateBulkAsync(request);
+            var result = await _hierarchyComponentService.UpdateBulkAsync(request);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
     }

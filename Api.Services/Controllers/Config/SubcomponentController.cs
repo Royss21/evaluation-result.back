@@ -54,9 +54,9 @@
         OperationId = "Subcomponent.Create",
         Tags = new[] { "SubcomponentService" })]
         [ProducesResponseType(typeof(JsonResult<SubcomponentDto>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> Create(SubcomponentCreateDto Level)
+        public async Task<IActionResult> Create(SubcomponentCreateDto subComponent)
         {
-            var result = await _subcomponentService.CreateAsync(Level);
+            var result = await _subcomponentService.CreateAsync(subComponent);
             return new OkObjectResult(new JsonResult<SubcomponentDto>(result));
         }
 
