@@ -144,7 +144,5 @@ namespace Application.Main.Services.EvaResult
 
             return periodInProgress;
         }
-
-
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20230103050259_02-01-2023")]
-    partial class _02012023
+    [Migration("20230218222734_ss")]
+    partial class ss
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -1146,6 +1146,11 @@ namespace Infrastructure.Main.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("FormulaQuery")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("FormulaValues")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");

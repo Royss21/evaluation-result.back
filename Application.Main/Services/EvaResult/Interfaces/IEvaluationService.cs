@@ -8,6 +8,7 @@
         Task<bool> CreateAsync(EvaluationCreateDto request);
         Task<EvaluationDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
         Task<IEnumerable<EvaluationDetailDto>> GetAllEvaluationDetailAsync();
+        Task<EvaluationDto> GetEnabledComponentsAsync(Guid id);
         //Task<IEnumerable<EvaluationDDDto>> GetAllAsync();
     }
 }

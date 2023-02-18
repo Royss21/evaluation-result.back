@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class cambios : Migration
+    public partial class ss : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -1092,6 +1092,7 @@ namespace Infrastructure.Main.Migrations
                     PointsCalibrated = table.Column<decimal>(type: "money", nullable: false, defaultValue: 0m),
                     FormulaName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     FormulaQuery = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    FormulaValues = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),

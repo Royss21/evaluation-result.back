@@ -77,6 +77,7 @@ namespace Application.Main.Services.EvaResult
                         }
 
                         var complianceValue = await CalculateFormulaCompliance(formulaQuerySql);
+                        ccd.FormulaValues = formulaQuerySql;
                         ccd.Compliance = complianceValue;
                         ccd.Points = complianceValue * ccd.WeightRelative;
                     }
@@ -277,11 +278,14 @@ namespace Application.Main.Services.EvaResult
                      .Find(f =>
                          f.EvaluationCollaboratorId.Equals(componenteCollaborator.EvaluationCollaboratorId) &&
                          f.EvaluationComponentStageId == evaluationComponentStage.Id
-                     ).FirstAsync();
+                     )
+                     .Select(s => new { s.StatusId, s.Status.Name })
+                     .FirstAsync();
 
             componenteCollaborator.EvaluationComponentStageId = evaluationComponentStage.Id;
             componenteCollaborator.StageId = evaluationComponentStage.StageId;
             componenteCollaborator.StatusId = comment.StatusId;
+            componenteCollaborator.StatusName = comment.Name;
             componenteCollaborator.Comment = (await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f => 
                         f.EvaluationComponentStageId == componenteCollaborator.EvaluationComponentStageId && 

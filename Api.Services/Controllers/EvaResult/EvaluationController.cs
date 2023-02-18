@@ -72,6 +72,19 @@
             return new OkObjectResult(new JsonResult<EvaluationDetailDto>(result));
         }
 
+        [HttpGet("{id}/enabled-components")]
+        [SwaggerOperation(
+        Summary = "Obtener Evaluacion",
+        Description = "evaluacion",
+        OperationId = "Evaluation.GetEnabledComponents",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetEnabledComponents(Guid id)
+        {
+            var result = await _evaluationService.GetEnabledComponentsAsync(id);
+            return new OkObjectResult(new JsonResult<EvaluationDto>(result));
+        }
+
         [HttpGet("all-detail")]
         [SwaggerOperation(
         Summary = "Obtener Listado de Evaluaciones",

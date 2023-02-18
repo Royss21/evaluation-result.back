@@ -206,6 +206,17 @@ namespace Application.Main.Services.EvaResult
             return evaluations;
         }
 
+        public async Task<EvaluationDto> GetEnabledComponentsAsync(Guid id)
+        {
+            
+            var evaluationCurrent = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.Id.Equals(id))
+                    .ProjectTo<EvaluationDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefaultAsync();
+
+            return evaluationCurrent;
+        }
+
         //public async Task<IEnumerable<EvaluationDDDto>> GetAllAsync()
         //{
         //    return await _unitOfWorkApp.Repository.EvaluationRepository

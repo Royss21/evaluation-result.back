@@ -52,6 +52,10 @@
                 .IsRequired()
                 .HasMaxLength(500);
 
+            builder.Property(p => p.FormulaValues)
+                .IsRequired()
+                .HasMaxLength(500);
+
             builder.HasOne(b => b.ComponentCollaborator)
                 .WithMany(b => b.ComponentCollaboratorDetails);
 

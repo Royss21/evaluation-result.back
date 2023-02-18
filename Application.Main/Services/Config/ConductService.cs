@@ -62,8 +62,8 @@ namespace Application.Main.Services.Config
                    .ProjectTo<ConductDto>(_mapper.ConfigurationProvider)
                    .ToListAsync();
 
-            if (!conduct.Any())
-                throw new WarningException(Messages.General.ResourceNotFound);
+            //if (!conduct.Any())
+            //    throw new WarningException(Messages.General.ResourceNotFound);
 
             return conduct;
         }
