@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class ss : Migration
+    public partial class cambio : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -122,6 +122,25 @@ namespace Infrastructure.Main.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gerency", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IdentityDocument",
+                schema: "Employee",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityDocument", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -806,6 +825,7 @@ namespace Infrastructure.Main.Migrations
                     DateBirthday = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DateAdmission = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateEgress = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IdentityDocumentId = table.Column<int>(type: "int", nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -820,6 +840,13 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.ChargeId,
                         principalSchema: "Employee",
                         principalTable: "Charge",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Collaborator_IdentityDocument_IdentityDocumentId",
+                        column: x => x.IdentityDocumentId,
+                        principalSchema: "Employee",
+                        principalTable: "IdentityDocument",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -1229,6 +1256,12 @@ namespace Infrastructure.Main.Migrations
                 column: "ChargeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Collaborator_IdentityDocumentId",
+                schema: "Employee",
+                table: "Collaborator",
+                column: "IdentityDocumentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ComponentCollaborator_EvaluationCollaboratorId",
                 schema: "EvaResult",
                 table: "ComponentCollaborator",
@@ -1632,6 +1665,10 @@ namespace Infrastructure.Main.Migrations
 
             migrationBuilder.DropTable(
                 name: "Charge",
+                schema: "Employee");
+
+            migrationBuilder.DropTable(
+                name: "IdentityDocument",
                 schema: "Employee");
 
             migrationBuilder.DropTable(

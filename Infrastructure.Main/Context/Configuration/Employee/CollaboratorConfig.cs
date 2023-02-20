@@ -39,6 +39,9 @@
 
             builder.HasOne(b => b.Charge)
                 .WithMany(b => b.Collaborators);
+
+            builder.HasOne(b => b.IdentityDocument)
+                .WithMany(b => b.Collaborators);
         }
     }
 }

@@ -39,6 +39,7 @@
         public DbSet<Collaborator> Collaborator { get; set; }
         public DbSet<Gerency> Gerency { get; set; }
         public DbSet<Hierarchy> Hierarchy { get; set; }
+        public DbSet<IdentityDocument> IdentityDocument { get; set; }
         #endregion
 
         #region Config
@@ -94,6 +95,7 @@
                 .ApplyConfiguration(new ChargeConfig())
                 .ApplyConfiguration(new GerencyConfig())
                 .ApplyConfiguration(new HierarchyConfig())
+                .ApplyConfiguration(new IdentityDocumentConfig())
                 .ApplyConfiguration(new CollaboratorConfig())
             #endregion
 

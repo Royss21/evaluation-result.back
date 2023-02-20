@@ -21,6 +21,16 @@ values
 go
 
 
+insert into [Employee].[IdentityDocument]
+(Name, Description, CreateUser, CreateDate)
+values
+('Dni', 'rmartel', getdate()),
+('Pasaporte', 'rmartel', getdate()),
+('Carnet Extranjeria', 'rmartel', getdate())
+
+go
+
+
 --insert into Employee.Area (GerencyId, name, CreateUser, CreateDate)
 --values
 --(1, 'Area 1','system','Oct 31 2022 10:30PM'),

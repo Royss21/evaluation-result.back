@@ -787,6 +787,9 @@ namespace Infrastructure.Main.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("IdentityDocumentId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -810,6 +813,8 @@ namespace Infrastructure.Main.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ChargeId");
+
+                    b.HasIndex("IdentityDocumentId");
 
                     b.ToTable("Collaborator", "Employee");
                 });
@@ -893,6 +898,44 @@ namespace Infrastructure.Main.Migrations
                     b.HasIndex("LevelId");
 
                     b.ToTable("Hierarchy", "Employee");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.IdentityDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreateUser")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("EditDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("EditUser")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityDocument", "Employee");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>
@@ -2202,7 +2245,15 @@ namespace Infrastructure.Main.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("Domain.Main.Employee.IdentityDocument", "IdentityDocument")
+                        .WithMany("Collaborators")
+                        .HasForeignKey("IdentityDocumentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Charge");
+
+                    b.Navigation("IdentityDocument");
                 });
 
             modelBuilder.Entity("Domain.Main.Employee.Hierarchy", b =>
@@ -2607,6 +2658,11 @@ namespace Infrastructure.Main.Migrations
                     b.Navigation("Charges");
 
                     b.Navigation("HierarchyComponents");
+                });
+
+            modelBuilder.Entity("Domain.Main.Employee.IdentityDocument", b =>
+                {
+                    b.Navigation("Collaborators");
                 });
 
             modelBuilder.Entity("Domain.Main.EvaResult.ComponentCollaborator", b =>

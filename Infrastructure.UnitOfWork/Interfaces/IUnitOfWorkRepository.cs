@@ -7,6 +7,7 @@ namespace Infrastructure.UnitOfWork.Interfaces
     using Infrastructure.Main.Repository.Config.Interfaces;
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
     using Infrastructure.Main.Repository.Security.Interfaces;
+    using Infrastructure.Main.Repository.Employee;
 
     public interface IUnitOfWorkRepository
     {
@@ -15,6 +16,7 @@ namespace Infrastructure.UnitOfWork.Interfaces
         ICollaboratorRepository CollaboratorRepository { get; }
         IGerencyRepository GerencyRepository { get; }
         IHierarchyRepository HierarchyRepository { get; }
+        IIdentityDocumentRepository IdentityDocumentRepository { get; }
 
         IComponentRepository ComponentRepository { get; }
         IConductRepository ConductRepository { get; }

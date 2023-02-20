@@ -18,6 +18,7 @@ namespace Infrastructure.UnitOfWork
         public IChargeRepository ChargeRepository { get; }
         public IGerencyRepository GerencyRepository { get; }
         public IHierarchyRepository HierarchyRepository { get; }
+        public IIdentityDocumentRepository IdentityDocumentRepository { get; }
         public IComponentRepository ComponentRepository { get; }
         public IConductRepository ConductRepository { get; }
         public IHierarchyComponentRepository HierarchyComponentRepository { get; }
@@ -60,6 +61,7 @@ namespace Infrastructure.UnitOfWork
             AreaRepository = new AreaRepository(context);
             GerencyRepository = new GerencyRepository(context);
             HierarchyRepository = new HierarchyRepository(context);
+            IdentityDocumentRepository = new IdentityDocumentRepository(context);
             ComponentRepository = new ComponentRepository(context);
             CollaboratorRepository = new CollaboratorRepository(context);
             ConductRepository = new ConductRepository(context);

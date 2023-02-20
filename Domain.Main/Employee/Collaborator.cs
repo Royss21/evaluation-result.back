@@ -19,11 +19,10 @@ namespace Domain.Main.Employee
         public DateTime? DateBirthday { get; set; } 
         public DateTime DateAdmission { get; set; } 
         public DateTime? DateEgress { get; set; }
+        public int IdentityDocumentId { get; set; }
 
 
-
-
-
+        public virtual IdentityDocument IdentityDocument{ get; set; }
         public virtual Charge Charge { get; set; }
         public virtual ICollection<EvaluationCollaborator> EvaluationCollaborators { get; set; }
     }
