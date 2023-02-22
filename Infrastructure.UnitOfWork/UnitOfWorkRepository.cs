@@ -14,6 +14,8 @@ namespace Infrastructure.UnitOfWork
 
     public class UnitOfWorkRepository : IUnitOfWorkRepository
     {
+        public ILogRepository LogRepository { get; }
+        public IAuditRepository AuditRepository { get; }
         public IAreaRepository AreaRepository { get; }
         public IChargeRepository ChargeRepository { get; }
         public IGerencyRepository GerencyRepository { get; }
@@ -96,6 +98,9 @@ namespace Infrastructure.UnitOfWork
             UserRepository = new UserRepository(context);
             UserRoleRepository = new UserRoleRepository(context);
             UserTokenRepository = new UserTokenRepository(context);
+
+            LogRepository = new LogRepository(context);
+            AuditRepository = new AuditRepository(context);
         }
     }
 }

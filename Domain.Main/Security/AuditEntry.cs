@@ -12,6 +12,7 @@
 
         public EntityEntry EntityEntry { get; }
         public string TableName { get; set; }
+        public string Action { get; set; }
         public Dictionary<string, object> KeyValues { get; } = new Dictionary<string, object>();
         public Dictionary<string, object> OldValues { get; } = new Dictionary<string, object>();
         public Dictionary<string, object> NewValues { get; } = new Dictionary<string, object>();
@@ -27,7 +28,8 @@
                 KeyValues = JsonSerializer.Serialize(KeyValues),
                 OldValues = !OldValues.Any() ? "" : JsonSerializer.Serialize(OldValues),
                 NewValues = !NewValues.Any() ? "" : JsonSerializer.Serialize(NewValues),
-                CreateUser = user
+                CreateUser = user,
+                Action = Action
             };
 
             return auditEntry;

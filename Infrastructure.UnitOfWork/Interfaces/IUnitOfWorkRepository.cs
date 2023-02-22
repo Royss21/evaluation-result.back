@@ -3,14 +3,15 @@
 
 namespace Infrastructure.UnitOfWork.Interfaces
 {
-    using Infrastructure.Main.Repository.Employee.Interfaces;
     using Infrastructure.Main.Repository.Config.Interfaces;
+    using Infrastructure.Main.Repository.Employee.Interfaces;
     using Infrastructure.Main.Repository.EvaResult.Interfaces;
     using Infrastructure.Main.Repository.Security.Interfaces;
-    using Infrastructure.Main.Repository.Employee;
 
     public interface IUnitOfWorkRepository
     {
+        ILogRepository LogRepository { get; }
+        IAuditRepository AuditRepository { get; }
         IAreaRepository AreaRepository { get; }
         IChargeRepository ChargeRepository { get; }
         ICollaboratorRepository CollaboratorRepository { get; }

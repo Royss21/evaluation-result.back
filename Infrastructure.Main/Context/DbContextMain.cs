@@ -24,6 +24,7 @@
         }
 
         public DbSet<AuditEntity> AuditEntity { get; set; }
+        public DbSet<LogEntity> LogEntity { get; set; }
         public DbSet<EndpointService> EndpointService { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<Role> Role { get; set; }
@@ -81,6 +82,7 @@
 
             builder
                 .ApplyConfiguration(new AuditConfig())
+                .ApplyConfiguration(new LogConfig())
                 .ApplyConfiguration(new EndpointServiceConfig())
                 .ApplyConfiguration(new MenuConfig())
                 .ApplyConfiguration(new RoleConfig())
@@ -189,10 +191,12 @@
                     {
                         case EntityState.Added:
                             auditEntry.NewValues[propertyName] = property.CurrentValue ?? "";
+                            auditEntry.Action = "Created";
                             break;
 
                         case EntityState.Deleted:
                             auditEntry.OldValues[propertyName] = property.OriginalValue ?? "";
+                            auditEntry.Action = "Deleted";
                             break;
 
                         case EntityState.Modified:
@@ -200,6 +204,7 @@
                             {
                                 auditEntry.OldValues[propertyName] = property.OriginalValue ?? "";
                                 auditEntry.NewValues[propertyName] = property.CurrentValue ?? "";
+                                auditEntry.Action = "Modified";
                             }
 
                             break;

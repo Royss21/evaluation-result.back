@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class cambio : Migration
+    public partial class nuevo : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -32,6 +32,7 @@ namespace Infrastructure.Main.Migrations
                     KeyValues = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
                     OldValues = table.Column<string>(type: "nvarchar(max)", maxLength: 100000, nullable: false),
                     NewValues = table.Column<string>(type: "nvarchar(max)", maxLength: 100000, nullable: false),
+                    Action = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -181,6 +182,29 @@ namespace Infrastructure.Main.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Level", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LogEntity",
+                schema: "Security",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Message = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    InnerExceptionMessage = table.Column<string>(type: "nvarchar(max)", maxLength: 100000, nullable: false),
+                    StackTrace = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    FullNameService = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    TypeException = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    CreateUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EditUser = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    EditDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LogEntity", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -1562,6 +1586,10 @@ namespace Infrastructure.Main.Migrations
             migrationBuilder.DropTable(
                 name: "LeaderCollaborator",
                 schema: "EvaResult");
+
+            migrationBuilder.DropTable(
+                name: "LogEntity",
+                schema: "Security");
 
             migrationBuilder.DropTable(
                 name: "ParameterValue",

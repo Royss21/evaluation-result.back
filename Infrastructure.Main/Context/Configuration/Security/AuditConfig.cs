@@ -11,6 +11,9 @@
             builder.Property(p => p.KeyValues)
                 .HasMaxLength(5000);
 
+            builder.Property(p => p.Action)
+                .HasMaxLength(20);
+
             builder.Property(p => p.NewValues)
                 .HasMaxLength(100000);
 
