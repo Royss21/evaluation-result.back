@@ -5,6 +5,8 @@
         public const int CountEvaluationAnnualLabelId = 1;
         public const int PointsCompetenceLabelId = 2;
         public const int CountCompetenceLabelId = 3;
+        public const int ResultLabelsLabelId = 4;
+
         public const int MonthsToSubtract = -3;
         public class Component
         {

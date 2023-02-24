@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Main.Migrations
 {
     [DbContext(typeof(DbContextMain))]
-    [Migration("20230222045035_nuevo")]
-    partial class nuevo
+    [Migration("20230224041101_sadad")]
+    partial class sadad
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
