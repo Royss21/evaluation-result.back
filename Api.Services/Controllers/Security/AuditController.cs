@@ -7,7 +7,7 @@
     using Application.Dto.Pagination;
     using Domain.Main.Security;
 
-    [Route("api/role")]
+    [Route("api/audit")]
     [ApiController]
     public class AuditController : BaseController
     {

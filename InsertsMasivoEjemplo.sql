@@ -223,7 +223,8 @@ insert into Config.Label
 values
 ('Cantidad de evaluaciones', '', 'rmartel', getdate()),
 ('Puntajes de competencias', '', 'rmartel', getdate()),
-('Total de Competencias', '', 'rmartel', getdate())
+('Total de Competencias', '', 'rmartel', getdate()),
+('Rango de Notas', '', 'rmartel', getdate())
 
 
 
@@ -236,7 +237,13 @@ values
 (2,'Punto 3', '', 3, 0,0,'', 'rmartel',getdate()),
 (2,'Punto 4', '', 4, 0,0,'', 'rmartel',getdate()),
 (2,'Punto 5', '', 5, 0,0,'', 'rmartel',getdate()),
-(3, 'Total', '', 18,0,0,'' , 'rmartel',getdate())
+(3, 'Total', '', 18,0,0,'' , 'rmartel',getdate()),
+(4, 'Muy Sobresaliente', '', 0,1.01,1.2,'' , 'rmartel',getdate()),
+(4, 'Sobresaliente', '', 0,0.8,1,'' , 'rmartel',getdate()),
+(4, 'Desarrollado', '', 0,0.7,0.79,'' , 'rmartel',getdate()),
+(4, 'En Proceso', '', 0,0.6,0.69,'' , 'rmartel',getdate()),
+(4, 'Básico', '', 0,0.4,0.599,'' , 'rmartel',getdate()),
+(4, 'Deficiente', '', 0,0,0.39,'' , 'rmartel',getdate())
 
 go
 

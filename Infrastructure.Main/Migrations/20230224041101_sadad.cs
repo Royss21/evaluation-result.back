@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class nuevo : Migration
+    public partial class sadad : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

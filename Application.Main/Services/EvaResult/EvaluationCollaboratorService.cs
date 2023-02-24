@@ -272,10 +272,6 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<PaginationResultDto<EvaluationCollaboratorReviewPagingDto>> GetPagingCollaboratorReviewStageEvaluationAsync(EvaluationCollaboratorReviewFilterDto filter)
         {
-            var collaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                    .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.Evaluation.EvaluationComponentStages.Select(ecs => ecs.StageId).Contains(filter.StageId))
-                    .ProjectTo<EvaluationCollaboratorReviewPagingDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync();
             var evaluationComponentStageId = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
                 .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.StageId == filter.StageId)
                 .Select(s => s.Id)
