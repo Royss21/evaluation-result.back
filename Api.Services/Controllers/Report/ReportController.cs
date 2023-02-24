@@ -19,7 +19,7 @@
             _reportService = reportService;
         }
 
-        [HttpGet("paging")]
+        [HttpGet("paging-final-result")]
         [SwaggerOperation(
         Summary = "Lista paginada resultado evaluacion final",
         Description = "lista paginada resultado evaluacion final",
