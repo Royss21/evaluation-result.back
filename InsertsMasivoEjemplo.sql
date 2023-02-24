@@ -22,7 +22,7 @@ go
 
 
 insert into [Employee].[IdentityDocument]
-(Name, Description, CreateUser, CreateDate)
+(Name, CreateUser, CreateDate)
 values
 ('Dni', 'rmartel', getdate()),
 ('Pasaporte', 'rmartel', getdate()),
