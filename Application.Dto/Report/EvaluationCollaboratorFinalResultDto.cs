@@ -1,7 +1,7 @@
-﻿using Application.Dto.EvaResult.EvaluationCollaborator;
-
+﻿
 namespace Application.Dto.Report
 {
+    using Application.Dto.EvaResult.EvaluationCollaborator;
     public class EvaluationCollaboratorFinalResultDto: CollaboratorInformationDto
     {
         public Guid EvaluationId { get; set; }
