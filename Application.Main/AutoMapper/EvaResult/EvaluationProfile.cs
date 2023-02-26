@@ -12,6 +12,9 @@
             //    .ForMember(x => x.PeriodName, m => m.MapFrom(d => d.Period.Name));
 
             CreateMap<EvaluationCreateDto, Evaluation>().ReverseMap();
+            CreateMap<Evaluation, EvaluationListDto>()
+                .ForMember(x => x.Name, m => m.MapFrom(d => $"{d.Period.Name}-{d.Name}"))
+                .ForMember(x => x.Id, m => m.MapFrom(d => d.Id));
 
             CreateMap<Evaluation, EvaluationDto>()
                .ForMember(x => x.HasComponentCorporateObjectives, m => m.MapFrom(d => d.EvaluationComponents.Any(ec => ec.ComponentId == GeneralConstants.Component.CorporateObjectives)))

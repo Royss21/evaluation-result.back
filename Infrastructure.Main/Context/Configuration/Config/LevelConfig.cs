@@ -17,7 +17,8 @@
                 .WithOne(b => b.Level);
 
             builder.HasMany(b => b.Conducts)
-                .WithOne(b => b.Level);
+                .WithOne(b => b.Level)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

@@ -2,6 +2,8 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.Evaluation;
+    using Application.Dto.EvaResult.Period;
+    using Application.Main.Services.EvaResult;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -96,6 +98,19 @@
         {
             var result = await _evaluationService.GetAllEvaluationDetailAsync();
             return new OkObjectResult(new JsonResult<IEnumerable<EvaluationDetailDto>>(result));
+        }
+
+        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Lista de evaluaciones finalizadas",
+        Description = "Listado de evaluaciones finalizadas",
+        OperationId = "Evaluation.GetAllEvaluationFinished",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationListDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllEvaluationFinished()
+        {
+            var result = await _evaluationService.GetAllEvaluationFinishedAsync();
+            return new OkObjectResult(new JsonResult<List<EvaluationListDto>>(result.ToList()));
         }
 
         //[HttpDelete("{id}")]

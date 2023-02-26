@@ -9,6 +9,7 @@
         Task<EvaluationDetailDto> GetEvaluationDetailAsync(Guid evaluationId);
         Task<IEnumerable<EvaluationDetailDto>> GetAllEvaluationDetailAsync();
         Task<EvaluationDto> GetEnabledComponentsAsync(Guid id);
+        Task<IEnumerable<EvaluationListDto>> GetAllEvaluationFinishedAsync();
         //Task<IEnumerable<EvaluationDDDto>> GetAllAsync();
     }
 }
