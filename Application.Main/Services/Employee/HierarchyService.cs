@@ -98,7 +98,10 @@
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var hierarchy = await _unitOfWorkApp.Repository.HierarchyRepository.GetAsync(id);
+            var hierarchy = await _unitOfWorkApp.Repository.HierarchyRepository
+                .Find(f => f.Id == id )
+                .Include("HierarchyComponents")
+                .FirstOrDefaultAsync();
 
             if (hierarchy is null)
                 throw new System.ComponentModel.WarningException(Messages.General.ResourceNotFound);
