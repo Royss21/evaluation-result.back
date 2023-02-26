@@ -100,7 +100,7 @@
             return new OkObjectResult(new JsonResult<IEnumerable<EvaluationDetailDto>>(result));
         }
 
-        [HttpGet]
+        [HttpGet("finished")]
         [SwaggerOperation(
         Summary = "Lista de evaluaciones finalizadas",
         Description = "Listado de evaluaciones finalizadas",
