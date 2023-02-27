@@ -25,7 +25,7 @@
                 .AddAsync(role, new RoleValidator(_unitOfWorkApp.Repository.RoleRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
@@ -83,7 +83,7 @@
                 .UpdateAsync(role, new RoleValidator(_unitOfWorkApp.Repository.RoleRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 

@@ -13,7 +13,7 @@
         //        .AddAsync(endpoint, new EndpointCrearValidador(_unitOfWorkApp.Repositorio.EndpointRepositorio));
 
         //    if (!resultadoValidador.IsValid)
-        //        throw new ValidatorException(string.Join(",", resultadoValidador.Errors.Select(e => e.ErrorMessage)));
+        //        throw new ValidatorException(string.Join(". \n", resultadoValidador.Errors.Select(e => e.ErrorMessage)));
 
         //    await _unitOfWorkApp.SaveChangesAsync();
 
@@ -36,7 +36,7 @@
         //        .UpdateAsync(endpoint, new EndpointActualizarValidador(_unitOfWorkApp.Repositorio.EndpointRepositorio));
 
         //    if (!resultadoValidador.IsValid)
-        //        throw new ValidatorException(string.Join(",", resultadoValidador.Errors.Select(e => e.ErrorMessage)));
+        //        throw new ValidatorException(string.Join(". \n", resultadoValidador.Errors.Select(e => e.ErrorMessage)));
 
         //    await _unitOfWorkApp.SaveChangesAsync();
 

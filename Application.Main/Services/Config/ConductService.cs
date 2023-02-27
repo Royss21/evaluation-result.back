@@ -21,7 +21,7 @@ namespace Application.Main.Services.Config
                     .AddAsync(conduct, new ConductCreateUpdateValidator(_unitOfWorkApp.Repository.ConductRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
@@ -35,7 +35,7 @@ namespace Application.Main.Services.Config
                     .UpdateAsync(conduct, new ConductCreateUpdateValidator(_unitOfWorkApp.Repository.ConductRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 

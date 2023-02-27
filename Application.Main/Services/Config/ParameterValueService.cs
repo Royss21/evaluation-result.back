@@ -23,7 +23,7 @@ namespace Application.Main.Services.Config
                     .AddAsync(parameterValue, new ParameterValueCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterValueRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
@@ -38,7 +38,7 @@ namespace Application.Main.Services.Config
                    .UpdateAsync(parameterValue, new ParameterValueCreateUpdateValidator(_unitOfWorkApp.Repository.ParameterValueRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
