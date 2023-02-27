@@ -31,7 +31,7 @@
                 .AddAsync(hierarchy, new HierarchyCreateUpdateValidation(_unitOfWorkApp.Repository.HierarchyRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
             return _mapper.Map<HierarchyDto>(hierarchy);
@@ -44,7 +44,7 @@
                 .UpdateAsync(hierarchy, new HierarchyCreateUpdateValidation(_unitOfWorkApp.Repository.HierarchyRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 

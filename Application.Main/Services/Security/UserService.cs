@@ -30,7 +30,7 @@ namespace Application.Main.Services.Security
                 user, new UserCreateValidator(_unitOfWorkApp.Repository.UserRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             user.HashType = hashType;
             user.Password = passwordHash;
@@ -51,7 +51,7 @@ namespace Application.Main.Services.Security
                 user, new UserUpdateValidator(_unitOfWorkApp.Repository.UserRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             user.UserRoles = request.RolesId.Select(roleId => new UserRole { RoleId = roleId }).ToList();
 

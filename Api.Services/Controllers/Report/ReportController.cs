@@ -37,7 +37,7 @@
         [SwaggerOperation(
         Summary = "Lista resultado evaluacion final",
         Description = "lista  resultado evaluacion final",
-        OperationId = "Report.GetAllPagingByFinalResult",
+        OperationId = "Report.GetAllByFinalResult",
         Tags = new[] { "ReportService" })]
         [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationCollaboratorFinalResultDto>>), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllByFinalResult(string? globalFilter, Guid? evaluationId)

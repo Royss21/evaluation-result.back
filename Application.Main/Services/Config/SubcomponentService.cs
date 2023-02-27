@@ -23,7 +23,7 @@ namespace Application.Main.Services.Config
                     .AddAsync(subcomponent, new SubcomponentCreateUpdateValidator(_unitOfWorkApp.Repository.SubcomponentRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
@@ -37,7 +37,7 @@ namespace Application.Main.Services.Config
                                 .UpdateAsync(subcomponent, new SubcomponentCreateUpdateValidator(_unitOfWorkApp.Repository.SubcomponentRepository));
 
             if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(",", resultValidator.Errors.Select(e => e.ErrorMessage)));
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
