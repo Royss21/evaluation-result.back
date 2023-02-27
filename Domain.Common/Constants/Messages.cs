@@ -51,9 +51,9 @@
         public static class SubcomponentValue
         {
             public const string RelativeWeightOutRange = "El peso relativo debe tener un valor entre 1 y 100";
-            public const string PercentageMinimumOutRange = "El % minimo debe tener un valor mayor a 0";
-            public const string PercentageMaximumOutRange = "El % maximo debe tener un valor mayor a 0";
-            public const string PercentageValidate = "El % minimo no debe ser mayor al % maximo";
+            public const string PercentageMinimumOutRange = "El porcentaje minimo debe tener un valor mayor a 0";
+            public const string PercentageMaximumOutRange = "El porcentaje maximo debe tener un valor mayor a 0";
+            public const string PercentageValidate = "El porcentaje minimo no debe ser mayor al porcentaje maximo";
         }
 
         public static class Collaborator

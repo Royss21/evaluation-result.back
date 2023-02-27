@@ -46,7 +46,10 @@ namespace Application.Main.Services.Config
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var level = await _unitOfWorkApp.Repository.LevelRepository.GetAsync(id);
+            var level = await _unitOfWorkApp.Repository.LevelRepository
+                .Find(f => f.Id.Equals(id))
+                .Include("Conducts")
+                .FirstOrDefaultAsync();
 
             if (level is null)
                 throw new WarningException(Messages.General.ResourceNotFound);

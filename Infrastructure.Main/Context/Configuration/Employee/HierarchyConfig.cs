@@ -16,7 +16,8 @@
                 .WithOne(b => b.Hierarchy);
 
             builder.HasMany(b => b.HierarchyComponents)
-                .WithOne(b => b.Hierarchy);
+                .WithOne(b => b.Hierarchy)
+                .OnDelete(DeleteBehavior.ClientCascade);
         }
     }
 }

@@ -5,6 +5,7 @@
     using Application.Dto.Pagination;
     using Application.Dto.Report;
     using Application.Main.Services.Report.Interfaces;
+    using Domain.Main.EvaResult;
     using SharedKernell.Wrappers;
 
     [Route("api/report")]
@@ -39,10 +40,38 @@
         OperationId = "Report.GetAllPagingByFinalResult",
         Tags = new[] { "ReportService" })]
         [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationCollaboratorFinalResultDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllByFinalResult(string globalFilter, Guid? evluationId)
+        public async Task<IActionResult> GetAllByFinalResult(string? globalFilter, Guid? evaluationId)
         {
-            var result = await _reportService.GetAllByFinalResultAsync(globalFilter, evluationId);
+            var result = await _reportService.GetAllByFinalResultAsync(evaluationId, globalFilter);
             return new OkObjectResult(new JsonResult<IEnumerable<EvaluationCollaboratorFinalResultDto>>(result));
+        }
+
+
+        [HttpGet("paging-follow-evaluation")]
+        [SwaggerOperation(
+        Summary = "Lista paginada seguimento evaluacion",
+        Description = "lista paginada seguimento evaluacion",
+        OperationId = "Report.GetAllPagingFollowResult",
+        Tags = new[] { "ReportService" })]
+        [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationCollaboratorarFollowResultDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllPagingFollowResult([FromQuery] EvaluationCollaboratorarFollowResultFilterDto filter)
+        {
+            var result = await _reportService.GetAllPagingFollowResultAsync(filter);
+            return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorarFollowResultDto>>(result));
+        }
+
+
+        [HttpGet("get-all-follow-evaluation")]
+        [SwaggerOperation(
+        Summary = "Lista seguimento evaluacion",
+        Description = "lista  seguimento evaluacion",
+        OperationId = "Report.GetAllFollowResult",
+        Tags = new[] { "ReportService" })]
+        [ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationCollaboratorarFollowResultDto>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllFollowResult(string? globalFilter, Guid? evaluationId)
+        {
+            var result = await _reportService.GetAllFollowResultAsync(evaluationId, globalFilter);
+            return new OkObjectResult(new JsonResult<IEnumerable<EvaluationCollaboratorarFollowResultDto>>(result));
         }
     }
 }

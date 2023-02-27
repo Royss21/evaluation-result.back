@@ -4,10 +4,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.Config.Subcomponent;
     using Application.Dto.Employee.Collaborator;
     using Application.Dto.EvaResult.Evaluation;
-    using Application.Dto.EvaResult.Period;
-    using Application.Dto.Pagination;
     using Application.Main.Exceptions;
-    using Application.Main.PrimeNg;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
     using Domain.Common.Constants;
@@ -205,7 +202,6 @@ namespace Application.Main.Services.EvaResult
 
             return evaluations;
         }
-
         public async Task<EvaluationDto> GetEnabledComponentsAsync(Guid id)
         {
             
@@ -216,14 +212,15 @@ namespace Application.Main.Services.EvaResult
 
             return evaluationCurrent;
         }
+        public async Task<IEnumerable<EvaluationListDto>> GetAllEvaluationFinishedAsync()
+        {
+            var formulas = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f =>  f.StatusId == GeneralConstants.StatusIds.Finalized)
+                    .ProjectTo<EvaluationListDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
 
-        //public async Task<IEnumerable<EvaluationDDDto>> GetAllAsync()
-        //{
-        //    return await _unitOfWorkApp.Repository.EvaluationRepository
-        //        .Find(f => true)
-        //        .ProjectTo<EvaluationDDDto>(_mapper.ConfigurationProvider)
-        //        .ToListAsync();
-        //}
+            return formulas;
+        }
 
         #region Helpers Functions
         private async Task<int> CountEvaluationsCurrentPeriod()

@@ -55,22 +55,22 @@ go
 
 go
 
---insert into config.ParameterRange
---(id, name, Description, IsInternalConfiguration, CreateUser, CreateDate)
---values
---('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', 'Parametro Internos', '', 1, 'rmartel', getdate()),
+insert into config.ParameterRange
+(id, name, Description, IsInternalConfiguration, CreateUser, CreateDate)
+values
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', 'Parametro Internos', '', 1, 'rmartel', getdate())
 --('9FFA613E-378B-4683-9C92-5728864DC0A1', 'Rango de 0 hasta 74.99', '', 0, 'rmartel', getdate()),
 --('C86C556E-9F26-48FA-A175-7E8D2C2F6C60', 'Rango de 75 hasta 80<', '', 0, 'rmartel', getdate()),
 --('B5F9B1B2-5F9D-4909-A5C8-1AAD47CD8BAA', 'Rango de 80 hasta 90<', '', 0, 'rmartel', getdate())
 
 --go
 
---insert into config.ParameterValue
---( ParameterRangeId,name, EntityName, Value, NameProperty,  CreateUser, CreateDate)
---values
---('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropValorReal', 'ComponentCollaboratorDetail', 0, 'Result','rmartel', getdate()),
---('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMeta', 'ComponentCollaboratorDetail', 0, 'MaximunPercentage','rmartel', getdate()),
---('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMinimo', 'ComponentCollaboratorDetail', 0, 'MinimunPercentage','rmartel', getdate()),
+insert into config.ParameterValue
+( ParameterRangeId,name, EntityName, Value, NameProperty,  CreateUser, CreateDate)
+values
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropValorReal', 'ComponentCollaboratorDetail', 0, 'Result','rmartel', getdate()),
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMeta', 'ComponentCollaboratorDetail', 0, 'MaximunPercentage','rmartel', getdate()),
+('EC4028F8-CF1B-4D84-B32C-A6BB89F09AA4', '@PropMinimo', 'ComponentCollaboratorDetail', 0, 'MinimunPercentage','rmartel', getdate())
 --('9FFA613E-378B-4683-9C92-5728864DC0A1', '@Nota1', '', 0.00, '','rmartel', getdate()),
 --('9FFA613E-378B-4683-9C92-5728864DC0A1', '@CisRealMinimo1', '', 0.00, '','rmartel', getdate()),
 --('9FFA613E-378B-4683-9C92-5728864DC0A1', '@CisRealMaximo1', '', 0.7499, '','rmartel', getdate()),
@@ -325,17 +325,36 @@ begin
 end
 
 
---delete from EvaResult.Evaluation
---delete from EvaResult.EvaluationComponent
---delete from EvaResult.EvaluationCollaborator
---delete from EvaResult.EvaluationComponentStage
---delete from EvaResult.ComponentCollaboratorDetail
---delete from EvaResult.ComponentCollaboratorConduct
 --delete from EvaResult.ComponentCollaborator
 --delete from EvaResult.ComponentCollaboratorComment
+--delete from EvaResult.ComponentCollaboratorConduct
+--delete from EvaResult.ComponentCollaboratorDetail
+--delete from EvaResult.EvaluationCollaborator
+--delete from EvaResult.EvaluationComponent
+--delete from EvaResult.EvaluationComponentStage
 --delete from EvaResult.EvaluationLeader
---delete from EvaResult.LeaderStage
 --delete from EvaResult.LeaderCollaborator
+--delete from EvaResult.LeaderStage
+--delete from EvaResult.Evaluation
+--delete from EvaResult.Period
+
+
+
+--delete from Config.Conduct
+--delete from Config.Formula
+--delete from Config.HierarchyComponent
+--delete from Config.Level
+--delete from Config.ParameterRange
+--delete from Config.ParameterValue
+--delete from Config.Subcomponent
+--delete from Config.SubcomponentValue
+
+--delete from Employee.Charge
+--delete from Employee.Area
+--delete from Employee.Collaborator
+--delete from Employee.Gerency
+--delete from Employee.Hierarchy
+
 
 /*
 
