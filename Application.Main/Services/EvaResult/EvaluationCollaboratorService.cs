@@ -12,6 +12,7 @@ namespace Application.Main.Services.EvaResult
     using Domain.Common.Constants;
     using Domain.Main.Config;
     using Domain.Main.EvaResult;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -266,6 +267,36 @@ namespace Application.Main.Services.EvaResult
             componentCollaboratorComment.StatusId = GeneralConstants.StatusIds.Completed;
 
             await _unitOfWorkApp.SaveChangesAsync();
+
+            var stageId = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                    .Find(f => f.Id == componentCollaboratorComment.EvaluationComponentStageId)
+                    .Select(s => s.StageId)
+                    .FirstAsync();
+
+            if (stageId == GeneralConstants.Stages.Feedback)
+            {
+                var evaluationCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.Id.Equals(componentCollaboratorComment.EvaluationCollaboratorId))
+                    .FirstAsync();
+
+                var commentsStatus = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f => 
+                        f.EvaluationCollaborator.EvaluationId.Equals(evaluationCollaborator.EvaluationId) &&
+                        f.EvaluationComponentStage.StageId != GeneralConstants.Stages.Approval
+                    )
+                    .Select(s => s.StatusId)
+                    .ToListAsync();
+
+                var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
+                        .Find(f => f.Id.Equals(evaluationCollaborator.EvaluationId), false)
+                        .FirstAsync();
+
+                evaluation.StatusId = commentsStatus.All(statusId => statusId == GeneralConstants.StatusIds.Completed)
+                        ? GeneralConstants.StatusIds.Completed
+                        : GeneralConstants.StatusIds.InProgress;
+
+                await _unitOfWorkApp.SaveChangesAsync();
+            }
 
             return true;
         }

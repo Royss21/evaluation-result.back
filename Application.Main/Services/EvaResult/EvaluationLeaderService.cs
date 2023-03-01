@@ -356,13 +356,14 @@ namespace Application.Main.Services.EvaResult
 
             if (typeImportLeaders == TypeImportLeadersEnum.Competencies)
             {
+                if (evaluationLeaderFileDataDto.Any(el => string.IsNullOrWhiteSpace(el.DniCollaborator)))
+                    throw new WarningException("El archivo contiene algunos DNI DE COLABORADORES vacios");
+
                 var stages = await _unitOfWorkApp.Repository.StageRepository.Find(s => s.Id != GeneralConstants.Stages.Approval).ToListAsync();
 
                 if (evaluationLeaderFileDataDto.Any(el => !stages.Select(e => e.Id).Contains(el.StageId ?? 0)))
                     throw new WarningException("El archivo contiene algunos IDS DE LAS ETAPAS vacias o no coinciden con algun ID DE ETAPA DEL SISTEMA");
 
-                if (evaluationLeaderFileDataDto.Any(el => string.IsNullOrWhiteSpace(el.DniCollaborator)))
-                    throw new WarningException("El archivo contiene algunos DNI DE COLABORADORES estan vacios");
             }
             else
             {

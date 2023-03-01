@@ -215,7 +215,7 @@ namespace Application.Main.Services.EvaResult
         public async Task<IEnumerable<EvaluationListDto>> GetAllEvaluationFinishedAsync()
         {
             var formulas = await _unitOfWorkApp.Repository.EvaluationRepository
-                    .Find(f =>  f.StatusId == GeneralConstants.StatusIds.Finalized)
+                    .Find(f =>  f.StatusId == GeneralConstants.StatusIds.Completed)
                     .ProjectTo<EvaluationListDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 

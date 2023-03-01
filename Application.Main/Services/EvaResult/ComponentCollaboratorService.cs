@@ -180,8 +180,8 @@ namespace Application.Main.Services.EvaResult
                             });
 
                            
-                            componentCollaborator.SubTotal = componentCollaboratorDetails.Sum(s => s.Points);
-                            componentCollaborator.ComplianceCompetence = (componentCollaborator.SubTotal * topScore);
+                            componentCollaborator.SubTotal = (componentCollaboratorDetails.Sum(s => s.Points) / 100);
+                            componentCollaborator.ComplianceCompetence = componentCollaborator.SubTotal / topScore * 100;
                             componentCollaborator.Total = componentCollaborator.WeightHierarchy  * componentCollaborator.ComplianceCompetence;
 
                             if (countLeaders > 1)
@@ -214,8 +214,8 @@ namespace Application.Main.Services.EvaResult
                                 });
                             });
 
-                            componentCollaborator.SubTotalCalibrated = componentCollaboratorDetails.Sum(s => s.PointsCalibrated);
-                            componentCollaborator.ComplianceCompetenceCalibrated = (componentCollaborator.SubTotalCalibrated * topScore);
+                            componentCollaborator.SubTotalCalibrated = (componentCollaboratorDetails.Sum(s => s.PointsCalibrated) / 100);
+                            componentCollaborator.ComplianceCompetenceCalibrated = componentCollaborator.SubTotalCalibrated / topScore * 100;
                             componentCollaborator.TotalCalibrated = componentCollaborator.WeightHierarchy * componentCollaborator.ComplianceCompetenceCalibrated;
 
                             break;
@@ -248,6 +248,7 @@ namespace Application.Main.Services.EvaResult
                 evaluationComponent.StatusId = GeneralConstants.StatusIds.Completed;
             else
                 evaluationComponent.StatusId = GeneralConstants.StatusIds.Pending;
+
 
             await _unitOfWorkApp.SaveChangesAsync();
 
