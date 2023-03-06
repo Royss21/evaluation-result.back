@@ -11,5 +11,6 @@
         Task<(IEnumerable<LeaderCollaboratorsDto>, int)> GetAllCollaboratorByLeaderAsync(int evaluationLeaderId, LeaderCollaboratorsFilterDto filter);
         Task<bool> ExistsPreviousImportAsync(int componentId);
         Task<LeaderEvaluateComponentDto> GetComponentsToEvaluateAsync(Guid evaluationCollaboratorId);
+        Task<CollaboratorLeaderEvaluateDto> GetComponentAndStageLeaderAsync(Guid evaluationCollaboratorId);
     }
 }

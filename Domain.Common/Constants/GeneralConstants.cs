@@ -36,6 +36,12 @@
             public const int Finalized = 6;
         }
 
+        public class ViewCollaborator
+        {
+            public const int Leader = 1;
+            public const int Collaborator = 2;
+        }
+
         public class Stages
         {
             public const int Evaluation = 1;

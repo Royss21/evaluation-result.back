@@ -20,32 +20,6 @@
             _logger = logger;
         }
 
-        //[HttpGet]
-        //[SwaggerOperation(
-        //Summary = "Lista de Evaluaciones",
-        //Description = "Listado de Evaluationos",
-        //OperationId = "Evaluation.GetAll",
-        //Tags = new[] { "EvaluationService" })]
-        //[ProducesResponseType(typeof(JsonResult<IEnumerable<EvaluationDto>>), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetAll()
-        //{
-        //    var result = await _evaluationService.GetAllAsync();
-        //    return new OkObjectResult(new JsonResult<IEnumerable<EvaluationDto>>(result));
-        //}
-
-        //[HttpGet("paging")]
-        //[SwaggerOperation(
-        //Summary = "Lista Paginada Evaluaciones",
-        //Description = "lista paginada de Evaluationso",
-        //OperationId = "Evaluation.GetAllPaging",
-        //Tags = new[] { "EvaluationService" })]
-        //[ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationDto>>), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> GetAllPaging([FromQuery] PrimeTable primeTable)
-        //{
-        //    var result = await _evaluationService.GetAllPagingAsync(primeTable);
-        //    return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationDto>>(result));
-        //}
-
         [HttpPost]
         [SwaggerOperation(
         Summary = "Crear Evaluacion",
@@ -112,19 +86,5 @@
             var result = await _evaluationService.GetAllEvaluationFinishedAsync();
             return new OkObjectResult(new JsonResult<List<EvaluationListDto>>(result.ToList()));
         }
-
-        //[HttpDelete("{id}")]
-        //[SwaggerOperation(
-        //Summary = "Eliminar Evaluationo",
-        //Description = "eliminar Evaluationo",
-        //OperationId = "Evaluation.Delete",
-        //Tags = new[] { "EvaluationService" })]
-        //[ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    var result = await _evaluationService.DeleteAsync(id);
-        //    return new OkObjectResult(new JsonResult<bool>(result));
-        //}
-
     }
 }

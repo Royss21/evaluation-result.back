@@ -352,6 +352,48 @@ namespace Application.Main.Services.EvaResult
             parametersDomain.FilterWhere = parametersDomain.FilterWhere
                         .AddCondition(add => add.EvaluationComponent.ComponentId == filter.ComponentId);
 
+            if (filter.EvaluationCollaboratorId is not null)
+            {
+                if (GeneralConstants.Component.AreaObjectives == filter.ComponentId)
+                {
+                    var areasName = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                        .Find(f => f.EvaluationComponent.ComponentId == filter.ComponentId && f.EvaluationCollaboratorId.Equals(filter.EvaluationCollaboratorId))
+                        .Select(s => s.AreaName.ToLower())
+                        .ToListAsync();
+
+                    parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => areasName.Contains(add.EvaluationCollaborator.AreaName.ToLower()));
+                }
+                else if (GeneralConstants.Component.Competencies == filter.ComponentId)
+                {
+                    var currentDate = DateTime.UtcNow.GetDatePeru();
+                    var currentStageId = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                            .Find(f =>
+                                f.EvaluationComponent.ComponentId == filter.ComponentId &&
+                                (currentDate >= f.StartDate && currentDate <= f.EndDate)
+                            )
+                            .Select(s => s.StageId)
+                            .FirstAsync();
+
+                    var leaderStageIds = await _unitOfWorkApp.Repository.LeaderStageRepository
+                            .Find(f =>
+                                f.EvaluationLeader.EvaluationCollaboratorId.Equals(filter.EvaluationCollaboratorId) &&
+                                f.EvaluationLeader.EvaluationComponent.ComponentId == filter.ComponentId &&
+                                f.StageId == currentStageId
+                            )
+                            .Select(s => s.Id)
+                            .ToListAsync();
+
+                    var collaboratorIds = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+                            .Find(f => leaderStageIds.Contains(f.LeaderStageId))
+                            .Select(s => s.EvaluationCollaboratorId)
+                            .ToListAsync();
+
+                    parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => collaboratorIds.Contains(add.EvaluationCollaboratorId));
+                }
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {
                 filter.GlobalFilter = filter.GlobalFilter ?? "";

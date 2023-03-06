@@ -31,6 +31,65 @@ values
 go
 
 
+insert into [Security].[Menu]
+(
+Name,
+Url,
+Icon,
+Sort,
+CreateUser,
+CreateDate,
+IsDeleted,
+IsActive
+)
+values
+('Periodo', 'period', 'calendar_today', 1, 'system', getdate(), 0 ,0),
+('Evaluación', 'evaluation', 'pinch', 2, 'system', getdate(), 0 ,0),
+('Configuración', 'configuration', 'settings', 3, 'system', getdate(), 0 ,0),
+('Mantenimiento', 'maintenance', 'edit_square', 4, 'system', getdate(), 0 ,0),
+('Seguridad', 'security', 'lock', 5, 'system', getdate(), 0 ,0),
+('Reportes', 'reports', 'equalizer', 6, 'system', getdate(), 0 ,0)
+
+go
+
+insert into [Security].[Menu]
+(
+MenuDadId,
+Name,
+Url,
+Icon,
+Sort,
+CreateUser,
+CreateDate,
+IsDeleted,
+IsActive
+)
+values
+(3 ,'Nivel', 'level', '', 1, 'system', getdate(), 0 ,0),
+(3 ,'Formula', 'formula', '', 2, 'system', getdate(), 0 ,0),
+(3 ,'Rango Parámetros', 'parameter-range', '', 3, 'system', getdate(), 0 ,0),
+(3 ,'Objetivos Corporativos', 'corporate-objectives', '', 4, 'system', getdate(), 0 ,0),
+(3 ,'Objetivos Área', 'area-objectives', '', 5, 'system', getdate(), 0 ,0),
+(3 ,'Competencias', 'competences', '', 6, 'system', getdate(), 0 ,0),
+(3 ,'Pesos por Jerarquía', 'weight-per-component', '', 7, 'system', getdate(), 0 ,0),
+
+(4 ,'Colaboradores', 'collaborator', '', 1, 'system', getdate(), 0 ,0),
+(4 ,'Gerencias', 'gerency', '', 2, 'system', getdate(), 0 ,0),
+(4 ,'Jerarquías', 'hierarchy', '', 3, 'system', getdate(), 0 ,0),
+(4 ,'Áreas', 'area', '', 4, 'system', getdate(), 0 ,0),
+(4 ,'Cargos', 'charge', '', 5, 'system', getdate(), 0 ,0),
+(4 ,'Usuarios', 'user', '', 6, 'system', getdate(), 0 ,0),
+(4 ,'Roles', 'role', '', 7, 'system', getdate(), 0 ,0),
+
+(5 ,'Auditoría', 'audit', '', 1, 'system', getdate(), 0 ,0),
+(5 ,'Logs', 'logs-system', '', 2, 'system', getdate(), 0 ,0),
+
+(6 ,'Notas finales', 'final-exam', '', 1, 'system', getdate(), 0 ,0),
+(6 ,'Progreso de evaluaciones', 'exam-progress', '', 2, 'system', getdate(), 0 ,0)
+
+
+go
+
 --insert into Employee.Area (GerencyId, name, CreateUser, CreateDate)
 --values
 --(1, 'Area 1','system','Oct 31 2022 10:30PM'),
@@ -238,12 +297,12 @@ values
 (2,'Punto 4', '', 4, 0,0,'', 'rmartel',getdate()),
 (2,'Punto 5', '', 5, 0,0,'', 'rmartel',getdate()),
 (3, 'Total', '', 18,0,0,'' , 'rmartel',getdate()),
-(4, 'Muy Sobresaliente', '', 0,1.01,1.2,'' , 'rmartel',getdate()),
-(4, 'Sobresaliente', '', 0,0.8,1,'' , 'rmartel',getdate()),
-(4, 'Desarrollado', '', 0,0.7,0.79,'' , 'rmartel',getdate()),
-(4, 'En Proceso', '', 0,0.6,0.69,'' , 'rmartel',getdate()),
-(4, 'Básico', '', 0,0.4,0.599,'' , 'rmartel',getdate()),
-(4, 'Deficiente', '', 0,0,0.39,'' , 'rmartel',getdate())
+(4, 'Alto Desempeño', '',	0,	0.85,	1.2,'' , 'rmartel',getdate()),
+(4, 'Mediano Desempeño', '',0,	0.65,	0.8499,'' , 'rmartel',getdate()),
+(4, 'Bajo Desempeño', '',	0,	0,		0.6499,'' , 'rmartel',getdate())
+--(4, 'En Proceso', '', 0,0.6,0.69,'' , 'rmartel',getdate()),
+--(4, 'Básico', '', 0,0.4,0.599,'' , 'rmartel',getdate()),
+--(4, 'Deficiente', '', 0,0,0.39,'' , 'rmartel',getdate())
 
 go
 

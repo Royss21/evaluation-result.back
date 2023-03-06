@@ -8,5 +8,7 @@ namespace Application.Main.Services.Security.Interfaces
         Task<LoginSesionResDto> ValidateUserAsync(string usuario);
         Task<AccessDto> LoginSesionAsync(LoginSesionReqDto loginSesionReq, Controller controller);
         Task<AccessDto> RefreshTokenAsync(TokenDto tokenReq);
+
+        Task<AccessCollaboratorDto> LoginSessionCollaboratorAsync(Guid evaluationCollaboratorId);
     }
 }

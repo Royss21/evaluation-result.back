@@ -105,5 +105,18 @@
             var result = await _evaluationLeaderService.GetComponentsToEvaluateAsync(evaluationCollaboratorId);
             return new OkObjectResult(new JsonResult<LeaderEvaluateComponentDto>(result));
         }
+
+        [HttpGet("flag/{evaluationCollaboratorId}")]
+        [SwaggerOperation(
+        Summary = "Obtener flag de componente y etapas a evaluar",
+        Description = "Obtener flag de componente y etapas a evaluar",
+        OperationId = "EvaluationLeader.GetComponentAndStageLeader",
+        Tags = new[] { "EvaluationLeaderService" })]
+        [ProducesResponseType(typeof(JsonResult<CollaboratorLeaderEvaluateDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetComponentAndStageLeader(Guid evaluationCollaboratorId)
+        {
+            var result = await _evaluationLeaderService.GetComponentAndStageLeaderAsync(evaluationCollaboratorId);
+            return new OkObjectResult(new JsonResult<CollaboratorLeaderEvaluateDto>(result));
+        }
     }
 }
