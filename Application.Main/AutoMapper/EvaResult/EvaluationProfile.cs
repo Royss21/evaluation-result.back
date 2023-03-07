@@ -68,7 +68,7 @@
                                 .Where(w => w.EvaluationComponentId == ec.Id)
                                 .First().StartDate,
 
-                   EndDate = ec.EvaluationComponentStages
+                    EndDate = ec.EvaluationComponentStages
                                 .Where(w => w.EvaluationComponentId == ec.Id)
                                 .First().EndDate,
 

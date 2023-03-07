@@ -46,14 +46,38 @@ namespace Application.Main.Services.Security
         public async Task<bool> UpdateAsync(UserUpdateDto request)
         {
             var user = _mapper.Map<User>(request);
+            //var userExists = await _unitOfWorkApp.Repository.UserRepository
+            //    .Find(f => f.Id.Equals(request.Id), false)
+            //    .FirstAsync();
 
-            var resultValidator = await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(
-                user, new UserUpdateValidator(_unitOfWorkApp.Repository.UserRepository));
+            //userExists.UserName = user.UserName;
+            //userExists.Names = user.Names;
+            //userExists.LastName = user.LastName;
+            //userExists.MiddleName = user.MiddleName;
+            //userExists.Email = user.Email;
+            //var resultValidator = await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(
+            //    user, new UserUpdateValidator(_unitOfWorkApp.Repository.UserRepository));
 
-            if (!resultValidator.IsValid)
-                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
+            //if (!resultValidator.IsValid)
+            //    throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
-            user.UserRoles = request.RolesId.Select(roleId => new UserRole { RoleId = roleId }).ToList();
+            //userExists.UserRoles = request.RolesId.Select(roleId => new UserRole { RoleId = roleId }).ToList();
+
+            var userRoles = await _unitOfWorkApp.Repository.UserRoleRepository
+                .Find(f => f.UserId.Equals(user.Id))
+                .ToListAsync();
+
+            foreach(var role in userRoles)
+            {
+                if (!request.RolesId.Contains(role.RoleId))
+                    await _unitOfWorkApp.Repository.UserRoleRepository.DeleteAsync(role);
+            }
+
+            foreach (var roleId in request.RolesId)
+            {
+                if (!userRoles.Select(s => s.RoleId).Contains(roleId))
+                    await _unitOfWorkApp.Repository.UserRoleRepository.AddAsync(new UserRole { UserId = user.Id, RoleId = roleId });
+            }
 
             await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(user);
             await _unitOfWorkApp.SaveChangesAsync();

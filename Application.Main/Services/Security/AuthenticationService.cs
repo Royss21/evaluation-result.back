@@ -2,6 +2,7 @@
 namespace Application.Main.Services.Security
 {
     using Application.Dto.Security.Authentication;
+    using Application.Dto.Security.Menu;
     using Application.Dto.Security.Role;
     using Application.Dto.Security.User;
     using Application.Main.Exceptions;
@@ -10,9 +11,12 @@ namespace Application.Main.Services.Security
     using Application.Security.Entities;
     using Application.Security.Jwt;
     using Application.Security.Password;
+    using Azure.Storage.Blobs.Models;
+    using DocumentFormat.OpenXml.Office2010.Drawing;
     using Domain.Common.Constants;
     using Infrastructure.UnitOfWork.Interfaces;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
     using System.IdentityModel.Tokens.Jwt;
 
@@ -76,6 +80,22 @@ namespace Application.Main.Services.Security
             else
                 _memoryCacheService.RemoveDataCache($"{Messages.MemoryCache.UserEndpointLocked}{userInfoToken.Id}");
 
+            var accessUser = _mapper.Map<AccessDto>(usuarioTokenApp);
+            accessUser.Name = $"{userInfoToken.FullName}";
+            accessUser.RoleName = await _unitOfWorkApp.Repository.RoleRepository.Find(f => f.Id == loginSesionReq.RoleId)
+                    .Select(s => s.Name).FirstAsync();
+            accessUser.Menus = await _unitOfWorkApp.Repository.RoleMenuRepository
+                    .Find(f => f.RoleId == loginSesionReq.RoleId)
+                    .Select(s => new MenuDto { 
+                        Icon = s.Menu.Icon,
+                        Name = s.Menu.Name,
+                        Sort= s.Menu.Sort,
+                        MenuDadId= s.Menu.MenuDadId,
+                        Id= s.Menu.Id,
+                        Url= s.Menu.Url
+                    })
+                    .ToListAsync();
+
             //var email = new Email
             //{
             //    Asunto = "INICIO SESION",
@@ -87,7 +107,7 @@ namespace Application.Main.Services.Security
             //BackgroundJob.Enqueue(() => _correoServicio.Enviar(email));
             //BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
 
-            return _mapper.Map<AccessDto>(usuarioTokenApp);
+            return accessUser;
         }
         public async Task<LoginSesionResDto> ValidateUserAsync(string userName)
         {
@@ -96,7 +116,7 @@ namespace Application.Main.Services.Security
                 .FirstOrDefaultAsync();
 
             if (user is null)
-                throw new WarningException(string.Format(Messages.General.ResourceNotFound, "User"));
+                throw new WarningException("El usuario ingresado no existe");
 
             var userRoles = await _unitOfWorkApp.Repository.UserRoleRepository
                 .Find(ur => ur.UserId.Equals(user.Id))
@@ -170,6 +190,59 @@ namespace Application.Main.Services.Security
                 throw new WarningException(Messages.Authentication.ReLogging);
         }
 
+        public async Task<AccessCollaboratorDto> LoginSessionCollaboratorAsync(Guid evaluationCollaboratorId)
+        {
+            var currentDate = DateTime.UtcNow.GetDatePeru();
+            var collaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.Id.Equals(evaluationCollaboratorId))
+                    .Select(s => new {s.CollaboratorId ,s.EvaluationId, s.Collaborator.Name, s.Collaborator.Email, s.Evaluation.StartDate, s.Evaluation.EndDate })
+                    .FirstAsync();
+
+            if (collaborator is null)
+                throw new WarningException("El código ingresado no existe");
+
+            if (!(currentDate >= collaborator.StartDate && currentDate <= collaborator.EndDate))
+                throw new WarningException("El código ingresado es invalido, la evaluacion ya no esta disponible");
+
+            var usuarioTokenApp = _jwtFactory.GetJwt(new UserClaim
+            {
+                Id = collaborator.CollaboratorId,
+                UserName = collaborator.Email,
+                FullName = collaborator.Name,
+                RoleId = 0
+            }, false);
+
+            var evaluationStageApproval = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                    .Find(f => f.EvaluationId.Equals(collaborator.EvaluationId) && f.StageId == GeneralConstants.Stages.Approval)
+                    .FirstAsync();
+
+            var accessUser = _mapper.Map<AccessCollaboratorDto>(usuarioTokenApp);
+
+            if (currentDate >= evaluationStageApproval.StartDate && currentDate <= evaluationStageApproval.EndDate)
+                accessUser.TypeViewCollaborator = GeneralConstants.ViewCollaborator.Collaborator;
+            else
+            {
+                if((await _unitOfWorkApp.Repository.EvaluationLeaderRepository.Find(f=> f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId)).AnyAsync()))
+                    accessUser.TypeViewCollaborator = GeneralConstants.ViewCollaborator.Leader;
+                else
+                    throw new WarningException("Aun no esta habiltado la etapa de visto bueno para que pueda ingresar al sistema.");
+
+                accessUser.IsLeaderCompetence = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                        .Find(f => f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId) && f.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
+                        .AnyAsync();
+
+                accessUser.IsLeaderAreaObjetive = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                        .Find(f => f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId) && f.EvaluationComponent.ComponentId == GeneralConstants.Component.AreaObjectives)
+                        .AnyAsync();
+            }
+
+
+            accessUser.EvaluationId = collaborator.EvaluationId;
+            accessUser.Name= collaborator.Name;
+            accessUser.EvaluationCollaboratorId = evaluationCollaboratorId;
+
+            return accessUser;
+        }
 
 
         //public async Task CrearActualizarToken(UsuarioTokenApp usuarioTokenApp, Guid usuarioId)

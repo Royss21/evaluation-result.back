@@ -47,6 +47,19 @@
             return new OkObjectResult(new JsonResult<AccessDto>(resultado));
         }
 
+        [HttpPost("login-sesion-collaborator/{id}")]
+        [SwaggerOperation(
+        Summary = "iniciar sesion",
+        Description = "Inicio de sesion",
+        OperationId = "Authentication.LoginSesionCollaborator",
+        Tags = new[] { "AuthenticationService" })]
+        [ProducesResponseType(typeof(JsonResult<AccessCollaboratorDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> LoginSesionCollaborator(Guid id)
+        {
+            var resultado = await _authenticationService.LoginSessionCollaboratorAsync(id);
+            return new OkObjectResult(new JsonResult<AccessCollaboratorDto>(resultado));
+        }
+
         [HttpPost("refresh-token")]
         [SwaggerOperation(
         Summary = "Validar nombbre de usuario",

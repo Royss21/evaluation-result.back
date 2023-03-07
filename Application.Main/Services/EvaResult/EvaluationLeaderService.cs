@@ -154,6 +154,8 @@ namespace Application.Main.Services.EvaResult
                                         EvaluationCollaboratorId = evaluationCollaborators.First(f => f.Collaborator.DocumentNumber.Equals(s.DniCollaborator)).Id
                                     }).ToList();
                             });
+
+                        leaderStages.AddRange(stagesLeaderNews);
                     }
                 });
             else
@@ -310,6 +312,25 @@ namespace Application.Main.Services.EvaResult
             };
         }
 
+        public async Task<CollaboratorLeaderEvaluateDto> GetComponentAndStageLeaderAsync(Guid evaluationCollaboratorId)
+        {
+            var collaboratorLeader = new CollaboratorLeaderEvaluateDto();
+            collaboratorLeader.IsLeaderAreaObjetives = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
+                    .Find(f => f.EvaluationCollaboratorId.Equals(evaluationCollaboratorId) && f.EvaluationComponent.ComponentId == GeneralConstants.Component.AreaObjectives)
+                    .AnyAsync();
+            var stageEvaluate = await _unitOfWorkApp.Repository.LeaderStageRepository
+                    .Find(f =>
+                        f.EvaluationLeader.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies &&
+                        f.EvaluationLeader.EvaluationCollaboratorId.Equals(evaluationCollaboratorId))
+                    .ToListAsync();
+
+            collaboratorLeader.IsLeaderStageEvaluation = stageEvaluate.Any(a => a.StageId == GeneralConstants.Stages.Evaluation);
+            collaboratorLeader.IsLeaderStageCalibration = stageEvaluate.Any(a => a.StageId == GeneralConstants.Stages.Calibration);
+            collaboratorLeader.IsLeaderStageFeedback = stageEvaluate.Any(a => a.StageId == GeneralConstants.Stages.Feedback);
+
+            return collaboratorLeader;
+        }
+
         #region Helper Functions
 
         private List<EvaluationLeaderFileDataDto> GetDataFromImportedFile(IFormFile file, TypeImportLeadersEnum typeImportLeaders)
@@ -377,11 +398,25 @@ namespace Application.Main.Services.EvaResult
                                                                         TypeImportLeadersEnum typeImportLeaders, 
                                                                         Guid evaluationId)
         {
+            var dnisIguales = new List<string>();
             var dnisNotFound = new List<string>();
             var dnis = new List<string>();
 
             if (typeImportLeaders == TypeImportLeadersEnum.Competencies)
-                dnis.AddRange(evaluationLeaderFileDataDto.Select(elfd => elfd.DniCollaborator).ToList());
+            {
+                dnis.AddRange(evaluationLeaderFileDataDto.Select(elfd => elfd.DniCollaborator).Distinct().ToList());
+
+                foreach (var dniCollaborator in dnis)
+                {
+                    var dniLeaders = evaluationLeaderFileDataDto.Where(w => w.DniCollaborator.Equals(dniCollaborator)).Select(s => s.DniLeader).ToList();
+                    if (dniLeaders.Contains(dniCollaborator))
+                        dnisIguales.Add(dniCollaborator);
+                }
+
+                if (dnisIguales.Any())
+                    throw new WarningException($"Los colaboradores con los siguientes dnis no pueden lideres asi mismos:\n {string.Join(",\n", dnisIguales)}");
+            }
+
 
             dnis.AddRange(evaluationLeaderFileDataDto.Select(elfd => elfd.DniLeader).ToList());
             dnis = dnis.Distinct().ToList();
@@ -400,7 +435,7 @@ namespace Application.Main.Services.EvaResult
             {
                 dnisNotFound = dnis.Where(dni => !dniCollaboratorsActive.Contains(dni)).ToList();
 
-                throw new WarningException($"Los COLABORADORES con los siguientes DNIS no aplican a la evaluación: {string.Join(", ", dnisNotFound)}");
+                throw new WarningException($"Los COLABORADORES con los siguientes DNIS no aplican a la evaluación:\n {string.Join(",\n", dnisNotFound)}");
             }    
 
             var evaluationCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
@@ -416,9 +451,9 @@ namespace Application.Main.Services.EvaResult
             if (collaboratorIds.Any(idcoll => !evaluationCollaboratorIds.Contains(idcoll)))
             {
                 var idsNotFound = collaboratorIds.Where(id => !evaluationCollaboratorIds.Contains(id))
-                                                .ToList();
+                                        .ToList();
 
-                throw new WarningException($"Los siguientes COLABORADORES con DNIS no se encuentran registrados en la EVALUACION {string.Join(",", collaborators.Where(c => idsNotFound.Contains(c.Id)).Select(s => s.DocumentNumber))}");
+                throw new WarningException($"Los siguientes COLABORADORES con DNIS no se encuentran registrados en la EVALUACION: \n {string.Join(", \n", collaborators.Where(c => idsNotFound.Contains(c.Id)).Select(s => s.DocumentNumber))}");
             }
 
             evaluationCollaborators = evaluationCollaborators.Where(ec => collaboratorIds.Contains(ec.CollaboratorId)).ToList();

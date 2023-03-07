@@ -311,6 +311,27 @@ namespace Application.Main.Services.EvaResult
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorReviewPagingDto>.Convert(filter);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorReviewPagingDto>(_mapper);
 
+            if (filter.EvaluationCollaboratorId is not null)
+            {
+                var currentDate = DateTime.UtcNow.GetDatePeru();
+                var leaderStageIds = await _unitOfWorkApp.Repository.LeaderStageRepository
+                        .Find(f =>
+                            f.EvaluationLeader.EvaluationCollaboratorId.Equals(filter.EvaluationCollaboratorId) &&
+                            f.EvaluationLeader.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies &&
+                            f.StageId == filter.StageId
+                        )
+                        .Select(s => s.Id)
+                        .ToListAsync();
+
+                var collaboratorIds = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+                        .Find(f => leaderStageIds.Contains(f.LeaderStageId))
+                        .Select(s => s.EvaluationCollaboratorId)
+                        .ToListAsync();
+
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                    .AddCondition(add => collaboratorIds.Contains(add.Id));    
+            }
+  
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {
                 parametersDomain.FilterWhere = parametersDomain.FilterWhere
@@ -324,8 +345,6 @@ namespace Application.Main.Services.EvaResult
                             add.GerencyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower()) ||
                             add.HierarchyName.ToLower().Trim().Contains(filter.GlobalFilter.Trim().ToLower())
                         );
-
-
             }
 
             var paging = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.FindAllPagingAsync(parametersDomain);

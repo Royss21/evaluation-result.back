@@ -20,6 +20,7 @@ namespace Application.Main.AutoMapper.Security
                     .ReverseMap();
 
             CreateMap<UserTokenApp, AccessDto>().ReverseMap();
+            CreateMap<UserTokenApp, AccessCollaboratorDto>().ReverseMap();
             CreateMap<UserCreateDto, User>();
             CreateMap<UserUpdateDto, User>();
 
