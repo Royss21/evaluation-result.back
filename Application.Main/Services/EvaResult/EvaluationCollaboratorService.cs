@@ -5,14 +5,20 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.EvaResult.Evaluation;
     using Application.Dto.EvaResult.EvaluationCollaborator;
     using Application.Dto.Pagination;
+    using Application.Dto.Views;
     using Application.Main.Exceptions;
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
+    using Application.Main.Services.General.Interfaces;
     using Domain.Common.Constants;
+    using Domain.Common.Enums;
     using Domain.Main.Config;
     using Domain.Main.EvaResult;
+    using Hangfire;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using SharedKernell.Mail;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -20,11 +26,13 @@ namespace Application.Main.Services.EvaResult
     public class EvaluationCollaboratorService : BaseService, IEvaluationCollaboratorService
     {
         public readonly IComponentCollaboratorService _componentCollaboratorService;
+        public readonly IMailService _mailService;
         public EvaluationCollaboratorService(
-            IServiceProvider serviceProvider, IComponentCollaboratorService componentCollaboratorService
+            IServiceProvider serviceProvider, IComponentCollaboratorService componentCollaboratorService, IMailService mailService
         ) : base(serviceProvider)
         {
             _componentCollaboratorService = componentCollaboratorService;
+            _mailService = mailService;
         }
 
         public async Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request)
@@ -257,7 +265,7 @@ namespace Application.Main.Services.EvaResult
             return evaluationCollaboratorResult;
         }
 
-        public async Task<bool> SaveCommentEvaluationStageAsync(CommentEvaluationDto request)
+        public async Task<bool> SaveCommentEvaluationStageAsync(CommentEvaluationDto request, Controller controller)
         {
             var componentCollaboratorComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                 .Find(f => f.Id == request.ComponentCollaboratorCommentId, false)
@@ -275,6 +283,27 @@ namespace Application.Main.Services.EvaResult
 
             if (stageId == GeneralConstants.Stages.Feedback)
             {
+
+                var collaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                        .Find(f => f.Id.Equals(componentCollaboratorComment.EvaluationCollaboratorId))
+                        .Select(s => new EmailNotifyCollaboratorDto
+                        {
+                            Email = s.Collaborator.Email,
+                            EvaluationCollaboratorId = s.Id.ToString(),
+                            FullName = $"{s.Collaborator.Name} {s.Collaborator.LastName}",
+                            EvaluationId = s.EvaluationId
+                        })
+                        .FirstAsync();
+
+                collaborator.RangeDateStageApproval = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                        .Find(f =>
+                            f.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies &&
+                            f.StageId == GeneralConstants.Stages.Approval &&
+                            f.EvaluationId.Equals(collaborator.EvaluationId)
+                        )
+                        .Select(s => "Desde el " + $"{s.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta el {s.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de"))
+                        .FirstAsync();
+
                 var evaluationCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(f => f.Id.Equals(componentCollaboratorComment.EvaluationCollaboratorId))
                     .FirstAsync();
@@ -296,6 +325,13 @@ namespace Application.Main.Services.EvaResult
                         : GeneralConstants.StatusIds.InProgress;
 
                 await _unitOfWorkApp.SaveChangesAsync();
+
+                BackgroundJob.Enqueue(() => _mailService.Send(new Mail
+                {
+                    Subject = "Evaluación de Desempeño - Etapa Visto bueno",
+                    Mails = new List<string> { collaborator.Email },
+                    Body = _mailService.UploadBodyMail<object>(MailTemplateEnum.EmailCollaboratorStageApproval, controller, collaborator)
+                }));
             }
 
             return true;

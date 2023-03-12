@@ -68,7 +68,7 @@
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SaveCommentEvaluationStage(CommentEvaluationDto request)
         {
-            var result = await _evaluationCollaboratorService.SaveCommentEvaluationStageAsync(request);
+            var result = await _evaluationCollaboratorService.SaveCommentEvaluationStageAsync(request, null);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 

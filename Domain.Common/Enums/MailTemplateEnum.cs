@@ -2,6 +2,7 @@
 {
     public enum MailTemplateEnum
     {
-        MailTest
+        EmailLeader,
+        EmailCollaboratorStageApproval
     }
 }

@@ -5,7 +5,9 @@ namespace Application.Main.Services.Security
     using Application.Dto.Security.Menu;
     using Application.Dto.Security.Role;
     using Application.Dto.Security.User;
+    using Application.Dto.Views;
     using Application.Main.Exceptions;
+    using Application.Main.Services.General.Interfaces;
     using Application.Main.Services.Security.Interfaces;
     using Application.Main.Servicios.Generico.Interfaces;
     using Application.Security.Entities;
@@ -14,10 +16,13 @@ namespace Application.Main.Services.Security
     using Azure.Storage.Blobs.Models;
     using DocumentFormat.OpenXml.Office2010.Drawing;
     using Domain.Common.Constants;
+    using Domain.Common.Enums;
+    using Hangfire;
     using Infrastructure.UnitOfWork.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
+    using SharedKernell.Mail;
     using System.IdentityModel.Tokens.Jwt;
 
     public class AuthenticationService : IAuthenticationService
@@ -27,6 +32,7 @@ namespace Application.Main.Services.Security
         private readonly IMemoryCacheService _memoryCacheService;
         private readonly IUnitOfWorkApp _unitOfWorkApp;
         private readonly IMapper _mapper;
+        private readonly IMailService _mailService;
         private readonly TokenValidationParameters _tokenValidationParameters;
 
         public AuthenticationService(
@@ -35,6 +41,7 @@ namespace Application.Main.Services.Security
             IUnitOfWorkApp unitOfWorkApp,
             IMapper mapper,
             IMemoryCacheService memoryCacheService,
+            IMailService mailService,
             TokenValidationParameters tokenValidationParameters
         )
         {
@@ -44,6 +51,7 @@ namespace Application.Main.Services.Security
             _mapper = mapper;
             _tokenValidationParameters = tokenValidationParameters;
             _memoryCacheService = memoryCacheService;
+            _mailService = mailService;
         }
 
         public async Task<AccessDto> LoginSesionAsync(LoginSesionReqDto loginSesionReq, Controller controller)
@@ -96,19 +104,17 @@ namespace Application.Main.Services.Security
                     })
                     .ToListAsync();
 
-            //var email = new Email
-            //{
-            //    Asunto = "INICIO SESION",
-            //    Correos = new List<string> { "martel.royss21@gmail.com" },
-            //    CorreosCopiar = new List<string> { "martel.royss21@gmail.com" },
-            //    Cuerpo = _correoServicio.CargarCuerpoCorreo<CorreoPruebaDto>(CorreoTemplateEnum.CorreoPrueba, controller, new CorreoPruebaDto { NombreCompletos = "royss", NombreUsuario = "rmartel", Endpoints = endpointsBloqueados })
-            //};
-
-            //BackgroundJob.Enqueue(() => _correoServicio.Enviar(email));
-            //BackgroundJob.Enqueue(() => CrearActualizarToken(usuarioTokenApp, usuarioPersonaDto.Id));
-
             return accessUser;
         }
+
+        public void Send(List<Mail> mails)
+        {
+            foreach (var mail in mails)
+            {
+                _mailService.Send(mail).ConfigureAwait(false);
+            }
+        }
+
         public async Task<LoginSesionResDto> ValidateUserAsync(string userName)
         {
             var user = await _unitOfWorkApp.Repository.UserRepository

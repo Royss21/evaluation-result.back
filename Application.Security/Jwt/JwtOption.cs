@@ -11,8 +11,8 @@ namespace Application.Security.JWT
         public string Audience { get; set; }
         public int DaysTokenRefresh { get; set; }
         public DateTime Expiration => IssuedAt.Add(ValidFor);
-        public DateTime NotBefore => DateTime.UtcNow.GetDatePeru();
-        public DateTime IssuedAt => DateTime.UtcNow.GetDatePeru();
+        public DateTime NotBefore => DateTime.UtcNow.GetDateTimePeru();
+        public DateTime IssuedAt => DateTime.UtcNow.GetDateTimePeru();
         public TimeSpan ValidFor { get; set; } = TimeSpan.FromHours(12);
 
         public string SecurityKey { get; set; }

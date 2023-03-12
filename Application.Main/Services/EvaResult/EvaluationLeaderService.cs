@@ -5,24 +5,33 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.Employee.Area;
     using Application.Dto.EvaResult.EvaluationLeader;
     using Application.Dto.Pagination;
+    using Application.Dto.Views;
     using Application.Main.Exceptions;
     using Application.Main.Pagination;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
+    using Application.Main.Services.General.Interfaces;
     using Domain.Common.Constants;
     using Domain.Common.Enums;
     using Domain.Main.EvaResult;
     using ExcelDataReader;
+    using Hangfire;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using SharedKernell.Mail;
     using System.Data;
     using System.Threading.Tasks;
 
     public class EvaluationLeaderService : BaseService, IEvaluationLeaderService
     {
-        public EvaluationLeaderService(IServiceProvider serviceProvider) : base(serviceProvider)
-        { }
+        private readonly IMailService _mailService;
 
-        public async Task<bool> ImportLeadersAsync(EvaluationLeaderFileDto request)
+        public EvaluationLeaderService(IServiceProvider serviceProvider, IMailService mailService) : base(serviceProvider)
+        {
+            _mailService = mailService;
+        }
+
+        public async Task<bool> ImportLeadersAsync(EvaluationLeaderFileDto request, Controller controller)
         {
             var areas = new List<AreaDto>();
             var evaluationComponents = await _unitOfWorkApp.Repository.EvaluationComponentRepository
@@ -67,6 +76,16 @@ namespace Application.Main.Services.EvaResult
             var evaluationLeaders = new List<EvaluationLeader>();
             var leaderStages = new List<LeaderStage>();
             var leaderCollaborators = new List<LeaderCollaborator>();
+            var emailsLeaders = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                .Find(f => dniLeaders.Contains(f.Collaborator.DocumentNumber))
+                .Select(s => new EmailLeaderDto  { 
+                    EvaluationCollaboratorId = s.Id.ToString(), 
+                    Email = s.Collaborator.Email,
+                    FullName = $"{s.Collaborator.Name} {s.Collaborator.LastName}",
+                    Component = request.TypeImportLeaders == TypeImportLeadersEnum.Competencies ? "Competencias" : "Objetivos de area"
+                })
+                .ToListAsync();
+
 
             if (request.TypeImportLeaders == TypeImportLeadersEnum.Competencies)
                 dniLeaders.ForEach(dniLeader =>
@@ -111,6 +130,8 @@ namespace Application.Main.Services.EvaResult
                     //LIDERES QUE YA EXISTEN 
                     else
                     {
+                        emailsLeaders = emailsLeaders.Where(w => !w.EvaluationCollaboratorId.Equals(evaluationLeaderExists.EvaluationCollaboratorId)).ToList();
+
                         var stagesLeaderExisting = evaluationLeaderExists?.LeaderStagesExistingDto?.Select(ls => ls.StageId) ?? new List<int>();
 
                         evaluationLeaderExists?.LeaderStagesExistingDto.ForEach(leaderStage =>
@@ -178,6 +199,8 @@ namespace Application.Main.Services.EvaResult
                     var areasNews = areasImport.Where(areaName => !evaluationLeaderExists.Select(el => el.AreaName).Contains(areaName))
                         .ToList();
 
+                    emailsLeaders = emailsLeaders.Where(w => !evaluationLeaderExists.Select(e => e.EvaluationCollaboratorId.ToString()).Contains(w .EvaluationCollaboratorId)).ToList();
+
                     evaluationLeaders.AddRange(areasNews.Select(areaName => new EvaluationLeader
                     {
                         AreaName = areaName,
@@ -194,7 +217,36 @@ namespace Application.Main.Services.EvaResult
 
             await _unitOfWorkApp.SaveChangesAsync();
 
+            BackgroundJob.Enqueue(() => Send(emailsLeaders.Select(s => new Mail
+            {
+                Subject = "Evaluación de Desempeño",
+                Mails = new List<string> { s.Email },
+                Body = _mailService.UploadBodyMail<object>(MailTemplateEnum.EmailLeader, controller, s)
+            }).ToList()));
+
+            //var emailsLeaders = new List<EmailLeaderDto>
+            //{
+            //    new EmailLeaderDto {Component ="Objetivos de area", EvaluationCollaboratorId= "adasdsdsadasdas", FullName ="colaborador 1" },
+            //    new EmailLeaderDto {Component ="Competencias", EvaluationCollaboratorId= "adsadsadasdas", FullName ="colaborador 2" },
+            //    new EmailLeaderDto {Component ="Objetivos de area", EvaluationCollaboratorId= "asdasdasdasd", FullName ="colaborador 3" }
+            //};
+
+            //BackgroundJob.Enqueue(() => Send(emailsLeaders.Select(s => new Mail
+            //{
+            //    Subject = "INICIO SESION",
+            //    Mails = new List<string> { "martel.royss21@gmail.com" },
+            //    Body = _mailService.UploadBodyMail<object>(MailTemplateEnum.MailTest, controller, s)
+            //}).ToList()));
+
             return true;
+        }
+
+        public void Send(List<Mail> mails)
+        {
+            foreach (var mail in mails)
+            {
+                _mailService.Send(mail).ConfigureAwait(false);
+            }
         }
 
         public async Task<PaginationResultDto<EvaluationLeaderDto>> GetAllPagingAsync(EvaluationLeaderFilterDto filter)
