@@ -22,8 +22,9 @@
         public string UploadBodyMail<TModel>(MailTemplateEnum template, Controller context, TModel model) where TModel : class
         => template switch
         {
-            MailTemplateEnum.MailTest => RenderViewToString(context, "~/Vistas/CorreoPrueba.cshtml", model),
-             _=> ""
+            MailTemplateEnum.EmailLeader => RenderViewToString(context, "~/Vistas/TemplateMailLeader.cshtml", model),
+            MailTemplateEnum.EmailCollaboratorStageApproval => RenderViewToString(context, "~/Vistas/TemplateMailCollaboratorStageApproval.cshtml", model),
+            _ => ""
         };
 
 

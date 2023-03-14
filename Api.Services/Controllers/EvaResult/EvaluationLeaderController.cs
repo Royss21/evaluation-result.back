@@ -32,7 +32,7 @@
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ImportLeaders([FromForm]EvaluationLeaderFileDto request)
         {           
-            var result = await _evaluationLeaderService.ImportLeadersAsync(request);
+            var result = await _evaluationLeaderService.ImportLeadersAsync(request, null);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
