@@ -2175,7 +2175,7 @@ namespace Infrastructure.Main.Migrations
                     b.HasOne("Domain.Main.Config.Level", "Level")
                         .WithMany("Conducts")
                         .HasForeignKey("LevelId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.HasOne("Domain.Main.Config.Subcomponent", "Subcomponent")
@@ -2200,7 +2200,7 @@ namespace Infrastructure.Main.Migrations
                     b.HasOne("Domain.Main.Employee.Hierarchy", "Hierarchy")
                         .WithMany("HierarchyComponents")
                         .HasForeignKey("HierarchyId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
                     b.Navigation("Component");

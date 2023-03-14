@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infrastructure.Main.Migrations
 {
-    public partial class sadad : Migration
+    public partial class migrationazure : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -753,8 +753,7 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.HierarchyId,
                         principalSchema: "Employee",
                         principalTable: "Hierarchy",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -823,8 +822,7 @@ namespace Infrastructure.Main.Migrations
                         column: x => x.LevelId,
                         principalSchema: "Config",
                         principalTable: "Level",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Conduct_Subcomponent_SubcomponentId",
                         column: x => x.SubcomponentId,
