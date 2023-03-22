@@ -26,16 +26,20 @@
                 .HasDefaultValue(0);
 
             builder.HasMany(c => c.EvaluationCollaborators)
-                .WithOne(e => e.Evaluation);
+                .WithOne(e => e.Evaluation)
+                .OnDelete(DeleteBehavior.ClientCascade); ;
 
             builder.HasMany(c => c.EvaluationComponents)
-                .WithOne(e => e.Evaluation);
+                .WithOne(e => e.Evaluation)
+                .OnDelete(DeleteBehavior.ClientCascade); ;
 
             builder.HasMany(c => c.EvaluationLeaders)
-                .WithOne(e => e.Evaluation);
+                .WithOne(e => e.Evaluation)
+                .OnDelete(DeleteBehavior.ClientCascade); ;
 
             builder.HasMany(c => c.EvaluationComponentStages)
-                .WithOne(e => e.Evaluation);
+                .WithOne(e => e.Evaluation)
+                .OnDelete(DeleteBehavior.ClientCascade); ;
 
             builder.HasOne(c => c.Period)
                 .WithMany(e => e.Evaluations);

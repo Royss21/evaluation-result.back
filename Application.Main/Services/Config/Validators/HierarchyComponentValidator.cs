@@ -10,7 +10,7 @@ namespace Application.Main.Services.Config.Validators
 
         public static void ValidateComponents(List<HierarchyComponent> request)
         {
-            if (request.Any(s => s.Weight <= 0))
+            if (request.Any(s => s.Weight < 0))
                 throw new WarningException(Messages.HierarchyComponent.SomeComponentHasZeroWeight);
 
             if (request.Sum(s => s.Weight) > 100)

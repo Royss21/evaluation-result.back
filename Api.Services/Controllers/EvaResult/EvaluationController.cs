@@ -2,8 +2,6 @@
 {
     using Api.Services.Controllers;
     using Application.Dto.EvaResult.Evaluation;
-    using Application.Dto.EvaResult.Period;
-    using Application.Main.Services.EvaResult;
     using Application.Main.Services.EvaResult.Interfaces;
     using SharedKernell.Wrappers;
 
@@ -26,14 +24,14 @@
         Description = "crear Evaluation",
         OperationId = "Evaluation.Create",
         Tags = new[] { "EvaluationService" })]
-        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(JsonResult<EvaluationResDto>), StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(EvaluationCreateDto Evaluation)
         {
             var result = await _evaluationService.CreateAsync(Evaluation);
-            return new OkObjectResult(new JsonResult<bool>(result));
+            return new OkObjectResult(new JsonResult<EvaluationResDto>(result));
         }
 
-       
+
 
         [HttpGet("{id}/detail")]
         [SwaggerOperation(
@@ -85,6 +83,19 @@
         {
             var result = await _evaluationService.GetAllEvaluationFinishedAsync();
             return new OkObjectResult(new JsonResult<List<EvaluationListDto>>(result.ToList()));
+        }
+
+        [HttpDelete("{id}")]
+        [SwaggerOperation(
+        Summary = "Eliminar evaluación",
+        Description = "Eliminar evaluación",
+        OperationId = "Evaluation.Delete",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var result = await _evaluationService.DeleteAsync(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
         }
     }
 }
