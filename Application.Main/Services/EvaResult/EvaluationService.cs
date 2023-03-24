@@ -227,8 +227,7 @@ namespace Application.Main.Services.EvaResult
         {
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
                     .Find(f => f.Id.Equals(id))
-                    .Include("EvaluationCollaborators")
-                    .Include("LeaderCollaborators")
+                    .Include("EvaluationCollaborators.LeaderCollaborators")
                     .Include("EvaluationComponents")
                     .Include("EvaluationComponentStages")
                     .ToListAsync();
