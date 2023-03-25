@@ -11,7 +11,7 @@
 
     [Route("api/evaluation-leader")]
     [ApiController]
-    public class EvaluationLeaderController : BaseController
+    public class EvaluationLeaderController : Controller
     {
         private readonly IEvaluationLeaderService _evaluationLeaderService;
         private readonly ILogger<EvaluationController> _logger;
@@ -31,8 +31,9 @@
         Tags = new[] { "EvaluationLeaderService" })]
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> ImportLeaders([FromForm]EvaluationLeaderFileDto request)
-        {           
-            var result = await _evaluationLeaderService.ImportLeadersAsync(request, null);
+        {
+   
+            var result = await _evaluationLeaderService.ImportLeadersAsync(request, this);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 
@@ -118,5 +119,10 @@
             var result = await _evaluationLeaderService.GetComponentAndStageLeaderAsync(evaluationCollaboratorId);
             return new OkObjectResult(new JsonResult<CollaboratorLeaderEvaluateDto>(result));
         }
+    }
+
+    public class ControllerFF : Controller
+    {
+
     }
 }

@@ -34,7 +34,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00.Scripts", "00.Scripts", 
 		InsertsMasivoEjemplo.sql = InsertsMasivoEjemplo.sql
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernell", "shared-kernell-net6\SharedKernell\SharedKernell.csproj", "{C339AA90-44C0-4551-AEBA-CF33E5FB560D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedKernell", "..\shared-kernell-net6\SharedKernell\SharedKernell.csproj", "{545B829E-CF2E-4450-859B-0CE777C05365}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,10 +78,10 @@ Global
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29BA845D-2552-4BDC-9EF8-D36C432B798A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C339AA90-44C0-4551-AEBA-CF33E5FB560D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C339AA90-44C0-4551-AEBA-CF33E5FB560D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C339AA90-44C0-4551-AEBA-CF33E5FB560D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C339AA90-44C0-4551-AEBA-CF33E5FB560D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{545B829E-CF2E-4450-859B-0CE777C05365}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{545B829E-CF2E-4450-859B-0CE777C05365}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{545B829E-CF2E-4450-859B-0CE777C05365}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{545B829E-CF2E-4450-859B-0CE777C05365}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
