@@ -7,6 +7,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
+    using DocumentFormat.OpenXml.Office2010.Excel;
     using Domain.Common.Constants;
     using Domain.Main.Config;
     using Domain.Main.EvaResult;
@@ -18,7 +19,7 @@ namespace Application.Main.Services.EvaResult
         public EvaluationService(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
 
-        public async Task<bool> CreateAsync(EvaluationCreateDto request)
+        public async Task<EvaluationResDto> CreateAsync(EvaluationCreateDto request)
         {
             if (!request.EvaluationComponents.Any())
                 throw new WarningException("No hay ningun componente seleccionado para la evaluacion.");
@@ -174,7 +175,7 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
             await _unitOfWorkApp.SaveChangesAsync();
 
-            return true;
+            return _mapper.Map<EvaluationResDto>(evaluation);
         }
         public async Task<EvaluationDetailDto> GetEvaluationDetailAsync(Guid evaluationId)
         {
@@ -220,6 +221,22 @@ namespace Application.Main.Services.EvaResult
                     .ToListAsync();
 
             return formulas;
+        }
+
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.Id.Equals(id))
+                    .Include("EvaluationCollaborators.LeaderCollaborators")
+                    .Include("EvaluationComponents")
+                    .Include("EvaluationComponentStages")
+                    .ToListAsync();
+
+            _unitOfWorkApp.Repository.EvaluationRepository.RemoveRange(evaluation);
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return true;
         }
 
         #region Helpers Functions

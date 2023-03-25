@@ -4,6 +4,7 @@
     using Application.Dto.Pagination;
     using Application.Dto.Security.User;
     using Application.Main.Services.Security.Interfaces;
+    using Microsoft.AspNetCore.Authorization;
     using SharedKernell.Wrappers;
 
     [Route("api/user")]
@@ -32,6 +33,7 @@
             return new OkObjectResult(new JsonResult<IEnumerable<UserDto>>(result));
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [SwaggerOperation(
         Summary = "Crear Usuario",

@@ -37,9 +37,9 @@ namespace Application.Main.Services.EvaResult
 
         public async Task<EvaluationCollaboratorDto> CreateAsync(EvaluationCollaboratorCreateDto request)
         {
-            var evaluationCollaboratorDeleted = (await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                    .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspGetLastEvaluationCollaboratorDeleted]", new { collaboratorId = request.CollaboratorId }))
-                    .FirstOrDefault();
+            //var evaluationCollaboratorDeleted = (await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+            //        .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspGetLastEvaluationCollaboratorDeleted]", new { collaboratorId = request.CollaboratorId }))
+            //        .FirstOrDefault();
 
             var evaluationCollaborator = _mapper.Map<EvaluationCollaborator>(request);
             var evaluationComponentStages = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
@@ -153,25 +153,25 @@ namespace Application.Main.Services.EvaResult
             await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.AddAsync(evaluationCollaborator);
             await _unitOfWorkApp.SaveChangesAsync();
 
-            if (evaluationCollaboratorDeleted is not null)
-            {
-                await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                        .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspUpdateEvaluationCollaboratorCurrentIdInEvaluationLeader]",
-                                                                new
-                                                                {
-                                                                    evaluationCollaboratorDeletedId = evaluationCollaboratorDeleted.Id,
-                                                                    evaluationCollaboratorCurrentId = evaluationCollaborator.Id
-                                                                });
+            //if (evaluationCollaboratorDeleted is not null)
+            //{
+            //    await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+            //            .RunSqlQuery<EvaluationCollaboratorDto>("[dbo].[uspUpdateEvaluationCollaboratorCurrentIdInEvaluationLeader]",
+            //                                                    new
+            //                                                    {
+            //                                                        evaluationCollaboratorDeletedId = evaluationCollaboratorDeleted.Id,
+            //                                                        evaluationCollaboratorCurrentId = evaluationCollaborator.Id
+            //                                                    });
 
-                var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
-                        .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id), false)
-                        .ToListAsync();
+            //    var leaderCollaborators = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+            //            .Find(lc => lc.EvaluationCollaboratorId.Equals(evaluationCollaboratorDeleted.Id), false)
+            //            .ToListAsync();
 
-                if (leaderCollaborators.Any())
-                    leaderCollaborators.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
+            //    if (leaderCollaborators.Any())
+            //        leaderCollaborators.ForEach(lc => lc.EvaluationCollaboratorId = evaluationCollaborator.Id);
                 
-                await _unitOfWorkApp.SaveChangesAsync();
-            }
+            //    await _unitOfWorkApp.SaveChangesAsync();
+            //}
 
             return _mapper.Map<EvaluationCollaboratorDto>(evaluationCollaborator);
         }

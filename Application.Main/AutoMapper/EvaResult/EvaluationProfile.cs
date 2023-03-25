@@ -12,6 +12,7 @@
             //    .ForMember(x => x.PeriodName, m => m.MapFrom(d => d.Period.Name));
 
             CreateMap<EvaluationCreateDto, Evaluation>().ReverseMap();
+            CreateMap<EvaluationResDto, Evaluation>().ReverseMap();
             CreateMap<Evaluation, EvaluationListDto>()
                 .ForMember(x => x.Name, m => m.MapFrom(d => $"{d.Period.Name}-{d.Name}"))
                 .ForMember(x => x.Id, m => m.MapFrom(d => d.Id));

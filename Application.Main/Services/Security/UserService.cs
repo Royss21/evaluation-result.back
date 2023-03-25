@@ -46,9 +46,13 @@ namespace Application.Main.Services.Security
         public async Task<bool> UpdateAsync(UserUpdateDto request)
         {
             var user = _mapper.Map<User>(request);
-            //var userExists = await _unitOfWorkApp.Repository.UserRepository
-            //    .Find(f => f.Id.Equals(request.Id), false)
-            //    .FirstAsync();
+            var userExists = await _unitOfWorkApp.Repository.UserRepository
+                .Find(f => f.Id.Equals(request.Id), false)
+                .FirstAsync();
+
+            user.Password = userExists.Password;
+            user.HashType = userExists.HashType;
+            user.IsLocked = userExists.IsLocked;
 
             //userExists.UserName = user.UserName;
             //userExists.Names = user.Names;
