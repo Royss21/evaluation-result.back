@@ -227,9 +227,11 @@ namespace Application.Main.Services.EvaResult
         {
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
                     .Find(f => f.Id.Equals(id))
-                    .Include("EvaluationCollaborators.LeaderCollaborators")
-                    .Include("EvaluationComponents")
-                    .Include("EvaluationComponentStages")
+                    //.Include("EvaluationCollaborators.LeaderCollaborators")
+                    //.Include("EvaluationComponents.ComponentsCollaborator.ComponentCollaboratorDetails.ComponentCollaboratorConducts")
+                    //.Include("EvaluationComponents")
+                    //.Include("EvaluationComponentStages.ComponentCollaboratorStages")
+                    //.Include("EvaluationComponentStages")
                     .ToListAsync();
 
             _unitOfWorkApp.Repository.EvaluationRepository.RemoveRange(evaluation);

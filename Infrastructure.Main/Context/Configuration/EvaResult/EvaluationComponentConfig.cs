@@ -20,7 +20,8 @@
                .WithOne(b => b.EvaluationComponent);
 
             builder.HasMany(b => b.ComponentsCollaborator)
-               .WithOne(b => b.EvaluationComponent);
+               .WithOne(b => b.EvaluationComponent)
+               .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasMany(b => b.EvaluationLeaders)
                .WithOne(b => b.EvaluationComponent);
