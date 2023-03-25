@@ -402,10 +402,13 @@ namespace Application.Main.Services.EvaResult
             };
         }
 
-        public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(PagingFilterDto filter)
+        public async Task<PaginationResultDto<EvaluationCollaboratorPagingDto>> GetPagingAsync(EvaluationCollaboratorFilterDto filter)
         {
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorPagingDto>.Convert(filter);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorPagingDto>(_mapper);
+
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+            .AddCondition(add => add.EvaluationId.Equals(filter.EvaluationId));
 
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {

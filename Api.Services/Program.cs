@@ -13,7 +13,7 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<DbContextMain>(opts => opts.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+builder.Services.AddDbContext<DbContextMain>(opts => opts.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"], o => o.CommandTimeout(180)));
 builder.Services.Configure<PasswordOption>(builder.Configuration.GetSection("PasswordOption"));
 builder.Services.Configure<JwtOption>(builder.Configuration.GetSection("JwtOption"));
 builder.Services.Configure<MailConfiguration>(builder.Configuration.GetSection("MailConfiguration"));

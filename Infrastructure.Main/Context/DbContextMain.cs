@@ -272,14 +272,14 @@
                 property.SetColumnType("money");
             }
 
-            foreach (var foreignKey in entidadesForeignKey)
-            {
-                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-            }
+            //foreach (var foreignKey in entidadesForeignKey)
+            //{
+            //    foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            //}
         }
         private void UpdateEntities()
         {
-            var currentDate = DateTime.Now.GetDatePeru();
+            var currentDate = DateTime.Now.GetDateTimePeru();
             var entityEntries = ChangeTracker.Entries().Where(e => e.Entity is IBaseModel);
             
             foreach (var entityEntry in entityEntries)

@@ -35,11 +35,11 @@
 
             builder.HasMany(c => c.EvaluationLeaders)
                 .WithOne(e => e.Evaluation)
-                .OnDelete(DeleteBehavior.ClientCascade); ;
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasMany(c => c.EvaluationComponentStages)
                 .WithOne(e => e.Evaluation)
-                .OnDelete(DeleteBehavior.ClientCascade); ;
+                .OnDelete(DeleteBehavior.ClientCascade);
 
             builder.HasOne(c => c.Period)
                 .WithMany(e => e.Evaluations);

@@ -27,7 +27,7 @@
         OperationId = "EvaluationCollaborator.GetAllPaging",
         Tags = new[] { "EvaluationCollaboratorService" })]
         [ProducesResponseType(typeof(JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetPaging([FromQuery] PagingFilterDto filter)
+        public async Task<IActionResult> GetPaging([FromQuery] EvaluationCollaboratorFilterDto filter)
         {
             var result = await _evaluationCollaboratorService.GetPagingAsync(filter);
             return new OkObjectResult(new JsonResult<PaginationResultDto<EvaluationCollaboratorPagingDto>>(result));
