@@ -1,4 +1,4 @@
-﻿
+﻿@model Application.Dto.Views.EmailNotifyCollaboratorDto
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,10 +20,15 @@
                                     <tr>
                                         <td style="padding:0 0 20px;">
                                             <h3 style="font-family:'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;color:#000;margin:40px 0 0;line-height:1.2;font-weight:400;font-size:18px">
-                                                Hola , se le ha asignado para el cargo de lider de evaluacion de desempeño, en el componente de 
+                                                Hola @Model.FullName, @Model.RangeDateStageApproval podras ingresar al sistema de evaluacion de resultados para que puedas
+                                                dar el visto bueno a tus notas obtenidas.
                                             </h3>
-                                            
-                                           
+
+                                            <h3>Debes dar click al siguiente enlace para ver el resultado de tu evaluacion.</h3>
+
+                                            <a href="http://localhost:4200/auth/login?code=@Model.EvaluationCollaboratorId">
+                                                Ver resultados de mi evaluacion
+                                            </a>
                                         </td>
                                     </tr>
                                 </table>

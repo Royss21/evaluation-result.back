@@ -9,11 +9,16 @@
     using Application.Main.Services.Employee.Interfaces;
     using Application.Main.Services.Employee.Validators;
     using Domain.Common.Constants;
+    using Application.Main.Services.EvaResult.Interfaces;
 
     public class CollaboratorService : BaseService, ICollaboratorService
     {
-        public CollaboratorService(IServiceProvider serviceProvider) : base(serviceProvider)
-        { }
+        private readonly IEvaluationCollaboratorService _service;
+
+        public CollaboratorService(IEvaluationCollaboratorService service,  IServiceProvider serviceProvider) : base(serviceProvider)
+        {
+            _service = service;
+        }
 
         public async Task<CollaboratorDto> CreateAsync(CollaboratorCreateDto request)
         {
@@ -83,15 +88,34 @@
 
         }
 
+        public async Task<bool> ValidateSubscribeEvaluationCurrent(Guid colaboratorId)
+        {
+            var currentDate = DateTime.UtcNow.GetDateTimePeru();
+
+            return await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.CollaboratorId.Equals(colaboratorId) && (currentDate >= f.Evaluation.StartDate && currentDate <= f.Evaluation.EndDate))
+                    .AnyAsync();
+        }
+
         public async Task<bool> DeleteAsync(Guid id)
         {
+            var currentDate = DateTime.UtcNow.GetDateTimePeru();
             var collaborator = await _unitOfWorkApp.Repository.CollaboratorRepository.GetAsync(id);
 
             if (collaborator is null)
                 throw new WarningException(Messages.General.ResourceNotFound);
 
             await _unitOfWorkApp.Repository.CollaboratorRepository.DeleteAsync(collaborator);
+
+            var evaluationCollaboratorId = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.CollaboratorId.Equals(id) && (currentDate >= f.Evaluation.StartDate && currentDate <= f.Evaluation.EndDate))
+                    .Select(s => s.Id)
+                    .FirstAsync();
+
+
             await _unitOfWorkApp.SaveChangesAsync();
+
+            await _service.DeleteAsync(evaluationCollaboratorId);
 
             return true;
         }
