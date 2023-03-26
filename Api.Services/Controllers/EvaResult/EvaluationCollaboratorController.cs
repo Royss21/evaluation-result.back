@@ -9,7 +9,7 @@
 
     [Route("api/evaluation-collaborator")]
     [ApiController]
-    public class EvaluationCollaboratorController : BaseController
+    public class EvaluationCollaboratorController : Controller
     {
         private readonly IEvaluationCollaboratorService _evaluationCollaboratorService;
         private readonly ILogger<EvaluationCollaboratorController> _logger;
@@ -68,7 +68,7 @@
         [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
         public async Task<IActionResult> SaveCommentEvaluationStage(CommentEvaluationDto request)
         {
-            var result = await _evaluationCollaboratorService.SaveCommentEvaluationStageAsync(request, null);
+            var result = await _evaluationCollaboratorService.SaveCommentEvaluationStageAsync(request, this);
             return new OkObjectResult(new JsonResult<bool>(result));
         }
 

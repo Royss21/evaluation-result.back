@@ -72,6 +72,19 @@
             return new OkObjectResult(new JsonResult<IEnumerable<CollaboratorNotInEvaluationDto>>(result));
         }
 
+        [HttpGet("validate-evaluation-current/{collaboratorId}")]
+        [SwaggerOperation(
+        Summary = "Valida si el colaborador esta en una evaluacion en curso",
+        Description = "Valida si el colaborador esta en una evaluacion en curso",
+        OperationId = "Collaborator.GetAllCollaboratorNotInEvaluation",
+        Tags = new[] { "CollaboratorService" })]
+        [ProducesResponseType(typeof(JsonResult<bool>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ValidateSubscribeEvaluationCurrent(Guid collaboratorId)
+        {
+            var result = await _collaboratorService.ValidateSubscribeEvaluationCurrent(collaboratorId);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
         [HttpDelete("{id}")]
         [SwaggerOperation(
         Summary = "Eliminar Colaborador",

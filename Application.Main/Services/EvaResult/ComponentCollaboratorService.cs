@@ -69,10 +69,10 @@ namespace Application.Main.Services.EvaResult
 
                         foreach (var parameterValue in paramatersValue)
                         {
-                            if(formulaQuerySql.Contains(parameterValue.Name))
+                            if (formulaQuerySql.Contains(parameterValue.Name))
                                 formulaQuerySql = formulaQuerySql.Replace(parameterValue.Name,
                                         parameterValue.ParameterRangeId == parametersRangeInternal.Id
-                                            ? ccd.GetType().GetProperty(parameterValue.NameProperty).GetValue(ccd, null)?.ToString() ?? ""
+                                            ? ccd.GetType().GetProperty(parameterValue.NameProperty)?.GetValue(ccd, null)?.ToString()
                                             : parameterValue.Value.ToString());
                         }
 
@@ -394,6 +394,9 @@ namespace Application.Main.Services.EvaResult
                 }
             }
 
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.EvaluationComponent.EvaluationId.Equals(filter.EvaluationId));
+
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {
                 filter.GlobalFilter = filter.GlobalFilter ?? "";
@@ -413,16 +416,24 @@ namespace Application.Main.Services.EvaResult
             var paging = await _unitOfWorkApp.Repository.ComponentCollaboratorRepository.FindAllPagingAsync(parametersDomain);
             var evaluationCollaborators = await paging.Entities.ProjectTo<ComponentCollaboratorPagingDto>(_mapper.ConfigurationProvider).ToListAsync();
 
-            foreach(var cc in evaluationCollaborators)
-            {
-                var evaluationComponentStage = await GetEvaluationComponentStageAsync(cc.ComponentId,cc.EvaluationComponentId);
-                var evaluationStatusComment = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
-                    .Find(f =>
-                        f.EvaluationCollaboratorId.Equals(cc.EvaluationCollaboratorId) &&
-                        f.EvaluationComponentStageId == evaluationComponentStage.Id
-                    ).FirstAsync();
-                cc.StatusId = evaluationStatusComment.StatusId;
+            var evaluationComponentId = await _unitOfWorkApp.Repository.EvaluationComponentRepository
+                    .Find(f => f.EvaluationId.Equals(filter.EvaluationId) && f.ComponentId == filter.ComponentId)
+                    .Select(s => s.Id)
+                    .FirstAsync();
 
+            var evaluationComponentStage = await GetEvaluationComponentStageAsync(filter.ComponentId, evaluationComponentId);
+            var commentsCollaborators = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
+                    .Find(f =>
+                        evaluationCollaborators.Select(s => s.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) &&
+                        f.EvaluationComponentStageId == evaluationComponentStage.Id
+                    ).ToListAsync();
+
+
+            foreach (var cc in evaluationCollaborators)
+            {
+                var evaluationStatusComment = commentsCollaborators.Find(f =>
+                        f.EvaluationCollaboratorId.Equals(cc.EvaluationCollaboratorId));
+                cc.StatusId = evaluationStatusComment.StatusId;
             }
 
             return new PaginationResultDto<ComponentCollaboratorPagingDto>

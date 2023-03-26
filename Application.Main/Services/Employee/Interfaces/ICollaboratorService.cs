@@ -11,5 +11,7 @@
         Task<bool> DeleteAsync(Guid id);
         Task<PaginationResultDto<CollaboratorDto>> GetAllPagingAsync(PagingFilterDto primeTable);
 
+        Task<bool> ValidateSubscribeEvaluationCurrent(Guid colaboratorId);
+
     }
 }

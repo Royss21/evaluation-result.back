@@ -297,7 +297,7 @@ namespace Application.Main.Services.EvaResult
 
                 collaborator.RangeDateStageApproval = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
                         .Find(f =>
-                            f.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies &&
+                            //f.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies &&
                             f.StageId == GeneralConstants.Stages.Approval &&
                             f.EvaluationId.Equals(collaborator.EvaluationId)
                         )

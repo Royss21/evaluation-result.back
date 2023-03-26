@@ -224,19 +224,6 @@ namespace Application.Main.Services.EvaResult
                 Body = _mailService.UploadBodyMail<object>(MailTemplateEnum.EmailLeader, controller, s)
             }).ToList()));
 
-            //var emailsLeaders = new List<EmailLeaderDto>
-            //{
-            //    new EmailLeaderDto {Component ="Objetivos de area", EvaluationCollaboratorId= "adasdsdsadasdas", FullName ="colaborador 1" },
-            //    new EmailLeaderDto {Component ="Competencias", EvaluationCollaboratorId= "adsadsadasdas", FullName ="colaborador 2" },
-            //    new EmailLeaderDto {Component ="Objetivos de area", EvaluationCollaboratorId= "asdasdasdasd", FullName ="colaborador 3" }
-            //};
-
-            //BackgroundJob.Enqueue(() => Send(emailsLeaders.Select(s => new Mail
-            //{
-            //    Subject = "INICIO SESION",
-            //    Mails = new List<string> { "martel.royss21@gmail.com" },
-            //    Body = _mailService.UploadBodyMail<object>(MailTemplateEnum.MailTest, controller, s)
-            //}).ToList()));
 
             return true;
         }
