@@ -98,20 +98,22 @@
 
         public async Task<PaginationResultDto<EvaluationCollaboratorarFollowResultDto>> GetAllPagingFollowResultAsync(EvaluationCollaboratorarFollowResultFilterDto filter)
         {
-            if (filter.EvaluationId is null)
+            var currentDate = DateTime.Now.GetDatePeru();
+            var evaluationId = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
+                    .Select(s => s.Id)
+                    .FirstOrDefaultAsync();
+            if (evaluationId.Equals(Guid.Empty))
                 return new PaginationResultDto<EvaluationCollaboratorarFollowResultDto>
                 {
                     Count = 0,
                     Entities = new List<EvaluationCollaboratorarFollowResultDto>()
                 };
 
-            var currentDate = DateTime.Now.GetDatePeru();
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorarFollowResultDto>.Convert(filter);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorarFollowResultDto>(_mapper);
 
-            if (filter.EvaluationId is not null)
-                parametersDomain.FilterWhere = parametersDomain.FilterWhere.AddCondition(a => a.EvaluationId.Equals(filter.EvaluationId));
-
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere.AddCondition(a => a.EvaluationId.Equals(evaluationId));
 
             if (!string.IsNullOrWhiteSpace(filter.GlobalFilter))
             {
@@ -138,16 +140,27 @@
                     .ToListAsync();
 
             var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                    .Find(f => f.EvaluationComponentId != null)
-                    .Select(s => new {s.Id, s.StageId, s.StartDate, s.EndDate, s.EvaluationComponent.ComponentId  })
+                    .Find(f => true)
+                    .Select(s => new {
+                        s.Id,
+                        s.StageId,
+                        s.StartDate,
+                        s.EndDate,
+                        ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.ComponentId
+                    })
                     .ToListAsync();
-
+            var ff = evaluationComponentStage.Where(w => w.ComponentId != 0);
             var componentCollaboratorComments = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f => 
                         evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) &&
-                        evaluationComponentStage.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
+                        ff.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
                     )
-                    .Select(s => new { s.Id, s.EvaluationCollaboratorId, s.EvaluationComponentStage.EvaluationComponent.ComponentId, s.StatusId })
+                    .Select(s => new { 
+                        s.Id, 
+                        s.EvaluationCollaboratorId,
+                        //ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.StatusId })
                     .ToListAsync();
 
             foreach (var ec in evaluationCollaborators) 
@@ -181,7 +194,7 @@
                     f.ComponentId == GeneralConstants.Component.Competencies)?.StatusId ?? 0;
 
                 ec.StageCurrentId = evaluationComponentStage?.Find(f =>
-                    f.ComponentId == GeneralConstants.Component.Competencies &&
+                    new[] {0, GeneralConstants.Component.Competencies }.Contains(f.ComponentId ) &&
                     (currentDate >= f.StartDate && currentDate <= f.EndDate))?.StageId ?? 0;
             }
 
@@ -195,12 +208,17 @@
 
         public async Task<IEnumerable<EvaluationCollaboratorarFollowResultDto>> GetAllFollowResultAsync(Guid? evaluationId, string? globalFilter = null)
         {
+            var currentDate = DateTime.Now.GetDatePeru();
+            evaluationId = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => currentDate >= f.StartDate && currentDate <= f.EndDate)
+                    .Select(s => s.Id)
+                    .FirstOrDefaultAsync();
+
             if (evaluationId is null)
                 return new List<EvaluationCollaboratorarFollowResultDto>();
 
 
             globalFilter = globalFilter ?? "";
-            var currentDate = DateTime.Now.GetDatePeru();
             var evaluationCollaborators =  await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(add =>
                             add.EvaluationId.Equals(evaluationId) &&
@@ -226,16 +244,28 @@
                     .ToListAsync();
 
             var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                    .Find(f => f.EvaluationComponentId != null)
-                    .Select(s => new { s.Id, s.StageId, s.StartDate, s.EndDate, s.EvaluationComponent.ComponentId })
-                    .ToListAsync();
-
+                     .Find(f => true)
+                     .Select(s => new {
+                         s.Id,
+                         s.StageId,
+                         s.StartDate,
+                         s.EndDate,
+                         ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.ComponentId
+                     })
+                     .ToListAsync();
+            var ff = evaluationComponentStage.Where(w => w.ComponentId != 0);
             var componentCollaboratorComments = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f =>
                         evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) &&
-                        evaluationComponentStage.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
+                        ff.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
                     )
-                    .Select(s => new { s.Id, s.EvaluationCollaboratorId, s.EvaluationComponentStage.EvaluationComponent.ComponentId, s.StatusId })
+                    .Select(s => new {
+                        s.Id,
+                        s.EvaluationCollaboratorId,
+                        //ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.StatusId
+                    })
                     .ToListAsync();
 
             foreach (var ec in evaluationCollaborators)
@@ -269,7 +299,7 @@
                     f.ComponentId == GeneralConstants.Component.Competencies)?.StatusId ?? 0;
 
                 ec.StageCurrentId = evaluationComponentStage?.Find(f =>
-                    f.ComponentId == GeneralConstants.Component.Competencies &&
+                    new[] { 0, GeneralConstants.Component.Competencies }.Contains(f.ComponentId) &&
                     (currentDate >= f.StartDate && currentDate <= f.EndDate))?.StageId ?? 0;
             }
 

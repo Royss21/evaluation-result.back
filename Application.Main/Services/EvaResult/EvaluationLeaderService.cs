@@ -321,7 +321,8 @@ namespace Application.Main.Services.EvaResult
             var leaderCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(predicate)
                     .Skip(filter.PageIndex)
-                    .Take(filter.PageSize)
+                    //.Take(filter.PageSize)
+                    .Take(countCollaborators)
                     .ProjectTo<LeaderCollaboratorsDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
 

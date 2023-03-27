@@ -8,6 +8,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
     using DocumentFormat.OpenXml.Office2010.Excel;
+    using DocumentFormat.OpenXml.Wordprocessing;
     using Domain.Common.Constants;
     using Domain.Main.Config;
     using Domain.Main.EvaResult;
@@ -222,7 +223,6 @@ namespace Application.Main.Services.EvaResult
 
             return formulas;
         }
-
         public async Task<bool> DeleteAsync(Guid id)
         {
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
@@ -240,6 +240,65 @@ namespace Application.Main.Services.EvaResult
 
             return true;
         }
+
+        public async Task<EvaluationComponentsDatesDto> GetDatesComponents(Guid evaluationId) 
+        {
+            var componentStages = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.Id.Equals(evaluationId))
+                    .ProjectTo<EvaluationComponentsDatesDto>(_mapper.ConfigurationProvider)
+                    .FirstAsync();
+
+            return componentStages;
+        }
+        public async Task<EvaluationResDto> UpdateAsync(EvaluationCreateDto request, Guid evaluationId)
+        {
+            var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.Id.Equals(evaluationId), false)
+                    .FirstAsync();
+
+            evaluation.StartDate = request.StartDate;
+            evaluation.EndDate = request.EndDate;
+            evaluation.Name = request.Name;
+            evaluation.Weight = request.Weight;
+
+            var componentStages = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
+                    .Find(f => f.EvaluationId.Equals(evaluationId), false)
+                    .Include("EvaluationComponent")
+                    .ToListAsync();
+
+            componentStages.ForEach(cs =>
+            {
+                if (cs.EvaluationComponent is not null)
+                {
+                    var componentStage = request.EvaluationComponents.Find(f => f.ComponentId == cs.EvaluationComponent.ComponentId);
+                    if(componentStage is not null)
+                    {
+                        if(cs.EvaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
+                        {
+                            var stage = request.EvaluationComponentStages.Find(f => f.StageId == cs.StageId);
+                            cs.StartDate = stage.StartDate;
+                            cs.EndDate = stage.EndDate;
+                        }
+                        else
+                        {
+                            cs.StartDate = componentStage.StartDate;
+                            cs.EndDate = componentStage.EndDate;
+                        }
+                    }
+                }
+                else
+                {
+                    var stage = request.EvaluationComponentStages.Find(f => f.StageId == cs.StageId);
+                    cs.StartDate = stage.StartDate;
+                    cs.EndDate = stage.EndDate;
+                }
+            });
+
+            await _unitOfWorkApp.SaveChangesAsync();
+
+            return _mapper.Map<EvaluationResDto>(evaluation);
+        }
+
 
         #region Helpers Functions
         private async Task<int> CountEvaluationsCurrentPeriod()
