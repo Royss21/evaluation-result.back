@@ -21,7 +21,9 @@ namespace Application.Main.Services.EvaResult.Validators
                 .MustAsync((period, cancel) => PeriodSharedValidator.NameExists( _periodRepository, period))
                 .WithMessage(Messages.General.NameAlreadyRegistered)
                 .MustAsync((period, cancel) => PeriodSharedValidator.DateRangeIsValid(_periodRepository, period))
-                .WithMessage(Messages.General.RangeDatesIsNotValid);
+                .WithMessage(Messages.General.RangeDatesIsNotValid)
+                .MustAsync((period, cancel) => PeriodSharedValidator.DateRangeBetweenIsValid(_periodRepository, period))
+                .WithMessage("Existen periodos que se encuentran dentro del rango de fechas ingresadas");
         }
     }
 
@@ -55,6 +57,25 @@ namespace Application.Main.Services.EvaResult.Validators
                 return false;
 
             predicate.And(p => (period.StartDate >= p.StartDate && period.StartDate <= p.EndDate) || (period.EndDate >= p.StartDate && period.EndDate <= p.EndDate));
+
+            var result = await periodRepository
+                   .Find(predicate)
+                   .ToListAsync();
+
+            return !result.Any();
+        }
+
+        public static async Task<bool> DateRangeBetweenIsValid(IPeriodRepository periodRepository, Period period)
+        {
+            var predicate = PredicateBuilder.New<Period>(true);
+
+            if (period.Id != 0)
+                predicate.And(p => p.Id != period.Id);
+
+            if (period.StartDate > period.EndDate)
+                return false;
+
+            predicate.And(p => (p.StartDate >= period.StartDate && p.StartDate <= period.EndDate) || (p.EndDate >= period.StartDate && p.EndDate <= period.EndDate));
 
             var result = await periodRepository
                    .Find(predicate)
