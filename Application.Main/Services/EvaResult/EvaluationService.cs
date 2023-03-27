@@ -7,6 +7,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Main.Exceptions;
     using Application.Main.Service.Base;
     using Application.Main.Services.EvaResult.Interfaces;
+    using Application.Main.Services.EvaResult.Validators;
     using DocumentFormat.OpenXml.Office2010.Excel;
     using DocumentFormat.OpenXml.Wordprocessing;
     using Domain.Common.Constants;
@@ -38,6 +39,8 @@ namespace Application.Main.Services.EvaResult
                 if (countEvaluations == countEvaluationsConfig)
                     throw new WarningException($"Llegó al limite de {countEvaluationsConfig} evaluaciones por periodo");
             }
+
+            
 
             var evaluation = _mapper.Map<Evaluation>(request);
             var currentDate = DateTime.UtcNow.GetDatePeru();
@@ -186,7 +189,12 @@ namespace Application.Main.Services.EvaResult
                 evaluationComponent.StatusId = GeneralConstants.StatusIds.Create;
             }
 
-            await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation);
+            var resultValidator = await _unitOfWorkApp.Repository.EvaluationRepository.AddAsync(evaluation,
+                new EvaluationCreateValidator(_unitOfWorkApp.Repository.EvaluationRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
+
             await _unitOfWorkApp.SaveChangesAsync();
 
             return _mapper.Map<EvaluationResDto>(evaluation);
@@ -266,7 +274,7 @@ namespace Application.Main.Services.EvaResult
         public async Task<EvaluationResDto> UpdateAsync(EvaluationCreateDto request, Guid evaluationId)
         {
             var evaluation = await _unitOfWorkApp.Repository.EvaluationRepository
-                    .Find(f => f.Id.Equals(evaluationId), false)
+                    .Find(f => f.Id.Equals(evaluationId))
                     .FirstAsync();
 
             evaluation.StartDate = request.StartDate;
@@ -306,6 +314,13 @@ namespace Application.Main.Services.EvaResult
                     cs.EndDate = stage.EndDate;
                 }
             });
+
+
+            var resultValidator = await _unitOfWorkApp.Repository.EvaluationRepository.UpdateAsync(evaluation,
+               new EvaluationCreateValidator(_unitOfWorkApp.Repository.EvaluationRepository));
+
+            if (!resultValidator.IsValid)
+                throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
 
             await _unitOfWorkApp.SaveChangesAsync();
 
