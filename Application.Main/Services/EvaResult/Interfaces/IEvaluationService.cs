@@ -12,6 +12,6 @@
         Task<bool> DeleteAsync(Guid id);
         Task<EvaluationComponentsDatesDto> GetDatesComponents(Guid evaluationId);
         Task<EvaluationResDto> UpdateAsync(EvaluationCreateDto request, Guid evaluationId);
-        //Task<IEnumerable<EvaluationDDDto>> GetAllAsync();
+
     }
 }

@@ -139,5 +139,13 @@ namespace Application.Main.Services.Config
                     .RunSqlQuery<decimal>("[dbo].[uspCalculateFormulaCompliance]", new { formulaQuerySql }))
                     .FirstOrDefault();
         }
+
+        public async Task<bool> ExistInObjectiveCorporative(Guid id)
+        {
+            return await _unitOfWorkApp.Repository.SubcomponentRepository
+                   .Find(f => f.ComponentId == GeneralConstants.Component.CorporateObjectives
+                         && f.FormulaId.Equals(id))
+                   .AnyAsync();
+        }
     }
 }

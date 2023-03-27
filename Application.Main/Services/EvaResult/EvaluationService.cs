@@ -114,7 +114,11 @@ namespace Application.Main.Services.EvaResult
 
                     if (evaluationComponent.ComponentId == GeneralConstants.Component.Competencies)
                     {
-                        var conductsOfCollaborator = conducts.Where(c => c.Level.Name.ToLower().Equals(ec.LevelName.ToLower()));
+                        var conductsOfCollaborator = conducts.Where(c => c.Level.Name.ToLower().Equals(ec.LevelName.ToLower())).ToList();
+
+                        if (conductsOfCollaborator.Count <= 0)
+                            throw new WarningException($"El nivel {ec.LevelName} no tienes conductas asignadas");
+
                         var subcomponentsOfCollaborator = subcomponents.Where(s =>
                             conductsOfCollaborator.Select(coc => coc.SubcomponentId).Contains(s.Id)
                         ).ToList();
@@ -137,11 +141,18 @@ namespace Application.Main.Services.EvaResult
                                 }).ToList();
                     }
                     else
-                        componentCollaboratorDetails = subcomponents
+                    {
+                        var subcomponentOfCollaborators = subcomponents
                                 .Where(s =>
                                         s.AreaName.ToLower().Equals(ec.AreaName.ToLower()) &&
                                         s.SubcomponentValues.Select(sv => sv.ChargeName.ToLower()).Contains(ec.ChargeName.ToLower())
-                                )
+                                ).ToList();
+
+                        if (subcomponentOfCollaborators.Count <= 0)
+                            throw new WarningException($"El colaborador del área {ec.AreaName} con el cargo {ec.ChargeName} " +
+                                $"no tiene {GeneralConstants.Component.ComponentsName[evaluationComponent.ComponentId]} asignados");
+
+                        componentCollaboratorDetails = subcomponentOfCollaborators
                                 .Select(s =>
                                 {
                                     var subcomponentValue = s.SubcomponentValues.First(sv => sv.SubcomponentId.Equals(s.Id) &&
@@ -157,6 +168,8 @@ namespace Application.Main.Services.EvaResult
                                         FormulaQuery = s.FormulaQuery ?? "",
                                     };
                                 }).ToList();
+                    }
+                        
 
                     evaluationComponent.ComponentsCollaborator.Add(new ComponentCollaborator
                     {
@@ -366,6 +379,9 @@ namespace Application.Main.Services.EvaResult
                 throw new WarningException("No se ha encontrado ninguna jerarquia con pesos configurados");
             if (!subcomponents.Any())
                 throw new WarningException("No se ha encontrado ningun subcomponente configurado");
+            if (subcomponents.Any(s => s.ComponentId == GeneralConstants.Component.CorporateObjectives && string.IsNullOrWhiteSpace(s.FormulaName) &&
+                string.IsNullOrWhiteSpace(s.FormulaQuery)))
+                throw new WarningException("No se ha encontrado fórmulas asignadas a los objetivos corporativos");
 
             return (hierarchyComponents, subcomponents);
         }

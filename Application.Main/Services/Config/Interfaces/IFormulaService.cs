@@ -10,6 +10,7 @@
         Task<FormulaDto> GetByIdAsync(Guid id);
         Task<FormulaDto> CreateAsync(FormulaCreateDto request);
         Task<bool> UpdateAsync(FormulaUpdateDto request);
+        Task<bool> ExistInObjectiveCorporative(Guid id);
         Task<bool> DeleteAsync(Guid id);
     }
 }

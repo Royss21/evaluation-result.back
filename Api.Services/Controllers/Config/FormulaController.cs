@@ -98,5 +98,18 @@
             return new OkObjectResult(new JsonResult<IEnumerable<FormulaDto>>(result));
         }
 
+        [HttpGet("validate-assigned/{id}")]
+        [SwaggerOperation(
+        Summary = "Validar si la fórmula está referenciada a un objetivo corporativo",
+        Description = "Validar si la fórmula está referenciada a un objetivo corporativo",
+        OperationId = "Formula.ExistInObjectiveCorporative",
+        Tags = new[] { "FormulaService" })]
+        [ProducesResponseType(typeof(JsonResult<JsonResult<bool>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> ExistInObjectiveCorporative(Guid id)
+        {
+            var result = await _formulaService.ExistInObjectiveCorporative(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
     }
 }
