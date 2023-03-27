@@ -14,7 +14,7 @@ namespace Application.Main.AutoMapper.Security
             CreateMap<User, UserInfoTokenDto>()
                     .ForMember(x => x.Email, m => m.MapFrom(d => d.Email))
                     .ForMember(x => x.UserName, m => m.MapFrom(d => d.UserName))
-                    .ForMember(x => x.FullName, m => m.MapFrom(d => $"{d.Names} {d.LastName} {d.MiddleName}"))
+                    .ForMember(x => x.FullName, m => m.MapFrom(d => $"{d.Names} {d.MiddleName} {d.LastName}"))
                     .ForMember(x => x.Password, m => m.MapFrom(d => d.Password))
                     .ForMember(x => x.HashType, m => m.MapFrom(d => d.HashType))
                     .ReverseMap();
