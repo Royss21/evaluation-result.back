@@ -85,6 +85,19 @@
             return new OkObjectResult(new JsonResult<List<EvaluationListDto>>(result.ToList()));
         }
 
+        [HttpGet("edit/{evaluationId}")]
+        [SwaggerOperation(
+        Summary = "Obtener fechas de evaluation y componentes",
+        Description = "Obtener fechas de evaluation y componentes",
+        OperationId = "Evaluation.GetDatesComponents",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationComponentsDatesDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetDatesComponents(Guid evaluationId)
+        {
+            var result = await _evaluationService.GetDatesComponents(evaluationId);
+            return new OkObjectResult(new JsonResult<EvaluationComponentsDatesDto>(result));
+        }
+
         [HttpDelete("{id}")]
         [SwaggerOperation(
         Summary = "Eliminar evaluación",
@@ -96,6 +109,19 @@
         {
             var result = await _evaluationService.DeleteAsync(id);
             return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
+        [HttpPut("{id}")]
+        [SwaggerOperation(
+        Summary = "Actualizar fechas evaluación",
+        Description = "Actualizar fechas evaluación",
+        OperationId = "Evaluation.Update",
+        Tags = new[] { "EvaluationService" })]
+        [ProducesResponseType(typeof(JsonResult<EvaluationResDto>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(EvaluationCreateDto evaluation, Guid id)
+        {
+            var result = await _evaluationService.UpdateAsync(evaluation, id);
+            return new OkObjectResult(new JsonResult<EvaluationResDto>(result));
         }
     }
 }

@@ -24,6 +24,19 @@
                .ForMember(x => x.Name, m => m.MapFrom(d => d.Name))
                .ForMember(x => x.RangeDate, m => m.MapFrom(d => "Desde el " + $"{d.StartDate.ToString("dd [P1] MMMMM, yyyy")} hasta {d.EndDate.ToString("dd [P1] MMMMM, yyyy")}".Replace("[P1]", "de")));
 
+            CreateMap<Evaluation, EvaluationComponentsDatesDto>()
+              .ForMember(x => x.Name, m => m.MapFrom(d => d.Name))
+              .ForMember(x => x.Weight, m => m.MapFrom(d => d.Weight))
+              .ForMember(x => x.StartDate, m => m.MapFrom(d => d.StartDate))
+              .ForMember(x => x.EndDate, m => m.MapFrom(d => d.EndDate))
+              .ForMember(x => x.ComponentStagesDates, m => m.MapFrom(d => d.EvaluationComponentStages.Select(s => new ComponentStagesDates
+              {
+                  ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.Component.Id,
+                  StartDate = s.StartDate,
+                  EndDate = s.EndDate,
+                  StageId = s.StageId,
+                  Id = s.Id
+              })));
 
             CreateMap<Evaluation, EvaluationDetailDto>()
                .ForMember(x => x.PeriodName, m => m.MapFrom(d => d.Period.Name))

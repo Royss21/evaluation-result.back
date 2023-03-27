@@ -2,6 +2,8 @@
 namespace Application.Dto.Report
 {
     using Application.Dto.EvaResult.EvaluationCollaborator;
+    using System.Text.Json.Serialization;
+
     public class EvaluationCollaboratorarFollowResultDto : CollaboratorInformationDto
     {
         public Guid EvaluationCollaboratorId { get; set; }
@@ -13,5 +15,8 @@ namespace Application.Dto.Report
         public int StatusObjectiveAreaId { get; set; }
         public int StatusCompetenceId { get; set; }
         public int StageCurrentId { get; set; }
+
+        [JsonIgnore]
+        public DateTime CreateDate { get; set; }
     }
 }
