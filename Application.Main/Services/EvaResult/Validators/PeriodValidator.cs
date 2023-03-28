@@ -21,7 +21,7 @@ namespace Application.Main.Services.EvaResult.Validators
                 .MustAsync((period, cancel) => PeriodSharedValidator.NameExists( _periodRepository, period))
                 .WithMessage(Messages.General.NameAlreadyRegistered)
                 .MustAsync((period, cancel) => PeriodSharedValidator.DateRangeIsValid(_periodRepository, period))
-                .WithMessage(Messages.General.RangeDatesIsNotValid)
+                .WithMessage(Messages.General.RangeDatesIsNotValidPeriod)
                 .MustAsync((period, cancel) => PeriodSharedValidator.DateRangeBetweenIsValid(_periodRepository, period))
                 .WithMessage("Existen periodos que se encuentran dentro del rango de fechas ingresadas");
         }

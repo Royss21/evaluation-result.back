@@ -95,7 +95,11 @@
             var parametersDto = PrimeNgToPaginationParametersDto<AreaDto>.Convert(primeTable);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<Area, AreaDto>(_mapper);
 
-            // parametrosDominio.FiltroWhere = parametrosDominio.FiltroWhere.AddCondition(x => x.State == (int)StateEnum.Active);
+            if (!string.IsNullOrWhiteSpace(primeTable.GlobalFilter))
+            {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => add.Name.ToLower().Contains(primeTable.GlobalFilter.ToLower()));
+            }
 
             var paging = await _unitOfWorkApp.Repository.AreaRepository.FindAllPagingAsync(parametersDomain);
             var areas = await paging.Entities.ProjectTo<AreaDto>(_mapper.ConfigurationProvider).ToListAsync();

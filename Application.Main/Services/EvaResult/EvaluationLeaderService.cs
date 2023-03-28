@@ -454,7 +454,7 @@ namespace Application.Main.Services.EvaResult
                 }
 
                 if (dnisIguales.Any())
-                    throw new WarningException($"Los colaboradores con los siguientes dnis no pueden lideres asi mismos:\n {string.Join(",\n", dnisIguales)}");
+                    throw new WarningException($"Los colaboradores con los siguientes DNI´s no pueden ser líderes de si mismos:\n {string.Join(",\n", dnisIguales)}");
             }
 
 
@@ -468,14 +468,14 @@ namespace Application.Main.Services.EvaResult
                     .ToListAsync();
 
             if (!collaborators.Any())
-                throw new WarningException("No se ha encontrado colaboradores activos");
+                throw new WarningException("No se ha encontrado colaboradores activos con los DNI´s importados");
 
             var dniCollaboratorsActive = collaborators.Select(c => c.DocumentNumber).ToList();
             if (dnis.Any(dni => !dniCollaboratorsActive.Contains(dni)))
             {
                 dnisNotFound = dnis.Where(dni => !dniCollaboratorsActive.Contains(dni)).ToList();
 
-                throw new WarningException($"Los COLABORADORES con los siguientes DNIS no aplican a la evaluación:\n {string.Join(",\n", dnisNotFound)}");
+                throw new WarningException($"Los COLABORADORES con los siguientes DNI´s no aplican a la evaluación:\n {string.Join(",\n", dnisNotFound)}");
             }    
 
             var evaluationCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository

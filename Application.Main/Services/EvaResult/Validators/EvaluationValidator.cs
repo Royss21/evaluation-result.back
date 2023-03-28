@@ -21,7 +21,7 @@ namespace Application.Main.Services.EvaResult.Validators
                 .MustAsync((evaluation, cancel) => EvaluationSharedValidator.NameExists( _evaluationRepository, evaluation))
                 .WithMessage(Messages.General.NameAlreadyRegistered)
                 .MustAsync((evaluation, cancel) => EvaluationSharedValidator.DateRangeIsValid(_evaluationRepository, evaluation))
-                .WithMessage(Messages.General.RangeDatesIsNotValid)
+                .WithMessage(Messages.General.RangeDatesIsNotValidEvaluation)
                 .MustAsync((evaluation, cancel) => EvaluationSharedValidator.DateRangeBetweenIsValid(_evaluationRepository, evaluation))
                 .WithMessage("Existen evaluaciones que se encuentran dentro del rango de fechas ingresadas");
         }

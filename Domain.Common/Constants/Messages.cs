@@ -28,7 +28,8 @@
             public const string EmailAlreadyRegistered = "El Correo ingresado ya se encuentra registrado";
             public const string PhoneAlreadyRegistered = "El Telefono ingresado ya se encuentra registrado";
             public const string DescriptionAlreadyRegistered = "La descripcion ingresada ya se encuentra registrado";
-            public const string RangeDatesIsNotValid = "El intervalo de fechas ingresadas es incorrecta y/o existe en otras evaluaciones";
+            public const string RangeDatesIsNotValidEvaluation = "El intervalo de fechas ingresadas es incorrecta y/o existe en otras evaluaciones";
+            public const string RangeDatesIsNotValidPeriod = "El intervalo de fechas ingresadas es incorrecta y/o existe en otros periodos";
         }
 
         public static class Level 
