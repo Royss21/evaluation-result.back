@@ -110,12 +110,13 @@
             var evaluationCollaboratorId = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(f => f.CollaboratorId.Equals(id) && (currentDate >= f.Evaluation.StartDate && currentDate <= f.Evaluation.EndDate))
                     .Select(s => s.Id)
-                    .FirstAsync();
+                    .FirstOrDefaultAsync();
 
 
             await _unitOfWorkApp.SaveChangesAsync();
 
-            await _service.DeleteAsync(evaluationCollaboratorId);
+            if(!evaluationCollaboratorId.Equals(Guid.Empty))
+                await _service.DeleteAsync(evaluationCollaboratorId);
 
             return true;
         }

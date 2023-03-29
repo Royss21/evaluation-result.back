@@ -110,5 +110,18 @@
             return new OkObjectResult(new JsonResult<PeriodInProgressDto>(result));
         }
 
+        [HttpGet("validate-assigned/{id}")]
+        [SwaggerOperation(
+        Summary = "Validar si el periodo tiene una evaluacion asignada",
+        Description = "Validar si el periodo tiene una evaluacion asignada",
+        OperationId = "Period.CheckExistEvaluationInProgress",
+        Tags = new[] { "PeriodService" })]
+        [ProducesResponseType(typeof(JsonResult<JsonResult<bool>>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> CheckExistEvaluationInProgress(int id)
+        {
+            var result = await _periodService.CheckExistEvaluationInProgress(id);
+            return new OkObjectResult(new JsonResult<bool>(result));
+        }
+
     }
 }

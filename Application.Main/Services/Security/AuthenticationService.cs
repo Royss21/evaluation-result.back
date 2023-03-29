@@ -199,10 +199,23 @@ namespace Application.Main.Services.Security
         public async Task<AccessCollaboratorDto> LoginSessionCollaboratorAsync(Guid evaluationCollaboratorId)
         {
             var currentDate = DateTime.UtcNow.GetDatePeru();
-            var collaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
-                    .Find(f => f.Id.Equals(evaluationCollaboratorId))
-                    .Select(s => new {s.CollaboratorId ,s.EvaluationId, s.Collaborator.Name, s.Collaborator.Email, s.Evaluation.StartDate, s.Evaluation.EndDate })
+
+            var evaluationId= await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find( f=> currentDate >= f.StartDate && currentDate <= f.EndDate )
+                    .Select(s => s.Id)
                     .FirstAsync();
+
+            var collaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                    .Find(f => f.Id.Equals(evaluationCollaboratorId) && f.EvaluationId.Equals(evaluationId))
+                    .Select(s => new {
+                        s.CollaboratorId,
+                        s.EvaluationId, 
+                        s.Collaborator.Name,
+                        s.Collaborator.Email, 
+                        s.Evaluation.StartDate, 
+                        s.Evaluation.EndDate 
+                    })
+                    .FirstOrDefaultAsync();
 
             if (collaborator is null)
                 throw new WarningException("El código ingresado no existe");

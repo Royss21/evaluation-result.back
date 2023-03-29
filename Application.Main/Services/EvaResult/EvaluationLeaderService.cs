@@ -260,9 +260,11 @@ namespace Application.Main.Services.EvaResult
             foreach(var el in evaluationLeaders)
             {
                 if (!el.AreaName.Equals(""))
-                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository.CountAsync(c => c.AreaName.Equals(el.AreaName));
+                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+                            .CountAsync(c => c.AreaName.Equals(el.AreaName) && c.EvaluationId.Equals(el.EvaluationId));
                 else
-                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository.Find(lc => el.StagesId.Contains(lc.LeaderStageId))
+                    el.CountAssignedCollaborator = await _unitOfWorkApp.Repository.LeaderCollaboratorRepository
+                            .Find(lc => el.StagesId.Contains(lc.LeaderStageId))
                             .Select(s => s.EvaluationCollaborator.Id)
                             .Distinct().CountAsync();
             }
@@ -295,6 +297,7 @@ namespace Application.Main.Services.EvaResult
                     throw new WarningException($"No se ha encontrado datos del lider al tratar de visualizar los colaboradores asignados");
 
                 predicate = PredicateBuilder.New<EvaluationCollaborator>(ec =>
+                            ec.EvaluationId.Equals(leader.EvaluationId) &&
                             leader.AreaName.ToLower().Trim().Contains(ec.AreaName.ToLower().Trim()) &&
                             (
                                 ec.AreaName.ToLower().Trim().Contains((filter.GlobalFilter ?? "").Trim().ToLower()) ||

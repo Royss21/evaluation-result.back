@@ -14,6 +14,7 @@
         Task<bool> DeleteAsync(int id);
         Task<PeriodInProgressDto> GetPeriodInProgressAsync();
         Task<PeriodDto> GetCurrentDatePeriodAsync();
+        Task<bool> CheckExistEvaluationInProgress(int id);
 
     }
 }

@@ -25,7 +25,11 @@
 
             globalFilter = globalFilter ?? "";
 
-            return  await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
+            var resultLabels = await _unitOfWorkApp.Repository.LabelDetailRepository
+                    .Find(f => f.LabelId == GeneralConstants.ResultLabelsLabelId)
+                    .ToListAsync();
+
+            var evaluationCollaborators = await _unitOfWorkApp.Repository.EvaluationCollaboratorRepository
                     .Find(add =>
                             add.EvaluationId.Equals(evaluationId) &&
                             (
@@ -42,6 +46,13 @@
                         )
                     .ProjectTo<EvaluationCollaboratorFinalResultDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
+
+            evaluationCollaborators.ForEach(f =>
+            {
+                f.ResultLabel = resultLabels.Find(l => f.FinalResult >= l.MinimunValue && f.FinalResult <= f.FinalResult)?.Name ?? "";
+            });
+
+            return evaluationCollaborators;
         }
 
         public async Task<PaginationResultDto<EvaluationCollaboratorFinalResultDto>> GetAllPagingByFinalResultAsync(EvaluationCollaboratorFinalResultFilterDto filter)
@@ -140,7 +151,7 @@
                     .ToListAsync();
 
             var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                    .Find(f => true)
+                    .Find(f => f.EvaluationId.Equals(evaluationId))
                     .Select(s => new {
                         s.Id,
                         s.StageId,
@@ -149,17 +160,17 @@
                         ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.ComponentId
                     })
                     .ToListAsync();
-            var ff = evaluationComponentStage.Where(w => w.ComponentId != 0);
+            var componentStages = evaluationComponentStage.Where(w => w.ComponentId != 0);
             var componentCollaboratorComments = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f => 
-                        evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) &&
-                        ff.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
+                        evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) //&&
+                        //componentStages.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
                     )
                     .Select(s => new { 
                         s.Id, 
                         s.EvaluationCollaboratorId,
-                        //ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
-                        s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.EvaluationComponentStage.StageId,
+                        ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
                         s.StatusId })
                     .ToListAsync();
 
@@ -173,8 +184,6 @@
                     f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     f.ComponentId == GeneralConstants.Component.CorporateObjectives)?.StatusId ?? 0;
 
-
-
                 ec.ResultObjectiveArea = componentsCollaborators?.Find(cc =>
                     cc.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     cc.ComponentId == GeneralConstants.Component.AreaObjectives)?.Total ?? 0.00M;
@@ -183,19 +192,18 @@
                     f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     f.ComponentId == GeneralConstants.Component.AreaObjectives)?.StatusId ?? 0;
 
-
-
                 ec.ResultCompetence = componentsCollaborators?.Find(cc =>
                     cc.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     cc.ComponentId == GeneralConstants.Component.Competencies)?.Total ?? 0.00M;
 
-                ec.StatusCompetenceId = componentCollaboratorComments?.Find(f =>
-                    f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
-                    f.ComponentId == GeneralConstants.Component.Competencies)?.StatusId ?? 0;
-
                 ec.StageCurrentId = evaluationComponentStage?.Find(f =>
                     new[] {0, GeneralConstants.Component.Competencies }.Contains(f.ComponentId ) &&
                     (currentDate >= f.StartDate && currentDate <= f.EndDate))?.StageId ?? 0;
+
+                ec.StatusCompetenceId = componentCollaboratorComments?.Find(f =>
+                    f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
+                    f.StageId == ec.StageCurrentId)?.StatusId ?? 0;
+
             }
 
 
@@ -244,26 +252,26 @@
                     .ToListAsync();
 
             var evaluationComponentStage = await _unitOfWorkApp.Repository.EvaluationComponentStageRepository
-                     .Find(f => true)
-                     .Select(s => new {
-                         s.Id,
-                         s.StageId,
-                         s.StartDate,
-                         s.EndDate,
-                         ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.ComponentId
-                     })
-                     .ToListAsync();
-            var ff = evaluationComponentStage.Where(w => w.ComponentId != 0);
+                    .Find(f => f.EvaluationId.Equals(evaluationId))
+                    .Select(s => new {
+                        s.Id,
+                        s.StageId,
+                        s.StartDate,
+                        s.EndDate,
+                        ComponentId = s.EvaluationComponent == null ? 0 : s.EvaluationComponent.ComponentId
+                    })
+                    .ToListAsync();
+            var componentStages = evaluationComponentStage.Where(w => w.ComponentId != 0);
             var componentCollaboratorComments = await _unitOfWorkApp.Repository.ComponentCollaboratorCommentRepository
                     .Find(f =>
-                        evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) &&
-                        ff.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
+                        evaluationCollaborators.Select(ec => ec.EvaluationCollaboratorId).Contains(f.EvaluationCollaboratorId) //&&
+                                                                                                                               //componentStages.Select(s => s.Id).Contains(f.EvaluationComponentStageId)
                     )
                     .Select(s => new {
                         s.Id,
                         s.EvaluationCollaboratorId,
-                        //ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
-                        s.EvaluationComponentStage.EvaluationComponent.ComponentId,
+                        s.EvaluationComponentStage.StageId,
+                        ComponentId = s.EvaluationComponentStage.EvaluationComponent == null ? 0 : s.EvaluationComponentStage.EvaluationComponent.ComponentId,
                         s.StatusId
                     })
                     .ToListAsync();
@@ -278,8 +286,6 @@
                     f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     f.ComponentId == GeneralConstants.Component.CorporateObjectives)?.StatusId ?? 0;
 
-
-
                 ec.ResultObjectiveArea = componentsCollaborators?.Find(cc =>
                     cc.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     cc.ComponentId == GeneralConstants.Component.AreaObjectives)?.Total ?? 0.00M;
@@ -288,19 +294,18 @@
                     f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     f.ComponentId == GeneralConstants.Component.AreaObjectives)?.StatusId ?? 0;
 
-
-
                 ec.ResultCompetence = componentsCollaborators?.Find(cc =>
                     cc.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
                     cc.ComponentId == GeneralConstants.Component.Competencies)?.Total ?? 0.00M;
 
-                ec.StatusCompetenceId = componentCollaboratorComments?.Find(f =>
-                    f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
-                    f.ComponentId == GeneralConstants.Component.Competencies)?.StatusId ?? 0;
-
                 ec.StageCurrentId = evaluationComponentStage?.Find(f =>
                     new[] { 0, GeneralConstants.Component.Competencies }.Contains(f.ComponentId) &&
                     (currentDate >= f.StartDate && currentDate <= f.EndDate))?.StageId ?? 0;
+
+                ec.StatusCompetenceId = componentCollaboratorComments?.Find(f =>
+                    f.EvaluationCollaboratorId.Equals(ec.EvaluationCollaboratorId) &&
+                    f.StageId == ec.StageCurrentId)?.StatusId ?? 0;
+
             }
 
             return evaluationCollaborators;

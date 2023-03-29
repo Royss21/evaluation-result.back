@@ -1,11 +1,9 @@
 ﻿namespace Api.Services.Controllers.Security
 {
     using Api.Services.Controllers;
-    using Application.Dto.Config.Subcomponent;
     using Application.Dto.Pagination;
     using Application.Dto.Report;
     using Application.Main.Services.Report.Interfaces;
-    using Domain.Main.EvaResult;
     using SharedKernell.Wrappers;
 
     [Route("api/report")]

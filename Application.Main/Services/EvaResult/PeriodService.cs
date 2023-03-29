@@ -11,6 +11,7 @@ namespace Application.Main.Services.EvaResult
     using Application.Dto.EvaResult.Evaluation;
     using Application.Main.Services.EvaResult.Interfaces;
     using Application.Main.Services.EvaResult.Validators;
+    using Microsoft.EntityFrameworkCore;
 
     public class PeriodService : BaseService, IPeriodService
     {
@@ -36,8 +37,38 @@ namespace Application.Main.Services.EvaResult
         {
             var period = _mapper.Map<Period>(periodDto);
 
+            if((await _unitOfWorkApp.Repository.EvaluationRepository.Find(f => f.PeriodId == periodDto.Id).AnyAsync()))
+            {
+
+                var startDateMin = await _unitOfWorkApp.Repository.EvaluationRepository
+                        .Find(f => f.PeriodId == periodDto.Id)
+                        .Select(s => s.StartDate)
+                        .MinAsync();
+
+                var startDateMax = await _unitOfWorkApp.Repository.EvaluationRepository
+                        .Find(f => f.PeriodId == periodDto.Id)
+                        .Select(s => s.EndDate)
+                        .MaxAsync();
+
+                if (periodDto.EndDate < startDateMin )
+                    throw new WarningException("La fecha fin del periodo no puede ser menor a la fecha inicio de alguna evaluacion existente.");
+
+                if (periodDto.EndDate < startDateMax)
+                    throw new WarningException("La fecha fin del periodo no puede ser menor a la fecha fin de alguna evaluacion existente.");
+
+                if (periodDto.StartDate > startDateMax)
+                    throw new WarningException("La fecha inicio del periodo no puede ser mayor a la fecha fin de alguna evaluacion existente.");
+
+                if (periodDto.StartDate > startDateMin)
+                    throw new WarningException("La fecha inicio del periodo no puede ser mayor a la fecha inicio de alguna evaluacion existente.");
+
+            }
+
             var resultValidator = await _unitOfWorkApp.Repository.PeriodRepository.UpdateAsync(
                 period, new PeriodCreateValidator(_unitOfWorkApp.Repository.PeriodRepository));
+
+
+
 
             if (!resultValidator.IsValid)
                 throw new ValidatorException(string.Join(". \n", resultValidator.Errors.Select(e => e.ErrorMessage)));
@@ -143,6 +174,13 @@ namespace Application.Main.Services.EvaResult
             }
 
             return periodInProgress;
+        }
+
+        public async Task<bool> CheckExistEvaluationInProgress(int id)
+        {
+            return await _unitOfWorkApp.Repository.EvaluationRepository
+                    .Find(f => f.PeriodId == id)
+                    .AnyAsync();
         }
     }
 }

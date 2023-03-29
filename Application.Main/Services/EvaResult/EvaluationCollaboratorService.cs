@@ -347,6 +347,9 @@ namespace Application.Main.Services.EvaResult
             var parametersDto = PrimeNgToPaginationParametersDto<EvaluationCollaboratorReviewPagingDto>.Convert(filter);
             var parametersDomain = parametersDto.ConvertToPaginationParameterDomain<EvaluationCollaborator, EvaluationCollaboratorReviewPagingDto>(_mapper);
 
+            parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                    .AddCondition(add => add.EvaluationId.Equals(filter.EvaluationId));
+
             if (filter.EvaluationCollaboratorId is not null)
             {
                 var currentDate = DateTime.UtcNow.GetDatePeru();
