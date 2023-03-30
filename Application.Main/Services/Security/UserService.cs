@@ -50,9 +50,11 @@ namespace Application.Main.Services.Security
                 .Find(f => f.Id.Equals(request.Id), false)
                 .FirstAsync();
 
-            user.Password = userExists.Password;
-            user.HashType = userExists.HashType;
-            user.IsLocked = userExists.IsLocked;
+            userExists.Names = user.Names;
+            userExists.LastName = user.LastName;
+            userExists.MiddleName = user.MiddleName;
+            userExists.Email = user.Email;
+            userExists.UserName = user.UserName;
 
             //userExists.UserName = user.UserName;
             //userExists.Names = user.Names;
@@ -83,7 +85,7 @@ namespace Application.Main.Services.Security
                     await _unitOfWorkApp.Repository.UserRoleRepository.AddAsync(new UserRole { UserId = user.Id, RoleId = roleId });
             }
 
-            await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(user);
+            await _unitOfWorkApp.Repository.UserRepository.UpdateAsync(userExists);
             await _unitOfWorkApp.SaveChangesAsync();
 
             return true;
