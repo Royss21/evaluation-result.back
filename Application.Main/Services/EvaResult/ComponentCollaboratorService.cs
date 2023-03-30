@@ -354,6 +354,9 @@ namespace Application.Main.Services.EvaResult
 
             if (filter.EvaluationCollaboratorId is not null)
             {
+                parametersDomain.FilterWhere = parametersDomain.FilterWhere
+                        .AddCondition(add => !add.EvaluationCollaboratorId.Equals(filter.EvaluationCollaboratorId));
+
                 if (GeneralConstants.Component.AreaObjectives == filter.ComponentId)
                 {
                     var areasName = await _unitOfWorkApp.Repository.EvaluationLeaderRepository
